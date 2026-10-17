@@ -2,13 +2,14 @@
  * 工作中樞平台前端核心邏輯 (ES6+)
  * 負責管理五大主題路由、關鍵字檢索、主題配色切換、構想筆記，
  * 以及「主題五：多元活動與非正式任務中心」旗下之「年終尾牙自動化抽獎系統」
- * （包含獨立名單匯入與獎金設定頁、獨立大型開獎展演舞台、手動控制姓名輪動與全螢幕煙花特效）
+ * （支援特定活動全畫面沉浸模式、左右懸掛動態鞭炮串與喜慶宮燈、獨立匯入頁、大型開獎舞台、手動控制輪動與煙花特效）
  */
 
 const WORKSPACE_THEMES = [
     {
         id: "theme-01",
         code: "MOD-01",
+        navShortName: "任務專案",
         title: "主題一：任務與專案中樞",
         subtitle: "Task & Project Nexus",
         status: "預留擴充區",
@@ -23,6 +24,7 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-02",
         code: "MOD-02",
+        navShortName: "效率工具",
         title: "主題二：自動化與效率工具箱",
         subtitle: "Automation & Utility Lab",
         status: "預留擴充區",
@@ -37,6 +39,7 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-03",
         code: "MOD-03",
+        navShortName: "數據觀測",
         title: "主題三：數據觀測與視覺化儀表板",
         subtitle: "Metrics & Analytics Pulse",
         status: "預留擴充區",
@@ -51,6 +54,7 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-04",
         code: "MOD-04",
+        navShortName: "知識文件",
         title: "主題四：知識庫與技術文件中心",
         subtitle: "Knowledge & Docs Vault",
         status: "預留擴充區",
@@ -65,13 +69,14 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-05",
         code: "MOD-05",
+        navShortName: "多元活動",
         title: "主題五：多元活動與非正式任務中心",
         subtitle: "Special Events & Informal Hub",
         status: "含已啟用子系統",
         description: "專門收納公司節慶活動、團隊交流、臨時性趣味工具與非正式專案任務的彈性工作區，目前已內建「年終尾牙自動化抽獎系統」。",
         iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
         slots: [
-            { name: "子系統一：年終尾牙自動化抽獎系統 (已啟用)", tag: "SYS-5A", detail: "獨立配置「名單匯入與獎金設定頁」及「大型開獎展演舞台」，支援手動控制輪動與煙花特效。" },
+            { name: "子系統一：年終尾牙自動化抽獎系統 (已啟用)", tag: "SYS-5A", detail: "進入時自動隱藏上方工作導覽列，展開左右懸掛鞭炮串與紅金喜慶大舞台。" },
             { name: "子系統二：部門聚餐與下午茶隨機抽選器 (預留)", tag: "SLOT-5B", detail: "預留供日後擴充餐廳決策轉盤、飲料團購統計與隨機分組小工具。" },
             { name: "子系統三：團康競賽計分與互動投票看板 (預留)", tag: "SLOT-5C", detail: "預留供日後擴充活動即時排行榜、趣味問答計分與現場互動任務。" }
         ]
@@ -128,22 +133,21 @@ class FireworksController {
         this.canvas.height = window.innerHeight;
     }
 
-    launchCelebration(durationMs = 4500) {
+    launchCelebration(durationMs = 4800) {
         if (!this.canvas || !this.ctx) return;
         this.stop();
         this.resizeCanvas();
         this.canvas.classList.remove("is-hidden");
 
-        // 立即發射第一波多點煙花
-        this.spawnBurst(window.innerWidth * 0.25, window.innerHeight * 0.32);
-        this.spawnBurst(window.innerWidth * 0.75, window.innerHeight * 0.32);
-        this.spawnBurst(window.innerWidth * 0.5, window.innerHeight * 0.24);
+        this.spawnBurst(window.innerWidth * 0.22, window.innerHeight * 0.3);
+        this.spawnBurst(window.innerWidth * 0.78, window.innerHeight * 0.3);
+        this.spawnBurst(window.innerWidth * 0.5, window.innerHeight * 0.22);
 
         this.burstTimerId = setInterval(() => {
-            const x = window.innerWidth * (0.18 + Math.random() * 0.64);
-            const y = window.innerHeight * (0.18 + Math.random() * 0.42);
+            const x = window.innerWidth * (0.16 + Math.random() * 0.68);
+            const y = window.innerHeight * (0.15 + Math.random() * 0.45);
             this.spawnBurst(x, y);
-        }, 420);
+        }, 380);
 
         this.stopTimerId = setTimeout(() => {
             if (this.burstTimerId) {
@@ -159,7 +163,7 @@ class FireworksController {
                 const p = this.particles[i];
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy += 0.065; // 重力加速度
+                p.vy += 0.065;
                 p.vx *= 0.985;
                 p.alpha -= p.decay;
 
@@ -171,7 +175,7 @@ class FireworksController {
                 this.ctx.save();
                 this.ctx.globalAlpha = Math.max(0, p.alpha);
                 this.ctx.fillStyle = p.color;
-                this.ctx.shadowBlur = 10;
+                this.ctx.shadowBlur = 12;
                 this.ctx.shadowColor = p.color;
                 this.ctx.beginPath();
                 this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -191,22 +195,22 @@ class FireworksController {
 
     spawnBurst(centerX, centerY) {
         const palette = [
-            "#0ea5e9", "#14b8a6", "#10b981", "#38bdf8",
-            "#f59e0b", "#fbbf24", "#f43f5e", "#a855f7"
+            "#fbbf24", "#f59e0b", "#fef08a", "#ef4444",
+            "#f43f5e", "#10b981", "#38bdf8", "#a855f7"
         ];
-        const count = 56;
+        const count = 60;
         for (let i = 0; i < count; i += 1) {
-            const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.2;
-            const speed = 2.2 + Math.random() * 6.5;
+            const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.22;
+            const speed = 2.4 + Math.random() * 6.8;
             this.particles.push({
                 x: centerX,
                 y: centerY,
                 vx: Math.cos(angle) * speed,
                 vy: Math.sin(angle) * speed,
-                radius: 2 + Math.random() * 2.8,
+                radius: 2.2 + Math.random() * 3,
                 color: palette[Math.floor(Math.random() * palette.length)],
                 alpha: 1,
-                decay: 0.012 + Math.random() * 0.014
+                decay: 0.011 + Math.random() * 0.014
             });
         }
     }
@@ -243,6 +247,7 @@ class WorkspaceApp {
         this.lotteryState = this.loadLotteryState();
         this.isRolling = false;
         this.rollingIntervalId = null;
+        this.isStageDrawerCollapsed = false;
 
         this.cacheDomElements();
         this.fireworks = new FireworksController(this.fireworksCanvas);
@@ -464,6 +469,10 @@ class WorkspaceApp {
         this.activeRoute = routeId;
         this.updateActiveNavTab();
 
+        // 當進入特定活動（尾牙抽獎舞台或尾牙後台管理頁）時，自動啟用節慶沉浸模式並隱藏上方工作導覽列
+        const isFestiveActivity = routeId === "theme-05-draw" || routeId === "theme-05-admin";
+        document.body.classList.toggle("is-festive-gala-mode", isFestiveActivity);
+
         if (routeId === "overview") {
             this.overviewSection.classList.remove("is-hidden");
             this.focusSection.classList.add("is-hidden");
@@ -494,14 +503,14 @@ class WorkspaceApp {
 
         const overviewBtnHtml = `
             <button type="button" class="nav-tab-btn" data-route="overview">
-                <span>總覽儀表板</span>
+                <span>總覽</span>
             </button>
         `;
 
         const themeBtnsHtml = WORKSPACE_THEMES.map((theme, idx) => `
             <button type="button" class="nav-tab-btn" data-route="${theme.id}">
                 <span class="nav-tab-code">0${idx + 1}</span>
-                <span>${theme.title.replace(/^主題[一二三四五]：/, "")}</span>
+                <span>${this.escapeHtml(theme.navShortName)}</span>
             </button>
         `).join("");
 
@@ -526,6 +535,128 @@ class WorkspaceApp {
                 btn.classList.remove("active");
             }
         });
+    }
+
+    /**
+     * 產生左右兩側懸掛式立體紅金鞭炮串與喜慶宮燈 SVG 裝飾
+     */
+    getFestiveSideHangingsHtml() {
+        const renderStringSvg = (emblemText) => `
+            <svg class="firecracker-svg" viewBox="0 0 100 660" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- 頂部祥雲金鉤與紅繩 -->
+                <rect x="46" y="0" width="8" height="28" fill="#f59e0b" />
+                <circle cx="50" cy="28" r="7" fill="#fbbf24" stroke="#b91c1c" stroke-width="2" />
+                <!-- 喜慶大紅宮燈 -->
+                <rect x="32" y="34" width="36" height="8" rx="3" fill="#fbbf24" stroke="#991b1b" stroke-width="1.5" />
+                <ellipse cx="50" cy="72" rx="34" ry="30" fill="#dc2626" stroke="#fbbf24" stroke-width="2.5" />
+                <path d="M32 45 C24 62, 24 82, 32 99" stroke="#fbbf24" stroke-width="1.5" fill="none" opacity="0.7" />
+                <path d="M68 45 C76 62, 76 82, 68 99" stroke="#fbbf24" stroke-width="1.5" fill="none" opacity="0.7" />
+                <circle cx="50" cy="72" r="15" fill="#991b1b" stroke="#fde047" stroke-width="1.5" />
+                <text x="50" y="78" text-anchor="middle" fill="#fef08a" font-size="16" font-weight="900" font-family="Noto Sans TC, sans-serif">${emblemText}</text>
+                <rect x="34" y="100" width="32" height="8" rx="3" fill="#fbbf24" stroke="#991b1b" stroke-width="1.5" />
+
+                <!-- 中央編織金紅主繩 -->
+                <line x1="50" y1="108" x2="50" y2="540" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+                <line x1="50" y1="108" x2="50" y2="540" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 6" />
+
+                <!-- 左右交錯懸掛之八響立體紅金鞭炮串 -->
+                <!-- 第 1 對鞭炮 -->
+                <g transform="translate(26, 135) rotate(-22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+                <g transform="translate(74, 160) rotate(22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+
+                <!-- 第 2 對鞭炮 -->
+                <g transform="translate(26, 205) rotate(-22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+                <g transform="translate(74, 230) rotate(22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+
+                <!-- 第 3 對鞭炮 -->
+                <g transform="translate(26, 275) rotate(-22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+                <g transform="translate(74, 300) rotate(22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+
+                <!-- 第 4 對鞭炮 -->
+                <g transform="translate(26, 345) rotate(-22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+                <g transform="translate(74, 370) rotate(22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+
+                <!-- 第 5 對鞭炮 -->
+                <g transform="translate(26, 415) rotate(-22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+                <g transform="translate(74, 440) rotate(22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+
+                <!-- 第 6 對鞭炮 -->
+                <g transform="translate(26, 485) rotate(-22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+                <g transform="translate(74, 508) rotate(22)">
+                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
+                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
+                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
+                </g>
+
+                <!-- 底部中國結與流蘇吊穗 -->
+                <polygon points="50,535 64,550 50,565 36,550" fill="#dc2626" stroke="#fbbf24" stroke-width="2" />
+                <line x1="45" y1="564" x2="42" y2="615" stroke="#dc2626" stroke-width="2.5" />
+                <line x1="50" y1="565" x2="50" y2="622" stroke="#f59e0b" stroke-width="2.5" />
+                <line x1="55" y1="564" x2="58" y2="615" stroke="#dc2626" stroke-width="2.5" />
+
+                <!-- 鞭炮尾端閃耀金紅火花特效 -->
+                <g class="firecracker-spark-group">
+                    <circle cx="50" cy="595" r="5" fill="#fef08a" />
+                    <line x1="50" y1="572" x2="50" y2="618" stroke="#fbbf24" stroke-width="2.2" />
+                    <line x1="26" y1="595" x2="74" y2="595" stroke="#fbbf24" stroke-width="2.2" />
+                    <line x1="33" y1="578" x2="67" y2="612" stroke="#f43f5e" stroke-width="2" />
+                    <line x1="67" y1="578" x2="33" y2="612" stroke="#f43f5e" stroke-width="2" />
+                </g>
+            </svg>
+        `;
+
+        return `
+            <div class="festive-side-hangings is-left" aria-hidden="true">
+                ${renderStringSvg("福")}
+            </div>
+            <div class="festive-side-hangings is-right" aria-hidden="true">
+                ${renderStringSvg("旺")}
+            </div>
+        `;
     }
 
     renderThemesGrid() {
@@ -638,8 +769,8 @@ class WorkspaceApp {
                 </div>
 
                 <div>
-                    <h3 class="section-heading">非正式任務與活動子系統列表 (Informal Subsystems)</h3>
-                    <p class="section-subheading">年終尾牙抽獎為此主題下之第一個正式子系統，並將「後台名單匯入設定」與「大型開獎舞台」拆分為兩個獨立頁面：</p>
+                    <h3 class="section-heading">非正式任務與節慶活動子系統列表 (Informal Subsystems)</h3>
+                    <p class="section-subheading">點選進入特定活動系統時，網頁將自動隱藏頂部工作導覽列並切換為專屬節慶活動佈置：</p>
                 </div>
 
                 <div class="informal-systems-grid">
@@ -648,11 +779,11 @@ class WorkspaceApp {
                         <div class="informal-card-body">
                             <div class="theme-meta-tags">
                                 <span class="theme-code-badge">SYS-5A</span>
-                                <span class="theme-status-badge">已實作啟用</span>
+                                <span class="theme-status-badge">節慶展演版已啟用</span>
                             </div>
-                            <h4 class="theme-title">年終尾牙自動化抽獎系統</h4>
+                            <h4 class="theme-title">歲末年終尾牙自動化抽獎系統</h4>
                             <p class="theme-desc">
-                                支援員工名單與預設獎金金額獨立後台管理、1/3/5 人手動控制輪動開獎、現場臨時輸入加碼金額，以及中獎姓名流光特效與全螢幕慶祝煙花。
+                                進入後自動切換全畫面喜慶紅金佈置與左右懸掛鞭炮串，並拆分為獨立的「大型開獎展演舞台」與「名單匯入與獎金設定頁」。
                             </p>
                             <p class="theme-route-hint">
                                 目前名單池狀態：待抽 ${remainingCount} 人 / 已中獎 ${winnersCount} 人
@@ -660,7 +791,7 @@ class WorkspaceApp {
                         </div>
                         <div class="informal-card-actions">
                             <button type="button" class="primary-btn" id="go-lottery-stage-btn">
-                                開啟大型開獎展演舞台
+                                開啟尾牙開獎大舞台
                             </button>
                             <button type="button" class="secondary-btn" id="go-lottery-admin-btn">
                                 名單匯入與獎項金額設定
@@ -694,7 +825,7 @@ class WorkspaceApp {
                             </div>
                             <h4 class="module-placeholder-title">團隊活動計分與互動投票看板</h4>
                             <p class="module-placeholder-desc">
-                                預留供日後擴充Team Building分組競賽即時積分榜、活動趣味投票與臨時性任務看板。
+                                預留供日後擴充 Team Building 分組競賽即時積分榜、活動趣味投票與臨時性任務看板。
                             </p>
                         </div>
                         <div class="informal-card-actions">
@@ -786,23 +917,19 @@ class WorkspaceApp {
     }
 
     /**
-     * 渲染專屬通行碼驗證畫面
+     * 渲染專屬通行碼驗證畫面（同樣帶有左右鞭炮串與喜慶裝飾）
      */
     renderLotteryPasscodeGate(theme, targetSubpageMode) {
         this.focusSection.innerHTML = `
-            <div class="theme-focus-panel">
-                <div class="focus-header">
-                    <div class="focus-title-group">
-                        <div class="theme-meta-tags">
-                            <span class="theme-code-badge">SYS-5A</span>
-                            <span class="theme-status-badge">安全鎖定控管中</span>
-                        </div>
-                        <h2 class="focus-title">年終尾牙自動化抽獎系統</h2>
-                        <p class="theme-desc">為保護員工名單隱私並防止尾牙現場誤觸抽獎系統，請先輸入主持人通行碼解鎖。</p>
+            ${this.getFestiveSideHangingsHtml()}
+            <div class="festive-gala-panel">
+                <div class="festive-header-ribbon">
+                    <div class="festive-brand-emblem">
+                        <span class="festive-emblem-badge">吉慶尾牙</span>
+                        <span class="festive-emblem-title">歲末年終尾牙歡慶盛典 — 安全驗證</span>
                     </div>
                     <button type="button" class="back-overview-btn" id="back-to-hub-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>返回主題五中心</span>
+                        <span>離開活動（返回主題五）</span>
                     </button>
                 </div>
 
@@ -813,9 +940,9 @@ class WorkspaceApp {
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                         </svg>
                     </div>
-                    <h3 class="gate-title">主持人通行碼驗證</h3>
+                    <h3 class="gate-title">尾牙主持人通行碼驗證</h3>
                     <p class="gate-desc">
-                        此抽獎系統採「純本機記憶體與瀏覽器本地儲存」架構，員工姓名絕不會上傳至 GitHub。請輸入通行碼以進入系統。
+                        此抽獎系統採「純本機記憶體與瀏覽器本地儲存」架構，員工姓名絕不會上傳至 GitHub。請輸入通行碼以進入尾牙活動頁面。
                     </p>
                     <form class="gate-form" id="passcode-gate-form">
                         <input
@@ -829,7 +956,7 @@ class WorkspaceApp {
                         <button type="submit" class="primary-btn">驗證解鎖</button>
                     </form>
                     <p class="gate-error-msg is-hidden" id="passcode-error-msg">通行碼不正確，請重新輸入。</p>
-                    <span class="gate-hint">預設管理員通行碼：8888（解鎖後可於管理頁修改）</span>
+                    <span class="gate-hint">預設管理員通行碼：8888（解鎖後可於設定頁修改）</span>
                 </div>
             </div>
         `;
@@ -907,22 +1034,23 @@ class WorkspaceApp {
             : `<li class="winner-history-item"><span class="theme-desc">目前尚無開獎紀錄。</span></li>`;
 
         this.focusSection.innerHTML = `
-            <div class="theme-focus-panel">
-                <!-- 頂部子系統頁面切換導覽列 -->
-                <div class="lottery-subpage-bar">
-                    <div class="lottery-subpage-tabs">
-                        <button type="button" class="subpage-tab-btn" id="switch-to-draw-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            <span>大型開獎展演舞台</span>
-                        </button>
-                        <button type="button" class="subpage-tab-btn active" id="switch-to-admin-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <span>名單匯入與獎項金額設定 (${remainingCount}人待抽)</span>
-                        </button>
+            ${this.getFestiveSideHangingsHtml()}
+            <div class="festive-gala-panel">
+                <!-- 頂部尾牙專屬橫額與子頁面切換列（已自動隱藏占空間的全局導覽列） -->
+                <div class="festive-header-ribbon">
+                    <div class="festive-brand-emblem">
+                        <span class="festive-emblem-badge">後台配置</span>
+                        <span class="festive-emblem-title">年終尾牙 — 人員名單匯入與獎項金額設定</span>
                     </div>
-                    <div class="lottery-top-actions">
-                        <button type="button" class="secondary-btn" id="admin-lock-btn">鎖定系統</button>
-                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">返回主題五中心</button>
+                    <div class="lottery-subpage-tabs">
+                        <button type="button" class="subpage-tab-btn is-festive-tab" id="switch-to-draw-btn">
+                            <span>前往大型開獎展演舞台</span>
+                        </button>
+                        <button type="button" class="subpage-tab-btn is-festive-tab active" id="switch-to-admin-btn">
+                            <span>名單與獎金設定 (${remainingCount}人待抽)</span>
+                        </button>
+                        <button type="button" class="secondary-btn" id="admin-lock-btn">上鎖</button>
+                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">離開活動</button>
                     </div>
                 </div>
 
@@ -998,7 +1126,7 @@ class WorkspaceApp {
                             <span class="theme-code-badge">PRIZE & AMOUNT</span>
                         </div>
                         <p class="section-subheading">
-                            在此預先設定尾牙各獎項與對應獎金金額，開獎舞台即可一鍵點選套用（開獎舞台亦支援現場臨時輸入或修改金額）：
+                            在此預先設定尾牙各獎項與對應獎金金額，開獎大舞台即可一鍵點選套用（大舞台亦支援現場臨時輸入加碼金額）：
                         </p>
 
                         <form class="prize-config-form" id="add-prize-config-form">
@@ -1048,7 +1176,7 @@ class WorkspaceApp {
 
     /**
      * 獨立頁面 B：大型開獎展演舞台頁 (#theme-05-draw)
-     * 支援：大畫面得獎人展示、臨時輸入獎項與金額、按下按鈕持續輪動直到再次按下才確定、特殊流光特效與全螢幕煙花
+     * 支援：全畫面隱藏頂部工作列、左右懸掛搖曳鞭炮串與宮燈、可收合獎金設定抽屜、手動控制持續輪動、鴻運金榜得獎特效與全螢幕煙花
      */
     renderLotteryGrandStagePage(theme) {
         const remainingCount = this.lotteryState.remainingPool.length;
@@ -1080,16 +1208,16 @@ class WorkspaceApp {
             `;
         }).join("");
 
-        // 渲染舞台中央大型得獎人卡片
+        // 渲染舞台中央大型鴻運金榜得獎人卡片
         let showcaseCardsHtml = "";
         if (this.lotteryState.latestDrawnWinners.length > 0) {
             const displayPrize = this.lotteryState.latestDrawnPrize || this.lotteryState.currentPrize;
             const displayAmount = this.lotteryState.latestDrawnAmount || this.lotteryState.currentAmount;
             showcaseCardsHtml = this.lotteryState.latestDrawnWinners.map((name, idx) => `
                 <div class="grand-winner-card is-celebrating">
-                    <span class="grand-winner-slot-badge">CONGRATULATIONS // WINNER #0${idx + 1}</span>
+                    <span class="grand-winner-slot-badge">鴻運當頭 // WINNER #0${idx + 1}</span>
                     <div class="grand-winner-name">${this.escapeHtml(name)}</div>
-                    <span class="grand-winner-Bonus-note">${this.escapeHtml(displayPrize)} — ${this.escapeHtml(displayAmount)}</span>
+                    <span class="grand-winner-Bonus-note">恭賀榮獲：${this.escapeHtml(displayPrize)}（${this.escapeHtml(displayAmount)}）</span>
                 </div>
             `).join("");
         } else {
@@ -1098,9 +1226,9 @@ class WorkspaceApp {
             for (let i = 0; i < slotsCount; i += 1) {
                 placeholders.push(`
                     <div class="grand-winner-card">
-                        <span class="grand-winner-slot-badge">SLOT #0${i + 1} READY</span>
-                        <div class="grand-winner-name">等待啟動輪動</div>
-                        <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
+                        <span class="grand-winner-slot-badge">吉星高照 // SLOT #0${i + 1}</span>
+                        <div class="grand-winner-name">吉時待開獎</div>
+                        <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentPrize)} — ${this.escapeHtml(this.lotteryState.currentAmount)}</span>
                     </div>
                 `);
             }
@@ -1121,118 +1249,131 @@ class WorkspaceApp {
             `).join("")
             : `<li class="winner-history-item"><span class="theme-desc">尚無開獎紀錄，完成抽選後將顯示於此。</span></li>`;
 
+        const drawerToggleLabel = this.isStageDrawerCollapsed ? "展開獎項與加碼金額設定" : "收合設定列（放大舞台）";
+
         this.focusSection.innerHTML = `
-            <div class="theme-focus-panel">
-                <!-- 頂部子系統頁面切換導覽列 -->
-                <div class="lottery-subpage-bar">
-                    <div class="lottery-subpage-tabs">
-                        <button type="button" class="subpage-tab-btn active" id="switch-to-draw-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            <span>大型開獎展演舞台</span>
-                        </button>
-                        <button type="button" class="subpage-tab-btn" id="switch-to-admin-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <span>名單匯入與獎項金額設定 (${remainingCount}/${totalCount}人待抽)</span>
-                        </button>
+            <!-- 左右兩側懸掛式立體紅金鞭炮串與喜慶宮燈 -->
+            ${this.getFestiveSideHangingsHtml()}
+
+            <div class="festive-gala-panel">
+                <!-- 緊湊型節慶頂部控制橫額（已隱藏原本占空間的全局導覽列） -->
+                <div class="festive-header-ribbon">
+                    <div class="festive-brand-emblem">
+                        <span class="festive-emblem-badge">鴻運尾牙</span>
+                        <span class="festive-emblem-title">歲末年終尾牙歡慶盛典 — 幸運大抽獎</span>
                     </div>
-                    <div class="lottery-top-actions">
-                        <button type="button" class="secondary-btn" id="replay-fireworks-btn">施放慶祝煙花</button>
-                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">返回主題五中心</button>
+                    <div class="lottery-subpage-tabs">
+                        <button type="button" class="secondary-btn" id="toggle-stage-drawer-btn">
+                            ${drawerToggleLabel}
+                        </button>
+                        <button type="button" class="secondary-btn" id="replay-fireworks-btn">
+                            施放慶祝煙花
+                        </button>
+                        <button type="button" class="subpage-tab-btn is-festive-tab" id="switch-to-admin-btn">
+                            <span>名單匯入與獎金設定 (${remainingCount}/${totalCount}人)</span>
+                        </button>
+                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">
+                            <span>離開活動</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="grand-stage-wrapper">
-                    <!-- 舞台即時設定列：可點選後台預設獎項，或現場直接臨時輸入獎項與加碼金額 -->
-                    <div class="stage-live-control-card">
-                        <div class="stage-preset-bar">
-                            <span class="live-input-label">點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
-                            <div class="prize-preset-chips">
-                                ${prizeChipsHtml}
-                            </div>
-                        </div>
-
-                        <div class="stage-live-inputs-row">
-                            <div class="live-input-group">
-                                <label class="live-input-label" for="live-prize-name-input">本輪獎項名稱（支援臨時修改）</label>
-                                <input
-                                    type="text"
-                                    id="live-prize-name-input"
-                                    class="live-stage-input"
-                                    value="${this.escapeHtml(this.lotteryState.currentPrize)}"
-                                    placeholder="例如：董事長特別加碼獎"
-                                />
-                            </div>
-                            <div class="live-input-group">
-                                <label class="live-input-label" for="live-prize-amount-input">本輪獎項金額（支援現場臨時輸入）</label>
-                                <input
-                                    type="text"
-                                    id="live-prize-amount-input"
-                                    class="live-stage-input live-amount-highlight"
-                                    value="${this.escapeHtml(this.lotteryState.currentAmount)}"
-                                    placeholder="例如：NT$ 66,000"
-                                />
-                            </div>
-                            <div class="live-input-group">
-                                <span class="live-input-label">單次同時抽出人數（1 / 3 / 5 人）</span>
-                                <div class="batch-size-selector">
-                                    ${batchBtnsHtml}
-                                </div>
-                            </div>
+                <!-- 可收合式舞台獎項、臨時加碼金額與抽選人數設定抽屜 -->
+                <div class="stage-config-drawer ${this.isStageDrawerCollapsed ? "is-hidden" : ""}" id="stage-config-drawer">
+                    <div class="stage-preset-bar">
+                        <span class="live-input-label">快速點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
+                        <div class="prize-preset-chips">
+                            ${prizeChipsHtml}
                         </div>
                     </div>
 
-                    <!-- 超大型展演開獎主舞台 -->
-                    <div class="grand-stage-arena">
-                        <div class="grand-stage-header">
-                            <div class="grand-prize-banner">
-                                <span class="grand-prize-title" id="stage-banner-prize">${this.escapeHtml(this.lotteryState.currentPrize)}</span>
-                                <span class="grand-prize-amount" id="stage-banner-amount">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
+                    <div class="stage-live-inputs-row">
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="live-prize-name-input">本輪獎項名稱（支援臨時輸入）</label>
+                            <input
+                                type="text"
+                                id="live-prize-name-input"
+                                class="live-stage-input"
+                                value="${this.escapeHtml(this.lotteryState.currentPrize)}"
+                                placeholder="例如：董事長現場加碼大紅包"
+                            />
+                        </div>
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="live-prize-amount-input">本輪獎項金額（支援臨時輸入金額）</label>
+                            <input
+                                type="text"
+                                id="live-prize-amount-input"
+                                class="live-stage-input live-amount-highlight"
+                                value="${this.escapeHtml(this.lotteryState.currentAmount)}"
+                                placeholder="例如：NT$ 88,000"
+                            />
+                        </div>
+                        <div class="live-input-group">
+                            <span class="live-input-label">單次同時抽出人數（1 / 3 / 5 人）</span>
+                            <div class="batch-size-selector">
+                                ${batchBtnsHtml}
                             </div>
-                            <span class="grand-pool-counter">
-                                待抽池剩餘人數：${remainingCount} 人（每次抽出 ${this.lotteryState.batchSize} 人）
-                            </span>
-                        </div>
-
-                        <!-- 大型得獎人卡片展示區 -->
-                        <div class="grand-winners-showcase" id="grand-winners-showcase">
-                            ${showcaseCardsHtml}
-                        </div>
-
-                        <!-- 手動控制啟動輪動 / 按下確定開獎巨型按鈕 -->
-                        <div class="grand-stage-controls">
-                            <button
-                                type="button"
-                                class="grand-action-btn"
-                                id="grand-roll-toggle-btn"
-                                ${remainingCount === 0 ? "disabled" : ""}
-                            >
-                                ${remainingCount === 0
-                                    ? "目前待抽池無名單（請點選上方「名單匯入與獎項金額設定」匯入或載入彩排名單）"
-                                    : `啟動姓名高速輪動（每次抽出 ${Math.min(this.lotteryState.batchSize, remainingCount)} 人）`}
-                            </button>
-                            <span class="grand-pool-counter">
-                                操作說明：點擊第一次啟動姓名持續輪動，再次點擊按鈕立即定格揭曉得獎者並施放煙花
-                            </span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 舞台下方最近中獎紀錄快覽 -->
-                    <div class="lottery-panel-card">
-                        <div class="section-toolbar">
-                            <span class="lottery-panel-title">已開出得獎名單紀錄 (${this.lotteryState.winnersHistory.length} 輪)</span>
-                            <button
-                                type="button"
-                                class="secondary-btn"
-                                id="stage-export-csv-btn"
-                                ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
-                            >
-                                匯出中獎結果 CSV 報表
-                            </button>
+                <!-- 超大型紅金喜慶展演開獎主舞台 -->
+                <div class="grand-stage-arena">
+                    <div class="stage-corner-ornament top-left" aria-hidden="true"></div>
+                    <div class="stage-corner-ornament top-right" aria-hidden="true"></div>
+                    <div class="stage-corner-ornament bottom-left" aria-hidden="true"></div>
+                    <div class="stage-corner-ornament bottom-right" aria-hidden="true"></div>
+
+                    <div class="grand-stage-header">
+                        <span class="festive-stage-kicker">YEAR-END GALA LUCKY DRAW // 金玉滿堂・鴻運當頭</span>
+                        <div class="grand-prize-banner">
+                            <span class="grand-prize-title" id="stage-banner-prize">${this.escapeHtml(this.lotteryState.currentPrize)}</span>
+                            <span class="grand-prize-amount" id="stage-banner-amount">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
                         </div>
-                        <ul class="winners-history-list">
-                            ${historyHtml}
-                        </ul>
+                        <span class="grand-pool-counter">
+                            待抽池剩餘人數：${remainingCount} 人 ｜ 本輪每次抽出：${this.lotteryState.batchSize} 人
+                        </span>
                     </div>
+
+                    <!-- 大型鴻運金榜得獎人卡片展示區 -->
+                    <div class="grand-winners-showcase" id="grand-winners-showcase">
+                        ${showcaseCardsHtml}
+                    </div>
+
+                    <!-- 手動控制啟動輪動 / 按下確定開獎巨型按鈕 -->
+                    <div class="grand-stage-controls">
+                        <button
+                            type="button"
+                            class="grand-action-btn"
+                            id="grand-roll-toggle-btn"
+                            ${remainingCount === 0 ? "disabled" : ""}
+                        >
+                            ${remainingCount === 0
+                                ? "目前待抽池無名單（請點選右上方「名單匯入與獎金設定」匯入或載入彩排名單）"
+                                : `啟動姓名高速輪動（抽出 ${Math.min(this.lotteryState.batchSize, remainingCount)} 位幸運得主）`}
+                        </button>
+                        <span class="grand-pool-counter">
+                            操作提示：按一下啟動姓名持續高速輪動，主持人喊停時再按一下立即定格揭曉並施放煙花
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 舞台下方最近中獎紅榜紀錄快覽 -->
+                <div class="lottery-panel-card">
+                    <div class="section-toolbar">
+                        <span class="lottery-panel-title">尾牙榮譽紅榜紀錄 (${this.lotteryState.winnersHistory.length} 輪)</span>
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            id="stage-export-csv-btn"
+                            ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
+                        >
+                            匯出含金額中獎結果 CSV 報表
+                        </button>
+                    </div>
+                    <ul class="winners-history-list">
+                        ${historyHtml}
+                    </ul>
                 </div>
             </div>
         `;
@@ -1348,7 +1489,6 @@ class WorkspaceApp {
             });
         }
 
-        // 新增或更新獎項與金額設定
         const addPrizeForm = document.getElementById("add-prize-config-form");
         const newPrizeNameInput = document.getElementById("new-prize-name-input");
         const newPrizeAmountInput = document.getElementById("new-prize-amount-input");
@@ -1373,7 +1513,6 @@ class WorkspaceApp {
             });
         }
 
-        // 刪除預設獎項
         this.focusSection.querySelectorAll("[data-remove-prize-idx]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 const idx = Number(btn.getAttribute("data-remove-prize-idx"));
@@ -1396,7 +1535,7 @@ class WorkspaceApp {
     }
 
     /**
-     * 綁定「大型開獎展演舞台頁」事件（包含手動啟動與停止輪動、臨時金額輸入與煙花觸發）
+     * 綁定「大型開獎展演舞台頁」事件
      */
     bindLotteryGrandStageEvents(theme) {
         const switchToAdminBtn = document.getElementById("switch-to-admin-btn");
@@ -1415,10 +1554,22 @@ class WorkspaceApp {
             });
         }
 
+        const toggleDrawerBtn = document.getElementById("toggle-stage-drawer-btn");
+        const stageDrawer = document.getElementById("stage-config-drawer");
+        if (toggleDrawerBtn && stageDrawer) {
+            toggleDrawerBtn.addEventListener("click", () => {
+                this.isStageDrawerCollapsed = !this.isStageDrawerCollapsed;
+                stageDrawer.classList.toggle("is-hidden", this.isStageDrawerCollapsed);
+                toggleDrawerBtn.textContent = this.isStageDrawerCollapsed
+                    ? "展開獎項與加碼金額設定"
+                    : "收合設定列（放大舞台）";
+            });
+        }
+
         const replayFireworksBtn = document.getElementById("replay-fireworks-btn");
         if (replayFireworksBtn) {
             replayFireworksBtn.addEventListener("click", () => {
-                this.fireworks.launchCelebration(4200);
+                this.fireworks.launchCelebration(4500);
             });
         }
 
@@ -1450,7 +1601,6 @@ class WorkspaceApp {
             liveAmountInput.addEventListener("input", syncLiveInputs);
         }
 
-        // 點選預設獎項標籤
         this.focusSection.querySelectorAll("[data-select-prize]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 if (this.isRolling) return;
@@ -1461,7 +1611,6 @@ class WorkspaceApp {
             });
         });
 
-        // 切換每次抽出 1 / 3 / 5 人
         this.focusSection.querySelectorAll("[data-batch-size]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 if (this.isRolling) return;
@@ -1475,7 +1624,6 @@ class WorkspaceApp {
             });
         });
 
-        // 啟動持續輪動 / 按下確定開獎按鈕
         const rollToggleBtn = document.getElementById("grand-roll-toggle-btn");
         if (rollToggleBtn) {
             rollToggleBtn.addEventListener("click", () => {
@@ -1510,7 +1658,7 @@ class WorkspaceApp {
 
         if (rollToggleBtn) {
             rollToggleBtn.classList.add("is-stop-mode");
-            rollToggleBtn.textContent = `按下停止！立即鎖定並揭曉 ${drawCount} 位得獎人`;
+            rollToggleBtn.textContent = `按下停止！立即鎖定並揭曉 ${drawCount} 位幸運得獎人`;
         }
 
         const renderRollingTick = () => {
@@ -1524,7 +1672,7 @@ class WorkspaceApp {
 
             showcaseContainer.innerHTML = tempPicked.map((name, idx) => `
                 <div class="grand-winner-card is-rolling">
-                    <span class="grand-winner-slot-badge">ROLLING SLOT #0${idx + 1}</span>
+                    <span class="grand-winner-slot-badge">高速輪動抽選中 // SLOT #0${idx + 1}</span>
                     <div class="grand-winner-name">${this.escapeHtml(name)}</div>
                     <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentPrize)} — ${this.escapeHtml(this.lotteryState.currentAmount)}</span>
                 </div>
@@ -1536,7 +1684,7 @@ class WorkspaceApp {
     }
 
     /**
-     * 第二階段：使用者按下停止按鈕時，立即抽出得獎者、展示特殊流光字體效果並觸發全螢幕煙花
+     * 第二階段：使用者按下停止按鈕時，立即抽出得獎者、展示鴻運金榜流光特效並觸發全螢幕煙花
      */
     stopRollingAndConfirmWinners(theme) {
         this.stopRollingIfNeeded();
@@ -1574,7 +1722,7 @@ class WorkspaceApp {
 
         this.saveLotteryState();
         this.renderLotteryGrandStagePage(theme);
-        this.fireworks.launchCelebration(4800);
+        this.fireworks.launchCelebration(5000);
     }
 
     parseParticipantNames(rawText) {
@@ -1616,9 +1764,6 @@ class WorkspaceApp {
         return array[0] % maxExclusive;
     }
 
-    /**
-     * 匯出完整中獎結果（含獎項金額）為 UTF-8 BOM CSV 檔案
-     */
     exportWinnersToCsv() {
         if (!this.lotteryState.winnersHistory || this.lotteryState.winnersHistory.length === 0) {
             return;
