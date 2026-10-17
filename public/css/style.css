@@ -930,11 +930,535 @@ body {
     font-size: 0.75rem;
 }
 
+/* ==========================================================================
+   主題五：年終尾牙自動化抽獎系統與專屬通行碼控管樣式
+   ========================================================================== */
+
+/* 通行碼驗證鎖定面板 (Passcode Gate) */
+.passcode-gate-card {
+    max-width: 520px;
+    margin: 1.5rem auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-active);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.15rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.gate-icon-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent-soft-bg);
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-teal);
+    box-shadow: var(--glow-cyan);
+}
+
+.gate-icon-circle svg {
+    width: 30px;
+    height: 30px;
+}
+
+.gate-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.gate-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.gate-form {
+    width: 100%;
+    display: flex;
+    gap: 0.65rem;
+    margin-top: 0.25rem;
+}
+
+.gate-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+    text-align: center;
+    letter-spacing: 0.18em;
+}
+
+.gate-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px var(--accent-cyan-soft);
+}
+
+.gate-hint {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-subtle);
+}
+
+.gate-error-msg {
+    font-size: 0.82rem;
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* 隱私安全狀態橫幅與控制頂欄 */
+.lottery-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: var(--accent-soft-bg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.25rem;
+}
+
+.privacy-shield-info {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.privacy-shield-info svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent-emerald);
+    flex-shrink: 0;
+}
+
+.lottery-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.secondary-btn {
+    appearance: none;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all var(--transition-fast);
+}
+
+.secondary-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: var(--bg-surface-hover);
+}
+
+.danger-outline-btn {
+    appearance: none;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.06);
+    color: #ef4444;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.danger-outline-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+/* 抽獎雙欄主版面 */
+.lottery-workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.45fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.lottery-panel-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.lottery-panel-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+/* 統計數據三格列 */
+.lottery-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.lottery-stat-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.lottery-stat-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+}
+
+.lottery-stat-label {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+}
+
+/* 名單匯入控制 */
+.roster-textarea {
+    width: 100%;
+    min-height: 130px;
+    resize: vertical;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.7rem 0.85rem;
+    line-height: 1.55;
+}
+
+.roster-textarea:focus {
+    outline: none;
+    border-color: var(--accent-teal);
+}
+
+.file-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--border-active);
+    background: var(--bg-surface);
+    color: var(--accent-teal);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.file-upload-label:hover {
+    background: var(--accent-soft-bg);
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+/* 獎項快選與人數選擇器 */
+.prize-preset-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.prize-chip-btn {
+    appearance: none;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.prize-chip-btn:hover,
+.prize-chip-btn.active {
+    background: var(--accent-soft-bg);
+    color: var(--accent-teal);
+    border-color: var(--border-active);
+}
+
+.batch-size-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+}
+
+.batch-option-btn {
+    appearance: none;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-family: inherit;
+    padding: 0.75rem 0.5rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    transition: all var(--transition-fast);
+}
+
+.batch-option-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+}
+
+.batch-option-btn.active {
+    background: var(--accent-gradient);
+    color: var(--text-on-accent);
+    border-color: transparent;
+    box-shadow: var(--glow-cyan);
+}
+
+.batch-option-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.batch-option-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* 開獎大舞台 */
+.draw-stage-box {
+    background: var(--bg-surface);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.85rem 1.5rem;
+    min-height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+
+.draw-stage-prize-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-teal);
+    background: var(--accent-soft-bg);
+    padding: 0.3rem 0.9rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-light);
+}
+
+.winners-stage-cards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+}
+
+.winner-stage-card {
+    min-width: 140px;
+    flex: 1;
+    max-width: 220px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-active);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 0.9rem;
+    text-align: center;
+    box-shadow: var(--glow-cyan);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    transition: transform var(--transition-fast);
+}
+
+.winner-stage-card.is-rolling {
+    border-style: dashed;
+    opacity: 0.88;
+}
+
+.winner-stage-index {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.winner-stage-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.launch-draw-btn {
+    width: 100%;
+    appearance: none;
+    border: none;
+    background: var(--accent-gradient);
+    color: var(--text-on-accent);
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 0.95rem 1.5rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: var(--glow-cyan);
+    transition: all var(--transition-fast);
+    letter-spacing: 0.03em;
+}
+
+.launch-draw-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.launch-draw-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* 中獎歷史紀錄列表 */
+.winners-history-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.winner-history-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.winner-history-left {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.winner-prize-badge {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--accent-teal);
+    background: var(--accent-soft-bg);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+}
+
+.winner-history-names {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+}
+
+.winner-history-time {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
+
+/* 待抽名單預覽膠囊區 */
+.pool-preview-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+}
+
+.pool-person-chip {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+}
+
 /* 響應式斷點設計 */
 @media (max-width: 960px) {
     .hero-banner {
         grid-template-columns: 1fr;
         padding: 1.75rem;
+    }
+
+    .lottery-workspace-grid {
+        grid-template-columns: 1fr;
     }
 
     .navbar-container {
@@ -963,4 +1487,9 @@ body {
     .hero-title {
         font-size: 1.55rem;
     }
+
+    .gate-form {
+        flex-direction: column;
+    }
 }
+
