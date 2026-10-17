@@ -1,7 +1,8 @@
 /**
  * 工作中樞平台前端核心邏輯 (ES6+)
- * 負責管理五大主題資料、路由切換、關鍵字檢索、主題配色切換、本地端構想筆記儲存，
- * 以及「主題五：年終尾牙自動化抽獎系統（含專屬通行碼控管與純本機名單處理）」
+ * 負責管理五大主題路由、關鍵字檢索、主題配色切換、構想筆記，
+ * 以及「主題五：多元活動與非正式任務中心」旗下之「年終尾牙自動化抽獎系統」
+ * （包含獨立名單匯入與獎金設定頁、獨立大型開獎展演舞台、手動控制姓名輪動與全螢幕煙花特效）
  */
 
 const WORKSPACE_THEMES = [
@@ -64,20 +65,27 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-05",
         code: "MOD-05",
-        title: "主題五：年終尾牙自動化抽獎系統",
-        subtitle: "Year-End Lucky Draw Hub",
-        status: "已實作啟用",
-        description: "專為年終尾牙打造的自動化隨機抽獎系統，具備專屬通行碼防誤觸鎖定、純本機名單匯入（個資不上傳 GitHub）、1/3/5 人批次抽選與 CSV 報表匯出。",
-        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>`,
+        title: "主題五：多元活動與非正式任務中心",
+        subtitle: "Special Events & Informal Hub",
+        status: "含已啟用子系統",
+        description: "專門收納公司節慶活動、團隊交流、臨時性趣味工具與非正式專案任務的彈性工作區，目前已內建「年終尾牙自動化抽獎系統」。",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
         slots: [
-            { name: "專屬通行碼鎖與本機名單匯入 (CSV/貼上)", tag: "LIVE-5A", detail: "名單僅存於本機瀏覽器，絕不上傳雲端，並支援 30 人彩排測試模式。" },
-            { name: "電腦隨機抽選引擎 (每次 1 / 3 / 5 人)", tag: "LIVE-5B", detail: "採用密碼學安全亂數搭配數位滾輪動畫，支援自訂獎項名稱與防重複中獎。" },
-            { name: "中獎歷史紀錄與 CSV 完整報表匯出", tag: "LIVE-5C", detail: "即時分類紀錄各獎項得主，一鍵匯出 Excel 相容之 UTF-8 CSV 報表。" }
+            { name: "子系統一：年終尾牙自動化抽獎系統 (已啟用)", tag: "SYS-5A", detail: "獨立配置「名單匯入與獎金設定頁」及「大型開獎展演舞台」，支援手動控制輪動與煙花特效。" },
+            { name: "子系統二：部門聚餐與下午茶隨機抽選器 (預留)", tag: "SLOT-5B", detail: "預留供日後擴充餐廳決策轉盤、飲料團購統計與隨機分組小工具。" },
+            { name: "子系統三：團康競賽計分與互動投票看板 (預留)", tag: "SLOT-5C", detail: "預留供日後擴充活動即時排行榜、趣味問答計分與現場互動任務。" }
         ]
     }
 ];
 
-const PRIZE_PRESETS = ["頭獎", "貳獎", "參獎", "肆獎", "伍獎", "特別加碼獎"];
+const DEFAULT_PRIZE_CONFIGS = [
+    { name: "頭獎", amount: "NT$ 50,000" },
+    { name: "貳獎", amount: "NT$ 30,000" },
+    { name: "參獎", amount: "NT$ 15,000" },
+    { name: "肆獎", amount: "NT$ 8,000" },
+    { name: "伍獎", amount: "NT$ 5,000" },
+    { name: "特別加碼獎", amount: "NT$ 10,000" }
+];
 
 const REHEARSAL_SAMPLE_NAMES = [
     "研發一部 - 陳建宏", "研發一部 - 林雅婷", "研發一部 - 張家豪", "研發一部 - 許詩涵", "研發一部 - 王冠宇",
@@ -92,10 +100,137 @@ const STORAGE_KEYS = {
     THEME_MODE: "aero_workspace_theme_mode",
     SCRATCHPAD: "aero_workspace_scratchpad",
     IDEA_BACKLOG: "aero_workspace_idea_backlog",
-    LOTTERY_STATE: "aero_workspace_lottery_state_v1",
+    LOTTERY_STATE: "aero_workspace_lottery_state_v2",
     LOTTERY_PASSCODE: "aero_workspace_lottery_passcode",
     LOTTERY_UNLOCKED_SESSION: "aero_workspace_lottery_unlocked"
 };
+
+/**
+ * 全螢幕得獎慶祝煙花粒子引擎 (HTML5 Canvas 2D)
+ */
+class FireworksController {
+    constructor(canvasEl) {
+        this.canvas = canvasEl;
+        this.ctx = canvasEl ? canvasEl.getContext("2d") : null;
+        this.particles = [];
+        this.animationFrameId = null;
+        this.burstTimerId = null;
+        this.stopTimerId = null;
+
+        if (this.canvas) {
+            window.addEventListener("resize", () => this.resizeCanvas());
+        }
+    }
+
+    resizeCanvas() {
+        if (!this.canvas) return;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    launchCelebration(durationMs = 4500) {
+        if (!this.canvas || !this.ctx) return;
+        this.stop();
+        this.resizeCanvas();
+        this.canvas.classList.remove("is-hidden");
+
+        // 立即發射第一波多點煙花
+        this.spawnBurst(window.innerWidth * 0.25, window.innerHeight * 0.32);
+        this.spawnBurst(window.innerWidth * 0.75, window.innerHeight * 0.32);
+        this.spawnBurst(window.innerWidth * 0.5, window.innerHeight * 0.24);
+
+        this.burstTimerId = setInterval(() => {
+            const x = window.innerWidth * (0.18 + Math.random() * 0.64);
+            const y = window.innerHeight * (0.18 + Math.random() * 0.42);
+            this.spawnBurst(x, y);
+        }, 420);
+
+        this.stopTimerId = setTimeout(() => {
+            if (this.burstTimerId) {
+                clearInterval(this.burstTimerId);
+                this.burstTimerId = null;
+            }
+        }, durationMs);
+
+        const animate = () => {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            for (let i = this.particles.length - 1; i >= 0; i -= 1) {
+                const p = this.particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.065; // 重力加速度
+                p.vx *= 0.985;
+                p.alpha -= p.decay;
+
+                if (p.alpha <= 0) {
+                    this.particles.splice(i, 1);
+                    continue;
+                }
+
+                this.ctx.save();
+                this.ctx.globalAlpha = Math.max(0, p.alpha);
+                this.ctx.fillStyle = p.color;
+                this.ctx.shadowBlur = 10;
+                this.ctx.shadowColor = p.color;
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.restore();
+            }
+
+            if (this.particles.length > 0 || this.burstTimerId !== null) {
+                this.animationFrameId = requestAnimationFrame(animate);
+            } else {
+                this.stop();
+            }
+        };
+
+        this.animationFrameId = requestAnimationFrame(animate);
+    }
+
+    spawnBurst(centerX, centerY) {
+        const palette = [
+            "#0ea5e9", "#14b8a6", "#10b981", "#38bdf8",
+            "#f59e0b", "#fbbf24", "#f43f5e", "#a855f7"
+        ];
+        const count = 56;
+        for (let i = 0; i < count; i += 1) {
+            const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.2;
+            const speed = 2.2 + Math.random() * 6.5;
+            this.particles.push({
+                x: centerX,
+                y: centerY,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                radius: 2 + Math.random() * 2.8,
+                color: palette[Math.floor(Math.random() * palette.length)],
+                alpha: 1,
+                decay: 0.012 + Math.random() * 0.014
+            });
+        }
+    }
+
+    stop() {
+        if (this.burstTimerId) {
+            clearInterval(this.burstTimerId);
+            this.burstTimerId = null;
+        }
+        if (this.stopTimerId) {
+            clearTimeout(this.stopTimerId);
+            this.stopTimerId = null;
+        }
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+        this.particles = [];
+        if (this.ctx && this.canvas) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.canvas.classList.add("is-hidden");
+        }
+    }
+}
 
 /**
  * 應用程式狀態管理類別
@@ -106,9 +241,11 @@ class WorkspaceApp {
         this.searchQuery = "";
         this.ideaBacklog = this.loadIdeaBacklog();
         this.lotteryState = this.loadLotteryState();
-        this.isDrawing = false;
+        this.isRolling = false;
+        this.rollingIntervalId = null;
 
         this.cacheDomElements();
+        this.fireworks = new FireworksController(this.fireworksCanvas);
         this.initThemeMode();
         this.initClock();
         this.initScratchpad();
@@ -127,11 +264,9 @@ class WorkspaceApp {
         this.scratchpadInput = document.getElementById("quick-scratchpad-input");
         this.scratchpadStatus = document.getElementById("scratchpad-save-status");
         this.totalIdeasCountEl = document.getElementById("total-ideas-count");
+        this.fireworksCanvas = document.getElementById("fireworks-canvas");
     }
 
-    /**
-     * 初始化亮暗色主題（預設為清新科技亮色）
-     */
     initThemeMode() {
         const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME_MODE) || "light";
         document.documentElement.setAttribute("data-theme", savedTheme);
@@ -157,9 +292,6 @@ class WorkspaceApp {
         }
     }
 
-    /**
-     * 即時數位系統時鐘
-     */
     initClock() {
         const updateClock = () => {
             if (!this.clockDisplay) return;
@@ -176,9 +308,6 @@ class WorkspaceApp {
         setInterval(updateClock, 1000);
     }
 
-    /**
-     * 快速工作隨手記（自動儲存至 localStorage）
-     */
     initScratchpad() {
         if (!this.scratchpadInput) return;
         const savedText = localStorage.getItem(STORAGE_KEYS.SCRATCHPAD);
@@ -196,9 +325,6 @@ class WorkspaceApp {
         });
     }
 
-    /**
-     * 讀取與儲存各主題的擴充構想清單
-     */
     loadIdeaBacklog() {
         try {
             const raw = localStorage.getItem(STORAGE_KEYS.IDEA_BACKLOG);
@@ -220,23 +346,27 @@ class WorkspaceApp {
         }
     }
 
-    /**
-     * 讀取與儲存主題五尾牙抽獎狀態（僅存於本機瀏覽器）
-     */
     loadLotteryState() {
         const defaultState = {
             allParticipants: [],
             remainingPool: [],
             winnersHistory: [],
+            prizeConfigs: [...DEFAULT_PRIZE_CONFIGS],
             batchSize: 1,
             currentPrize: "頭獎",
+            currentAmount: "NT$ 50,000",
             latestDrawnWinners: [],
+            latestDrawnPrize: "",
+            latestDrawnAmount: "",
             isRehearsalMode: false
         };
         try {
             const raw = localStorage.getItem(STORAGE_KEYS.LOTTERY_STATE);
             if (raw) {
                 const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed.prizeConfigs) || parsed.prizeConfigs.length === 0) {
+                    parsed.prizeConfigs = [...DEFAULT_PRIZE_CONFIGS];
+                }
                 return { ...defaultState, ...parsed };
             }
         } catch (err) {
@@ -297,8 +427,17 @@ class WorkspaceApp {
         }
 
         window.addEventListener("hashchange", () => {
+            this.stopRollingIfNeeded();
             this.syncRouteFromHash();
         });
+    }
+
+    stopRollingIfNeeded() {
+        if (this.rollingIntervalId) {
+            clearInterval(this.rollingIntervalId);
+            this.rollingIntervalId = null;
+        }
+        this.isRolling = false;
     }
 
     handleInitialRoute() {
@@ -309,6 +448,10 @@ class WorkspaceApp {
 
     syncRouteFromHash() {
         const hash = window.location.hash.replace("#", "").trim();
+        if (hash === "theme-05-draw" || hash === "theme-05-admin") {
+            this.setRoute(hash);
+            return;
+        }
         const matchedTheme = WORKSPACE_THEMES.find((t) => t.id === hash);
         if (matchedTheme) {
             this.setRoute(matchedTheme.id);
@@ -325,16 +468,23 @@ class WorkspaceApp {
             this.overviewSection.classList.remove("is-hidden");
             this.focusSection.classList.add("is-hidden");
             this.renderThemesGrid();
+            return;
+        }
+
+        this.overviewSection.classList.add("is-hidden");
+        this.focusSection.classList.remove("is-hidden");
+
+        const theme05Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-05");
+        if (routeId === "theme-05") {
+            this.renderTheme05InformalHub(theme05Obj);
+        } else if (routeId === "theme-05-draw") {
+            this.renderLotterySubpage(theme05Obj, "draw");
+        } else if (routeId === "theme-05-admin") {
+            this.renderLotterySubpage(theme05Obj, "admin");
         } else {
             const themeObj = WORKSPACE_THEMES.find((t) => t.id === routeId);
             if (themeObj) {
-                this.overviewSection.classList.add("is-hidden");
-                this.focusSection.classList.remove("is-hidden");
-                if (themeObj.id === "theme-05") {
-                    this.renderTheme05Lottery(themeObj);
-                } else {
-                    this.renderFocusSection(themeObj);
-                }
+                this.renderFocusSection(themeObj);
             }
         }
     }
@@ -367,9 +517,10 @@ class WorkspaceApp {
 
     updateActiveNavTab() {
         if (!this.navTabsContainer) return;
+        const normalizedRoute = this.activeRoute.startsWith("theme-05") ? "theme-05" : this.activeRoute;
         this.navTabsContainer.querySelectorAll(".nav-tab-btn").forEach((btn) => {
             const route = btn.getAttribute("data-route");
-            if (route === this.activeRoute) {
+            if (route === normalizedRoute) {
                 btn.classList.add("active");
             } else {
                 btn.classList.remove("active");
@@ -413,12 +564,6 @@ class WorkspaceApp {
                 </li>
             `).join("");
 
-            const footerHint = theme.id === "theme-05"
-                ? `待抽池人數：${this.lotteryState.remainingPool.length} 人`
-                : `已紀錄構想：${customIdeas.length} 項`;
-
-            const btnText = theme.id === "theme-05" ? "進入尾牙抽獎系統" : "進入主題工作區";
-
             return `
                 <article class="theme-card">
                     <div class="theme-card-top">
@@ -439,9 +584,9 @@ class WorkspaceApp {
                         </ul>
                     </div>
                     <div class="theme-card-footer">
-                        <span class="theme-route-hint">${footerHint}</span>
+                        <span class="theme-route-hint">已紀錄構想：${customIdeas.length} 項</span>
                         <button type="button" class="explore-btn" data-open-theme="${theme.id}">
-                            <span>${btnText}</span>
+                            <span>進入主題工作區</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </button>
                     </div>
@@ -458,70 +603,22 @@ class WorkspaceApp {
     }
 
     /**
-     * 渲染主題五：年終尾牙自動化抽獎系統（含專屬通行碼鎖與本機名單控管）
+     * 渲染主題五：多元活動與非正式任務中心（年終尾牙抽獎作為其中一個獨立子系統）
      */
-    renderTheme05Lottery(theme) {
+    renderTheme05InformalHub(theme) {
         if (!this.focusSection) return;
-
-        if (!this.isLotteryUnlocked()) {
-            this.renderLotteryPasscodeGate(theme);
-            return;
-        }
-
-        const totalCount = this.lotteryState.allParticipants.length;
+        const ideas = this.ideaBacklog[theme.id] || [];
         const remainingCount = this.lotteryState.remainingPool.length;
-        const winnersCount = totalCount - remainingCount;
+        const winnersCount = this.lotteryState.allParticipants.length - remainingCount;
 
-        const prizeChipsHtml = PRIZE_PRESETS.map((preset) => {
-            const activeClass = this.lotteryState.currentPrize === preset ? "active" : "";
-            return `<button type="button" class="prize-chip-btn ${activeClass}" data-prize-preset="${this.escapeHtml(preset)}">${this.escapeHtml(preset)}</button>`;
-        }).join("");
-
-        const batchOptions = [1, 3, 5];
-        const batchBtnsHtml = batchOptions.map((size) => {
-            const activeClass = this.lotteryState.batchSize === size ? "active" : "";
-            return `
-                <button type="button" class="batch-option-btn ${activeClass}" data-batch-size="${size}">
-                    <span class="batch-option-num">${size}</span>
-                    <span class="batch-option-label">每次抽出 ${size} 人</span>
-                </button>
-            `;
-        }).join("");
-
-        const stageCardsHtml = this.lotteryState.latestDrawnWinners.length > 0
-            ? this.lotteryState.latestDrawnWinners.map((name, idx) => `
-                <div class="winner-stage-card">
-                    <span class="winner-stage-index">WINNER #0${idx + 1}</span>
-                    <span class="winner-stage-name">${this.escapeHtml(name)}</span>
-                </div>
-            `).join("")
-            : `
-                <div class="winner-stage-card">
-                    <span class="winner-stage-index">READY TO DRAW</span>
-                    <span class="winner-stage-name">等待啟動抽選</span>
-                </div>
-            `;
-
-        const historyHtml = this.lotteryState.winnersHistory.length > 0
-            ? this.lotteryState.winnersHistory.map((record) => `
-                <li class="winner-history-item">
-                    <div class="winner-history-left">
-                        <span class="theme-code-badge">第 ${record.round} 輪</span>
-                        <span class="winner-prize-badge">${this.escapeHtml(record.prize)}</span>
-                        <span class="winner-history-names">${record.winners.map((w) => this.escapeHtml(w)).join("、")}</span>
-                    </div>
-                    <span class="winner-history-time">${this.escapeHtml(record.time)}</span>
+        const ideasListHtml = ideas.length > 0
+            ? ideas.map((item, idx) => `
+                <li class="idea-list-item">
+                    <span>${this.escapeHtml(item)}</span>
+                    <button type="button" class="delete-idea-btn" data-delete-idx="${idx}">移除</button>
                 </li>
             `).join("")
-            : `<li class="winner-history-item"><span class="theme-desc">目前尚無開獎紀錄，完成抽選後將自動依序顯示於此。</span></li>`;
-
-        const poolPreviewHtml = this.lotteryState.remainingPool.length > 0
-            ? this.lotteryState.remainingPool.map((person) => `
-                <span class="pool-person-chip">${this.escapeHtml(person)}</span>
-            `).join("")
-            : `<span class="theme-desc">目前待抽池為空，請由左側匯入員工名單或載入彩排測試名單。</span>`;
-
-        const modeBadgeText = this.lotteryState.isRehearsalMode ? "彩排測試名單模式" : "正式本機名單模式";
+            : `<li class="idea-list-item"><span>目前尚無其他非正式主題構想，可於上方輸入框新增未來想加入的趣味或活動系統。</span></li>`;
 
         this.focusSection.innerHTML = `
             <div class="theme-focus-panel">
@@ -529,7 +626,7 @@ class WorkspaceApp {
                     <div class="focus-title-group">
                         <div class="theme-meta-tags">
                             <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
-                            <span class="theme-status-badge">${modeBadgeText}</span>
+                            <span class="theme-status-badge">${this.escapeHtml(theme.subtitle)}</span>
                         </div>
                         <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
@@ -540,164 +637,172 @@ class WorkspaceApp {
                     </button>
                 </div>
 
-                <!-- 隱私安全狀態與頂部快速操作列 -->
-                <div class="lottery-top-bar">
-                    <div class="privacy-shield-info">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                        <span>本機隱私保護中：員工姓名僅儲存於此台電腦瀏覽器，絕不上傳至 GitHub 伺服器。</span>
-                    </div>
-                    <div class="lottery-top-actions">
-                        <button type="button" class="secondary-btn" id="load-rehearsal-btn">載入彩排測試名單 (30人)</button>
-                        <button type="button" class="secondary-btn" id="change-passcode-btn">變更通行碼</button>
-                        <button type="button" class="secondary-btn" id="lock-lottery-btn">立即鎖定畫面</button>
-                        <button type="button" class="danger-outline-btn" id="clear-all-lottery-btn">清空名單與紀錄 (正式尾牙歸零)</button>
-                    </div>
+                <div>
+                    <h3 class="section-heading">非正式任務與活動子系統列表 (Informal Subsystems)</h3>
+                    <p class="section-subheading">年終尾牙抽獎為此主題下之第一個正式子系統，並將「後台名單匯入設定」與「大型開獎舞台」拆分為兩個獨立頁面：</p>
                 </div>
 
-                <!-- 雙欄抽獎工作區 -->
-                <div class="lottery-workspace-grid">
-                    <!-- 左欄：名單匯入與待抽池管理 -->
-                    <div class="lottery-panel-card">
-                        <div class="lottery-panel-title">
-                            <span>步驟一：匯入與管理參與員工名單</span>
-                            <span class="theme-code-badge">ROSTER</span>
-                        </div>
-
-                        <div class="lottery-stats-grid">
-                            <div class="lottery-stat-box">
-                                <span class="lottery-stat-num" id="stat-total-count">${totalCount}</span>
-                                <span class="lottery-stat-label">總參與人數</span>
+                <div class="informal-systems-grid">
+                    <!-- 子系統 1：年終尾牙自動化抽獎系統 -->
+                    <article class="informal-system-card is-featured">
+                        <div class="informal-card-body">
+                            <div class="theme-meta-tags">
+                                <span class="theme-code-badge">SYS-5A</span>
+                                <span class="theme-status-badge">已實作啟用</span>
                             </div>
-                            <div class="lottery-stat-box">
-                                <span class="lottery-stat-num" id="stat-remaining-count">${remainingCount}</span>
-                                <span class="lottery-stat-label">剩餘待抽人數</span>
-                            </div>
-                            <div class="lottery-stat-box">
-                                <span class="lottery-stat-num" id="stat-winners-count">${winnersCount}</span>
-                                <span class="lottery-stat-label">已中獎人數</span>
-                            </div>
+                            <h4 class="theme-title">年終尾牙自動化抽獎系統</h4>
+                            <p class="theme-desc">
+                                支援員工名單與預設獎金金額獨立後台管理、1/3/5 人手動控制輪動開獎、現場臨時輸入加碼金額，以及中獎姓名流光特效與全螢幕慶祝煙花。
+                            </p>
+                            <p class="theme-route-hint">
+                                目前名單池狀態：待抽 ${remainingCount} 人 / 已中獎 ${winnersCount} 人
+                            </p>
                         </div>
-
-                        <textarea
-                            id="roster-paste-input"
-                            class="roster-textarea"
-                            placeholder="請在此貼上員工名單（每行一位，例如：研發部 - 王小明，或以逗號分隔），貼上後點擊下方「匯入並更新名單池」..."
-                        ></textarea>
-
-                        <div class="file-upload-row">
-                            <button type="button" class="primary-btn" id="import-paste-btn">匯入貼上名單</button>
-                            <label class="file-upload-label" for="csv-file-input">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                <span>讀取 CSV / TXT 檔案</span>
-                            </label>
-                            <input type="file" id="csv-file-input" class="hidden-file-input" accept=".csv,.txt" />
-                            <button type="button" class="secondary-btn" id="reset-pool-only-btn" title="保留員工名單，僅將已中獎者放回待抽池重新抽獎">重置待抽池</button>
-                        </div>
-
-                        <div>
-                            <div class="lottery-panel-title">
-                                <span>目前待抽池名單預覽 (${remainingCount} 人)</span>
-                            </div>
-                            <div class="pool-preview-chips" id="pool-preview-container">
-                                ${poolPreviewHtml}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 右欄：抽選設定、開獎舞台與得獎結果報表 -->
-                    <div class="lottery-panel-card">
-                        <div class="lottery-panel-title">
-                            <span>步驟二：設定獎項與啟動電腦隨機抽選</span>
-                            <span class="theme-code-badge">DRAW ENGINE</span>
-                        </div>
-
-                        <!-- 獎項設定 -->
-                        <div>
-                            <p class="section-subheading">點選快速獎項標籤或直接輸入本輪獎項名稱：</p>
-                            <div class="prize-preset-chips" id="prize-preset-container">
-                                ${prizeChipsHtml}
-                            </div>
-                        </div>
-
-                        <div class="idea-form-row">
-                            <input
-                                type="text"
-                                id="current-prize-input"
-                                class="idea-input"
-                                value="${this.escapeHtml(this.lotteryState.currentPrize)}"
-                                placeholder="輸入本輪抽出獎項名稱（例如：頭獎 - 現金三萬元）"
-                            />
-                        </div>
-
-                        <!-- 每次抽選人數 (1 / 3 / 5) -->
-                        <div>
-                            <p class="section-subheading">選擇單次電腦隨機抽出人數：</p>
-                            <div class="batch-size-selector" id="batch-size-container">
-                                ${batchBtnsHtml}
-                            </div>
-                        </div>
-
-                        <!-- 開獎動態舞台 -->
-                        <div class="draw-stage-box" id="draw-stage-box">
-                            <span class="draw-stage-prize-tag" id="stage-prize-tag">本輪獎項：${this.escapeHtml(this.lotteryState.currentPrize)}（每次抽 ${this.lotteryState.batchSize} 人）</span>
-                            <div class="winners-stage-cards" id="winners-stage-cards">
-                                ${stageCardsHtml}
-                            </div>
-                        </div>
-
-                        <button
-                            type="button"
-                            class="launch-draw-btn"
-                            id="launch-draw-btn"
-                            ${remainingCount === 0 ? "disabled" : ""}
-                        >
-                            ${remainingCount === 0 ? "請先於左側匯入員工名單" : `啟動電腦隨機抽選（抽出 ${Math.min(this.lotteryState.batchSize, remainingCount)} 位得獎者）`}
-                        </button>
-
-                        <!-- 得獎名單紀錄與匯出 CSV -->
-                        <div class="section-toolbar">
-                            <span class="lottery-panel-title">中獎結果歷史紀錄 (${this.lotteryState.winnersHistory.length} 輪)</span>
-                            <button
-                                type="button"
-                                class="secondary-btn"
-                                id="export-winners-csv-btn"
-                                ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
-                            >
-                                匯出中獎結果 CSV 報表
+                        <div class="informal-card-actions">
+                            <button type="button" class="primary-btn" id="go-lottery-stage-btn">
+                                開啟大型開獎展演舞台
+                            </button>
+                            <button type="button" class="secondary-btn" id="go-lottery-admin-btn">
+                                名單匯入與獎項金額設定
                             </button>
                         </div>
+                    </article>
 
-                        <ul class="winners-history-list" id="winners-history-list">
-                            ${historyHtml}
-                        </ul>
-                    </div>
+                    <!-- 子系統 2：預留非正式任務 -->
+                    <article class="informal-system-card">
+                        <div class="informal-card-body">
+                            <div class="theme-meta-tags">
+                                <span class="theme-code-badge">SLOT-5B</span>
+                                <span class="theme-status-badge">預留擴充槽</span>
+                            </div>
+                            <h4 class="module-placeholder-title">部門聚餐與下午茶隨機抽選器</h4>
+                            <p class="module-placeholder-desc">
+                                預留供日後擴充部門聚餐餐廳決策轉盤、下午茶團購點餐彙整與隨機值日生指派等非正式任務。
+                            </p>
+                        </div>
+                        <div class="informal-card-actions">
+                            <span class="theme-route-hint">模組插槽待命擴充中</span>
+                        </div>
+                    </article>
+
+                    <!-- 子系統 3：預留非正式任務 -->
+                    <article class="informal-system-card">
+                        <div class="informal-card-body">
+                            <div class="theme-meta-tags">
+                                <span class="theme-code-badge">SLOT-5C</span>
+                                <span class="theme-status-badge">預留擴充槽</span>
+                            </div>
+                            <h4 class="module-placeholder-title">團隊活動計分與互動投票看板</h4>
+                            <p class="module-placeholder-desc">
+                                預留供日後擴充Team Building分組競賽即時積分榜、活動趣味投票與臨時性任務看板。
+                            </p>
+                        </div>
+                        <div class="informal-card-actions">
+                            <span class="theme-route-hint">模組插槽待命擴充中</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- 主題五非正式任務構想紀錄器 -->
+                <div class="idea-capture-box">
+                    <h3 class="section-heading">其他非正式主題任務構想清單 (Informal Tasks Backlog)</h3>
+                    <p class="section-subheading">除了年終尾牙抽獎外，若您想到其他非正式活動或趣味工作小工具，可先記錄於此：</p>
+                    <form class="idea-form-row" id="idea-add-form">
+                        <input type="text" class="idea-input" id="idea-text-input" placeholder="輸入想在主題五新增的其他非正式任務，例如：交換禮物配對器、下午茶轉盤..." required />
+                        <button type="submit" class="primary-btn">新增任務構想</button>
+                    </form>
+                    <ul class="idea-list" id="theme-idea-list">
+                        ${ideasListHtml}
+                    </ul>
                 </div>
             </div>
         `;
 
-        this.bindTheme05Events(theme);
+        const backBtn = document.getElementById("back-to-overview-btn");
+        if (backBtn) {
+            backBtn.addEventListener("click", () => {
+                window.location.hash = "overview";
+            });
+        }
+
+        const goStageBtn = document.getElementById("go-lottery-stage-btn");
+        if (goStageBtn) {
+            goStageBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-draw";
+            });
+        }
+
+        const goAdminBtn = document.getElementById("go-lottery-admin-btn");
+        if (goAdminBtn) {
+            goAdminBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-admin";
+            });
+        }
+
+        const ideaForm = document.getElementById("idea-add-form");
+        const ideaInput = document.getElementById("idea-text-input");
+        if (ideaForm && ideaInput) {
+            ideaForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const val = ideaInput.value.trim();
+                if (!val) return;
+                if (!Array.isArray(this.ideaBacklog[theme.id])) {
+                    this.ideaBacklog[theme.id] = [];
+                }
+                this.ideaBacklog[theme.id].push(val);
+                this.saveIdeaBacklog();
+                this.renderTheme05InformalHub(theme);
+            });
+        }
+
+        this.focusSection.querySelectorAll("[data-delete-idx]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const idx = Number(btn.getAttribute("data-delete-idx"));
+                if (Array.isArray(this.ideaBacklog[theme.id])) {
+                    this.ideaBacklog[theme.id].splice(idx, 1);
+                    this.saveIdeaBacklog();
+                    this.renderTheme05InformalHub(theme);
+                }
+            });
+        });
     }
 
     /**
-     * 渲染主題五專屬通行碼驗證鎖定畫面
+     * 尾牙子系統路由入口：支援切換「大型開獎展演舞台 (draw)」與「名單匯入與獎金設定頁 (admin)」
      */
-    renderLotteryPasscodeGate(theme) {
+    renderLotterySubpage(theme, subpageMode) {
+        if (!this.focusSection) return;
+
+        if (!this.isLotteryUnlocked()) {
+            this.renderLotteryPasscodeGate(theme, subpageMode);
+            return;
+        }
+
+        if (subpageMode === "admin") {
+            this.renderLotteryAdminPage(theme);
+        } else {
+            this.renderLotteryGrandStagePage(theme);
+        }
+    }
+
+    /**
+     * 渲染專屬通行碼驗證畫面
+     */
+    renderLotteryPasscodeGate(theme, targetSubpageMode) {
         this.focusSection.innerHTML = `
             <div class="theme-focus-panel">
                 <div class="focus-header">
                     <div class="focus-title-group">
                         <div class="theme-meta-tags">
-                            <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
+                            <span class="theme-code-badge">SYS-5A</span>
                             <span class="theme-status-badge">安全鎖定控管中</span>
                         </div>
-                        <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
-                        <p class="theme-desc">為保護員工名單隱私並防止尾牙現場誤觸抽獎面板，進入此主題需驗證主持人通行碼。</p>
+                        <h2 class="focus-title">年終尾牙自動化抽獎系統</h2>
+                        <p class="theme-desc">為保護員工名單隱私並防止尾牙現場誤觸抽獎系統，請先輸入主持人通行碼解鎖。</p>
                     </div>
-                    <button type="button" class="back-overview-btn" id="back-to-overview-btn">
+                    <button type="button" class="back-overview-btn" id="back-to-hub-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>返回五大主題總覽</span>
+                        <span>返回主題五中心</span>
                     </button>
                 </div>
 
@@ -710,7 +815,7 @@ class WorkspaceApp {
                     </div>
                     <h3 class="gate-title">主持人通行碼驗證</h3>
                     <p class="gate-desc">
-                        此抽獎系統採「純本機記憶體與瀏覽器本地儲存」架構，名單不會上傳至 GitHub。請輸入通行碼以解鎖抽獎控制台。
+                        此抽獎系統採「純本機記憶體與瀏覽器本地儲存」架構，員工姓名絕不會上傳至 GitHub。請輸入通行碼以進入系統。
                     </p>
                     <form class="gate-form" id="passcode-gate-form">
                         <input
@@ -724,15 +829,15 @@ class WorkspaceApp {
                         <button type="submit" class="primary-btn">驗證解鎖</button>
                     </form>
                     <p class="gate-error-msg is-hidden" id="passcode-error-msg">通行碼不正確，請重新輸入。</p>
-                    <span class="gate-hint">預設管理員通行碼：8888（解鎖後可自訂修改）</span>
+                    <span class="gate-hint">預設管理員通行碼：8888（解鎖後可於管理頁修改）</span>
                 </div>
             </div>
         `;
 
-        const backBtn = document.getElementById("back-to-overview-btn");
+        const backBtn = document.getElementById("back-to-hub-btn");
         if (backBtn) {
             backBtn.addEventListener("click", () => {
-                window.location.hash = "overview";
+                window.location.hash = "theme-05";
             });
         }
 
@@ -750,7 +855,7 @@ class WorkspaceApp {
                 const entered = gateInput.value.trim();
                 if (entered === this.getPasscode()) {
                     this.setLotteryUnlocked(true);
-                    this.renderTheme05Lottery(theme);
+                    this.renderLotterySubpage(theme, targetSubpageMode);
                 } else {
                     if (errorMsg) {
                         errorMsg.classList.remove("is-hidden");
@@ -763,31 +868,411 @@ class WorkspaceApp {
     }
 
     /**
-     * 綁定主題五抽獎系統內部互動事件
+     * 獨立頁面 A：人員名單匯入與獎項金額設定頁 (#theme-05-admin)
      */
-    bindTheme05Events(theme) {
-        const backBtn = document.getElementById("back-to-overview-btn");
-        if (backBtn) {
-            backBtn.addEventListener("click", () => {
-                window.location.hash = "overview";
+    renderLotteryAdminPage(theme) {
+        const totalCount = this.lotteryState.allParticipants.length;
+        const remainingCount = this.lotteryState.remainingPool.length;
+        const winnersCount = totalCount - remainingCount;
+        const modeBadgeText = this.lotteryState.isRehearsalMode ? "彩排測試名單模式" : "正式本機名單模式";
+
+        const prizeConfigListHtml = this.lotteryState.prizeConfigs.map((item, idx) => `
+            <li class="prize-config-item">
+                <div class="prize-config-info">
+                    <span class="prize-config-name">${this.escapeHtml(item.name)}</span>
+                    <span class="prize-amount-badge">${this.escapeHtml(item.amount)}</span>
+                </div>
+                <button type="button" class="delete-idea-btn" data-remove-prize-idx="${idx}">刪除</button>
+            </li>
+        `).join("");
+
+        const poolPreviewHtml = this.lotteryState.remainingPool.length > 0
+            ? this.lotteryState.remainingPool.map((person) => `
+                <span class="pool-person-chip">${this.escapeHtml(person)}</span>
+            `).join("")
+            : `<span class="theme-desc">目前待抽池為空，請由上方貼上員工名單、上傳 CSV 或載入彩排測試名單。</span>`;
+
+        const historyHtml = this.lotteryState.winnersHistory.length > 0
+            ? this.lotteryState.winnersHistory.map((record) => `
+                <li class="winner-history-item">
+                    <div class="winner-history-left">
+                        <span class="theme-code-badge">第 ${record.round} 輪</span>
+                        <span class="winner-prize-badge">${this.escapeHtml(record.prize)}</span>
+                        <span class="prize-amount-badge">${this.escapeHtml(record.amount || "未指定金額")}</span>
+                        <span class="winner-history-names">${record.winners.map((w) => this.escapeHtml(w)).join("、")}</span>
+                    </div>
+                    <span class="winner-history-time">${this.escapeHtml(record.time)}</span>
+                </li>
+            `).join("")
+            : `<li class="winner-history-item"><span class="theme-desc">目前尚無開獎紀錄。</span></li>`;
+
+        this.focusSection.innerHTML = `
+            <div class="theme-focus-panel">
+                <!-- 頂部子系統頁面切換導覽列 -->
+                <div class="lottery-subpage-bar">
+                    <div class="lottery-subpage-tabs">
+                        <button type="button" class="subpage-tab-btn" id="switch-to-draw-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>大型開獎展演舞台</span>
+                        </button>
+                        <button type="button" class="subpage-tab-btn active" id="switch-to-admin-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>名單匯入與獎項金額設定 (${remainingCount}人待抽)</span>
+                        </button>
+                    </div>
+                    <div class="lottery-top-actions">
+                        <button type="button" class="secondary-btn" id="admin-lock-btn">鎖定系統</button>
+                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">返回主題五中心</button>
+                    </div>
+                </div>
+
+                <!-- 隱私安全狀態與快速操作列 -->
+                <div class="lottery-top-bar">
+                    <div class="privacy-shield-info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span>【${modeBadgeText}】員工姓名僅保存在本機瀏覽器，絕不上傳至 GitHub。</span>
+                    </div>
+                    <div class="lottery-top-actions">
+                        <button type="button" class="secondary-btn" id="load-rehearsal-btn">載入 30 人彩排測試名單</button>
+                        <button type="button" class="secondary-btn" id="change-passcode-btn">修改通行碼</button>
+                        <button type="button" class="danger-outline-btn" id="clear-all-lottery-btn">清空所有名單與紀錄 (正式尾牙歸零)</button>
+                    </div>
+                </div>
+
+                <!-- 雙欄管理版面：左欄人員匯入、右欄獎項金額設定與得獎報表 -->
+                <div class="lottery-admin-grid">
+                    <!-- 左欄：參與員工名單匯入與待抽池檢視 -->
+                    <div class="lottery-panel-card">
+                        <div class="lottery-panel-title">
+                            <span>一、參與員工名單匯入管理</span>
+                            <span class="theme-code-badge">ROSTER SETUP</span>
+                        </div>
+
+                        <div class="lottery-stats-grid">
+                            <div class="lottery-stat-box">
+                                <span class="lottery-stat-num">${totalCount}</span>
+                                <span class="lottery-stat-label">總參與人數</span>
+                            </div>
+                            <div class="lottery-stat-box">
+                                <span class="lottery-stat-num">${remainingCount}</span>
+                                <span class="lottery-stat-label">剩餘待抽人數</span>
+                            </div>
+                            <div class="lottery-stat-box">
+                                <span class="lottery-stat-num">${winnersCount}</span>
+                                <span class="lottery-stat-label">已中獎人數</span>
+                            </div>
+                        </div>
+
+                        <textarea
+                            id="roster-paste-input"
+                            class="roster-textarea"
+                            placeholder="請在此貼上參與尾牙的員工名單（每行一位，例如：研發部 - 王小明，或以逗號分隔）..."
+                        ></textarea>
+
+                        <div class="file-upload-row">
+                            <button type="button" class="primary-btn" id="import-paste-btn">匯入並更新名單池</button>
+                            <label class="file-upload-label" for="csv-file-input">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <span>從電腦讀取 CSV / TXT 名單</span>
+                            </label>
+                            <input type="file" id="csv-file-input" class="hidden-file-input" accept=".csv,.txt" />
+                            <button type="button" class="secondary-btn" id="reset-pool-only-btn">將已中獎者放回待抽池</button>
+                        </div>
+
+                        <div>
+                            <div class="lottery-panel-title">
+                                <span>目前待抽池名單預覽 (${remainingCount} 人)</span>
+                            </div>
+                            <div class="pool-preview-chips">
+                                ${poolPreviewHtml}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右欄：獎項與獎金金額預設設定 ＋ 中獎歷史報表匯出 -->
+                    <div class="lottery-panel-card">
+                        <div class="lottery-panel-title">
+                            <span>二、獎項名稱與預設金額設定</span>
+                            <span class="theme-code-badge">PRIZE & AMOUNT</span>
+                        </div>
+                        <p class="section-subheading">
+                            在此預先設定尾牙各獎項與對應獎金金額，開獎舞台即可一鍵點選套用（開獎舞台亦支援現場臨時輸入或修改金額）：
+                        </p>
+
+                        <form class="prize-config-form" id="add-prize-config-form">
+                            <input
+                                type="text"
+                                id="new-prize-name-input"
+                                class="idea-input"
+                                placeholder="獎項名稱 (如：特獎、加碼獎)"
+                                required
+                            />
+                            <input
+                                type="text"
+                                id="new-prize-amount-input"
+                                class="idea-input"
+                                placeholder="獎項金額 (如：NT$ 88,000)"
+                                required
+                            />
+                            <button type="submit" class="primary-btn">新增或更新獎項</button>
+                        </form>
+
+                        <ul class="prize-config-list">
+                            ${prizeConfigListHtml}
+                        </ul>
+
+                        <div class="section-toolbar">
+                            <span class="lottery-panel-title">三、中獎紀錄與報表匯出 (${this.lotteryState.winnersHistory.length} 輪)</span>
+                            <button
+                                type="button"
+                                class="secondary-btn"
+                                id="export-winners-csv-btn"
+                                ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
+                            >
+                                匯出含金額中獎結果 CSV
+                            </button>
+                        </div>
+
+                        <ul class="winners-history-list">
+                            ${historyHtml}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        this.bindLotteryAdminEvents(theme);
+    }
+
+    /**
+     * 獨立頁面 B：大型開獎展演舞台頁 (#theme-05-draw)
+     * 支援：大畫面得獎人展示、臨時輸入獎項與金額、按下按鈕持續輪動直到再次按下才確定、特殊流光特效與全螢幕煙花
+     */
+    renderLotteryGrandStagePage(theme) {
+        const remainingCount = this.lotteryState.remainingPool.length;
+        const totalCount = this.lotteryState.allParticipants.length;
+
+        const prizeChipsHtml = this.lotteryState.prizeConfigs.map((cfg) => {
+            const isActive = this.lotteryState.currentPrize === cfg.name && this.lotteryState.currentAmount === cfg.amount;
+            return `
+                <button
+                    type="button"
+                    class="prize-chip-btn ${isActive ? "active" : ""}"
+                    data-select-prize="${this.escapeHtml(cfg.name)}"
+                    data-select-amount="${this.escapeHtml(cfg.amount)}"
+                >
+                    <span>${this.escapeHtml(cfg.name)}</span>
+                    <span>(${this.escapeHtml(cfg.amount)})</span>
+                </button>
+            `;
+        }).join("");
+
+        const batchOptions = [1, 3, 5];
+        const batchBtnsHtml = batchOptions.map((size) => {
+            const activeClass = this.lotteryState.batchSize === size ? "active" : "";
+            return `
+                <button type="button" class="batch-option-btn ${activeClass}" data-batch-size="${size}">
+                    <span class="batch-option-num">${size}</span>
+                    <span class="batch-option-label">人 / 次</span>
+                </button>
+            `;
+        }).join("");
+
+        // 渲染舞台中央大型得獎人卡片
+        let showcaseCardsHtml = "";
+        if (this.lotteryState.latestDrawnWinners.length > 0) {
+            const displayPrize = this.lotteryState.latestDrawnPrize || this.lotteryState.currentPrize;
+            const displayAmount = this.lotteryState.latestDrawnAmount || this.lotteryState.currentAmount;
+            showcaseCardsHtml = this.lotteryState.latestDrawnWinners.map((name, idx) => `
+                <div class="grand-winner-card is-celebrating">
+                    <span class="grand-winner-slot-badge">CONGRATULATIONS // WINNER #0${idx + 1}</span>
+                    <div class="grand-winner-name">${this.escapeHtml(name)}</div>
+                    <span class="grand-winner-Bonus-note">${this.escapeHtml(displayPrize)} — ${this.escapeHtml(displayAmount)}</span>
+                </div>
+            `).join("");
+        } else {
+            const slotsCount = this.lotteryState.batchSize;
+            const placeholders = [];
+            for (let i = 0; i < slotsCount; i += 1) {
+                placeholders.push(`
+                    <div class="grand-winner-card">
+                        <span class="grand-winner-slot-badge">SLOT #0${i + 1} READY</span>
+                        <div class="grand-winner-name">等待啟動輪動</div>
+                        <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
+                    </div>
+                `);
+            }
+            showcaseCardsHtml = placeholders.join("");
+        }
+
+        const historyHtml = this.lotteryState.winnersHistory.length > 0
+            ? this.lotteryState.winnersHistory.map((record) => `
+                <li class="winner-history-item">
+                    <div class="winner-history-left">
+                        <span class="theme-code-badge">第 ${record.round} 輪</span>
+                        <span class="winner-prize-badge">${this.escapeHtml(record.prize)}</span>
+                        <span class="prize-amount-badge">${this.escapeHtml(record.amount || "")}</span>
+                        <span class="winner-history-names">${record.winners.map((w) => this.escapeHtml(w)).join("、")}</span>
+                    </div>
+                    <span class="winner-history-time">${this.escapeHtml(record.time)}</span>
+                </li>
+            `).join("")
+            : `<li class="winner-history-item"><span class="theme-desc">尚無開獎紀錄，完成抽選後將顯示於此。</span></li>`;
+
+        this.focusSection.innerHTML = `
+            <div class="theme-focus-panel">
+                <!-- 頂部子系統頁面切換導覽列 -->
+                <div class="lottery-subpage-bar">
+                    <div class="lottery-subpage-tabs">
+                        <button type="button" class="subpage-tab-btn active" id="switch-to-draw-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>大型開獎展演舞台</span>
+                        </button>
+                        <button type="button" class="subpage-tab-btn" id="switch-to-admin-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>名單匯入與獎項金額設定 (${remainingCount}/${totalCount}人待抽)</span>
+                        </button>
+                    </div>
+                    <div class="lottery-top-actions">
+                        <button type="button" class="secondary-btn" id="replay-fireworks-btn">施放慶祝煙花</button>
+                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">返回主題五中心</button>
+                    </div>
+                </div>
+
+                <div class="grand-stage-wrapper">
+                    <!-- 舞台即時設定列：可點選後台預設獎項，或現場直接臨時輸入獎項與加碼金額 -->
+                    <div class="stage-live-control-card">
+                        <div class="stage-preset-bar">
+                            <span class="live-input-label">點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
+                            <div class="prize-preset-chips">
+                                ${prizeChipsHtml}
+                            </div>
+                        </div>
+
+                        <div class="stage-live-inputs-row">
+                            <div class="live-input-group">
+                                <label class="live-input-label" for="live-prize-name-input">本輪獎項名稱（支援臨時修改）</label>
+                                <input
+                                    type="text"
+                                    id="live-prize-name-input"
+                                    class="live-stage-input"
+                                    value="${this.escapeHtml(this.lotteryState.currentPrize)}"
+                                    placeholder="例如：董事長特別加碼獎"
+                                />
+                            </div>
+                            <div class="live-input-group">
+                                <label class="live-input-label" for="live-prize-amount-input">本輪獎項金額（支援現場臨時輸入）</label>
+                                <input
+                                    type="text"
+                                    id="live-prize-amount-input"
+                                    class="live-stage-input live-amount-highlight"
+                                    value="${this.escapeHtml(this.lotteryState.currentAmount)}"
+                                    placeholder="例如：NT$ 66,000"
+                                />
+                            </div>
+                            <div class="live-input-group">
+                                <span class="live-input-label">單次同時抽出人數（1 / 3 / 5 人）</span>
+                                <div class="batch-size-selector">
+                                    ${batchBtnsHtml}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 超大型展演開獎主舞台 -->
+                    <div class="grand-stage-arena">
+                        <div class="grand-stage-header">
+                            <div class="grand-prize-banner">
+                                <span class="grand-prize-title" id="stage-banner-prize">${this.escapeHtml(this.lotteryState.currentPrize)}</span>
+                                <span class="grand-prize-amount" id="stage-banner-amount">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
+                            </div>
+                            <span class="grand-pool-counter">
+                                待抽池剩餘人數：${remainingCount} 人（每次抽出 ${this.lotteryState.batchSize} 人）
+                            </span>
+                        </div>
+
+                        <!-- 大型得獎人卡片展示區 -->
+                        <div class="grand-winners-showcase" id="grand-winners-showcase">
+                            ${showcaseCardsHtml}
+                        </div>
+
+                        <!-- 手動控制啟動輪動 / 按下確定開獎巨型按鈕 -->
+                        <div class="grand-stage-controls">
+                            <button
+                                type="button"
+                                class="grand-action-btn"
+                                id="grand-roll-toggle-btn"
+                                ${remainingCount === 0 ? "disabled" : ""}
+                            >
+                                ${remainingCount === 0
+                                    ? "目前待抽池無名單（請點選上方「名單匯入與獎項金額設定」匯入或載入彩排名單）"
+                                    : `啟動姓名高速輪動（每次抽出 ${Math.min(this.lotteryState.batchSize, remainingCount)} 人）`}
+                            </button>
+                            <span class="grand-pool-counter">
+                                操作說明：點擊第一次啟動姓名持續輪動，再次點擊按鈕立即定格揭曉得獎者並施放煙花
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 舞台下方最近中獎紀錄快覽 -->
+                    <div class="lottery-panel-card">
+                        <div class="section-toolbar">
+                            <span class="lottery-panel-title">已開出得獎名單紀錄 (${this.lotteryState.winnersHistory.length} 輪)</span>
+                            <button
+                                type="button"
+                                class="secondary-btn"
+                                id="stage-export-csv-btn"
+                                ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
+                            >
+                                匯出中獎結果 CSV 報表
+                            </button>
+                        </div>
+                        <ul class="winners-history-list">
+                            ${historyHtml}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        this.bindLotteryGrandStageEvents(theme);
+    }
+
+    /**
+     * 綁定「名單匯入與獎項金額設定頁」事件
+     */
+    bindLotteryAdminEvents(theme) {
+        const switchToDrawBtn = document.getElementById("switch-to-draw-btn");
+        if (switchToDrawBtn) {
+            switchToDrawBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-draw";
             });
         }
 
-        const lockBtn = document.getElementById("lock-lottery-btn");
+        const backToHubBtn = document.getElementById("back-to-hub-btn");
+        if (backToHubBtn) {
+            backToHubBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05";
+            });
+        }
+
+        const lockBtn = document.getElementById("admin-lock-btn");
         if (lockBtn) {
             lockBtn.addEventListener("click", () => {
                 this.setLotteryUnlocked(false);
-                this.renderTheme05Lottery(theme);
+                this.renderLotterySubpage(theme, "admin");
             });
         }
 
         const changePassBtn = document.getElementById("change-passcode-btn");
         if (changePassBtn) {
             changePassBtn.addEventListener("click", () => {
-                const newCode = window.prompt("請輸入新的主題五主持人通行碼（建議 4 至 8 碼）：", this.getPasscode());
+                const newCode = window.prompt("請輸入新的主持人通行碼：", this.getPasscode());
                 if (newCode && newCode.trim().length > 0) {
                     this.setPasscode(newCode.trim());
-                    window.alert("通行碼已更新完成（儲存於此台電腦瀏覽器）。");
+                    window.alert("通行碼已更新完成。");
                 }
             });
         }
@@ -795,22 +1280,15 @@ class WorkspaceApp {
         const rehearsalBtn = document.getElementById("load-rehearsal-btn");
         if (rehearsalBtn) {
             rehearsalBtn.addEventListener("click", () => {
-                if (this.isDrawing) return;
-                this.lotteryState.allParticipants = [...REHEARSAL_SAMPLE_NAMES];
-                this.lotteryState.remainingPool = [...REHEARSAL_SAMPLE_NAMES];
-                this.lotteryState.winnersHistory = [];
-                this.lotteryState.latestDrawnWinners = [];
-                this.lotteryState.isRehearsalMode = true;
-                this.saveLotteryState();
-                this.renderTheme05Lottery(theme);
+                this.applyImportedParticipants(REHEARSAL_SAMPLE_NAMES, true);
+                this.renderLotteryAdminPage(theme);
             });
         }
 
         const clearAllBtn = document.getElementById("clear-all-lottery-btn");
         if (clearAllBtn) {
             clearAllBtn.addEventListener("click", () => {
-                if (this.isDrawing) return;
-                const confirmed = window.confirm("確定要清空所有員工名單與中獎紀錄嗎？（適合彩排結束準備進入正式尾牙時使用）");
+                const confirmed = window.confirm("確定要清空所有員工名單與中獎紀錄嗎？");
                 if (!confirmed) return;
                 this.lotteryState.allParticipants = [];
                 this.lotteryState.remainingPool = [];
@@ -818,7 +1296,7 @@ class WorkspaceApp {
                 this.lotteryState.latestDrawnWinners = [];
                 this.lotteryState.isRehearsalMode = false;
                 this.saveLotteryState();
-                this.renderTheme05Lottery(theme);
+                this.renderLotteryAdminPage(theme);
             });
         }
 
@@ -826,15 +1304,13 @@ class WorkspaceApp {
         const rosterTextarea = document.getElementById("roster-paste-input");
         if (importPasteBtn && rosterTextarea) {
             importPasteBtn.addEventListener("click", () => {
-                if (this.isDrawing) return;
-                const rawText = rosterTextarea.value;
-                const names = this.parseParticipantNames(rawText);
+                const names = this.parseParticipantNames(rosterTextarea.value);
                 if (names.length === 0) {
                     window.alert("請先在文字框中貼上至少一位員工姓名。");
                     return;
                 }
                 this.applyImportedParticipants(names, false);
-                this.renderTheme05Lottery(theme);
+                this.renderLotteryAdminPage(theme);
             });
         }
 
@@ -848,11 +1324,11 @@ class WorkspaceApp {
                     const content = String(evt.target.result || "");
                     const names = this.parseParticipantNames(content);
                     if (names.length === 0) {
-                        window.alert("檔案中未偵測到有效的員工姓名，請確認檔案內容。");
+                        window.alert("檔案中未偵測到有效的員工姓名。");
                         return;
                     }
                     this.applyImportedParticipants(names, false);
-                    this.renderTheme05Lottery(theme);
+                    this.renderLotteryAdminPage(theme);
                 };
                 reader.readAsText(file, "UTF-8");
             });
@@ -861,68 +1337,56 @@ class WorkspaceApp {
         const resetPoolBtn = document.getElementById("reset-pool-only-btn");
         if (resetPoolBtn) {
             resetPoolBtn.addEventListener("click", () => {
-                if (this.isDrawing || this.lotteryState.allParticipants.length === 0) return;
-                const confirmed = window.confirm("確定要將所有已中獎員工放回待抽池，並清空歷史中獎紀錄嗎？");
+                if (this.lotteryState.allParticipants.length === 0) return;
+                const confirmed = window.confirm("確定要將已中獎員工全數放回待抽池，並清除歷史中獎紀錄嗎？");
                 if (!confirmed) return;
                 this.lotteryState.remainingPool = [...this.lotteryState.allParticipants];
                 this.lotteryState.winnersHistory = [];
                 this.lotteryState.latestDrawnWinners = [];
                 this.saveLotteryState();
-                this.renderTheme05Lottery(theme);
+                this.renderLotteryAdminPage(theme);
             });
         }
 
-        // 獎項名稱快選與輸入
-        const prizeInput = document.getElementById("current-prize-input");
-        const stagePrizeTag = document.getElementById("stage-prize-tag");
-        if (prizeInput) {
-            prizeInput.addEventListener("input", () => {
-                this.lotteryState.currentPrize = prizeInput.value.trim() || "尾牙獎項";
-                this.saveLotteryState();
-                if (stagePrizeTag) {
-                    stagePrizeTag.textContent = `本輪獎項：${this.lotteryState.currentPrize}（每次抽 ${this.lotteryState.batchSize} 人）`;
+        // 新增或更新獎項與金額設定
+        const addPrizeForm = document.getElementById("add-prize-config-form");
+        const newPrizeNameInput = document.getElementById("new-prize-name-input");
+        const newPrizeAmountInput = document.getElementById("new-prize-amount-input");
+        if (addPrizeForm && newPrizeNameInput && newPrizeAmountInput) {
+            addPrizeForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const nameVal = newPrizeNameInput.value.trim();
+                const amountVal = newPrizeAmountInput.value.trim();
+                if (!nameVal || !amountVal) return;
+
+                const existingIdx = this.lotteryState.prizeConfigs.findIndex((p) => p.name === nameVal);
+                if (existingIdx >= 0) {
+                    this.lotteryState.prizeConfigs[existingIdx].amount = amountVal;
+                } else {
+                    this.lotteryState.prizeConfigs.unshift({ name: nameVal, amount: amountVal });
                 }
-                this.focusSection.querySelectorAll("[data-prize-preset]").forEach((btn) => {
-                    if (btn.getAttribute("data-prize-preset") === this.lotteryState.currentPrize) {
-                        btn.classList.add("active");
-                    } else {
-                        btn.classList.remove("active");
-                    }
-                });
+
+                this.lotteryState.currentPrize = nameVal;
+                this.lotteryState.currentAmount = amountVal;
+                this.saveLotteryState();
+                this.renderLotteryAdminPage(theme);
             });
         }
 
-        this.focusSection.querySelectorAll("[data-prize-preset]").forEach((btn) => {
+        // 刪除預設獎項
+        this.focusSection.querySelectorAll("[data-remove-prize-idx]").forEach((btn) => {
             btn.addEventListener("click", () => {
-                const preset = btn.getAttribute("data-prize-preset");
-                this.lotteryState.currentPrize = preset;
+                const idx = Number(btn.getAttribute("data-remove-prize-idx"));
+                if (this.lotteryState.prizeConfigs.length <= 1) {
+                    window.alert("請至少保留一個預設獎項。");
+                    return;
+                }
+                this.lotteryState.prizeConfigs.splice(idx, 1);
                 this.saveLotteryState();
-                this.renderTheme05Lottery(theme);
+                this.renderLotteryAdminPage(theme);
             });
         });
 
-        // 單次抽選人數 (1 / 3 / 5)
-        this.focusSection.querySelectorAll("[data-batch-size]").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                if (this.isDrawing) return;
-                const size = Number(btn.getAttribute("data-batch-size"));
-                if ([1, 3, 5].includes(size)) {
-                    this.lotteryState.batchSize = size;
-                    this.saveLotteryState();
-                    this.renderTheme05Lottery(theme);
-                }
-            });
-        });
-
-        // 啟動電腦隨機抽選按鈕
-        const launchDrawBtn = document.getElementById("launch-draw-btn");
-        if (launchDrawBtn) {
-            launchDrawBtn.addEventListener("click", () => {
-                this.executeAnimatedRandomDraw(theme);
-            });
-        }
-
-        // 匯出 CSV 報表按鈕
         const exportCsvBtn = document.getElementById("export-winners-csv-btn");
         if (exportCsvBtn) {
             exportCsvBtn.addEventListener("click", () => {
@@ -932,8 +1396,187 @@ class WorkspaceApp {
     }
 
     /**
-     * 解析匯入之員工姓名（支援換行、逗號或分號分隔，並自動去除標題列與重複姓名）
+     * 綁定「大型開獎展演舞台頁」事件（包含手動啟動與停止輪動、臨時金額輸入與煙花觸發）
      */
+    bindLotteryGrandStageEvents(theme) {
+        const switchToAdminBtn = document.getElementById("switch-to-admin-btn");
+        if (switchToAdminBtn) {
+            switchToAdminBtn.addEventListener("click", () => {
+                this.stopRollingIfNeeded();
+                window.location.hash = "theme-05-admin";
+            });
+        }
+
+        const backToHubBtn = document.getElementById("back-to-hub-btn");
+        if (backToHubBtn) {
+            backToHubBtn.addEventListener("click", () => {
+                this.stopRollingIfNeeded();
+                window.location.hash = "theme-05";
+            });
+        }
+
+        const replayFireworksBtn = document.getElementById("replay-fireworks-btn");
+        if (replayFireworksBtn) {
+            replayFireworksBtn.addEventListener("click", () => {
+                this.fireworks.launchCelebration(4200);
+            });
+        }
+
+        const livePrizeInput = document.getElementById("live-prize-name-input");
+        const liveAmountInput = document.getElementById("live-prize-amount-input");
+        const stageBannerPrize = document.getElementById("stage-banner-prize");
+        const stageBannerAmount = document.getElementById("stage-banner-amount");
+
+        const syncLiveInputs = () => {
+            if (livePrizeInput) {
+                this.lotteryState.currentPrize = livePrizeInput.value.trim() || "尾牙獎項";
+            }
+            if (liveAmountInput) {
+                this.lotteryState.currentAmount = liveAmountInput.value.trim() || "驚喜獎金";
+            }
+            if (stageBannerPrize) {
+                stageBannerPrize.textContent = this.lotteryState.currentPrize;
+            }
+            if (stageBannerAmount) {
+                stageBannerAmount.textContent = this.lotteryState.currentAmount;
+            }
+            this.saveLotteryState();
+        };
+
+        if (livePrizeInput) {
+            livePrizeInput.addEventListener("input", syncLiveInputs);
+        }
+        if (liveAmountInput) {
+            liveAmountInput.addEventListener("input", syncLiveInputs);
+        }
+
+        // 點選預設獎項標籤
+        this.focusSection.querySelectorAll("[data-select-prize]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (this.isRolling) return;
+                this.lotteryState.currentPrize = btn.getAttribute("data-select-prize") || "頭獎";
+                this.lotteryState.currentAmount = btn.getAttribute("data-select-amount") || "NT$ 50,000";
+                this.saveLotteryState();
+                this.renderLotteryGrandStagePage(theme);
+            });
+        });
+
+        // 切換每次抽出 1 / 3 / 5 人
+        this.focusSection.querySelectorAll("[data-batch-size]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (this.isRolling) return;
+                const size = Number(btn.getAttribute("data-batch-size"));
+                if ([1, 3, 5].includes(size)) {
+                    this.lotteryState.batchSize = size;
+                    this.lotteryState.latestDrawnWinners = [];
+                    this.saveLotteryState();
+                    this.renderLotteryGrandStagePage(theme);
+                }
+            });
+        });
+
+        // 啟動持續輪動 / 按下確定開獎按鈕
+        const rollToggleBtn = document.getElementById("grand-roll-toggle-btn");
+        if (rollToggleBtn) {
+            rollToggleBtn.addEventListener("click", () => {
+                if (!this.isRolling) {
+                    this.startContinuousRolling();
+                } else {
+                    this.stopRollingAndConfirmWinners(theme);
+                }
+            });
+        }
+
+        const exportCsvBtn = document.getElementById("stage-export-csv-btn");
+        if (exportCsvBtn) {
+            exportCsvBtn.addEventListener("click", () => {
+                this.exportWinnersToCsv();
+            });
+        }
+    }
+
+    /**
+     * 第一階段：按下按鈕後讓員工姓名在舞台卡片上持續高速輪動（直到使用者再次按下按鈕才確定）
+     */
+    startContinuousRolling() {
+        const pool = this.lotteryState.remainingPool;
+        if (!Array.isArray(pool) || pool.length === 0) return;
+
+        this.fireworks.stop();
+        this.isRolling = true;
+        const drawCount = Math.min(this.lotteryState.batchSize, pool.length);
+        const showcaseContainer = document.getElementById("grand-winners-showcase");
+        const rollToggleBtn = document.getElementById("grand-roll-toggle-btn");
+
+        if (rollToggleBtn) {
+            rollToggleBtn.classList.add("is-stop-mode");
+            rollToggleBtn.textContent = `按下停止！立即鎖定並揭曉 ${drawCount} 位得獎人`;
+        }
+
+        const renderRollingTick = () => {
+            if (!showcaseContainer) return;
+            const tempPicked = [];
+            const poolLen = pool.length;
+            for (let i = 0; i < drawCount; i += 1) {
+                const randIdx = this.getCryptoRandomInt(poolLen);
+                tempPicked.push(pool[randIdx]);
+            }
+
+            showcaseContainer.innerHTML = tempPicked.map((name, idx) => `
+                <div class="grand-winner-card is-rolling">
+                    <span class="grand-winner-slot-badge">ROLLING SLOT #0${idx + 1}</span>
+                    <div class="grand-winner-name">${this.escapeHtml(name)}</div>
+                    <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentPrize)} — ${this.escapeHtml(this.lotteryState.currentAmount)}</span>
+                </div>
+            `).join("");
+        };
+
+        renderRollingTick();
+        this.rollingIntervalId = setInterval(renderRollingTick, 65);
+    }
+
+    /**
+     * 第二階段：使用者按下停止按鈕時，立即抽出得獎者、展示特殊流光字體效果並觸發全螢幕煙花
+     */
+    stopRollingAndConfirmWinners(theme) {
+        this.stopRollingIfNeeded();
+
+        const poolCopy = [...this.lotteryState.remainingPool];
+        if (poolCopy.length === 0) return;
+
+        const drawCount = Math.min(this.lotteryState.batchSize, poolCopy.length);
+        const selectedWinners = [];
+
+        for (let i = 0; i < drawCount; i += 1) {
+            const randIndex = this.getCryptoRandomInt(poolCopy.length);
+            const [picked] = poolCopy.splice(randIndex, 1);
+            selectedWinners.push(picked);
+        }
+
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+        const nextRound = this.lotteryState.winnersHistory.length + 1;
+        const prizeTitle = this.lotteryState.currentPrize || "尾牙獎項";
+        const prizeAmount = this.lotteryState.currentAmount || "驚喜獎金";
+
+        this.lotteryState.remainingPool = poolCopy;
+        this.lotteryState.latestDrawnWinners = selectedWinners;
+        this.lotteryState.latestDrawnPrize = prizeTitle;
+        this.lotteryState.latestDrawnAmount = prizeAmount;
+
+        this.lotteryState.winnersHistory.unshift({
+            round: nextRound,
+            prize: prizeTitle,
+            amount: prizeAmount,
+            winners: selectedWinners,
+            time: timeStr
+        });
+
+        this.saveLotteryState();
+        this.renderLotteryGrandStagePage(theme);
+        this.fireworks.launchCelebration(4800);
+    }
+
     parseParticipantNames(rawText) {
         const lines = rawText
             .split(/\r?\n|,|;/)
@@ -966,9 +1609,6 @@ class WorkspaceApp {
         this.saveLotteryState();
     }
 
-    /**
-     * 使用密碼學安全亂數 (Web Crypto API) 產生隨機整數
-     */
     getCryptoRandomInt(maxExclusive) {
         if (maxExclusive <= 1) return 0;
         const array = new Uint32Array(1);
@@ -977,86 +1617,14 @@ class WorkspaceApp {
     }
 
     /**
-     * 執行數位跳動開獎動畫並抽出 1 / 3 / 5 位得主
-     */
-    executeAnimatedRandomDraw(theme) {
-        if (this.isDrawing) return;
-        const pool = this.lotteryState.remainingPool;
-        if (!Array.isArray(pool) || pool.length === 0) return;
-
-        this.isDrawing = true;
-        const drawCount = Math.min(this.lotteryState.batchSize, pool.length);
-        const stageCardsContainer = document.getElementById("winners-stage-cards");
-        const launchBtn = document.getElementById("launch-draw-btn");
-
-        if (launchBtn) {
-            launchBtn.disabled = true;
-            launchBtn.textContent = "電腦高速隨機抽選中...";
-        }
-
-        const totalTicks = 16;
-        let currentTick = 0;
-
-        const rollInterval = setInterval(() => {
-            currentTick += 1;
-            if (stageCardsContainer) {
-                const tempNames = [];
-                for (let i = 0; i < drawCount; i += 1) {
-                    const randIdx = this.getCryptoRandomInt(pool.length);
-                    tempNames.push(pool[randIdx]);
-                }
-                stageCardsContainer.innerHTML = tempNames.map((name, idx) => `
-                    <div class="winner-stage-card is-rolling">
-                        <span class="winner-stage-index">ROLLING #0${idx + 1}</span>
-                        <span class="winner-stage-name">${this.escapeHtml(name)}</span>
-                    </div>
-                `).join("");
-            }
-
-            if (currentTick >= totalTicks) {
-                clearInterval(rollInterval);
-                this.finalizeDrawSelection(drawCount, theme);
-            }
-        }, 75);
-    }
-
-    finalizeDrawSelection(drawCount, theme) {
-        const poolCopy = [...this.lotteryState.remainingPool];
-        const selectedWinners = [];
-
-        for (let i = 0; i < drawCount; i += 1) {
-            const randIndex = this.getCryptoRandomInt(poolCopy.length);
-            const [picked] = poolCopy.splice(randIndex, 1);
-            selectedWinners.push(picked);
-        }
-
-        const now = new Date();
-        const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
-        const nextRound = this.lotteryState.winnersHistory.length + 1;
-
-        this.lotteryState.remainingPool = poolCopy;
-        this.lotteryState.latestDrawnWinners = selectedWinners;
-        this.lotteryState.winnersHistory.unshift({
-            round: nextRound,
-            prize: this.lotteryState.currentPrize || "尾牙獎項",
-            winners: selectedWinners,
-            time: timeStr
-        });
-
-        this.saveLotteryState();
-        this.isDrawing = false;
-        this.renderTheme05Lottery(theme);
-    }
-
-    /**
-     * 匯出完整中獎結果為 UTF-8 BOM CSV 檔案（支援 Excel 直接開啟不亂碼）
+     * 匯出完整中獎結果（含獎項金額）為 UTF-8 BOM CSV 檔案
      */
     exportWinnersToCsv() {
         if (!this.lotteryState.winnersHistory || this.lotteryState.winnersHistory.length === 0) {
             return;
         }
 
-        const rows = [["抽選輪次", "獎項名稱", "中獎員工姓名", "抽出時間"]];
+        const rows = [["抽選輪次", "獎項名稱", "獎項金額", "中獎員工姓名", "抽出時間"]];
         const chronological = [...this.lotteryState.winnersHistory].reverse();
 
         chronological.forEach((record) => {
@@ -1064,6 +1632,7 @@ class WorkspaceApp {
                 rows.push([
                     `第 ${record.round} 輪`,
                     record.prize,
+                    record.amount || "",
                     winnerName,
                     record.time
                 ]);
