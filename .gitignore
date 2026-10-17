@@ -1,0 +1,14 @@
+# Python 快取與環境
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# 作業系統與編輯器設定檔
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

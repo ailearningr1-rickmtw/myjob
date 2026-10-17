@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="融合科技與清新美學的多功能模組化工作中樞平台，支援五大核心主題彈性擴充與 GitHub Pages 自動化部署。" />
+    <title>AERO-NEXUS | 多功能科技清新工作中樞</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+    <!-- 科技網格與清新流體光暈背景 -->
+    <div class="ambient-background" aria-hidden="true"></div>
+    <div class="ambient-orb orb-primary" aria-hidden="true"></div>
+    <div class="ambient-orb orb-secondary" aria-hidden="true"></div>
+
+    <!-- 頂部導覽列 -->
+    <header class="top-navbar">
+        <div class="navbar-container">
+            <a href="#overview" class="brand-group">
+                <div class="brand-logo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                </div>
+                <div class="brand-text-wrap">
+                    <span class="brand-title">AERO-NEXUS 工作中樞</span>
+                    <span class="brand-subtitle">TECH-FRESH MODULAR WORKSPACE</span>
+                </div>
+            </a>
+
+            <!-- 動態五大主題與總覽切換標籤 -->
+            <nav class="nav-tabs" id="nav-tabs" aria-label="主要主題導覽"></nav>
+
+            <!-- 系統時間與亮暗模式切換 -->
+            <div class="navbar-actions">
+                <div class="system-clock" title="系統即時時間">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span id="clock-text">----/--/-- --:--:--</span>
+                </div>
+                <button type="button" class="icon-btn" id="theme-toggle-btn" aria-label="切換色彩主題"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要內容區 -->
+    <main class="main-container">
+        <!-- 總覽區：包含英雄橫幅、隨手記與五大主題卡片網格 -->
+        <div id="overview-section">
+            <section class="hero-banner" aria-labelledby="hero-heading">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span>SYSTEM READY // 5 CORE THEMES RESERVED</span>
+                    </div>
+                    <h1 class="hero-title" id="hero-heading">清新視覺與科技效率兼具的個人工作平台</h1>
+                    <p class="hero-description">
+                        採用模組化插槽設計，目前已預留五大核心主題架構。您可隨時於右側隨手記或點選任一主題工作區記錄新點子，並透過 GitHub Actions 自動部署更新。
+                    </p>
+                    <div class="hero-stats-row">
+                        <div class="stat-pill">
+                            <span class="stat-pill-label">預留核心主題</span>
+                            <span class="stat-pill-value">05</span>
+                        </div>
+                        <div class="stat-pill">
+                            <span class="stat-pill-label">子模組擴充槽</span>
+                            <span class="stat-pill-value">15</span>
+                        </div>
+                        <div class="stat-pill">
+                            <span class="stat-pill-label">待開發構想數</span>
+                            <span class="stat-pill-value" id="total-ideas-count">0</span>
+                        </div>
+                        <div class="stat-pill">
+                            <span class="stat-pill-label">部署架構</span>
+                            <span class="stat-pill-value">GitHub Pages</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 即時工作隨手記 -->
+                <aside class="quick-scratchpad" aria-label="快速工作隨手記">
+                    <div class="scratchpad-header">
+                        <span class="scratchpad-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9"></path>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
+                            <span>靈感與工作隨手記</span>
+                        </span>
+                        <span class="scratchpad-status" id="scratchpad-save-status">本地端自動儲存</span>
+                    </div>
+                    <textarea
+                        id="quick-scratchpad-input"
+                        class="scratchpad-textarea"
+                        placeholder="隨時記下今日待辦事項、臨時會議重點，或未來想加入此網頁的新功能構想..."
+                    ></textarea>
+                </aside>
+            </section>
+
+            <!-- 搜尋與五大主題列表標題 -->
+            <section aria-labelledby="themes-section-title">
+                <div class="section-toolbar">
+                    <div class="section-heading-group">
+                        <h2 class="section-heading" id="themes-section-title">五大核心預留主題 (Core Themes)</h2>
+                        <p class="section-subheading">點選任一主題卡片或上方導覽列，即可進入該主題專屬工作區並新增功能構想</p>
+                    </div>
+                    <div class="search-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input
+                            type="search"
+                            id="theme-search-input"
+                            class="search-input"
+                            placeholder="搜尋主題名稱或子模組關鍵字..."
+                            aria-label="搜尋主題名稱或子模組關鍵字"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <!-- 五大主題網格容器 -->
+            <section class="themes-grid" id="themes-grid" aria-label="五大預留主題列表"></section>
+        </div>
+
+        <!-- 單一主題展開檢視容器 (由 JS 動態渲染) -->
+        <section id="focus-section" class="is-hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- 頁尾資訊 -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <span>AERO-NEXUS 模組化工作中樞 — 科技與清新融合設計版本</span>
+            <div class="footer-tech-tags">
+                <span>HTML5 / CSS3 / ES6+</span>
+                <span>•</span>
+                <span>Python 3.11+ Ready</span>
+                <span>•</span>
+                <span>GitHub Pages CI/CD</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/app.js"></script>
+</body>
+</html>
