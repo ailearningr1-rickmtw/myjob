@@ -1143,7 +1143,8 @@ class WorkspaceApp {
         this.rpaPptConfig = {
             topic: "納稅者權利保護法核心實務與案例解析",
             audience: "機關同仁與第一線稅務服務人員",
-            slideCount: "10",
+            slideCount: "6",
+            geminiModel: "gemini-2.5-flash",
             paletteId: "P01",
             styleId: "S01",
             toneId: "T01",
@@ -1153,6 +1154,8 @@ class WorkspaceApp {
             sourceText: "一、納稅者權利保護法立法目的：保障賦稅人權，維護人民基本生存權，實現課稅公平及貫徹正當法律程序。\n二、基本生活費不得課稅：納稅者為維持自己及受扶養親屬享有符合人性尊嚴之基本生活所需之費用，不得加以課稅。\n三、正當法律程序與調查原則：稅捐稽徵機關調查課稅事實，應以書面通知被調查者，並給予陳述意見之機會。\n四、納保官協助機制：納稅者遇有稅捐爭議得申請納稅者權利保護官進行溝通協調與申訴協助。"
         };
         this.rpaGeneratedPrompt = "";
+        this.rpaDeckSlides = this.buildDefaultDeckSlides();
+        this.rpaActiveDeckSlideIdx = 0;
         this.rpaConvertedImages = [];
 
         // 工具 5：簡報智慧講稿與教學影片產製器（網頁版）狀態
@@ -5733,8 +5736,8 @@ class WorkspaceApp {
                 <div class="rpa-five-tabs-bar">
                     <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-01" ? "active" : ""}" data-rpa-tool="tool-01">
                         <span class="rpa-big-tool-num">工具 01</span>
-                        <span class="rpa-big-tool-title">AI 簡報提示詞</span>
-                        <span class="rpa-big-tool-sub">選配色風格・一鍵產出簡報大綱</span>
+                        <span class="rpa-big-tool-title">AI 簡報與產製</span>
+                        <span class="rpa-big-tool-sub">Gemini 自動寫稿・直接匯出 PPTX / PDF</span>
                     </button>
                     <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-02" ? "active" : ""}" data-rpa-tool="tool-02">
                         <span class="rpa-big-tool-num">工具 02</span>
@@ -5844,9 +5847,83 @@ class WorkspaceApp {
 
     /**
      * ========================================================================
-     * 工具 01：AI 簡報提示詞產製器（大字體極簡版）
+     * 工具 01：AI 簡報提示詞與 Gemini 後續簡報產製工作台
      * ========================================================================
      */
+    buildDefaultDeckSlides() {
+        return [
+            {
+                page: 1,
+                layout: "cover",
+                title: "納稅者權利保護法核心實務與案例解析",
+                subtitle: "機關同仁與第一線稅務服務人員專題簡報",
+                bullets: [
+                    "保障賦稅人權，維護人民基本生存權",
+                    "實現課稅公平並貫徹正當法律程序",
+                    "善用納保官溝通協調機制化解爭議"
+                ],
+                highlightTag: "機關專題簡報",
+                speakerNotes: "各位同仁大家好，今天為大家介紹納稅者權利保護法的核心實務與案例解析，協助第一線服務更加順暢。"
+            },
+            {
+                page: 2,
+                layout: "bento",
+                title: "一、立法目的與四大核心保障",
+                subtitle: "從基本生存權到正當法律程序的全方位守護",
+                bullets: [
+                    "保障賦稅人權：落實憲法保障人民財產權與生存權意旨",
+                    "基本生活費不課稅：維持人性尊嚴所需費用免予課稅",
+                    "正當法律程序：調查課稅事實應書面通知並給予陳述機會",
+                    "設置納保官：提供納稅者溝通協調與救濟諮詢管道"
+                ],
+                highlightTag: "四大核心原則",
+                speakerNotes: "首先看到立法目的，納保法共有四大核心保障，包含賦稅人權、基本生活費不課稅、正當程序以及納保官制度。"
+            },
+            {
+                page: 3,
+                layout: "comparison",
+                title: "二、基本生活費不課稅實務要點",
+                subtitle: "以主計總處公布基準計算，保障家庭基本開銷",
+                bullets: [
+                    "計算基準：依全國每人可支配所得中位數 60% 訂定",
+                    "比較項目：基本生活費總額超過免稅額及扣除額差額得予減除",
+                    "扶養親屬：納稅者本人、配偶及受扶養親屬皆納入計算",
+                    "實務提醒：申報系統自動試算最有利結果，免人工重扣"
+                ],
+                highlightTag: "系統自動從優試算",
+                speakerNotes: "第二頁說明基本生活費不課稅的實務要點，系統會自動試算最有利結果，避免人工重扣或漏算。"
+            },
+            {
+                page: 4,
+                layout: "steps",
+                title: "三、正當法律程序與調查作業標準",
+                subtitle: "落實程序正義，確保調查過程合法透明",
+                bullets: [
+                    "步驟一：調查前以書面通知被調查者事由與範圍",
+                    "步驟二：給予被調查者充分陳述意見與提示帳證機會",
+                    "步驟三：合法調閱相關課稅資料並詳實記載調查筆錄",
+                    "步驟四：核定處分書明確記載理由與法令依據"
+                ],
+                highlightTag: "程序正義四步驟",
+                speakerNotes: "第三部分為正當法律程序，同仁在進行調查與調閱資料時，務必遵循四個標準步驟。"
+            },
+            {
+                page: 5,
+                layout: "bento",
+                title: "四、納保官協助機制與結語",
+                subtitle: "主動傾聽、專業協調，創造徵納雙贏",
+                bullets: [
+                    "申請時機：對稅捐稽徵調查程序或核定內容有疑義時",
+                    "協助項目：稅法諮詢、爭議溝通協調、申訴陳情處理",
+                    "申辦方式：書面、言詞或線上皆可提出申請",
+                    "核心目標：迅速釐清爭點，減少後續復查與訴願成本"
+                ],
+                highlightTag: "徵納雙贏",
+                speakerNotes: "最後介紹納保官協助機制，當民眾對核定內容有疑義時，可隨時引導申請納保官協助，達成徵納雙贏。謝謝大家！"
+            }
+        ];
+    }
+
     getRpaTool01PptPromptHtml() {
         const cfg = this.rpaPptConfig;
         const selectedPalette = RPA_PPT_THEME_PRESETS.find((p) => p.id === cfg.paletteId) || RPA_PPT_THEME_PRESETS[0];
@@ -5856,6 +5933,14 @@ class WorkspaceApp {
         if (!this.rpaGeneratedPrompt) {
             this.rpaGeneratedPrompt = this.buildPptPromptText();
         }
+        if (!Array.isArray(this.rpaDeckSlides) || this.rpaDeckSlides.length === 0) {
+            this.rpaDeckSlides = this.buildDefaultDeckSlides();
+            this.rpaActiveDeckSlideIdx = 0;
+        }
+        if (this.rpaActiveDeckSlideIdx >= this.rpaDeckSlides.length) {
+            this.rpaActiveDeckSlideIdx = 0;
+        }
+        const activeSlide = this.rpaDeckSlides[this.rpaActiveDeckSlideIdx] || this.rpaDeckSlides[0];
 
         const paletteOptionsHtml = RPA_PPT_THEME_PRESETS.map((p) => `
             <option value="${p.id}" ${p.id === cfg.paletteId ? "selected" : ""}>${this.escapeHtml(p.name)}</option>
@@ -5873,13 +5958,19 @@ class WorkspaceApp {
             <rect x="${idx * 40}" y="0" width="37" height="34" rx="4" fill="${hex}" stroke="#64748b" stroke-width="1"></rect>
         `).join("");
 
+        const slidePageBtnsHtml = this.rpaDeckSlides.map((s, idx) => `
+            <button type="button" class="rpa-deck-page-btn ${idx === this.rpaActiveDeckSlideIdx ? "active" : ""}" data-deck-page="${idx}">
+                第 ${idx + 1} 頁：${this.escapeHtml((s.title || "").slice(0, 10))}
+            </button>
+        `).join("");
+
         return `
             <div class="rpa-ppt-studio-grid">
                 <div class="rpa-studio-card">
                     <div>
-                        <span class="rpa-step-badge">步驟 1：選擇簡報配色與風格</span>
-                        <h3 class="section-heading">工具 01：AI 簡報提示詞產製器</h3>
-                        <p class="section-subheading">選好配色與風格、貼上文稿，即可一鍵複製提示詞或直接讓 AI 寫出每頁簡報大綱。</p>
+                        <span class="rpa-step-badge">步驟 1：選擇配色、風格與 Gemini 模型</span>
+                        <h3 class="section-heading">工具 01：AI 簡報提示詞與後續簡報產製器</h3>
+                        <p class="section-subheading">選好配色與文稿後，可直接由 Gemini 產製全套簡報投影片，並匯出 PowerPoint (.pptx) 或 PDF 簡報！</p>
                     </div>
 
                     <div class="rpa-form-two-col">
@@ -5895,22 +5986,21 @@ class WorkspaceApp {
 
                     <div class="rpa-form-two-col">
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-slides">預計頁數</label>
-                            <input type="number" class="idea-input" id="rpa-ppt-slides" min="3" max="50" value="${this.escapeHtml(cfg.slideCount)}" />
+                            <label class="stage-input-label" for="rpa-ppt-gemini-model">選擇 Gemini 產製模型</label>
+                            <select class="prize-select" id="rpa-ppt-gemini-model">
+                                <option value="gemini-2.5-flash" ${cfg.geminiModel === "gemini-2.5-flash" ? "selected" : ""}>Gemini 2.5 Flash（推薦・快速產製簡報）</option>
+                                <option value="gemini-2.5-pro" ${cfg.geminiModel === "gemini-2.5-pro" ? "selected" : ""}>Gemini 2.5 Pro（深度推理・長篇法規分析）</option>
+                                <option value="gemini-2.0-flash" ${cfg.geminiModel === "gemini-2.0-flash" ? "selected" : ""}>Gemini 2.0 Flash（高速輕量備援）</option>
+                            </select>
                         </div>
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-mascot">小幫手角色出現頻率</label>
-                            <select class="prize-select" id="rpa-ppt-mascot">
-                                <option value="重點頁點綴 (約 30% 頁面)" ${cfg.mascotFreq.includes("30%") ? "selected" : ""}>重點頁點綴 (約 30% 頁面)</option>
-                                <option value="僅封面與結尾頁出現" ${cfg.mascotFreq.includes("封面") ? "selected" : ""}>僅封面與結尾頁出現</option>
-                                <option value="每頁皆出現引導" ${cfg.mascotFreq.includes("每頁") ? "selected" : ""}>每頁皆出現引導</option>
-                                <option value="不使用角色插圖" ${cfg.mascotFreq.includes("不使用") ? "selected" : ""}>不使用角色插圖</option>
-                            </select>
+                            <label class="stage-input-label" for="rpa-ppt-slides">預計產製頁數</label>
+                            <input type="number" class="idea-input" id="rpa-ppt-slides" min="3" max="25" value="${this.escapeHtml(cfg.slideCount)}" />
                         </div>
                     </div>
 
                     <div class="stage-input-group">
-                        <label class="stage-input-label" for="rpa-ppt-palette">選擇「5+1 色彩計畫」配色</label>
+                        <label class="stage-input-label" for="rpa-ppt-palette">選擇「5+1 色彩計畫」配色（直接套用至下方簡報投影片與 PPTX）</label>
                         <select class="prize-select" id="rpa-ppt-palette">
                             ${paletteOptionsHtml}
                         </select>
@@ -5931,7 +6021,7 @@ class WorkspaceApp {
                             <span class="admin-helper-text">${this.escapeHtml(selectedStyle.desc)}</span>
                         </div>
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-tone">選擇語氣</label>
+                            <label class="stage-input-label" for="rpa-ppt-tone">選擇語氣與小幫手點綴</label>
                             <select class="prize-select" id="rpa-ppt-tone">
                                 ${toneOptionsHtml}
                             </select>
@@ -5945,12 +6035,13 @@ class WorkspaceApp {
                             <label class="secondary-btn" for="rpa-ppt-file-input">載入文字檔 (.txt)</label>
                             <input type="file" id="rpa-ppt-file-input" class="is-hidden" accept=".txt,.md,.csv" />
                         </div>
-                        <textarea class="batch-textarea" id="rpa-ppt-source" rows="5">${this.escapeHtml(cfg.sourceText)}</textarea>
+                        <textarea class="batch-textarea" id="rpa-ppt-source" rows="4">${this.escapeHtml(cfg.sourceText)}</textarea>
                     </div>
 
                     <div class="survey-inline-actions">
-                        <button type="button" class="primary-btn" id="rpa-generate-prompt-btn">產生簡報提示詞</button>
-                        <button type="button" class="secondary-btn" id="rpa-call-gemini-btn">直接由 AI 產出逐頁簡報大綱</button>
+                        <button type="button" class="primary-btn" id="rpa-call-gemini-btn">使用 Gemini 直接產製全套簡報投影片</button>
+                        <button type="button" class="secondary-btn" id="rpa-parse-text-slides-btn">從文稿或右側大綱轉換為投影片</button>
+                        <button type="button" class="secondary-btn" id="rpa-generate-prompt-btn">更新提示詞</button>
                     </div>
                     <p class="admin-feedback-msg" id="rpa-ppt-feedback"></p>
                 </div>
@@ -5958,8 +6049,9 @@ class WorkspaceApp {
                 <div class="rpa-studio-card">
                     <div class="survey-section-title-row">
                         <div>
-                            <span class="rpa-step-badge">步驟 2：一鍵複製或下載結果</span>
-                            <h3 class="section-heading">產出結果區</h3>
+                            <span class="rpa-step-badge">步驟 2：提示詞與 AI 簡報大綱文字</span>
+                            <h3 class="section-heading">提示詞 / 簡報大綱文字區</h3>
+                            <p class="section-subheading">可複製貼到 Gemini 網頁版，或將 Gemini 產出的大綱貼回此處點「轉換為投影片」。</p>
                         </div>
                         <div class="survey-inline-actions">
                             <button type="button" class="primary-btn" id="rpa-copy-prompt-btn">一鍵複製內容</button>
@@ -5967,6 +6059,75 @@ class WorkspaceApp {
                         </div>
                     </div>
                     <textarea class="rpa-prompt-textarea" id="rpa-prompt-output-box">${this.escapeHtml(this.rpaGeneratedPrompt)}</textarea>
+                </div>
+
+                <!-- 步驟 3：後續簡報產製工作台（全寬度 16:9 預覽、逐頁編輯、匯出 PPTX / PDF / 工具 05 影片） -->
+                <div class="rpa-studio-card rpa-deck-production-panel">
+                    <div class="rpa-deck-export-bar">
+                        <div>
+                            <span class="rpa-step-badge">步驟 3：後續簡報產製工作台（共 ${this.rpaDeckSlides.length} 頁・套用 ${this.escapeHtml(selectedPalette.name)}）</span>
+                            <h3 class="section-heading">16:9 簡報成品預覽、逐頁微調與一鍵匯出</h3>
+                        </div>
+                        <div class="survey-inline-actions">
+                            <button type="button" class="primary-btn" id="rpa-export-pptx-btn">下載 PowerPoint 簡報檔 (.pptx)</button>
+                            <button type="button" class="secondary-btn" id="rpa-export-pdf-btn">下載 PDF 簡報檔 (.pdf)</button>
+                            <button type="button" class="secondary-btn" id="rpa-export-png-btn">下載本頁圖片 (.png)</button>
+                            <button type="button" class="secondary-btn" id="rpa-send-to-tool05-btn">一鍵送往「工具 05」合成教學影片</button>
+                        </div>
+                    </div>
+
+                    <!-- 頁次切換列 -->
+                    <div class="rpa-deck-slide-nav">
+                        ${slidePageBtnsHtml}
+                        <button type="button" class="secondary-btn" id="rpa-deck-add-slide-btn">+ 新增一頁</button>
+                        <button type="button" class="danger-outline-btn" id="rpa-deck-del-slide-btn">刪除本頁</button>
+                    </div>
+
+                    <div class="rpa-deck-preview-layout">
+                        <!-- 左側 16:9 簡報畫布 -->
+                        <div class="rpa-deck-canvas-stage">
+                            <canvas id="rpa-deck-slide-canvas" class="rpa-deck-slide-canvas" width="1280" height="720"></canvas>
+                        </div>
+
+                        <!-- 右側當頁內容即時編輯器 -->
+                        <div class="rpa-deck-editor-card">
+                            <div class="rpa-form-two-col">
+                                <div class="stage-input-group">
+                                    <label class="stage-input-label" for="rpa-slide-edit-layout">本頁版型配置</label>
+                                    <select class="prize-select" id="rpa-slide-edit-layout">
+                                        <option value="cover" ${activeSlide.layout === "cover" ? "selected" : ""}>封面大標題版型 (Cover)</option>
+                                        <option value="bento" ${activeSlide.layout === "bento" ? "selected" : ""}>雙欄重點卡片版型 (Bento Grid)</option>
+                                        <option value="comparison" ${activeSlide.layout === "comparison" ? "selected" : ""}>左右對照比較版型 (Comparison)</option>
+                                        <option value="steps" ${activeSlide.layout === "steps" ? "selected" : ""}>步驟流程版型 (Steps Flow)</option>
+                                    </select>
+                                </div>
+                                <div class="stage-input-group">
+                                    <label class="stage-input-label" for="rpa-slide-edit-tag">右上角強調標籤</label>
+                                    <input type="text" class="idea-input" id="rpa-slide-edit-tag" value="${this.escapeHtml(activeSlide.highlightTag || "核心重點")}" />
+                                </div>
+                            </div>
+
+                            <div class="stage-input-group">
+                                <label class="stage-input-label" for="rpa-slide-edit-title">本頁主標題</label>
+                                <input type="text" class="idea-input" id="rpa-slide-edit-title" value="${this.escapeHtml(activeSlide.title || "")}" />
+                            </div>
+
+                            <div class="stage-input-group">
+                                <label class="stage-input-label" for="rpa-slide-edit-subtitle">本頁副標題 / 核心結論</label>
+                                <input type="text" class="idea-input" id="rpa-slide-edit-subtitle" value="${this.escapeHtml(activeSlide.subtitle || "")}" />
+                            </div>
+
+                            <div class="stage-input-group">
+                                <label class="stage-input-label" for="rpa-slide-edit-bullets">本頁重點條列（每行一點，建議 3 至 4 點）</label>
+                                <textarea class="batch-textarea" id="rpa-slide-edit-bullets" rows="4">${this.escapeHtml((activeSlide.bullets || []).join("\n"))}</textarea>
+                            </div>
+
+                            <div class="stage-input-group">
+                                <label class="stage-input-label" for="rpa-slide-edit-notes">本頁口語講稿（支援破音字校正，會一併寫入 PPTX 備忘稿與工具 05 旁白）</label>
+                                <textarea class="batch-textarea" id="rpa-slide-edit-notes" rows="3">${this.escapeHtml(activeSlide.speakerNotes || "")}</textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -5979,7 +6140,7 @@ class WorkspaceApp {
         const tone = RPA_PPT_TONE_PRESETS.find((t) => t.id === cfg.toneId) || RPA_PPT_TONE_PRESETS[0];
         const [bgMain, bgSub, textMain, textSub, accent1, accent2] = palette.colors;
 
-        return `# 企業級 AI 簡報設計與逐頁大綱提示詞
+        return `# 企業級 AI 簡報設計與逐頁大綱提示詞（適用 Gemini 模型：${cfg.geminiModel || "gemini-2.5-flash"}）
 
 ## 一、簡報設定
 - 簡報主題：${cfg.topic}
@@ -6001,10 +6162,534 @@ class WorkspaceApp {
 ## 三、撰寫要求
 1. 每頁重點不超過 4 點，字句精簡好讀，拒絕文字牆。
 2. 全文使用台灣繁體中文，旁白注意破音字正確讀音（如：重扣讀作蟲扣、調閱讀作掉閱）。
-3. 請依序輸出【第 1 頁】至【第 ${cfg.slideCount} 頁】之標題、精煉內文、視覺排版建議與口語講稿。
+3. 請依序輸出【第 1 頁】至【第 ${cfg.slideCount} 頁】之標題、副標題、條列重點（3~4 點）與口語講稿。
 
 ## 四、參考文稿內容
 ${cfg.sourceText}`;
+    }
+
+    /**
+     * 將 Gemini 回傳之 JSON 或使用者貼上的大綱/文稿解析為結構化投影片陣列
+     */
+    parseTextOrJsonToSlides(rawText) {
+        const cleaned = String(rawText || "").trim();
+        if (!cleaned) return this.buildDefaultDeckSlides();
+
+        // 1. 嘗試解析 JSON 格式
+        try {
+            const jsonMatch = cleaned.match(/\[[\s\S]*\]/) || cleaned.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                const arr = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.slides) ? parsed.slides : null);
+                if (arr && arr.length > 0) {
+                    return arr.map((item, idx) => ({
+                        page: idx + 1,
+                        layout: ["cover", "bento", "comparison", "steps"].includes(item.layout)
+                            ? item.layout
+                            : (idx === 0 ? "cover" : (idx % 3 === 1 ? "bento" : (idx % 3 === 2 ? "comparison" : "steps"))),
+                        title: String(item.title || `第 ${idx + 1} 頁重點`).trim(),
+                        subtitle: String(item.subtitle || this.rpaPptConfig.topic).trim(),
+                        bullets: Array.isArray(item.bullets)
+                            ? item.bullets.map((b) => String(b).trim()).filter(Boolean).slice(0, 4)
+                            : ["核心重點一", "核心重點二", "核心重點三"],
+                        highlightTag: String(item.highlightTag || (idx === 0 ? "專題首頁" : `重點 ${idx}`)).trim(),
+                        speakerNotes: String(String(item.speakerNotes || item.notes || ""))
+                    }));
+                }
+            }
+        } catch (e) {
+            // 若非 JSON 則改用智慧段落切頁解析
+        }
+
+        // 2. 智慧解析【第 X 頁】或段落文字為多頁簡報
+        const targetCount = Math.max(3, Math.min(20, parseInt(this.rpaPptConfig.slideCount, 10) || 6));
+        const lines = cleaned
+            .split(/\r?\n/)
+            .map((l) => l.trim())
+            .filter((l) => l && !l.startsWith("# ") && !l.startsWith("## 一、") && !l.startsWith("## 二、") && !l.startsWith("## 三、"));
+
+        const sourceLines = (this.rpaPptConfig.sourceText || "")
+            .split(/\r?\n/)
+            .map((l) => l.trim())
+            .filter(Boolean);
+
+        const effectiveLines = lines.length >= 3 && !cleaned.includes("## 二、版面風格與「5+1 色彩計畫」") ? lines : sourceLines;
+
+        const slides = [];
+        // 第 1 頁：封面頁
+        slides.push({
+            page: 1,
+            layout: "cover",
+            title: this.rpaPptConfig.topic || "專題簡報報告",
+            subtitle: `報告對象：${this.rpaPptConfig.audience || "機關同仁"}`,
+            bullets: effectiveLines.slice(0, 3).map((l) => l.slice(0, 38)),
+            highlightTag: "專題簡報",
+            speakerNotes: String(`大家好，今天為各位報告「${this.rpaPptConfig.topic}」，針對核心實務進行重點說明。`)
+        });
+
+        // 內頁分配
+        const layouts = ["bento", "comparison", "steps"];
+        const bodyCount = Math.max(2, Math.min(targetCount - 1, Math.max(effectiveLines.length, 3)));
+        for (let i = 0; i < bodyCount; i += 1) {
+            const rawLine = effectiveLines[i % Math.max(1, effectiveLines.length)] || `核心議題第 ${i + 1} 項重點說明`;
+            const parts = rawLine.split(/[：:。；;，,]/).map((s) => s.trim()).filter(Boolean);
+            const mainTitle = parts[0] ? parts[0].slice(0, 26) : `核心重點（${i + 1}）`;
+            const subText = parts[1] ? parts[1].slice(0, 42) : `${this.rpaPptConfig.topic} 實務解析`;
+            const bullets = parts.length >= 2
+                ? parts.slice(1, 5).map((p) => p.slice(0, 42))
+                : [
+                    rawLine.slice(0, 42),
+                    "落實標準作業流程，確保服務品質與法規遵循",
+                    "透過跨單位橫向聯繫與系統檢核提升行政效率"
+                ];
+
+            slides.push({
+                page: i + 2,
+                layout: layouts[i % layouts.length],
+                title: mainTitle,
+                subtitle: subText,
+                bullets,
+                highlightTag: `重點解析 0${i + 1}`,
+                speakerNotes: String(`第 ${i + 2} 頁我們看到「${mainTitle}」，重點包含：${bullets.join("，")}。`)
+            });
+        }
+
+        return slides;
+    }
+
+    /**
+     * 在 16:9 Canvas (1280x720) 繪製高品質「5+1 色彩計畫」簡報投影片
+     */
+    renderDeckSlideToCanvas(canvas, slide, slideIdx, totalSlides) {
+        if (!canvas || !slide) return;
+        const ctx = canvas.getContext("2d");
+        const W = canvas.width;
+        const H = canvas.height;
+
+        const cfg = this.rpaPptConfig;
+        const palette = RPA_PPT_THEME_PRESETS.find((p) => p.id === cfg.paletteId) || RPA_PPT_THEME_PRESETS[0];
+        const [bgMain, bgSub, textMain, textSub, accent1, accent2] = palette.colors;
+
+        // 1. 填滿主背景色
+        ctx.fillStyle = bgMain;
+        ctx.fillRect(0, 0, W, H);
+
+        // 2. 頂部裝飾色帶與右側幾何視覺區塊
+        ctx.fillStyle = accent1;
+        ctx.fillRect(0, 0, W, 12);
+
+        ctx.save();
+        ctx.globalAlpha = 0.12;
+        ctx.fillStyle = accent1;
+        ctx.beginPath();
+        ctx.arc(W - 90, 90, 220, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = accent2;
+        ctx.beginPath();
+        ctx.arc(100, H - 60, 160, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // 3. 左上角機關標章膠囊與右上角亮點標籤
+        ctx.fillStyle = bgSub;
+        ctx.strokeStyle = accent1;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(56, 36, 290, 44, 22);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = textMain;
+        ctx.font = "bold 20px 'Noto Sans TC', sans-serif";
+        ctx.fillText("智慧自動化與專業簡報中心", 78, 65);
+
+        const tagText = slide.highlightTag || `PAGE ${slideIdx + 1}`;
+        ctx.font = "bold 20px 'Noto Sans TC', sans-serif";
+        const tagWidth = Math.max(140, ctx.measureText(tagText).width + 44);
+        ctx.fillStyle = accent2;
+        ctx.beginPath();
+        ctx.roundRect(W - 56 - tagWidth, 36, tagWidth, 44, 22);
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(tagText, W - 56 - tagWidth + 22, 65);
+
+        const bullets = Array.isArray(slide.bullets) && slide.bullets.length > 0
+            ? slide.bullets
+            : ["請於右側編輯器輸入本頁條列重點"];
+
+        // 4. 根據版型繪製內容
+        if (slide.layout === "cover") {
+            // 封面大卡片
+            ctx.fillStyle = bgSub;
+            ctx.strokeStyle = accent1;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.roundRect(56, 115, W - 112, 495, 24);
+            ctx.fill();
+            ctx.stroke();
+
+            // 左側強調色條
+            ctx.fillStyle = accent1;
+            ctx.beginPath();
+            ctx.roundRect(88, 160, 14, 150, 7);
+            ctx.fill();
+
+            ctx.fillStyle = textMain;
+            ctx.font = "900 48px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.title || cfg.topic, 124, 212, W - 250, 62, 2);
+
+            ctx.fillStyle = accent1;
+            ctx.font = "bold 28px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.subtitle || `報告對象：${cfg.audience}`, 124, 345, W - 250, 40, 1);
+
+            // 封面摘要條列
+            bullets.slice(0, 3).forEach((b, i) => {
+                const y = 420 + i * 54;
+                ctx.fillStyle = accent2;
+                ctx.beginPath();
+                ctx.arc(138, y - 9, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = textSub;
+                ctx.font = "bold 24px 'Noto Sans TC', sans-serif";
+                this.drawWrappedCanvasText(ctx, b, 160, y, W - 280, 32, 1);
+            });
+        } else if (slide.layout === "comparison") {
+            // 標題區
+            ctx.fillStyle = textMain;
+            ctx.font = "900 40px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.title || "", 56, 140, W - 112, 50, 1);
+
+            ctx.fillStyle = textSub;
+            ctx.font = "bold 24px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.subtitle || "", 56, 185, W - 112, 34, 1);
+
+            // 左右雙欄對照卡片
+            const colW = (W - 140) / 2;
+            const leftBullets = bullets.filter((_, i) => i % 2 === 0);
+            const rightBullets = bullets.filter((_, i) => i % 2 === 1);
+
+            [
+                { x: 56, header: "核心要點與規範基準", accent: accent1, list: leftBullets },
+                { x: 56 + colW + 28, header: "實務執行與注意事項", accent: accent2, list: rightBullets.length ? rightBullets : ["落實標準作業與覆核機制"] }
+            ].forEach((col) => {
+                ctx.fillStyle = bgSub;
+                ctx.strokeStyle = col.accent;
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.roundRect(col.x, 220, colW, 400, 18);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = col.accent;
+                ctx.beginPath();
+                ctx.roundRect(col.x, 220, colW, 56, [18, 18, 0, 0]);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 24px 'Noto Sans TC', sans-serif";
+                ctx.fillText(col.header, col.x + 24, 257);
+
+                col.list.slice(0, 3).forEach((item, idx) => {
+                    const y = 325 + idx * 95;
+                    ctx.fillStyle = col.accent;
+                    ctx.font = "900 24px 'Noto Sans TC', sans-serif";
+                    ctx.fillText(`0${idx + 1}`, col.x + 24, y);
+
+                    ctx.fillStyle = textMain;
+                    ctx.font = "bold 23px 'Noto Sans TC', sans-serif";
+                    this.drawWrappedCanvasText(ctx, item, col.x + 68, y, colW - 90, 32, 2);
+                });
+            });
+        } else if (slide.layout === "steps") {
+            // 標題區
+            ctx.fillStyle = textMain;
+            ctx.font = "900 40px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.title || "", 56, 140, W - 112, 50, 1);
+
+            ctx.fillStyle = textSub;
+            ctx.font = "bold 24px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.subtitle || "", 56, 185, W - 112, 34, 1);
+
+            // 橫向條列步驟卡片
+            const list = bullets.slice(0, 4);
+            const rowH = 88;
+            list.forEach((item, idx) => {
+                const y = 220 + idx * (rowH + 14);
+                ctx.fillStyle = bgSub;
+                ctx.strokeStyle = idx % 2 === 0 ? accent1 : accent2;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.roundRect(56, y, W - 112, rowH, 16);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = idx % 2 === 0 ? accent1 : accent2;
+                ctx.beginPath();
+                ctx.roundRect(74, y + 16, 115, rowH - 32, 12);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "900 22px 'Noto Sans TC', sans-serif";
+                ctx.fillText(`STEP 0${idx + 1}`, 88, y + 52);
+
+                ctx.fillStyle = textMain;
+                ctx.font = "bold 25px 'Noto Sans TC', sans-serif";
+                this.drawWrappedCanvasText(ctx, item, 212, y + 53, W - 290, 32, 1);
+            });
+        } else {
+            // 預設 Bento 2x2 網格卡片版型
+            ctx.fillStyle = textMain;
+            ctx.font = "900 40px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.title || "", 56, 140, W - 112, 50, 1);
+
+            ctx.fillStyle = textSub;
+            ctx.font = "bold 24px 'Noto Sans TC', sans-serif";
+            this.drawWrappedCanvasText(ctx, slide.subtitle || "", 56, 185, W - 112, 34, 1);
+
+            const cardW = (W - 136) / 2;
+            const cardH = 188;
+            bullets.slice(0, 4).forEach((item, idx) => {
+                const col = idx % 2;
+                const row = Math.floor(idx / 2);
+                const x = 56 + col * (cardW + 24);
+                const y = 222 + row * (cardH + 22);
+
+                ctx.fillStyle = bgSub;
+                ctx.strokeStyle = idx === 0 ? accent2 : accent1;
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                ctx.roundRect(x, y, cardW, cardH, 18);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = idx === 0 ? accent2 : accent1;
+                ctx.beginPath();
+                ctx.arc(x + 38, y + 44, 20, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "900 20px 'Noto Sans TC', sans-serif";
+                ctx.fillText(`${idx + 1}`, x + 32, y + 51);
+
+                ctx.fillStyle = textMain;
+                ctx.font = "bold 24px 'Noto Sans TC', sans-serif";
+                this.drawWrappedCanvasText(ctx, item, x + 72, y + 52, cardW - 96, 36, 3);
+            });
+        }
+
+        // 5. 底部頁尾資訊與頁碼
+        ctx.fillStyle = textSub;
+        ctx.font = "bold 18px 'Noto Sans TC', sans-serif";
+        ctx.fillText(`${cfg.topic} ｜ 5+1 配色：${palette.name}`, 56, H - 24);
+        ctx.fillText(`第 ${slideIdx + 1} / ${totalSlides} 頁`, W - 170, H - 24);
+    }
+
+    /**
+     * Canvas 自動斷行文字繪製輔助
+     */
+    drawWrappedCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
+        const chars = String(text || "").split("");
+        let line = "";
+        let lineCount = 0;
+        for (let i = 0; i < chars.length; i += 1) {
+            const testLine = line + chars[i];
+            if (ctx.measureText(testLine).width > maxWidth && line.length > 0) {
+                lineCount += 1;
+                if (lineCount >= maxLines) {
+                    ctx.fillText(`${line.slice(0, Math.max(1, line.length - 1))}...`, x, y);
+                    return;
+                }
+                ctx.fillText(line, x, y);
+                line = chars[i];
+                y += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        if (line) {
+            ctx.fillText(line, x, y);
+        }
+    }
+
+    /**
+     * 匯出可編輯之 PowerPoint (.pptx) 簡報檔（包含 5+1 配色與每頁演講者備忘稿）
+     */
+    async exportDeckToPptx() {
+        const feedbackEl = document.getElementById("rpa-ppt-feedback");
+        if (!window.PptxGenJS) {
+            if (feedbackEl) {
+                feedbackEl.textContent = "PowerPoint 產製元件尚未載入完成，請先使用「下載 PDF 簡報檔」或重新整理頁面。";
+                feedbackEl.className = "admin-feedback-msg is-error";
+            }
+            return;
+        }
+
+        const cfg = this.rpaPptConfig;
+        const palette = RPA_PPT_THEME_PRESETS.find((p) => p.id === cfg.paletteId) || RPA_PPT_THEME_PRESETS[0];
+        const cleanHex = (hex) => String(hex || "#1E293B").replace("#", "").toUpperCase();
+        const [bgMain, bgSub, textMain, textSub, accent1, accent2] = palette.colors.map(cleanHex);
+
+        const pptx = new window.PptxGenJS();
+        pptx.layout = "LAYOUT_16x9";
+        pptx.title = cfg.topic || "AI 專題簡報";
+        pptx.author = "主題二 AI 簡報產製工作台";
+
+        this.rpaDeckSlides.forEach((s, idx) => {
+            const slide = pptx.addSlide();
+            slide.background = { color: bgMain };
+
+            // 頂部色帶
+            slide.addShape(pptx.ShapeType.rect, {
+                x: 0,
+                y: 0,
+                w: 10,
+                h: 0.12,
+                fill: { color: accent1 }
+            });
+
+            // 右上角標籤
+            slide.addText(s.highlightTag || `PAGE ${idx + 1}`, {
+                x: 7.7,
+                y: 0.25,
+                w: 1.8,
+                h: 0.38,
+                fontSize: 12,
+                bold: true,
+                color: "FFFFFF",
+                align: "center",
+                fill: { color: accent2 },
+                fontFace: "Microsoft JhengHei"
+            });
+
+            // 主標題與副標題
+            slide.addText(s.title || `第 ${idx + 1} 頁`, {
+                x: 0.5,
+                y: s.layout === "cover" ? 1.3 : 0.45,
+                w: 7.0,
+                h: s.layout === "cover" ? 1.1 : 0.65,
+                fontSize: s.layout === "cover" ? 32 : 24,
+                bold: true,
+                color: textMain,
+                fontFace: "Microsoft JhengHei"
+            });
+
+            slide.addText(s.subtitle || "", {
+                x: 0.5,
+                y: s.layout === "cover" ? 2.45 : 1.12,
+                w: 8.8,
+                h: 0.45,
+                fontSize: 16,
+                bold: true,
+                color: accent1,
+                fontFace: "Microsoft JhengHei"
+            });
+
+            // 條列重點內容區塊
+            const bulletItems = (s.bullets || []).map((b, bIdx) => ({
+                text: `${bIdx + 1}. ${b}`,
+                options: {
+                    fontSize: 16,
+                    color: textMain,
+                    bold: true,
+                    breakLine: true,
+                    paraSpaceAfter: 12
+                }
+            }));
+
+            if (bulletItems.length > 0) {
+                slide.addText(bulletItems, {
+                    x: 0.5,
+                    y: s.layout === "cover" ? 3.15 : 1.75,
+                    w: 9.0,
+                    h: s.layout === "cover" ? 1.8 : 3.2,
+                    fill: { color: bgSub },
+                    line: { color: accent1, pt: 1.5 },
+                    margin: 16,
+                    valign: "top",
+                    fontFace: "Microsoft JhengHei"
+                });
+            }
+
+            // 頁尾
+            slide.addText(`${cfg.topic} ｜ 第 ${idx + 1} / ${this.rpaDeckSlides.length} 頁`, {
+                x: 0.5,
+                y: 5.2,
+                w: 9.0,
+                h: 0.3,
+                fontSize: 11,
+                color: textSub,
+                fontFace: "Microsoft JhengHei"
+            });
+
+            if (s.speakerNotes) {
+                slide.addNotes(s.speakerNotes);
+            }
+        });
+
+        const safeName = (cfg.topic || "AI簡報").replace(/[\\/:*?"<>|]/g, "_").slice(0, 24);
+        await pptx.writeFile({ fileName: `${safeName}_${cfg.paletteId}.pptx` });
+        if (feedbackEl) {
+            feedbackEl.textContent = "已成功產製並下載 PowerPoint (.pptx) 簡報檔（含 5+1 配色與每頁講稿備忘錄）！";
+            feedbackEl.className = "admin-feedback-msg is-success";
+        }
+    }
+
+    /**
+     * 將全套投影片渲染為高解析度多頁 PDF 簡報檔下載
+     */
+    exportDeckToPdf() {
+        const offCanvas = document.createElement("canvas");
+        offCanvas.width = 1280;
+        offCanvas.height = 720;
+
+        const pages = this.rpaDeckSlides.map((slide, idx) => {
+            this.renderDeckSlideToCanvas(offCanvas, slide, idx, this.rpaDeckSlides.length);
+            const jpegDataUrl = offCanvas.toDataURL("image/jpeg", 0.92);
+            return {
+                widthPt: 960,
+                heightPt: 540,
+                pixelW: 1280,
+                pixelH: 720,
+                jpegBytes: this.dataUrlToUint8Array(jpegDataUrl)
+            };
+        });
+
+        const pdfBytes = this.buildMultiPageJpegPdfBytes(pages);
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const safeName = (this.rpaPptConfig.topic || "AI簡報").replace(/[\\/:*?"<>|]/g, "_").slice(0, 24);
+        a.href = url;
+        a.download = `${safeName}_${this.rpaPptConfig.paletteId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    /**
+     * 一鍵將工具 01 產製好的全套投影片與講稿送往「工具 05：簡報講稿與影片」直接合成教學影片
+     */
+    sendDeckToTool05(theme) {
+        const offCanvas = document.createElement("canvas");
+        offCanvas.width = 1280;
+        offCanvas.height = 720;
+
+        this.rpaVideoSlides = this.rpaDeckSlides.map((slide, idx) => {
+            this.renderDeckSlideToCanvas(offCanvas, slide, idx, this.rpaDeckSlides.length);
+            return {
+                pageNum: idx + 1,
+                title: slide.title || `第 ${idx + 1} 頁`,
+                dataUrl: offCanvas.toDataURL("image/png"),
+                rawText: `${slide.title} ${slide.subtitle} ${(slide.bullets || []).join(" ")}`,
+                script: this.applyTaiwanPolyphonicFixes(slide.speakerNotes || `第 ${idx + 1} 頁重點：${slide.title}。`)
+            };
+        });
+
+        this.rpaActiveTool = "tool-05";
+        this.renderTheme02AutomationHub(theme);
     }
 
     /**
@@ -6482,11 +7167,28 @@ ${cfg.sourceText}`;
     }
 
     bindRpaPptPromptEvents(theme) {
+        const previewCanvas = document.getElementById("rpa-deck-slide-canvas");
+        const redrawCurrentSlide = () => {
+            if (!previewCanvas) return;
+            const currentSlide = this.rpaDeckSlides[this.rpaActiveDeckSlideIdx] || this.rpaDeckSlides[0];
+            if (currentSlide) {
+                this.renderDeckSlideToCanvas(
+                    previewCanvas,
+                    currentSlide,
+                    this.rpaActiveDeckSlideIdx,
+                    this.rpaDeckSlides.length
+                );
+            }
+        };
+
+        // 初次載入立即繪製 16:9 簡報預覽畫布
+        redrawCurrentSlide();
+
         const syncFormToState = () => {
             const topicEl = document.getElementById("rpa-ppt-topic");
             const audEl = document.getElementById("rpa-ppt-audience");
             const slidesEl = document.getElementById("rpa-ppt-slides");
-            const mascotEl = document.getElementById("rpa-ppt-mascot");
+            const modelEl = document.getElementById("rpa-ppt-gemini-model");
             const paletteEl = document.getElementById("rpa-ppt-palette");
             const styleEl = document.getElementById("rpa-ppt-style");
             const toneEl = document.getElementById("rpa-ppt-tone");
@@ -6494,8 +7196,8 @@ ${cfg.sourceText}`;
 
             if (topicEl) this.rpaPptConfig.topic = topicEl.value.trim() || "未命名簡報主題";
             if (audEl) this.rpaPptConfig.audience = audEl.value.trim() || "一般受眾";
-            if (slidesEl) this.rpaPptConfig.slideCount = slidesEl.value || "10";
-            if (mascotEl) this.rpaPptConfig.mascotFreq = mascotEl.value;
+            if (slidesEl) this.rpaPptConfig.slideCount = slidesEl.value || "6";
+            if (modelEl) this.rpaPptConfig.geminiModel = modelEl.value || "gemini-2.5-flash";
             if (paletteEl) this.rpaPptConfig.paletteId = paletteEl.value;
             if (styleEl) this.rpaPptConfig.styleId = styleEl.value;
             if (toneEl) this.rpaPptConfig.toneId = toneEl.value;
@@ -6504,7 +7206,7 @@ ${cfg.sourceText}`;
             this.rpaGeneratedPrompt = this.buildPptPromptText();
         };
 
-        ["rpa-ppt-palette", "rpa-ppt-style", "rpa-ppt-tone", "rpa-ppt-mascot"].forEach((id) => {
+        ["rpa-ppt-palette", "rpa-ppt-style", "rpa-ppt-tone", "rpa-ppt-gemini-model"].forEach((id) => {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener("change", () => {
@@ -6522,9 +7224,29 @@ ${cfg.sourceText}`;
             genBtn.addEventListener("click", () => {
                 syncFormToState();
                 if (outBox) outBox.value = this.rpaGeneratedPrompt;
+                redrawCurrentSlide();
                 if (feedbackEl) {
-                    feedbackEl.textContent = "已更新簡報提示詞！請點右側「一鍵複製內容」。";
+                    feedbackEl.textContent = "已更新簡報提示詞與配色預覽！";
                     feedbackEl.className = "admin-feedback-msg is-success";
+                }
+            });
+        }
+
+        // 從文稿或右側大綱轉換為投影片（免 API Key 亦可立即產製）
+        const parseSlidesBtn = document.getElementById("rpa-parse-text-slides-btn");
+        if (parseSlidesBtn) {
+            parseSlidesBtn.addEventListener("click", () => {
+                syncFormToState();
+                const rawText = outBox && outBox.value.trim() && !outBox.value.includes("## 二、版面風格與「5+1 色彩計畫」")
+                    ? outBox.value
+                    : this.rpaPptConfig.sourceText;
+                this.rpaDeckSlides = this.parseTextOrJsonToSlides(rawText);
+                this.rpaActiveDeckSlideIdx = 0;
+                this.renderTheme02AutomationHub(theme);
+                const newFeedback = document.getElementById("rpa-ppt-feedback");
+                if (newFeedback) {
+                    newFeedback.textContent = `已根據文稿轉換產製共 ${this.rpaDeckSlides.length} 頁簡報投影片！請見下方步驟 3 預覽與下載。`;
+                    newFeedback.className = "admin-feedback-msg is-success";
                 }
             });
         }
@@ -6538,6 +7260,8 @@ ${cfg.sourceText}`;
                 reader.onload = () => {
                     this.rpaPptConfig.sourceText = String(reader.result || "");
                     this.rpaGeneratedPrompt = this.buildPptPromptText();
+                    this.rpaDeckSlides = this.parseTextOrJsonToSlides(this.rpaPptConfig.sourceText);
+                    this.rpaActiveDeckSlideIdx = 0;
                     this.renderTheme02AutomationHub(theme);
                 };
                 reader.readAsText(file, "utf-8");
@@ -6571,6 +7295,7 @@ ${cfg.sourceText}`;
             });
         }
 
+        // 使用 Gemini 模型直接產製全套結構化簡報投影片與講稿
         const geminiBtn = document.getElementById("rpa-call-gemini-btn");
         if (geminiBtn && outBox) {
             geminiBtn.addEventListener("click", async () => {
@@ -6578,42 +7303,200 @@ ${cfg.sourceText}`;
                 const apiKey = this.getLocalGeminiKey();
                 if (!apiKey) {
                     if (feedbackEl) {
-                        feedbackEl.textContent = "請先點上方「設定 Gemini 金鑰」輸入您的 API Key。";
+                        feedbackEl.textContent = "請先點上方「設定 Gemini 金鑰」輸入您的 API Key（或點「從文稿轉換為投影片」免金鑰產製）。";
                         feedbackEl.className = "admin-feedback-msg is-error";
                     }
                     return;
                 }
+                const modelName = this.rpaPptConfig.geminiModel || "gemini-2.5-flash";
                 if (feedbackEl) {
-                    feedbackEl.textContent = "AI 正在為您撰寫逐頁簡報大綱與講稿，請稍候...";
+                    feedbackEl.textContent = `正在呼叫 ${modelName} 為您產製全套 ${this.rpaPptConfig.slideCount} 頁簡報投影片與講稿，請稍候...`;
                     feedbackEl.className = "admin-feedback-msg";
                 }
                 try {
-                    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+                    const slideGenPrompt = `${this.rpaGeneratedPrompt}
+
+請根據上述設定與參考文稿，直接產製共 ${this.rpaPptConfig.slideCount} 頁結構化簡報資料，並嚴格只輸出 JSON 陣列（不要加上 Markdown 語法以外的多餘說明），每個元素格式如下：
+[
+  {
+    "page": 1,
+    "layout": "cover",
+    "title": "主標題（精簡有力，20字內）",
+    "subtitle": "副標題或核心結論（30字內）",
+    "bullets": ["重點條列一（32字內）", "重點條列二（32字內）", "重點條列三（32字內）"],
+    "highlightTag": "右上角4~6字強調標籤",
+    "speakerNotes": "本頁自然口語講稿（約80~120字，台灣繁體中文，口語自然）"
+  }
+]
+注意：layout 欄位請依內容性質選用 "cover"（第1頁封面）、"bento"（雙欄重點卡片）、"comparison"（左右對照比較）或 "steps"（步驟流程）。`;
+
+                    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent?key=${encodeURIComponent(apiKey)}`;
                     const resp = await fetch(endpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: this.rpaGeneratedPrompt }] }]
+                            contents: [{ parts: [{ text: slideGenPrompt }] }],
+                            generationConfig: {
+                                responseMimeType: "application/json"
+                            }
                         })
                     });
                     const data = await resp.json();
                     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (text) {
-                        this.rpaGeneratedPrompt = text;
-                        outBox.value = text;
-                        if (feedbackEl) {
-                            feedbackEl.textContent = "逐頁簡報大綱已生成完畢！";
-                            feedbackEl.className = "admin-feedback-msg is-success";
+                        const slides = this.parseTextOrJsonToSlides(text);
+                        this.rpaDeckSlides = slides;
+                        this.rpaActiveDeckSlideIdx = 0;
+
+                        // 同步將可讀性高的逐頁大綱顯示於步驟 2 文字框
+                        const readableOutline = slides.map((s, i) => (
+                            `【第 ${i + 1} 頁｜版型：${s.layout}｜標籤：${s.highlightTag}】\n` +
+                            `主標題：${s.title}\n` +
+                            `副標題：${s.subtitle}\n` +
+                            `重點條列：\n${(s.bullets || []).map((b, bIdx) => `  ${bIdx + 1}. ${b}`).join("\n")}\n` +
+                            `口語講稿：${s.speakerNotes}\n`
+                        )).join("\n----------------------------------------\n");
+
+                        this.rpaGeneratedPrompt = readableOutline;
+                        this.renderTheme02AutomationHub(theme);
+
+                        const newFeedback = document.getElementById("rpa-ppt-feedback");
+                        if (newFeedback) {
+                            newFeedback.textContent = `已由 ${modelName} 產製完成共 ${slides.length} 頁投影片！可直接於下方步驟 3 預覽修改或下載 PowerPoint (.pptx) 與 PDF。`;
+                            newFeedback.className = "admin-feedback-msg is-success";
                         }
                     } else {
                         throw new Error(data?.error?.message || "未收到回應內容");
                     }
                 } catch (err) {
                     if (feedbackEl) {
-                        feedbackEl.textContent = `生成失敗：${err.message}`;
+                        feedbackEl.textContent = `Gemini 產製失敗：${err.message}`;
                         feedbackEl.className = "admin-feedback-msg is-error";
                     }
                 }
+            });
+        }
+
+        // 步驟 3：頁次切換按鈕
+        this.focusSection.querySelectorAll("[data-deck-page]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const idx = parseInt(btn.getAttribute("data-deck-page"), 10);
+                if (!Number.isNaN(idx) && idx >= 0 && idx < this.rpaDeckSlides.length) {
+                    this.rpaActiveDeckSlideIdx = idx;
+                    this.renderTheme02AutomationHub(theme);
+                }
+            });
+        });
+
+        // 新增一頁投影片
+        const addSlideBtn = document.getElementById("rpa-deck-add-slide-btn");
+        if (addSlideBtn) {
+            addSlideBtn.addEventListener("click", () => {
+                const newPageNum = this.rpaDeckSlides.length + 1;
+                this.rpaDeckSlides.push({
+                    page: newPageNum,
+                    layout: "bento",
+                    title: `新增重點頁（第 ${newPageNum} 頁）`,
+                    subtitle: "請於右側輸入副標題或核心結論",
+                    bullets: [
+                        "核心重點項目一",
+                        "核心重點項目二",
+                        "核心重點項目三"
+                    ],
+                    highlightTag: `重點 0${newPageNum}`,
+                    speakerNotes: `這是第 ${newPageNum} 頁的口語講稿內容。`
+                });
+                this.rpaActiveDeckSlideIdx = this.rpaDeckSlides.length - 1;
+                this.renderTheme02AutomationHub(theme);
+            });
+        }
+
+        // 刪除本頁投影片
+        const delSlideBtn = document.getElementById("rpa-deck-del-slide-btn");
+        if (delSlideBtn) {
+            delSlideBtn.addEventListener("click", () => {
+                if (this.rpaDeckSlides.length <= 1) {
+                    window.alert("簡報至少需保留 1 頁投影片！");
+                    return;
+                }
+                this.rpaDeckSlides.splice(this.rpaActiveDeckSlideIdx, 1);
+                if (this.rpaActiveDeckSlideIdx >= this.rpaDeckSlides.length) {
+                    this.rpaActiveDeckSlideIdx = this.rpaDeckSlides.length - 1;
+                }
+                this.renderTheme02AutomationHub(theme);
+            });
+        }
+
+        // 步驟 3：右側即時編輯器綁定（即時重繪 16:9 畫布）
+        const editLayoutEl = document.getElementById("rpa-slide-edit-layout");
+        const editTagEl = document.getElementById("rpa-slide-edit-tag");
+        const editTitleEl = document.getElementById("rpa-slide-edit-title");
+        const editSubEl = document.getElementById("rpa-slide-edit-subtitle");
+        const editBulletsEl = document.getElementById("rpa-slide-edit-bullets");
+        const editNotesEl = document.getElementById("rpa-slide-edit-notes");
+
+        const syncSlideEdit = () => {
+            const slide = this.rpaDeckSlides[this.rpaActiveDeckSlideIdx];
+            if (!slide) return;
+            if (editLayoutEl) slide.layout = editLayoutEl.value;
+            if (editTagEl) slide.highlightTag = editTagEl.value.trim();
+            if (editTitleEl) slide.title = editTitleEl.value;
+            if (editSubEl) slide.subtitle = editSubEl.value;
+            if (editBulletsEl) {
+                slide.bullets = editBulletsEl.value
+                    .split(/\r?\n/)
+                    .map((line) => line.trim())
+                    .filter(Boolean);
+            }
+            if (editNotesEl) slide.speakerNotes = editNotesEl.value;
+            redrawCurrentSlide();
+        };
+
+        if (editLayoutEl) editLayoutEl.addEventListener("change", syncSlideEdit);
+        [editTagEl, editTitleEl, editSubEl, editBulletsEl, editNotesEl].forEach((el) => {
+            if (el) el.addEventListener("input", syncSlideEdit);
+        });
+
+        // 四大匯出與串接按鈕
+        const exportPptxBtn = document.getElementById("rpa-export-pptx-btn");
+        if (exportPptxBtn) {
+            exportPptxBtn.addEventListener("click", () => {
+                syncFormToState();
+                this.exportDeckToPptx();
+            });
+        }
+
+        const exportPdfBtn = document.getElementById("rpa-export-pdf-btn");
+        if (exportPdfBtn) {
+            exportPdfBtn.addEventListener("click", () => {
+                syncFormToState();
+                this.exportDeckToPdf();
+                if (feedbackEl) {
+                    feedbackEl.textContent = "已產製並下載全套 16:9 PDF 簡報檔！";
+                    feedbackEl.className = "admin-feedback-msg is-success";
+                }
+            });
+        }
+
+        const exportPngBtn = document.getElementById("rpa-export-png-btn");
+        if (exportPngBtn && previewCanvas) {
+            exportPngBtn.addEventListener("click", () => {
+                redrawCurrentSlide();
+                const dataUrl = previewCanvas.toDataURL("image/png");
+                const a = document.createElement("a");
+                a.href = dataUrl;
+                a.download = `簡報第${this.rpaActiveDeckSlideIdx + 1}頁_${this.rpaPptConfig.paletteId}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        }
+
+        const sendTool05Btn = document.getElementById("rpa-send-to-tool05-btn");
+        if (sendTool05Btn) {
+            sendTool05Btn.addEventListener("click", () => {
+                syncFormToState();
+                this.sendDeckToTool05(theme);
             });
         }
     }
