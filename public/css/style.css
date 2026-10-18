@@ -2694,6 +2694,93 @@ html[data-theme="dark"] .copay-highlight-pill.is-owing {
     gap: 0.9rem;
 }
 
+/* 兩階段票選與點餐流程切換器 (Phase 1: 店家票選 -> Phase 2: 最高票店家點餐) */
+.survey-phase-stepper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.phase-step-card {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.05rem 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.phase-step-card:hover {
+    border-color: var(--accent-cyan);
+    background: var(--bg-surface-hover);
+}
+
+.phase-step-card.is-active-phase {
+    background: var(--bg-surface-hover);
+    border-color: var(--accent-teal);
+    box-shadow:
+        0 0 0 3px var(--accent-soft-bg),
+        var(--shadow-soft);
+}
+
+.phase-step-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.phase-step-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+    letter-spacing: 0.04em;
+}
+
+.phase-step-card.is-active-phase .phase-step-badge {
+    color: var(--accent-teal);
+}
+
+.phase-step-title {
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.phase-step-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+/* 最高票當選店家公告橫幅 */
+.winner-vendor-banner {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(20, 184, 166, 0.12) 100%);
+    border: 1.5px solid var(--accent-teal);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.vote-count-pill {
+    font-family: "JetBrains Mono", "Noto Sans TC", monospace;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+    background: var(--bg-surface);
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-active);
+}
+
 /* 響應式斷點設計 */
 @media (max-width: 1100px) {
     body.is-festive-gala-mode .main-container {
@@ -2721,7 +2808,8 @@ html[data-theme="dark"] .copay-highlight-pill.is-owing {
     .voter-identity-card,
     .survey-stats-grid,
     .custom-order-adjust-grid,
-    .stats-four-grid {
+    .stats-four-grid,
+    .survey-phase-stepper {
         grid-template-columns: 1fr;
     }
 
