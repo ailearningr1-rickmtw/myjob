@@ -2143,6 +2143,403 @@ html[data-theme="dark"] .winner-prize-badge {
     color: var(--text-muted);
 }
 
+/* ==========================================================================
+   主題五子系統二：多功能問卷調查與尾牙餐點/活動票選系統 (Survey & Voting System)
+   ========================================================================== */
+
+body.is-survey-activity-mode .top-navbar,
+body.is-survey-activity-mode .site-footer {
+    display: none !important;
+}
+
+body.is-survey-activity-mode .main-container {
+    max-width: 1420px;
+    padding: 1rem 1.5rem 2.5rem;
+}
+
+.survey-system-shell {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid var(--border-active);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.85rem 2.25rem;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    position: relative;
+}
+
+.survey-system-shell::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--accent-gradient);
+}
+
+/* 問卷系統頂部導覽與活動專案切換列 */
+.survey-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.15rem;
+}
+
+.survey-campaign-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: var(--accent-soft-bg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.25rem;
+}
+
+.campaign-select-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.campaign-select {
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-active);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.campaign-select:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+}
+
+/* 活動附檔與外部介紹連結橫幅 */
+.campaign-resources-banner {
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border-active);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.resource-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.resource-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.resource-desc {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+}
+
+.resource-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.external-link-btn {
+    appearance: none;
+    text-decoration: none;
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
+    color: var(--accent-cyan);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.42rem 0.85rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.external-link-btn:hover {
+    background: var(--accent-gradient);
+    color: var(--text-on-accent);
+    border-color: transparent;
+}
+
+/* 投票人身分選擇與狀態區 */
+.voter-identity-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.4rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.25rem;
+    align-items: end;
+}
+
+/* 餐點／票選項目卡片網格 */
+.survey-category-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.survey-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.1rem;
+}
+
+.survey-option-card {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.survey-option-card:hover {
+    border-color: var(--accent-cyan);
+    background: var(--bg-surface-hover);
+    transform: translateY(-2px);
+}
+
+.survey-option-card.is-selected {
+    background: var(--bg-surface-hover);
+    border-color: var(--accent-teal);
+    box-shadow:
+        0 0 0 3px var(--accent-soft-bg),
+        var(--shadow-soft);
+}
+
+.option-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.option-radio-indicator {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+}
+
+.survey-option-card.is-selected .option-radio-indicator {
+    border-color: var(--accent-teal);
+    background: var(--accent-teal);
+}
+
+.survey-option-card.is-selected .option-radio-indicator::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.option-title {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.option-tag-pill {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-teal);
+    background: var(--accent-soft-bg);
+    padding: 0.18rem 0.55rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-light);
+}
+
+.option-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.option-links-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* 附檔預覽燈箱視窗 (Attachment Preview Modal) */
+.attachment-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.attachment-modal-card {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-active);
+    border-radius: var(--radius-lg);
+    max-width: 820px;
+    width: 100%;
+    max-height: 88vh;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: var(--shadow-hover);
+    overflow-y: auto;
+}
+
+.attachment-preview-media {
+    width: 100%;
+    max-height: 62vh;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+}
+
+.attachment-doc-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    color: var(--text-primary);
+}
+
+/* 統計分析與 LINE 群組一鍵通知產生器 */
+.survey-stats-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.stats-canvas-wrap {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem;
+}
+
+.stats-chart-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.line-generator-card {
+    background: var(--bg-secondary);
+    border: 1.5px solid #10b981;
+    border-radius: var(--radius-md);
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.line-badge-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.line-green-tag {
+    background: #06c755;
+    color: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.04em;
+}
+
+.line-preview-textarea {
+    width: 100%;
+    min-height: 250px;
+    resize: vertical;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: "JetBrains Mono", "Noto Sans TC", monospace;
+    font-size: 0.84rem;
+    padding: 0.85rem;
+    line-height: 1.6;
+}
+
+.line-copy-btn {
+    appearance: none;
+    border: none;
+    background: linear-gradient(135deg, #06c755 0%, #10b981 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.75rem 1.35rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(6, 199, 85, 0.28);
+    transition: all var(--transition-fast);
+}
+
+.line-copy-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(6, 199, 85, 0.38);
+}
+
 /* 響應式斷點設計 */
 @media (max-width: 1100px) {
     body.is-festive-gala-mode .main-container {
@@ -2166,7 +2563,9 @@ html[data-theme="dark"] .winner-prize-badge {
     }
 
     .lottery-admin-grid,
-    .stage-live-inputs-row {
+    .stage-live-inputs-row,
+    .voter-identity-card,
+    .survey-stats-grid {
         grid-template-columns: 1fr;
     }
 
@@ -2202,6 +2601,7 @@ html[data-theme="dark"] .winner-prize-badge {
         font-size: 1.65rem;
     }
 }
+
 
 
 

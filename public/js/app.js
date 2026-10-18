@@ -1,8 +1,9 @@
 /**
  * 工作中樞平台前端核心邏輯 (ES6+)
  * 負責管理五大主題路由、關鍵字檢索、主題配色切換、構想筆記，
- * 以及「主題五：多元活動與非正式任務中心」旗下之「年終尾牙自動化抽獎系統」
- * （支援特定活動全畫面沉浸模式、左右懸掛動態鞭炮串與喜慶宮燈、獨立匯入頁、大型開獎舞台、手動控制輪動與煙花特效）
+ * 以及「主題五：多元活動與非正式任務中心」旗下之兩大關聯子系統：
+ * 1. 多功能問卷調查與尾牙餐點/活動票選系統 (與尾牙抽獎共用員工名單，支援選項附檔檢視、網頁評價查詢、Canvas 統計分析與一鍵複製 LINE 群組通知)
+ * 2. 歲末年終尾牙自動化抽獎系統 (支援全畫面沉浸模式、左右懸掛搖曳鞭炮串與宮燈、獨立匯入頁、大型開獎舞台、手動控制輪動與煙花特效)
  */
 
 const WORKSPACE_THEMES = [
@@ -72,13 +73,13 @@ const WORKSPACE_THEMES = [
         navShortName: "多元活動",
         title: "主題五：多元活動與非正式任務中心",
         subtitle: "Special Events & Informal Hub",
-        status: "含已啟用子系統",
-        description: "專門收納公司節慶活動、團隊交流、臨時性趣味工具與非正式專案任務的彈性工作區，目前已內建「年終尾牙自動化抽獎系統」。",
+        status: "雙核心系統已啟用",
+        description: "收納公司節慶活動、餐飲票選調查與非正式專案任務的彈性工作區。內建共用員工名單之「多功能問卷調查與餐點票選系統」與「年終尾牙自動化抽獎系統」。",
         iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
         slots: [
-            { name: "子系統一：年終尾牙自動化抽獎系統 (已啟用)", tag: "SYS-5A", detail: "進入時自動隱藏上方工作導覽列，展開左右懸掛鞭炮串與紅金喜慶大舞台。" },
-            { name: "子系統二：部門聚餐與下午茶隨機抽選器 (預留)", tag: "SLOT-5B", detail: "預留供日後擴充餐廳決策轉盤、飲料團購統計與隨機分組小工具。" },
-            { name: "子系統三：團康競賽計分與互動投票看板 (預留)", tag: "SLOT-5C", detail: "預留供日後擴充活動即時排行榜、趣味問答計分與現場互動任務。" }
+            { name: "前置系統：多功能問卷調查與餐點票選 (已啟用)", tag: "SYS-5A", detail: "與尾牙共用員工名單，支援主餐與飲料設定、附檔介紹檢視、網頁評價查詢、統計圖表與一鍵複製 LINE 通知。" },
+            { name: "活動系統：歲末年終尾牙自動化抽獎 (已啟用)", tag: "SYS-5B", detail: "承接問卷名單，具備左右懸掛鞭炮串、紅金喜慶大舞台、手動控制輪動與全螢幕煙花。" },
+            { name: "擴充預留：團隊競賽計分與臨時任務看板 (預留)", tag: "SLOT-5C", detail: "預留供日後擴充活動即時排行榜、趣味問答計分與現場互動任務。" }
         ]
     }
 ];
@@ -101,13 +102,160 @@ const REHEARSAL_SAMPLE_NAMES = [
     "行政管理部 - 何佳琪", "行政管理部 - 蕭宇廷", "行政管理部 - 羅雅雯", "行政管理部 - 高志豪", "行政管理部 - 潘怡君"
 ];
 
+/**
+ * 預設內建之多主題票選活動範本（支援尾牙餐點票選、部門聚餐下午茶與任意自訂票選主題）
+ */
+const DEFAULT_SURVEY_CAMPAIGNS = [
+    {
+        id: "campaign-yearend-meal",
+        title: "歲末年終尾牙 — 當日主餐與飲品票選調查",
+        description: "請各位同仁於尾牙活動前完成當日「主餐」與「飲品」票選，可點選各品項下方按鈕查看菜單附檔介紹或查詢網路食記評價。",
+        primaryCategoryLabel: "第一部分：當日主餐選擇（必選一項）",
+        secondaryCategoryLabel: "第二部分：當日飲品選擇（必選一項）",
+        officialUrl: "https://www.google.com/search?q=%E5%B0%BE%E7%89%99+%E7%B2%BE%E7%B7%BB%E5%A5%97%E9%A4%90+%E9%A3%9F%E8%A8%98+%E8%A9%95%E5%83%B9",
+        attachmentTitle: "歲末年終尾牙盛宴 — 完整菜單與過敏原說明書.doc",
+        attachmentContent: "【歲末年終尾牙盛宴・主廚精選菜單介紹】\n\n一、主餐供應說明：\n1. 炙燒頂級肋眼牛排套餐：嚴選美國 Prime 等級肋眼（建議熟度 5 至 7 分熟），佐黑松露紅酒醬與季節時蔬。\n2. 法式香草烤春雞佐松露醬：採用屏東放牧春雞，以迷迭香與百里香低溫慢烤，外皮酥脆肉質多汁。\n3. 北海道干貝明蝦海鮮雙拼：生食級北海道大干貝香煎搭配澎湖野生大明蝦，佐檸檬奶油白酒醬。\n4. 松露野菇堅果蔬食燉飯（全素可用）：義大利 Carnaroli 米燉煮牛肝菌、黑松露醬與烘烤核桃。\n\n二、飲品供應說明：\n所有飲品皆可於備註欄註明冰塊（正常／少冰／去冰／溫／熱）與甜度需求。",
+        attachmentDataUrl: "",
+        primaryOptions: [
+            {
+                id: "main-01",
+                name: "炙燒頂級肋眼牛排套餐",
+                tag: "人氣首選",
+                desc: "嚴選 Prime 肋眼牛排（建議 7 分熟），搭配黑松露紅酒沾醬、爐烤蒜球與季節時蔬。",
+                refUrl: "https://www.google.com/search?q=%E7%82%99%E7%87%92%E8%82%8B%E7%9C%BC%E7%89%9B%E6%8E%92%E5%A5%97%E9%A4%90+%E9%A3%9F%E8%A8%98+%E8%A9%95%E5%83%B9",
+                attachNote: "【餐點規格】10 oz 美國 Prime 肋眼牛排\n【包含配菜】松露薯泥、蘆筍、紅酒牛肉汁\n【備註提醒】如需全熟或更改醬料請於下方備註欄填寫。",
+                attachDataUrl: ""
+            },
+            {
+                id: "main-02",
+                name: "法式香草烤春雞佐松露醬",
+                tag: "不吃牛推薦",
+                desc: "鮮嫩春雞以多種法式香草醃製慢烤，表皮金黃酥脆，附烤馬鈴薯角與溫野菜。",
+                refUrl: "https://www.google.com/search?q=%E6%B3%95%E5%BC%8F%E9%A6%99%E8%8D%89%E7%83%A4%E6%98%A5%E9%9B%9E+%E9%A3%9F%E8%A8%98+%E8%A9%95%E5%83%B9",
+                attachNote: "【餐點規格】整隻法式普羅旺斯香草烤春雞\n【風味特色】迷迭香、百里香、初榨橄欖油爐烤，無牛肉成分。",
+                attachDataUrl: ""
+            },
+            {
+                id: "main-03",
+                name: "北海道干貝明蝦海鮮雙拼",
+                tag: "主廚海味",
+                desc: "生食級大干貝與野生海大蝦鐵板香煎，佐法式番紅花檸檬奶油醬。",
+                refUrl: "https://www.google.com/search?q=%E5%B9%B2%E8%B2%9D%E6%98%8E%E8%9D%A6%E6%B5%B7%E9%AE%AE%E9%9B%99%E6%8B%BC+%E9%A3%9F%E8%A8%98+%E8%A9%95%E5%83%B9",
+                attachNote: "【餐點規格】北海道 2L 干貝 3 顆 ＋ 野生大明蝦 2 尾\n【過敏原提示】本餐點含甲殼類與貝類海鮮。",
+                attachDataUrl: ""
+            },
+            {
+                id: "main-04",
+                name: "松露野菇堅果蔬食燉飯 (全素)",
+                tag: "精緻蔬食",
+                desc: "嚴選義大利米與頂級黑松露醬、綜合森林野菇及烘烤堅果慢火燉煮（全素可食）。",
+                refUrl: "https://www.google.com/search?q=%E6%9D%BE%E9%9C%B2%E9%87%8E%E8%8F%87%E7%87%89%E9%A3%AF+%E7%94%A8%E9%A4%90%E8%A9%95%E5%83%B9",
+                attachNote: "【餐點規格】全素／蛋奶素皆可調整（預設為全素無五辛）\n【主要食材】黑松露醬、杏鮑菇、鴻喜菇、松子、腰果。",
+                attachDataUrl: ""
+            }
+        ],
+        secondaryOptions: [
+            {
+                id: "drink-01",
+                name: "手沖蜜香紅烏龍 (微糖/無糖)",
+                tag: "台灣特色茶",
+                desc: "台東鹿野蜜香紅烏龍，帶有天然熟果香與蜂蜜尾韻，冷熱皆宜。",
+                refUrl: "https://www.google.com/search?q=%E8%9C%9C%E9%A6%99%E7%B4%85%E7%83%8F%E9%BE%8D+%E9%A3%B2%E6%96%99+%E8%A9%95%E5%83%B9",
+                attachNote: "【甜度冰塊】預設微糖少冰，如需無糖或熱飲請於備註欄說明。",
+                attachDataUrl: ""
+            },
+            {
+                id: "drink-02",
+                name: "鮮榨紅心芭樂檸檬綠茶",
+                tag: "清爽解膩",
+                desc: "新鮮紅心芭樂原汁搭配屏東檸檬與茉莉綠茶，富含維他命 C，清爽解膩。",
+                refUrl: "https://www.google.com/search?q=%E7%B4%85%E5%BF%83%E8%8A%AD%E6%A8%82%E6%AA%B8%E6%AA%AC%E7%B6%A0+%E8%A9%95%E5%83%B9",
+                attachNote: "【飲品特色】新鮮現榨果汁調和，僅提供冷飲（少冰／去冰）。",
+                attachDataUrl: ""
+            },
+            {
+                id: "drink-03",
+                name: "莊園精品拿鐵咖啡 (冰/熱)",
+                tag: "經典醇厚",
+                desc: "中深焙阿拉比卡精品配方豆萃取，融合小農鮮乳，口感滑順濃厚。",
+                refUrl: "https://www.google.com/search?q=%E8%8E%8A%E5%9C%92%E6%8B%BF%E9%90%B5%E5%92%96%E5%95%A1+%E8%A9%95%E5%83%B9",
+                attachNote: "【飲品特色】無加糖配方，可選冰拿鐵或熱拿鐵。",
+                attachDataUrl: ""
+            },
+            {
+                id: "drink-04",
+                name: "氣泡接骨木花果茶 (無咖啡因)",
+                tag: "無咖啡因",
+                desc: "歐洲接骨木花蜜融合綜合莓果與綿密氣泡水，完全無咖啡因負擔。",
+                refUrl: "https://www.google.com/search?q=%E6%8E%A5%E9%AA%A8%E6%9C%A8%E8%8A%B1%E6%9E%9C%E6%B0%A3%E6%B3%A1%E9%A3%B2+%E8%A9%95%E5%83%B9",
+                attachNote: "【飲品特色】0 咖啡因，孕婦與對咖啡因敏感之同仁皆可安心飲用。",
+                attachDataUrl: ""
+            }
+        ],
+        votes: {}
+    },
+    {
+        id: "campaign-team-outing",
+        title: "年度部門聚餐與下午茶 — 餐廳與飲品汎用票選",
+        description: "通用型多主題票選範例：可用於部門聚餐餐廳決策、下午茶團購、員工旅遊地點或福委會禮品方案調查。",
+        primaryCategoryLabel: "第一部分：聚餐餐廳／主食方案選擇",
+        secondaryCategoryLabel: "第二部分：搭配下午茶／飲品方案選擇",
+        officialUrl: "https://www.google.com/search?q=%E9%83%A8%E9%96%80%E8%81%9A%E9%A4%90+%E4%BA%BA%E6%B0%A3%E9%A4%90%E5%BB%B3+%E6%8E%A8%E8%96%A6",
+        attachmentTitle: "部門聚餐候選餐廳價位與交通資訊彙整表.doc",
+        attachmentContent: "【部門聚餐候選餐廳彙整說明】\n1. 日式和牛燒肉專門店：位於捷運站步行 3 分鐘，提供獨立包廂。\n2. 義式手工窯烤披薩餐酒館：適合多人分享，提供素食義大利麵選項。\n3. 泰式皇家料理合菜餐廳：酸辣開胃，十人圓桌配置。",
+        attachmentDataUrl: "",
+        primaryOptions: [
+            {
+                id: "out-main-01",
+                name: "日式和牛燒肉專門店",
+                tag: "獨立包廂",
+                desc: "專人代烤頂級和牛與伊比利豬拼盤，附無限量日式小菜與甜點。",
+                refUrl: "https://www.google.com/search?q=%E6%97%A5%E5%BC%8F%E5%92%8C%E7%89%9B%E7%87%92%E8%82%89+%E9%A3%9F%E8%A8%98+%E8%A9%95%E5%83%B9",
+                attachNote: "人均預算約 NT$ 1,200，設有三間獨立十人包廂。",
+                attachDataUrl: ""
+            },
+            {
+                id: "out-main-02",
+                name: "義式手工窯烤披薩餐酒館",
+                tag: "輕鬆聚會",
+                desc: "拿坡里認證龍眼木窯烤披薩、手工寬扁麵與歐陸開胃小點分享餐。",
+                refUrl: "https://www.google.com/search?q=%E7%BE%A9%E5%BC%8F%E7%AA%AF%E7%83%A4%E6%8A%AB%E8%96%A9%E9%A4%90%E9%85%92%E9%A4%A8+%E8%A9%95%E5%83%B9",
+                attachNote: "提供多款奶蛋素與全素窯烤料理，適合跨部門交流。",
+                attachDataUrl: ""
+            }
+        ],
+        secondaryOptions: [
+            {
+                id: "out-drink-01",
+                name: "精品手搖茶飲外送方案",
+                tag: "人手一杯",
+                desc: "精選台灣原葉鮮奶茶與鮮果茶系列。",
+                refUrl: "https://www.google.com/search?q=%E4%BA%BA%E6%B0%A3%E6%89%8B%E6%90%96%E9%A3%B2+%E5%BF%85%E5%96%9D+%E8%A9%95%E5%83%B9",
+                attachNote: "可自選甜度與冰塊。",
+                attachDataUrl: ""
+            },
+            {
+                id: "out-drink-02",
+                name: "法式千層蛋糕與濾掛咖啡組",
+                tag: "甜點組合",
+                desc: "手作水果千層切片蛋糕搭配莊園精品濾掛咖啡包。",
+                refUrl: "https://www.google.com/search?q=%E6%B3%95%E5%BC%8F%E5%8D%83%E5%B1%A4%E8%9B%8B%E7%B3%95+%E4%B8%8B%E5%8D%88%E8%8C%B6+%E8%A9%95%E5%83%B9",
+                attachNote: "蛋奶素可食。",
+                attachDataUrl: ""
+            }
+        ],
+        votes: {}
+    }
+];
+
 const STORAGE_KEYS = {
     THEME_MODE: "aero_workspace_theme_mode",
     SCRATCHPAD: "aero_workspace_scratchpad",
     IDEA_BACKLOG: "aero_workspace_idea_backlog",
     LOTTERY_STATE: "aero_workspace_lottery_state_v2",
     LOTTERY_PASSCODE: "aero_workspace_lottery_passcode",
-    LOTTERY_UNLOCKED_SESSION: "aero_workspace_lottery_unlocked"
+    LOTTERY_UNLOCKED_SESSION: "aero_workspace_lottery_unlocked",
+    SURVEY_STATE: "aero_workspace_survey_state_v1"
 };
 
 /**
@@ -245,9 +393,17 @@ class WorkspaceApp {
         this.searchQuery = "";
         this.ideaBacklog = this.loadIdeaBacklog();
         this.lotteryState = this.loadLotteryState();
+        this.surveyState = this.loadSurveyState();
         this.isRolling = false;
         this.rollingIntervalId = null;
         this.isStageDrawerCollapsed = false;
+
+        // 問卷互動暫存狀態
+        this.selectedVoterName = "";
+        this.selectedPrimaryOptionId = "";
+        this.selectedSecondaryOptionId = "";
+        this.voterCustomNote = "";
+        this.lineTemplateMode = "summary"; // summary | detailed | reminder
 
         this.cacheDomElements();
         this.fireworks = new FireworksController(this.fireworksCanvas);
@@ -353,8 +509,8 @@ class WorkspaceApp {
 
     loadLotteryState() {
         const defaultState = {
-            allParticipants: [],
-            remainingPool: [],
+            allParticipants: [...REHEARSAL_SAMPLE_NAMES],
+            remainingPool: [...REHEARSAL_SAMPLE_NAMES],
             winnersHistory: [],
             prizeConfigs: [...DEFAULT_PRIZE_CONFIGS],
             batchSize: 1,
@@ -363,7 +519,7 @@ class WorkspaceApp {
             latestDrawnWinners: [],
             latestDrawnPrize: "",
             latestDrawnAmount: "",
-            isRehearsalMode: false
+            isRehearsalMode: true
         };
         try {
             const raw = localStorage.getItem(STORAGE_KEYS.LOTTERY_STATE);
@@ -386,6 +542,41 @@ class WorkspaceApp {
         } catch (err) {
             console.error("儲存抽獎狀態失敗:", err);
         }
+    }
+
+    /**
+     * 讀取與儲存多功能問卷調查與餐點票選狀態
+     */
+    loadSurveyState() {
+        const defaultSurvey = {
+            activeCampaignId: DEFAULT_SURVEY_CAMPAIGNS[0].id,
+            campaigns: JSON.parse(JSON.stringify(DEFAULT_SURVEY_CAMPAIGNS))
+        };
+        try {
+            const raw = localStorage.getItem(STORAGE_KEYS.SURVEY_STATE);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed.campaigns) && parsed.campaigns.length > 0) {
+                    return parsed;
+                }
+            }
+        } catch (err) {
+            console.error("讀取問卷狀態失敗:", err);
+        }
+        return defaultSurvey;
+    }
+
+    saveSurveyState() {
+        try {
+            localStorage.setItem(STORAGE_KEYS.SURVEY_STATE, JSON.stringify(this.surveyState));
+        } catch (err) {
+            console.error("儲存問卷狀態失敗:", err);
+        }
+    }
+
+    getActiveCampaign() {
+        const found = this.surveyState.campaigns.find((c) => c.id === this.surveyState.activeCampaignId);
+        return found || this.surveyState.campaigns[0];
     }
 
     getPasscode() {
@@ -453,7 +644,14 @@ class WorkspaceApp {
 
     syncRouteFromHash() {
         const hash = window.location.hash.replace("#", "").trim();
-        if (hash === "theme-05-draw" || hash === "theme-05-admin") {
+        const specialRoutes = [
+            "theme-05-draw",
+            "theme-05-admin",
+            "theme-05-survey-vote",
+            "theme-05-survey-setup",
+            "theme-05-survey-stats"
+        ];
+        if (specialRoutes.includes(hash)) {
             this.setRoute(hash);
             return;
         }
@@ -469,9 +667,11 @@ class WorkspaceApp {
         this.activeRoute = routeId;
         this.updateActiveNavTab();
 
-        // 當進入特定活動（尾牙抽獎舞台或尾牙後台管理頁）時，自動啟用節慶沉浸模式並隱藏上方工作導覽列
         const isFestiveActivity = routeId === "theme-05-draw" || routeId === "theme-05-admin";
+        const isSurveyActivity = routeId.startsWith("theme-05-survey");
+
         document.body.classList.toggle("is-festive-gala-mode", isFestiveActivity);
+        document.body.classList.toggle("is-survey-activity-mode", isSurveyActivity);
 
         if (routeId === "overview") {
             this.overviewSection.classList.remove("is-hidden");
@@ -490,6 +690,12 @@ class WorkspaceApp {
             this.renderLotterySubpage(theme05Obj, "draw");
         } else if (routeId === "theme-05-admin") {
             this.renderLotterySubpage(theme05Obj, "admin");
+        } else if (routeId === "theme-05-survey-vote") {
+            this.renderSurveyPage("vote");
+        } else if (routeId === "theme-05-survey-setup") {
+            this.renderSurveyPage("setup");
+        } else if (routeId === "theme-05-survey-stats") {
+            this.renderSurveyPage("stats");
         } else {
             const themeObj = WORKSPACE_THEMES.find((t) => t.id === routeId);
             if (themeObj) {
@@ -543,10 +749,8 @@ class WorkspaceApp {
     getFestiveSideHangingsHtml() {
         const renderStringSvg = (emblemText) => `
             <svg class="firecracker-svg" viewBox="0 0 100 660" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- 頂部祥雲金鉤與紅繩 -->
                 <rect x="46" y="0" width="8" height="28" fill="#f59e0b" />
                 <circle cx="50" cy="28" r="7" fill="#fbbf24" stroke="#b91c1c" stroke-width="2" />
-                <!-- 喜慶大紅宮燈 -->
                 <rect x="32" y="34" width="36" height="8" rx="3" fill="#fbbf24" stroke="#991b1b" stroke-width="1.5" />
                 <ellipse cx="50" cy="72" rx="34" ry="30" fill="#dc2626" stroke="#fbbf24" stroke-width="2.5" />
                 <path d="M32 45 C24 62, 24 82, 32 99" stroke="#fbbf24" stroke-width="1.5" fill="none" opacity="0.7" />
@@ -554,91 +758,24 @@ class WorkspaceApp {
                 <circle cx="50" cy="72" r="15" fill="#991b1b" stroke="#fde047" stroke-width="1.5" />
                 <text x="50" y="78" text-anchor="middle" fill="#fef08a" font-size="16" font-weight="900" font-family="Noto Sans TC, sans-serif">${emblemText}</text>
                 <rect x="34" y="100" width="32" height="8" rx="3" fill="#fbbf24" stroke="#991b1b" stroke-width="1.5" />
-
-                <!-- 中央編織金紅主繩 -->
                 <line x1="50" y1="108" x2="50" y2="540" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
                 <line x1="50" y1="108" x2="50" y2="540" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 6" />
-
-                <!-- 左右交錯懸掛之八響立體紅金鞭炮串 -->
-                <!-- 第 1 對鞭炮 -->
-                <g transform="translate(26, 135) rotate(-22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-                <g transform="translate(74, 160) rotate(22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-
-                <!-- 第 2 對鞭炮 -->
-                <g transform="translate(26, 205) rotate(-22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-                <g transform="translate(74, 230) rotate(22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-
-                <!-- 第 3 對鞭炮 -->
-                <g transform="translate(26, 275) rotate(-22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-                <g transform="translate(74, 300) rotate(22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-
-                <!-- 第 4 對鞭炮 -->
-                <g transform="translate(26, 345) rotate(-22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-                <g transform="translate(74, 370) rotate(22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-
-                <!-- 第 5 對鞭炮 -->
-                <g transform="translate(26, 415) rotate(-22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-                <g transform="translate(74, 440) rotate(22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-
-                <!-- 第 6 對鞭炮 -->
-                <g transform="translate(26, 485) rotate(-22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-                <g transform="translate(74, 508) rotate(22)">
-                    <rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" />
-                    <rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" />
-                    <rect x="-10" y="11" width="20" height="5" fill="#fbbf24" />
-                </g>
-
-                <!-- 底部中國結與流蘇吊穗 -->
+                <g transform="translate(26, 135) rotate(-22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(74, 160) rotate(22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(26, 205) rotate(-22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(74, 230) rotate(22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(26, 275) rotate(-22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(74, 300) rotate(22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(26, 345) rotate(-22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(74, 370) rotate(22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(26, 415) rotate(-22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(74, 440) rotate(22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(26, 485) rotate(-22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
+                <g transform="translate(74, 508) rotate(22)"><rect x="-10" y="-22" width="20" height="44" rx="4" fill="#e11d48" stroke="#fbbf24" stroke-width="1.5" /><rect x="-10" y="-16" width="20" height="5" fill="#fbbf24" /><rect x="-10" y="11" width="20" height="5" fill="#fbbf24" /></g>
                 <polygon points="50,535 64,550 50,565 36,550" fill="#dc2626" stroke="#fbbf24" stroke-width="2" />
                 <line x1="45" y1="564" x2="42" y2="615" stroke="#dc2626" stroke-width="2.5" />
                 <line x1="50" y1="565" x2="50" y2="622" stroke="#f59e0b" stroke-width="2.5" />
                 <line x1="55" y1="564" x2="58" y2="615" stroke="#dc2626" stroke-width="2.5" />
-
-                <!-- 鞭炮尾端閃耀金紅火花特效 -->
                 <g class="firecracker-spark-group">
                     <circle cx="50" cy="595" r="5" fill="#fef08a" />
                     <line x1="50" y1="572" x2="50" y2="618" stroke="#fbbf24" stroke-width="2.2" />
@@ -734,13 +871,17 @@ class WorkspaceApp {
     }
 
     /**
-     * 渲染主題五：多元活動與非正式任務中心（年終尾牙抽獎作為其中一個獨立子系統）
+     * 渲染主題五：多元活動與非正式任務中心（包含階段一：多功能問卷與尾牙餐點票選、階段二：年終尾牙抽獎）
      */
     renderTheme05InformalHub(theme) {
         if (!this.focusSection) return;
         const ideas = this.ideaBacklog[theme.id] || [];
+        const totalEmployees = this.lotteryState.allParticipants.length;
         const remainingCount = this.lotteryState.remainingPool.length;
-        const winnersCount = this.lotteryState.allParticipants.length - remainingCount;
+        const winnersCount = totalEmployees - remainingCount;
+
+        const activeCampaign = this.getActiveCampaign();
+        const votedCount = Object.keys(activeCampaign.votes || {}).length;
 
         const ideasListHtml = ideas.length > 0
             ? ideas.map((item, idx) => `
@@ -757,7 +898,7 @@ class WorkspaceApp {
                     <div class="focus-title-group">
                         <div class="theme-meta-tags">
                             <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
-                            <span class="theme-status-badge">${this.escapeHtml(theme.subtitle)}</span>
+                            <span class="theme-status-badge">共用員工名單：${totalEmployees} 人</span>
                         </div>
                         <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
@@ -769,24 +910,52 @@ class WorkspaceApp {
                 </div>
 
                 <div>
-                    <h3 class="section-heading">非正式任務與節慶活動子系統列表 (Informal Subsystems)</h3>
-                    <p class="section-subheading">點選進入特定活動系統時，網頁將自動隱藏頂部工作導覽列並切換為專屬節慶活動佈置：</p>
+                    <h3 class="section-heading">非正式任務與節慶活動子系統列表 (前後關聯雙系統已啟用)</h3>
+                    <p class="section-subheading">「問卷調查與餐點票選系統」與「年終尾牙抽獎系統」共用同一份員工名單，可先完成當日主餐與飲料票選，再無縫接軌尾牙抽獎：</p>
                 </div>
 
                 <div class="informal-systems-grid">
-                    <!-- 子系統 1：年終尾牙自動化抽獎系統 -->
+                    <!-- 階段一：多功能問卷調查與尾牙餐點票選系統 -->
                     <article class="informal-system-card is-featured">
                         <div class="informal-card-body">
                             <div class="theme-meta-tags">
-                                <span class="theme-code-badge">SYS-5A</span>
+                                <span class="theme-code-badge">SYS-5A // 第一階段：活動前調查</span>
+                                <span class="theme-status-badge">已實作啟用</span>
+                            </div>
+                            <h4 class="theme-title">多功能問卷調查與餐點票選系統</h4>
+                            <p class="theme-desc">
+                                與尾牙抽獎共用員工名單！支援當日主餐與飲料設定、菜單附檔預覽、一鍵查詢網路食記與餐廳評價、視覺化統計圖表，以及一鍵複製 LINE 群組通知文案。亦可用於其他各類票選活動。
+                            </p>
+                            <p class="theme-route-hint">
+                                當前活動：${this.escapeHtml(activeCampaign.title)}（已填 ${votedCount} / ${totalEmployees} 人）
+                            </p>
+                        </div>
+                        <div class="informal-card-actions">
+                            <button type="button" class="primary-btn" id="go-survey-vote-btn">
+                                進入同仁餐點票選頁
+                            </button>
+                            <button type="button" class="secondary-btn" id="go-survey-setup-btn">
+                                設定餐點與附檔
+                            </button>
+                            <button type="button" class="secondary-btn" id="go-survey-stats-btn">
+                                統計分析與 LINE 通知
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 階段二：年終尾牙自動化抽獎系統 -->
+                    <article class="informal-system-card is-featured">
+                        <div class="informal-card-body">
+                            <div class="theme-meta-tags">
+                                <span class="theme-code-badge">SYS-5B // 第二階段：現場開獎</span>
                                 <span class="theme-status-badge">節慶展演版已啟用</span>
                             </div>
                             <h4 class="theme-title">歲末年終尾牙自動化抽獎系統</h4>
                             <p class="theme-desc">
-                                進入後自動切換全畫面喜慶紅金佈置與左右懸掛鞭炮串，並拆分為獨立的「大型開獎展演舞台」與「名單匯入與獎金設定頁」。
+                                直接沿用問卷系統之員工名單！進入後自動切換全畫面喜慶紅金佈置與左右懸掛鞭炮串，具備獨立「大型開獎展演舞台」與「名單獎金設定頁」。
                             </p>
                             <p class="theme-route-hint">
-                                目前名單池狀態：待抽 ${remainingCount} 人 / 已中獎 ${winnersCount} 人
+                                目前抽獎池狀態：待抽 ${remainingCount} 人 / 已中獎 ${winnersCount} 人
                             </p>
                         </div>
                         <div class="informal-card-actions">
@@ -799,23 +968,6 @@ class WorkspaceApp {
                         </div>
                     </article>
 
-                    <!-- 子系統 2：預留非正式任務 -->
-                    <article class="informal-system-card">
-                        <div class="informal-card-body">
-                            <div class="theme-meta-tags">
-                                <span class="theme-code-badge">SLOT-5B</span>
-                                <span class="theme-status-badge">預留擴充槽</span>
-                            </div>
-                            <h4 class="module-placeholder-title">部門聚餐與下午茶隨機抽選器</h4>
-                            <p class="module-placeholder-desc">
-                                預留供日後擴充部門聚餐餐廳決策轉盤、下午茶團購點餐彙整與隨機值日生指派等非正式任務。
-                            </p>
-                        </div>
-                        <div class="informal-card-actions">
-                            <span class="theme-route-hint">模組插槽待命擴充中</span>
-                        </div>
-                    </article>
-
                     <!-- 子系統 3：預留非正式任務 -->
                     <article class="informal-system-card">
                         <div class="informal-card-body">
@@ -823,9 +975,9 @@ class WorkspaceApp {
                                 <span class="theme-code-badge">SLOT-5C</span>
                                 <span class="theme-status-badge">預留擴充槽</span>
                             </div>
-                            <h4 class="module-placeholder-title">團隊活動計分與互動投票看板</h4>
+                            <h4 class="module-placeholder-title">團隊活動計分與分組競賽看板</h4>
                             <p class="module-placeholder-desc">
-                                預留供日後擴充 Team Building 分組競賽即時積分榜、活動趣味投票與臨時性任務看板。
+                                預留供日後擴充 Team Building 分組競賽即時積分榜與臨時趣味任務看板。
                             </p>
                         </div>
                         <div class="informal-card-actions">
@@ -837,9 +989,9 @@ class WorkspaceApp {
                 <!-- 主題五非正式任務構想紀錄器 -->
                 <div class="idea-capture-box">
                     <h3 class="section-heading">其他非正式主題任務構想清單 (Informal Tasks Backlog)</h3>
-                    <p class="section-subheading">除了年終尾牙抽獎外，若您想到其他非正式活動或趣味工作小工具，可先記錄於此：</p>
+                    <p class="section-subheading">若您想到其他非正式活動或趣味工作小工具，可先記錄於此：</p>
                     <form class="idea-form-row" id="idea-add-form">
-                        <input type="text" class="idea-input" id="idea-text-input" placeholder="輸入想在主題五新增的其他非正式任務，例如：交換禮物配對器、下午茶轉盤..." required />
+                        <input type="text" class="idea-input" id="idea-text-input" placeholder="輸入想在主題五新增的其他非正式任務，例如：交換禮物配對器..." required />
                         <button type="submit" class="primary-btn">新增任務構想</button>
                     </form>
                     <ul class="idea-list" id="theme-idea-list">
@@ -853,6 +1005,27 @@ class WorkspaceApp {
         if (backBtn) {
             backBtn.addEventListener("click", () => {
                 window.location.hash = "overview";
+            });
+        }
+
+        const goSurveyVoteBtn = document.getElementById("go-survey-vote-btn");
+        if (goSurveyVoteBtn) {
+            goSurveyVoteBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-survey-vote";
+            });
+        }
+
+        const goSurveySetupBtn = document.getElementById("go-survey-setup-btn");
+        if (goSurveySetupBtn) {
+            goSurveySetupBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-survey-setup";
+            });
+        }
+
+        const goSurveyStatsBtn = document.getElementById("go-survey-stats-btn");
+        if (goSurveyStatsBtn) {
+            goSurveyStatsBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-survey-stats";
             });
         }
 
@@ -898,9 +1071,1117 @@ class WorkspaceApp {
         });
     }
 
+    /* ==========================================================================
+       多功能問卷調查與餐點/活動票選系統 (SYS-5A)
+       支援：通用多主題切換、與尾牙共用員工名單、附檔介紹檢視、網頁食記評價查詢、
+            Canvas 統計圖表分析、一鍵複製 LINE 群組通知文案
+       ========================================================================== */
+
+    renderSurveyPage(subView) {
+        if (!this.focusSection) return;
+        const campaign = this.getActiveCampaign();
+        const employees = this.lotteryState.allParticipants;
+        const votedCount = Object.keys(campaign.votes || {}).length;
+
+        const campaignOptionsHtml = this.surveyState.campaigns.map((c) => `
+            <option value="${this.escapeHtml(c.id)}" ${c.id === campaign.id ? "selected" : ""}>
+                ${this.escapeHtml(c.title)}
+            </option>
+        `).join("");
+
+        const headerHtml = `
+            <!-- 問卷系統頂部導覽列 -->
+            <div class="survey-header-bar">
+                <div class="festive-brand-emblem">
+                    <span class="theme-code-badge">SYS-5A // 問卷與票選中心</span>
+                    <span class="section-heading">多功能問卷調查與尾牙餐點票選系統</span>
+                </div>
+                <div class="lottery-subpage-tabs">
+                    <button type="button" class="subpage-tab-btn ${subView === "vote" ? "active" : ""}" id="tab-survey-vote">
+                        <span>1. 同仁餐點與項目票選</span>
+                    </button>
+                    <button type="button" class="subpage-tab-btn ${subView === "setup" ? "active" : ""}" id="tab-survey-setup">
+                        <span>2. 設定餐點、附檔與共用名單</span>
+                    </button>
+                    <button type="button" class="subpage-tab-btn ${subView === "stats" ? "active" : ""}" id="tab-survey-stats">
+                        <span>3. 統計分析與 LINE 群組通知 (${votedCount}/${employees.length})</span>
+                    </button>
+                    <button type="button" class="secondary-btn" id="jump-to-lottery-btn">
+                        <span>前往尾牙抽獎</span>
+                    </button>
+                    <button type="button" class="back-overview-btn" id="survey-back-hub-btn">
+                        <span>離開系統</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 票選活動主題切換器（支援尾牙餐點與其他任意票選用途） -->
+            <div class="survey-campaign-bar">
+                <div class="campaign-select-group">
+                    <label class="live-input-label" for="survey-campaign-select">切換票選主題專案：</label>
+                    <select id="survey-campaign-select" class="campaign-select">
+                        ${campaignOptionsHtml}
+                    </select>
+                    <button type="button" class="secondary-btn" id="create-new-campaign-btn">＋ 新增其他票選主題</button>
+                </div>
+                <span class="theme-route-hint">
+                    與尾牙系統共用名單：共 ${employees.length} 位員工 ｜ 本主題已投票：${votedCount} 人
+                </span>
+            </div>
+        `;
+
+        let bodyContentHtml = "";
+        if (subView === "vote") {
+            bodyContentHtml = this.getSurveyVoteViewHtml(campaign, employees);
+        } else if (subView === "setup") {
+            bodyContentHtml = this.getSurveySetupViewHtml(campaign, employees);
+        } else {
+            bodyContentHtml = this.getSurveyStatsViewHtml(campaign, employees);
+        }
+
+        this.focusSection.innerHTML = `
+            <div class="survey-system-shell">
+                ${headerHtml}
+                ${bodyContentHtml}
+            </div>
+            <div id="attachment-modal-root" class="is-hidden"></div>
+        `;
+
+        this.bindSurveyCommonEvents(subView);
+        if (subView === "vote") {
+            this.bindSurveyVoteEvents(campaign);
+        } else if (subView === "setup") {
+            this.bindSurveySetupEvents(campaign);
+        } else {
+            this.bindSurveyStatsEvents(campaign, employees);
+            this.drawSurveyStatsCharts(campaign);
+        }
+    }
+
     /**
-     * 尾牙子系統路由入口：支援切換「大型開獎展演舞台 (draw)」與「名單匯入與獎金設定頁 (admin)」
+     * 子視圖 1：同仁互動點餐與票選頁面
      */
+    getSurveyVoteViewHtml(campaign, employees) {
+        if (!this.selectedVoterName && employees.length > 0) {
+            this.selectedVoterName = employees[0];
+            this.loadExistingVoteForSelectedEmployee(campaign);
+        }
+
+        if (!this.selectedPrimaryOptionId && campaign.primaryOptions.length > 0) {
+            this.selectedPrimaryOptionId = campaign.primaryOptions[0].id;
+        }
+        if (!this.selectedSecondaryOptionId && campaign.secondaryOptions.length > 0) {
+            this.selectedSecondaryOptionId = campaign.secondaryOptions[0].id;
+        }
+
+        const voterOptionsHtml = employees.length > 0
+            ? employees.map((emp) => {
+                const hasVoted = Boolean(campaign.votes && campaign.votes[emp]);
+                const statusTag = hasVoted ? "[已完成票選]" : "[尚未填寫]";
+                return `<option value="${this.escapeHtml(emp)}" ${emp === this.selectedVoterName ? "selected" : ""}>${this.escapeHtml(emp)} ${statusTag}</option>`;
+            }).join("")
+            : `<option value="">請先至「設定餐點、附檔與共用名單」匯入員工姓名</option>`;
+
+        const renderOptionCards = (options, selectedId, groupType) => options.map((opt) => {
+            const isSelected = opt.id === selectedId;
+            const searchQueryUrl = `https://www.google.com/search?q=${encodeURIComponent(opt.name + " 餐點介紹 評價 食記")}`;
+            const mapQueryUrl = `https://www.google.com/maps/search/${encodeURIComponent(opt.name)}`;
+            return `
+                <article class="survey-option-card ${isSelected ? "is-selected" : ""}" data-select-group="${groupType}" data-option-id="${this.escapeHtml(opt.id)}">
+                    <div class="informal-card-body">
+                        <div class="option-card-header">
+                            <div>
+                                <span class="option-tag-pill">${this.escapeHtml(opt.tag || "精選項目")}</span>
+                                <h4 class="option-title">${this.escapeHtml(opt.name)}</h4>
+                            </div>
+                            <div class="option-radio-indicator" aria-hidden="true"></div>
+                        </div>
+                        <p class="option-desc">${this.escapeHtml(opt.desc)}</p>
+                    </div>
+                    <div class="option-links-bar">
+                        <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(opt.id)}" data-view-opt-group="${groupType}">
+                            <span>查看附檔介紹資料</span>
+                        </button>
+                        ${opt.refUrl ? `
+                            <a href="${this.escapeHtml(opt.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
+                                <span>介紹網頁</span>
+                            </a>
+                        ` : ""}
+                        <a href="${searchQueryUrl}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
+                            <span>查詢網路評價</span>
+                        </a>
+                        <a href="${mapQueryUrl}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
+                            <span>地圖評價</span>
+                        </a>
+                    </div>
+                </article>
+            `;
+        }).join("");
+
+        return `
+            <!-- 活動整體菜單附檔與外部介紹連結橫幅 -->
+            <div class="campaign-resources-banner">
+                <div class="resource-info-col">
+                    <span class="resource-title">${this.escapeHtml(campaign.title)}</span>
+                    <span class="resource-desc">${this.escapeHtml(campaign.description)}</span>
+                </div>
+                <div class="resource-actions-row">
+                    <button type="button" class="primary-btn" id="view-campaign-attachment-btn">
+                        查看完整菜單／活動介紹附檔 (${this.escapeHtml(campaign.attachmentTitle || "介紹文件")})
+                    </button>
+                    <a href="${this.escapeHtml(campaign.officialUrl || "https://www.google.com")}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
+                        <span>開啟餐廳／活動官方介紹網頁</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 步驟一：選擇投票員工姓名與特殊飲食備註 -->
+            <div class="voter-identity-card">
+                <div class="live-input-group">
+                    <label class="live-input-label" for="voter-employee-select">步驟一：請選擇您的員工姓名（與尾牙抽獎系統共用名單）</label>
+                    <select id="voter-employee-select" class="live-stage-input">
+                        ${voterOptionsHtml}
+                    </select>
+                </div>
+                <div class="live-input-group">
+                    <label class="live-input-label" for="voter-custom-note-input">個人飲食或票選備註（如：牛排 7 分熟、飲料去冰無糖、不加蔥等）</label>
+                    <input
+                        type="text"
+                        id="voter-custom-note-input"
+                        class="live-stage-input"
+                        value="${this.escapeHtml(this.voterCustomNote)}"
+                        placeholder="選填：輸入您的熟度、冰塊甜度或過敏原備註..."
+                    />
+                </div>
+            </div>
+
+            <!-- 步驟二：主餐（第一分類）選擇 -->
+            <div class="survey-category-section">
+                <h3 class="section-heading">${this.escapeHtml(campaign.primaryCategoryLabel)}</h3>
+                <p class="section-subheading">點擊卡片即可選取；點擊卡片下方按鈕可檢視附檔規格介紹或開啟網頁查詢真實評價：</p>
+                <div class="survey-options-grid">
+                    ${renderOptionCards(campaign.primaryOptions, this.selectedPrimaryOptionId, "primary")}
+                </div>
+            </div>
+
+            <!-- 步驟三：飲料（第二分類）選擇 -->
+            <div class="survey-category-section">
+                <h3 class="section-heading">${this.escapeHtml(campaign.secondaryCategoryLabel)}</h3>
+                <div class="survey-options-grid">
+                    ${renderOptionCards(campaign.secondaryOptions, this.selectedSecondaryOptionId, "secondary")}
+                </div>
+            </div>
+
+            <!-- 送出票選按鈕 -->
+            <div class="grand-stage-controls">
+                <button type="button" class="primary-btn" id="submit-survey-vote-btn" ${employees.length === 0 ? "disabled" : ""}>
+                    確認送出「${this.escapeHtml(this.selectedVoterName || "同仁")}」的票選結果
+                </button>
+            </div>
+        `;
+    }
+
+    /**
+     * 子視圖 2：餐點、飲料、附檔介紹資料與外部連結設定管理頁
+     */
+    getSurveySetupViewHtml(campaign, employees) {
+        const primaryListHtml = campaign.primaryOptions.map((opt, idx) => `
+            <li class="prize-config-item">
+                <div class="prize-config-info">
+                    <span class="option-tag-pill">${this.escapeHtml(opt.tag)}</span>
+                    <span class="prize-config-name">${this.escapeHtml(opt.name)}</span>
+                    <span class="theme-route-hint">${this.escapeHtml(opt.desc)}</span>
+                </div>
+                <button type="button" class="delete-idea-btn" data-del-primary-idx="${idx}">移除</button>
+            </li>
+        `).join("");
+
+        const secondaryListHtml = campaign.secondaryOptions.map((opt, idx) => `
+            <li class="prize-config-item">
+                <div class="prize-config-info">
+                    <span class="option-tag-pill">${this.escapeHtml(opt.tag)}</span>
+                    <span class="prize-config-name">${this.escapeHtml(opt.name)}</span>
+                    <span class="theme-route-hint">${this.escapeHtml(opt.desc)}</span>
+                </div>
+                <button type="button" class="delete-idea-btn" data-del-secondary-idx="${idx}">移除</button>
+            </li>
+        `).join("");
+
+        return `
+            <div class="lottery-top-bar">
+                <div class="privacy-shield-info">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>在此設定主餐、飲料、附檔介紹資料與評價網址；匯入的員工名單將自動與「年終尾牙抽獎系統」同步共用。</span>
+                </div>
+                <div class="lottery-top-actions">
+                    <button type="button" class="secondary-btn" id="simulate-votes-btn">一鍵產生模擬投票數據 (測試統計與 LINE 通知)</button>
+                    <button type="button" class="danger-outline-btn" id="clear-campaign-votes-btn">清空本活動投票紀錄</button>
+                </div>
+            </div>
+
+            <div class="lottery-admin-grid">
+                <!-- 左欄：新增餐點／飲料選項、附檔介紹與評價網址 -->
+                <div class="lottery-panel-card">
+                    <div class="lottery-panel-title">
+                        <span>一、新增餐點／飲料選項與附檔介紹</span>
+                        <span class="theme-code-badge">OPTIONS & ATTACHMENTS</span>
+                    </div>
+
+                    <form class="idea-capture-box" id="add-survey-option-form">
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="new-opt-category">選擇所屬分類</label>
+                            <select id="new-opt-category" class="live-stage-input">
+                                <option value="primary">${this.escapeHtml(campaign.primaryCategoryLabel)}</option>
+                                <option value="secondary">${this.escapeHtml(campaign.secondaryCategoryLabel)}</option>
+                            </select>
+                        </div>
+                        <div class="idea-form-row">
+                            <input type="text" id="new-opt-name" class="idea-input" placeholder="項目名稱（如：龍蝦海陸大餐、黑糖珍珠鮮奶）" required />
+                            <input type="text" id="new-opt-tag" class="idea-input" placeholder="特色標籤（如：主廚推薦、熱飲可）" />
+                        </div>
+                        <input type="text" id="new-opt-desc" class="idea-input" placeholder="餐點／項目簡短介紹說明..." required />
+                        <input type="url" id="new-opt-url" class="idea-input" placeholder="介紹與評價網頁連結 URL（選填，未填亦支援自動 Google 評價查詢）" />
+                        <textarea id="new-opt-attach-note" class="roster-textarea" placeholder="附檔詳細介紹文字（如：食材產地、卡路里、甜度冰塊說明，同仁點擊『查看附檔介紹』時會顯示）..."></textarea>
+                        <div class="file-upload-row">
+                            <label class="file-upload-label" for="new-opt-file-input">
+                                <span>上傳餐點介紹圖片附檔 (選填，支援 JPG/PNG)</span>
+                            </label>
+                            <input type="file" id="new-opt-file-input" class="hidden-file-input" accept="image/*" />
+                            <span class="theme-route-hint" id="new-opt-file-status">尚未選擇圖片附檔</span>
+                        </div>
+                        <button type="submit" class="primary-btn">新增至票選選項列表</button>
+                    </form>
+
+                    <div>
+                        <h4 class="lottery-panel-title">${this.escapeHtml(campaign.primaryCategoryLabel)} (${campaign.primaryOptions.length} 項)</h4>
+                        <ul class="prize-config-list">${primaryListHtml}</ul>
+                    </div>
+
+                    <div>
+                        <h4 class="lottery-panel-title">${this.escapeHtml(campaign.secondaryCategoryLabel)} (${campaign.secondaryOptions.length} 項)</h4>
+                        <ul class="prize-config-list">${secondaryListHtml}</ul>
+                    </div>
+                </div>
+
+                <!-- 右欄：活動整體菜單附檔設定 ＋ 共用員工名單匯入 -->
+                <div class="lottery-panel-card">
+                    <div class="lottery-panel-title">
+                        <span>二、活動整體介紹附檔與官方連結設定</span>
+                        <span class="theme-code-badge">MENU ATTACHMENT</span>
+                    </div>
+
+                    <div class="idea-capture-box">
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="setup-campaign-title">活動主題名稱</label>
+                            <input type="text" id="setup-campaign-title" class="idea-input" value="${this.escapeHtml(campaign.title)}" />
+                        </div>
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="setup-campaign-url">餐廳官網／網路食記評價總連結</label>
+                            <input type="url" id="setup-campaign-url" class="idea-input" value="${this.escapeHtml(campaign.officialUrl)}" />
+                        </div>
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="setup-attach-title">完整菜單／介紹附檔標題</label>
+                            <input type="text" id="setup-attach-title" class="idea-input" value="${this.escapeHtml(campaign.attachmentTitle)}" />
+                        </div>
+                        <div class="live-input-group">
+                            <label class="live-input-label" for="setup-attach-content">完整菜單／附檔內容說明</label>
+                            <textarea id="setup-attach-content" class="roster-textarea">${this.escapeHtml(campaign.attachmentContent)}</textarea>
+                        </div>
+                        <div class="file-upload-row">
+                            <label class="file-upload-label" for="campaign-menu-file-input">
+                                <span>上傳完整菜單圖片或 TXT 附檔</span>
+                            </label>
+                            <input type="file" id="campaign-menu-file-input" class="hidden-file-input" accept="image/*,.txt" />
+                            <button type="button" class="primary-btn" id="save-campaign-meta-btn">儲存活動與附檔設定</button>
+                        </div>
+                    </div>
+
+                    <div class="lottery-panel-title">
+                        <span>三、共用員工名單管理（與尾牙抽獎同步，共 ${employees.length} 人）</span>
+                        <span class="theme-code-badge">SHARED ROSTER</span>
+                    </div>
+
+                    <textarea
+                        id="survey-roster-paste-input"
+                        class="roster-textarea"
+                        placeholder="在此貼上員工名單（每行一位，如：研發一部 - 陳建宏），匯入後問卷調查與尾牙抽獎將同時更新..."
+                    ></textarea>
+
+                    <div class="file-upload-row">
+                        <button type="button" class="primary-btn" id="survey-import-roster-btn">匯入共用員工名單</button>
+                        <button type="button" class="secondary-btn" id="survey-load-sample-roster-btn">載入 30 人預設名單</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * 子視圖 3：統計分析圖表與一鍵複製 LINE 群組通知頁
+     */
+    getSurveyStatsViewHtml(campaign, employees) {
+        const votesMap = campaign.votes || {};
+        const votedNames = Object.keys(votesMap);
+        const unvotedNames = employees.filter((emp) => !votesMap[emp]);
+        const completionRate = employees.length > 0
+            ? Math.round((votedNames.length / employees.length) * 100)
+            : 0;
+
+        const lineText = this.generateLineGroupNotificationText(campaign, employees, this.lineTemplateMode);
+
+        const detailedRecordsHtml = votedNames.length > 0
+            ? votedNames.map((empName) => {
+                const v = votesMap[empName];
+                return `
+                    <li class="winner-history-item">
+                        <div class="winner-history-left">
+                            <span class="winner-history-names">${this.escapeHtml(empName)}</span>
+                            <span class="winner-prize-badge">${this.escapeHtml(v.primaryName)}</span>
+                            <span class="prize-amount-badge">${this.escapeHtml(v.secondaryName)}</span>
+                            ${v.note ? `<span class="theme-route-hint">備註：${this.escapeHtml(v.note)}</span>` : ""}
+                        </div>
+                        <span class="winner-history-time">${this.escapeHtml(v.time)}</span>
+                    </li>
+                `;
+            }).join("")
+            : `<li class="winner-history-item"><span class="theme-desc">目前尚無同仁送出票選（可至「設定頁」點擊「一鍵產生模擬投票數據」預覽統計與 LINE 通知效果）。</span></li>`;
+
+        const unvotedChipsHtml = unvotedNames.length > 0
+            ? unvotedNames.map((name) => `<span class="pool-person-chip">${this.escapeHtml(name)}</span>`).join("")
+            : `<span class="theme-status-badge">全員皆已完成票選！</span>`;
+
+        return `
+            <!-- 統計頂部數據卡 -->
+            <div class="lottery-stats-grid">
+                <div class="lottery-stat-box">
+                    <span class="lottery-stat-num">${employees.length}</span>
+                    <span class="lottery-stat-label">應填員工總數 (共用名單)</span>
+                </div>
+                <div class="lottery-stat-box">
+                    <span class="lottery-stat-num">${votedNames.length} (${completionRate}%)</span>
+                    <span class="lottery-stat-label">已完成票選人數与比例</span>
+                </div>
+                <div class="lottery-stat-box">
+                    <span class="lottery-stat-num">${unvotedNames.length}</span>
+                    <span class="lottery-stat-label">尚未填寫人數</span>
+                </div>
+            </div>
+
+            <div class="survey-stats-grid">
+                <!-- 左欄：Canvas 視覺化統計長條圖與未投票名單 -->
+                <div class="lottery-panel-card">
+                    <div class="lottery-panel-title">
+                        <span>一、各品項得票數與比例統計分析</span>
+                        <button type="button" class="secondary-btn" id="sync-voted-to-lottery-btn">
+                            將已完成投票者同步為尾牙抽獎池 (${votedNames.length}人)
+                        </button>
+                    </div>
+
+                    <div class="stats-canvas-wrap">
+                        <canvas id="survey-stats-canvas" class="stats-chart-canvas" width="640" height="420"></canvas>
+                    </div>
+
+                    <div>
+                        <div class="lottery-panel-title">
+                            <span>尚未完成票選同仁名單 (${unvotedNames.length} 人)</span>
+                        </div>
+                        <div class="pool-preview-chips">
+                            ${unvotedChipsHtml}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右欄：LINE 群組通知文案一鍵產生器 -->
+                <div class="line-generator-card">
+                    <div class="line-badge-header">
+                        <div>
+                            <span class="line-green-tag">LINE GROUP NOTIFIER</span>
+                            <h3 class="lottery-panel-title">二、一鍵產生並複製 LINE 群組通知文案</h3>
+                        </div>
+                        <button type="button" class="secondary-btn" id="export-survey-csv-btn" ${votedNames.length === 0 ? "disabled" : ""}>
+                            匯出完整點餐 CSV 報表
+                        </button>
+                    </div>
+
+                    <p class="section-subheading">選擇通知用途，系統將自動排版成最適合貼在 LINE 群組的格式：</p>
+
+                    <div class="prize-preset-chips">
+                        <button type="button" class="prize-chip-btn ${this.lineTemplateMode === "summary" ? "active" : ""}" data-line-mode="summary">
+                            格式一：餐點數量彙整版 (訂餐/總務核對)
+                        </button>
+                        <button type="button" class="prize-chip-btn ${this.lineTemplateMode === "detailed" ? "active" : ""}" data-line-mode="detailed">
+                            格式二：群組公告＋個人選擇明細核對版
+                        </button>
+                        <button type="button" class="prize-chip-btn ${this.lineTemplateMode === "reminder" ? "active" : ""}" data-line-mode="reminder">
+                            格式三：尚未投票同仁催票提醒版
+                        </button>
+                    </div>
+
+                    <textarea id="line-notification-textarea" class="line-preview-textarea" readonly>${this.escapeHtml(lineText)}</textarea>
+
+                    <button type="button" class="line-copy-btn" id="copy-line-text-btn">
+                        一鍵複製 LINE 通知文案（直接貼上群組）
+                    </button>
+                </div>
+            </div>
+
+            <!-- 下方：每位同仁投票明細列表 -->
+            <div class="lottery-panel-card">
+                <div class="lottery-panel-title">
+                    <span>三、同仁票選結果明細總表 (${votedNames.length} 筆)</span>
+                </div>
+                <ul class="winners-history-list">
+                    ${detailedRecordsHtml}
+                </ul>
+            </div>
+        `;
+    }
+
+    loadExistingVoteForSelectedEmployee(campaign) {
+        const existing = campaign.votes && campaign.votes[this.selectedVoterName];
+        if (existing) {
+            this.selectedPrimaryOptionId = existing.primaryId;
+            this.selectedSecondaryOptionId = existing.secondaryId;
+            this.voterCustomNote = existing.note || "";
+        } else {
+            this.voterCustomNote = "";
+        }
+    }
+
+    bindSurveyCommonEvents(subView) {
+        const tabVote = document.getElementById("tab-survey-vote");
+        const tabSetup = document.getElementById("tab-survey-setup");
+        const tabStats = document.getElementById("tab-survey-stats");
+        const jumpLottery = document.getElementById("jump-to-lottery-btn");
+        const backHub = document.getElementById("survey-back-hub-btn");
+
+        if (tabVote) tabVote.addEventListener("click", () => { window.location.hash = "theme-05-survey-vote"; });
+        if (tabSetup) tabSetup.addEventListener("click", () => { window.location.hash = "theme-05-survey-setup"; });
+        if (tabStats) tabStats.addEventListener("click", () => { window.location.hash = "theme-05-survey-stats"; });
+        if (jumpLottery) jumpLottery.addEventListener("click", () => { window.location.hash = "theme-05-draw"; });
+        if (backHub) backHub.addEventListener("click", () => { window.location.hash = "theme-05"; });
+
+        const campaignSelect = document.getElementById("survey-campaign-select");
+        if (campaignSelect) {
+            campaignSelect.addEventListener("change", () => {
+                this.surveyState.activeCampaignId = campaignSelect.value;
+                this.selectedPrimaryOptionId = "";
+                this.selectedSecondaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(subView);
+            });
+        }
+
+        const createNewCampaignBtn = document.getElementById("create-new-campaign-btn");
+        if (createNewCampaignBtn) {
+            createNewCampaignBtn.addEventListener("click", () => {
+                const title = window.prompt("請輸入新票選主題名稱（例如：春季員工旅遊地點與房型票選、中秋禮盒票選）：");
+                if (!title || !title.trim()) return;
+                const cat1 = window.prompt("請輸入第一分類標題：", "第一部分：主要方案選擇") || "第一部分：主要方案選擇";
+                const cat2 = window.prompt("請輸入第二分類標題：", "第二部分：搭配項目選擇") || "第二部分：搭配項目選擇";
+
+                const newId = `campaign-${Date.now()}`;
+                this.surveyState.campaigns.push({
+                    id: newId,
+                    title: title.trim(),
+                    description: "請同仁選擇偏好的方案，可點擊下方按鈕檢視附檔資料或搜尋網路評價。",
+                    primaryCategoryLabel: cat1.trim(),
+                    secondaryCategoryLabel: cat2.trim(),
+                    officialUrl: "https://www.google.com",
+                    attachmentTitle: `${title.trim()} — 說明附檔.doc`,
+                    attachmentContent: `【${title.trim()}】詳細說明資料，可於「設定餐點、附檔與共用名單」頁面編輯內容或上傳圖片附檔。`,
+                    attachmentDataUrl: "",
+                    primaryOptions: [
+                        { id: `p-${Date.now()}-1`, name: "方案 A（請於設定頁新增或修改）", tag: "選項 A", desc: "預設方案 A 說明", refUrl: "", attachNote: "方案 A 附檔介紹", attachDataUrl: "" },
+                        { id: `p-${Date.now()}-2`, name: "方案 B（請於設定頁新增或修改）", tag: "選項 B", desc: "預設方案 B 說明", refUrl: "", attachNote: "方案 B 附檔介紹", attachDataUrl: "" }
+                    ],
+                    secondaryOptions: [
+                        { id: `s-${Date.now()}-1`, name: "搭配項目 1", tag: "規格 1", desc: "預設搭配項目 1", refUrl: "", attachNote: "搭配項目 1 說明", attachDataUrl: "" },
+                        { id: `s-${Date.now()}-2`, name: "搭配項目 2", tag: "規格 2", desc: "預設搭配項目 2", refUrl: "", attachNote: "搭配項目 2 說明", attachDataUrl: "" }
+                    ],
+                    votes: {}
+                });
+                this.surveyState.activeCampaignId = newId;
+                this.selectedPrimaryOptionId = "";
+                this.selectedSecondaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage("setup");
+            });
+        }
+    }
+
+    bindSurveyVoteEvents(campaign) {
+        const voterSelect = document.getElementById("voter-employee-select");
+        const noteInput = document.getElementById("voter-custom-note-input");
+
+        if (voterSelect) {
+            voterSelect.addEventListener("change", () => {
+                this.selectedVoterName = voterSelect.value;
+                this.loadExistingVoteForSelectedEmployee(campaign);
+                this.renderSurveyPage("vote");
+            });
+        }
+
+        if (noteInput) {
+            noteInput.addEventListener("input", () => {
+                this.voterCustomNote = noteInput.value;
+            });
+        }
+
+        // 點擊查看活動整體菜單附檔
+        const viewCampaignAttachBtn = document.getElementById("view-campaign-attachment-btn");
+        if (viewCampaignAttachBtn) {
+            viewCampaignAttachBtn.addEventListener("click", () => {
+                this.openAttachmentPreviewModal(
+                    campaign.attachmentTitle || "活動介紹附檔",
+                    campaign.attachmentContent || "尚無文字說明",
+                    campaign.attachmentDataUrl || ""
+                );
+            });
+        }
+
+        // 點擊查看單一餐點／飲料附檔介紹
+        this.focusSection.querySelectorAll("[data-view-opt-attach]").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const optId = btn.getAttribute("data-view-opt-attach");
+                const group = btn.getAttribute("data-view-opt-group");
+                const list = group === "primary" ? campaign.primaryOptions : campaign.secondaryOptions;
+                const opt = list.find((item) => item.id === optId);
+                if (opt) {
+                    this.openAttachmentPreviewModal(
+                        `${opt.name} — 餐點介紹與規格附檔`,
+                        `${opt.desc}\n\n${opt.attachNote || "無額外附註"}`,
+                        opt.attachDataUrl || ""
+                    );
+                }
+            });
+        });
+
+        this.focusSection.querySelectorAll("[data-stop-card-click]").forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
+        });
+
+        // 點選主餐或飲料卡片
+        this.focusSection.querySelectorAll("[data-select-group]").forEach((card) => {
+            card.addEventListener("click", () => {
+                const group = card.getAttribute("data-select-group");
+                const optId = card.getAttribute("data-option-id");
+                if (group === "primary") {
+                    this.selectedPrimaryOptionId = optId;
+                } else {
+                    this.selectedSecondaryOptionId = optId;
+                }
+                this.renderSurveyPage("vote");
+            });
+        });
+
+        // 送出票選
+        const submitBtn = document.getElementById("submit-survey-vote-btn");
+        if (submitBtn) {
+            submitBtn.addEventListener("click", () => {
+                if (!this.selectedVoterName) {
+                    window.alert("請先選擇您的員工姓名。");
+                    return;
+                }
+                const primaryObj = campaign.primaryOptions.find((o) => o.id === this.selectedPrimaryOptionId);
+                const secondaryObj = campaign.secondaryOptions.find((o) => o.id === this.selectedSecondaryOptionId);
+
+                if (!primaryObj || !secondaryObj) {
+                    window.alert("請確認已各選擇一項主項目與副項目。");
+                    return;
+                }
+
+                const now = new Date();
+                const timeStr = `${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+                if (!campaign.votes) {
+                    campaign.votes = {};
+                }
+                campaign.votes[this.selectedVoterName] = {
+                    primaryId: primaryObj.id,
+                    primaryName: primaryObj.name,
+                    secondaryId: secondaryObj.id,
+                    secondaryName: secondaryObj.name,
+                    note: (this.voterCustomNote || "").trim(),
+                    time: timeStr
+                };
+
+                this.saveSurveyState();
+                window.alert(`已成功記錄「${this.selectedVoterName}」的票選結果：\n・${primaryObj.name}\n・${secondaryObj.name}`);
+                this.renderSurveyPage("vote");
+            });
+        }
+    }
+
+    openAttachmentPreviewModal(title, textContent, dataUrl) {
+        const modalRoot = document.getElementById("attachment-modal-root");
+        if (!modalRoot) return;
+
+        const mediaHtml = dataUrl
+            ? `<img src="${dataUrl}" alt="${this.escapeHtml(title)}" class="attachment-preview-media" />`
+            : "";
+
+        modalRoot.classList.remove("is-hidden");
+        modalRoot.innerHTML = `
+            <div class="attachment-modal-backdrop" id="close-modal-backdrop">
+                <div class="attachment-modal-card" id="modal-card-inner">
+                    <div class="lottery-panel-title">
+                        <span>附檔檢視器：${this.escapeHtml(title)}</span>
+                        <button type="button" class="secondary-btn" id="close-attachment-modal-btn">關閉預覽</button>
+                    </div>
+                    ${mediaHtml}
+                    <div class="attachment-doc-box">${this.escapeHtml(textContent)}</div>
+                </div>
+            </div>
+        `;
+
+        const closeBtn = document.getElementById("close-attachment-modal-btn");
+        const backdrop = document.getElementById("close-modal-backdrop");
+        const cardInner = document.getElementById("modal-card-inner");
+
+        if (cardInner) {
+            cardInner.addEventListener("click", (e) => e.stopPropagation());
+        }
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => modalRoot.classList.add("is-hidden"));
+        }
+        if (backdrop) {
+            backdrop.addEventListener("click", () => modalRoot.classList.add("is-hidden"));
+        }
+    }
+
+    bindSurveySetupEvents(campaign) {
+        let pendingOptionImageDataUrl = "";
+        const optFileInput = document.getElementById("new-opt-file-input");
+        const optFileStatus = document.getElementById("new-opt-file-status");
+
+        if (optFileInput) {
+            optFileInput.addEventListener("change", (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    pendingOptionImageDataUrl = String(evt.target.result || "");
+                    if (optFileStatus) {
+                        optFileStatus.textContent = `已載入附檔：${file.name}`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        const addOptForm = document.getElementById("add-survey-option-form");
+        if (addOptForm) {
+            addOptForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const cat = document.getElementById("new-opt-category").value;
+                const name = document.getElementById("new-opt-name").value.trim();
+                const tag = document.getElementById("new-opt-tag").value.trim() || "精選項目";
+                const desc = document.getElementById("new-opt-desc").value.trim();
+                const url = document.getElementById("new-opt-url").value.trim();
+                const attachNote = document.getElementById("new-opt-attach-note").value.trim();
+
+                if (!name || !desc) return;
+
+                const newOption = {
+                    id: `${cat}-${Date.now()}`,
+                    name,
+                    tag,
+                    desc,
+                    refUrl: url,
+                    attachNote: attachNote || `${name} 詳細規格說明`,
+                    attachDataUrl: pendingOptionImageDataUrl
+                };
+
+                if (cat === "primary") {
+                    campaign.primaryOptions.push(newOption);
+                } else {
+                    campaign.secondaryOptions.push(newOption);
+                }
+
+                this.saveSurveyState();
+                this.renderSurveyPage("setup");
+            });
+        }
+
+        this.focusSection.querySelectorAll("[data-del-primary-idx]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (campaign.primaryOptions.length <= 1) {
+                    window.alert("每個分類請至少保留一個選項。");
+                    return;
+                }
+                const idx = Number(btn.getAttribute("data-del-primary-idx"));
+                campaign.primaryOptions.splice(idx, 1);
+                this.saveSurveyState();
+                this.renderSurveyPage("setup");
+            });
+        });
+
+        this.focusSection.querySelectorAll("[data-del-secondary-idx]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (campaign.secondaryOptions.length <= 1) {
+                    window.alert("每個分類請至少保留一個選項。");
+                    return;
+                }
+                const idx = Number(btn.getAttribute("data-del-secondary-idx"));
+                campaign.secondaryOptions.splice(idx, 1);
+                this.saveSurveyState();
+                this.renderSurveyPage("setup");
+            });
+        });
+
+        // 儲存活動整體菜單附檔與連結
+        const menuFileInput = document.getElementById("campaign-menu-file-input");
+        if (menuFileInput) {
+            menuFileInput.addEventListener("change", (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                if (file.type.startsWith("image/")) {
+                    reader.onload = (evt) => {
+                        campaign.attachmentDataUrl = String(evt.target.result || "");
+                        campaign.attachmentTitle = file.name;
+                        this.saveSurveyState();
+                        window.alert(`已成功載入菜單圖片附檔：${file.name}`);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    reader.onload = (evt) => {
+                        campaign.attachmentContent = String(evt.target.result || "");
+                        campaign.attachmentTitle = file.name;
+                        this.saveSurveyState();
+                        this.renderSurveyPage("setup");
+                    };
+                    reader.readAsText(file, "UTF-8");
+                }
+            });
+        }
+
+        const saveMetaBtn = document.getElementById("save-campaign-meta-btn");
+        if (saveMetaBtn) {
+            saveMetaBtn.addEventListener("click", () => {
+                campaign.title = document.getElementById("setup-campaign-title").value.trim() || campaign.title;
+                campaign.officialUrl = document.getElementById("setup-campaign-url").value.trim();
+                campaign.attachmentTitle = document.getElementById("setup-attach-title").value.trim() || "活動附檔";
+                campaign.attachmentContent = document.getElementById("setup-attach-content").value;
+                this.saveSurveyState();
+                window.alert("已儲存活動與完整菜單附檔設定！");
+                this.renderSurveyPage("setup");
+            });
+        }
+
+        // 共用員工名單匯入（同步更新尾牙抽獎名單）
+        const importRosterBtn = document.getElementById("survey-import-roster-btn");
+        const rosterInput = document.getElementById("survey-roster-paste-input");
+        if (importRosterBtn && rosterInput) {
+            importRosterBtn.addEventListener("click", () => {
+                const names = this.parseParticipantNames(rosterInput.value);
+                if (names.length === 0) {
+                    window.alert("請先貼上至少一位員工姓名。");
+                    return;
+                }
+                this.applyImportedParticipants(names, false);
+                window.alert(`已成功更新共用員工名單（共 ${names.length} 人），尾牙抽獎系統已同步更新！`);
+                this.renderSurveyPage("setup");
+            });
+        }
+
+        const loadSampleBtn = document.getElementById("survey-load-sample-roster-btn");
+        if (loadSampleBtn) {
+            loadSampleBtn.addEventListener("click", () => {
+                this.applyImportedParticipants(REHEARSAL_SAMPLE_NAMES, true);
+                this.renderSurveyPage("setup");
+            });
+        }
+
+        // 一鍵產生模擬同仁投票數據
+        const simulateBtn = document.getElementById("simulate-votes-btn");
+        if (simulateBtn) {
+            simulateBtn.addEventListener("click", () => {
+                if (this.lotteryState.allParticipants.length === 0) {
+                    this.applyImportedParticipants(REHEARSAL_SAMPLE_NAMES, true);
+                }
+                const emps = this.lotteryState.allParticipants;
+                const pOpts = campaign.primaryOptions;
+                const sOpts = campaign.secondaryOptions;
+                if (pOpts.length === 0 || sOpts.length === 0) return;
+
+                const sampleNotes = ["", "少冰無糖", "7分熟", "去冰微糖", "溫飲", ""];
+                campaign.votes = {};
+                // 模擬約 80% 同仁已完成投票，留下少數未投票供測試催票功能
+                const simCount = Math.max(1, Math.floor(emps.length * 0.8));
+                for (let i = 0; i < simCount; i += 1) {
+                    const emp = emps[i];
+                    const pPick = pOpts[this.getCryptoRandomInt(pOpts.length)];
+                    const sPick = sOpts[this.getCryptoRandomInt(sOpts.length)];
+                    const notePick = sampleNotes[this.getCryptoRandomInt(sampleNotes.length)];
+                    campaign.votes[emp] = {
+                        primaryId: pPick.id,
+                        primaryName: pPick.name,
+                        secondaryId: sPick.id,
+                        secondaryName: sPick.name,
+                        note: notePick,
+                        time: "10/18 09:30"
+                    };
+                }
+                this.saveSurveyState();
+                window.location.hash = "theme-05-survey-stats";
+            });
+        }
+
+        const clearVotesBtn = document.getElementById("clear-campaign-votes-btn");
+        if (clearVotesBtn) {
+            clearVotesBtn.addEventListener("click", () => {
+                if (!window.confirm("確定要清空本活動目前已收到的票選紀錄嗎？")) return;
+                campaign.votes = {};
+                this.saveSurveyState();
+                this.renderSurveyPage("setup");
+            });
+        }
+    }
+
+    bindSurveyStatsEvents(campaign, employees) {
+        this.focusSection.querySelectorAll("[data-line-mode]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                this.lineTemplateMode = btn.getAttribute("data-line-mode") || "summary";
+                this.renderSurveyPage("stats");
+            });
+        });
+
+        const copyLineBtn = document.getElementById("copy-line-text-btn");
+        const lineTextarea = document.getElementById("line-notification-textarea");
+        if (copyLineBtn && lineTextarea) {
+            copyLineBtn.addEventListener("click", () => {
+                navigator.clipboard.writeText(lineTextarea.value).then(() => {
+                    const originalText = copyLineBtn.textContent;
+                    copyLineBtn.textContent = "已成功複製到剪貼簿！現在可直接至 LINE 群組貼上 (Ctrl+V)";
+                    setTimeout(() => {
+                        copyLineBtn.textContent = originalText;
+                    }, 2800);
+                });
+            });
+        }
+
+        const syncToLotteryBtn = document.getElementById("sync-voted-to-lottery-btn");
+        if (syncToLotteryBtn) {
+            syncToLotteryBtn.addEventListener("click", () => {
+                const votedNames = Object.keys(campaign.votes || {});
+                if (votedNames.length === 0) {
+                    window.alert("目前尚無已完成投票之員工。");
+                    return;
+                }
+                this.lotteryState.remainingPool = [...votedNames];
+                this.saveLotteryState();
+                window.alert(`已將 ${votedNames.length} 位完成問卷票選的同仁同步至「尾牙抽獎待抽池」！`);
+            });
+        }
+
+        const exportCsvBtn = document.getElementById("export-survey-csv-btn");
+        if (exportCsvBtn) {
+            exportCsvBtn.addEventListener("click", () => {
+                this.exportSurveyVotesToCsv(campaign, employees);
+            });
+        }
+    }
+
+    /**
+     * 使用 HTML5 Canvas 繪製主餐與飲料得票統計橫向長條圖（無任何 Inline CSS）
+     */
+    drawSurveyStatsCharts(campaign) {
+        const canvas = document.getElementById("survey-stats-canvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const votesList = Object.values(campaign.votes || {});
+        const totalVotes = votesList.length;
+
+        const primaryCounts = campaign.primaryOptions.map((opt) => ({
+            name: opt.name,
+            count: votesList.filter((v) => v.primaryId === opt.id || v.primaryName === opt.name).length
+        }));
+
+        const secondaryCounts = campaign.secondaryOptions.map((opt) => ({
+            name: opt.name,
+            count: votesList.filter((v) => v.secondaryId === opt.id || v.secondaryName === opt.name).length
+        }));
+
+        const totalRows = primaryCounts.length + secondaryCounts.length;
+        const canvasHeight = Math.max(320, 110 + totalRows * 42);
+        canvas.height = canvasHeight;
+
+        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        const textColor = isDark ? "#f1f5f9" : "#0f172a";
+        const mutedColor = isDark ? "#94a3b8" : "#475569";
+        const trackBg = isDark ? "rgba(148, 163, 184, 0.15)" : "rgba(14, 165, 233, 0.1)";
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "700 14px 'Noto Sans TC', sans-serif";
+
+        let currentY = 28;
+
+        const drawSection = (sectionTitle, items, barColor) => {
+            ctx.fillStyle = textColor;
+            ctx.font = "800 15px 'Noto Sans TC', sans-serif";
+            ctx.fillText(sectionTitle, 16, currentY);
+            currentY += 22;
+
+            items.forEach((item) => {
+                const pct = totalVotes > 0 ? Math.round((item.count / totalVotes) * 100) : 0;
+                const labelText = item.name.length > 15 ? `${item.name.slice(0, 15)}...` : item.name;
+
+                ctx.fillStyle = mutedColor;
+                ctx.font = "600 13px 'Noto Sans TC', sans-serif";
+                ctx.fillText(labelText, 16, currentY + 15);
+
+                const barX = 235;
+                const maxBarW = 300;
+                const barH = 20;
+
+                ctx.fillStyle = trackBg;
+                ctx.beginPath();
+                ctx.roundRect(barX, currentY, maxBarW, barH, 6);
+                ctx.fill();
+
+                const fillW = totalVotes > 0 ? Math.max(6, (item.count / totalVotes) * maxBarW) : 0;
+                if (fillW > 0) {
+                    ctx.fillStyle = barColor;
+                    ctx.beginPath();
+                    ctx.roundRect(barX, currentY, fillW, barH, 6);
+                    ctx.fill();
+                }
+
+                ctx.fillStyle = textColor;
+                ctx.font = "700 13px 'JetBrains Mono', monospace";
+                ctx.fillText(`${item.count} 票 (${pct}%)`, barX + maxBarW + 14, currentY + 15);
+
+                currentY += 36;
+            });
+
+            currentY += 16;
+        };
+
+        drawSection(campaign.primaryCategoryLabel, primaryCounts, "#0ea5e9");
+        drawSection(campaign.secondaryCategoryLabel, secondaryCounts, "#14b8a6");
+    }
+
+    /**
+     * 產生可一鍵貼上 LINE 群組的通知文案（無任何表情符號，版面清晰易讀）
+     */
+    generateLineGroupNotificationText(campaign, employees, mode) {
+        const votesMap = campaign.votes || {};
+        const votedNames = Object.keys(votesMap);
+        const unvotedNames = employees.filter((emp) => !votesMap[emp]);
+        const votesList = Object.values(votesMap);
+
+        const primarySummaryLines = campaign.primaryOptions.map((opt) => {
+            const cnt = votesList.filter((v) => v.primaryId === opt.id || v.primaryName === opt.name).length;
+            return `・${opt.name}：${cnt} 份`;
+        });
+
+        const secondarySummaryLines = campaign.secondaryOptions.map((opt) => {
+            const cnt = votesList.filter((v) => v.secondaryId === opt.id || v.secondaryName === opt.name).length;
+            return `・${opt.name}：${cnt} 杯/份`;
+        });
+
+        const pageUrl = `${window.location.origin}${window.location.pathname}#theme-05-survey-vote`;
+
+        if (mode === "reminder") {
+            return [
+                `【群組通知】${campaign.title} — 尚未填寫提醒`,
+                `----------------------------------------`,
+                `各位同仁好，目前「${campaign.title}」已完成 ${votedNames.length} / ${employees.length} 人登記。`,
+                ``,
+                `【尚未完成票選同仁名單（共 ${unvotedNames.length} 人）】`,
+                unvotedNames.length > 0 ? unvotedNames.map((n) => `・${n}`).join("\n") : "・全員皆已完成登記！",
+                ``,
+                `請尚未填寫的同仁點選以下線上連結查看菜單介紹並完成票選：`,
+                pageUrl
+            ].join("\n");
+        }
+
+        if (mode === "detailed") {
+            const detailLines = votedNames.map((name, idx) => {
+                const v = votesMap[name];
+                const notePart = v.note ? `（備註：${v.note}）` : "";
+                return `${String(idx + 1).padStart(2, "0")}. ${name}：${v.primaryName} ＋ ${v.secondaryName}${notePart}`;
+            });
+
+            return [
+                `【群組公告】${campaign.title} — 統計與個人明細核對`,
+                `----------------------------------------`,
+                `應填人數：${employees.length} 人 ｜ 已完成：${votedNames.length} 人`,
+                ``,
+                `【${campaign.primaryCategoryLabel} 數量統計】`,
+                ...primarySummaryLines,
+                ``,
+                `【${campaign.secondaryCategoryLabel} 數量統計】`,
+                ...secondarySummaryLines,
+                ``,
+                `【各別同仁點餐／票選明細】`,
+                ...(detailLines.length > 0 ? detailLines : ["（尚無填答紀錄）"]),
+                ``,
+                `如需修改或查看菜單介紹，請開啟線上票選頁面：`,
+                pageUrl
+            ].join("\n");
+        }
+
+        // 預設 summary 模式（數量統計彙整版）
+        return [
+            `【統計通知】${campaign.title} — 數量彙整總表`,
+            `----------------------------------------`,
+            `統計進度：已完成 ${votedNames.length} / ${employees.length} 人（待填 ${unvotedNames.length} 人）`,
+            ``,
+            `【${campaign.primaryCategoryLabel}】`,
+            ...primarySummaryLines,
+            ``,
+            `【${campaign.secondaryCategoryLabel}】`,
+            ...secondarySummaryLines,
+            ``,
+            `線上票選與明細檢視網址：`,
+            pageUrl
+        ].join("\n");
+    }
+
+    exportSurveyVotesToCsv(campaign, employees) {
+        const votesMap = campaign.votes || {};
+        const rows = [["員工姓名", "填答狀態", campaign.primaryCategoryLabel, campaign.secondaryCategoryLabel, "個人備註", "登記時間"]];
+
+        employees.forEach((emp) => {
+            const v = votesMap[emp];
+            if (v) {
+                rows.push([emp, "已完成", v.primaryName, v.secondaryName, v.note || "", v.time || ""]);
+            } else {
+                rows.push([emp, "尚未填寫", "", "", "", ""]);
+            }
+        });
+
+        const csvContent = rows
+            .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+            .join("\r\n");
+
+        const bom = "\uFEFF";
+        const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${campaign.title}_統計明細報表.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    /* ==========================================================================
+       年終尾牙自動化抽獎系統 (SYS-5B)
+       ========================================================================== */
+
     renderLotterySubpage(theme, subpageMode) {
         if (!this.focusSection) return;
 
@@ -916,9 +2197,6 @@ class WorkspaceApp {
         }
     }
 
-    /**
-     * 渲染專屬通行碼驗證畫面（同樣帶有左右鞭炮串與喜慶裝飾）
-     */
     renderLotteryPasscodeGate(theme, targetSubpageMode) {
         this.focusSection.innerHTML = `
             ${this.getFestiveSideHangingsHtml()}
@@ -942,7 +2220,7 @@ class WorkspaceApp {
                     </div>
                     <h3 class="gate-title">尾牙主持人通行碼驗證</h3>
                     <p class="gate-desc">
-                        此抽獎系統採「純本機記憶體與瀏覽器本地儲存」架構，員工姓名絕不會上傳至 GitHub。請輸入通行碼以進入尾牙活動頁面。
+                        此抽獎系統與「問卷調查與餐點票選系統」共用本機員工名單，資料絕不會上傳至 GitHub。請輸入通行碼以進入尾牙活動頁面。
                     </p>
                     <form class="gate-form" id="passcode-gate-form">
                         <input
@@ -994,9 +2272,6 @@ class WorkspaceApp {
         }
     }
 
-    /**
-     * 獨立頁面 A：人員名單匯入與獎項金額設定頁 (#theme-05-admin)
-     */
     renderLotteryAdminPage(theme) {
         const totalCount = this.lotteryState.allParticipants.length;
         const remainingCount = this.lotteryState.remainingPool.length;
@@ -1036,7 +2311,6 @@ class WorkspaceApp {
         this.focusSection.innerHTML = `
             ${this.getFestiveSideHangingsHtml()}
             <div class="festive-gala-panel">
-                <!-- 頂部尾牙專屬橫額與子頁面切換列（已自動隱藏占空間的全局導覽列） -->
                 <div class="festive-header-ribbon">
                     <div class="festive-brand-emblem">
                         <span class="festive-emblem-badge">後台配置</span>
@@ -1049,18 +2323,18 @@ class WorkspaceApp {
                         <button type="button" class="subpage-tab-btn is-festive-tab active" id="switch-to-admin-btn">
                             <span>名單與獎金設定 (${remainingCount}人待抽)</span>
                         </button>
+                        <button type="button" class="secondary-btn" id="jump-to-survey-btn">前往餐點問卷系統</button>
                         <button type="button" class="secondary-btn" id="admin-lock-btn">上鎖</button>
                         <button type="button" class="back-overview-btn" id="back-to-hub-btn">離開活動</button>
                     </div>
                 </div>
 
-                <!-- 隱私安全狀態與快速操作列 -->
                 <div class="lottery-top-bar">
                     <div class="privacy-shield-info">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                         </svg>
-                        <span>【${modeBadgeText}】員工姓名僅保存在本機瀏覽器，絕不上傳至 GitHub。</span>
+                        <span>【${modeBadgeText}】此名單與「問卷調查與餐點票選系統」即時同步共用，僅保存在本機瀏覽器。</span>
                     </div>
                     <div class="lottery-top-actions">
                         <button type="button" class="secondary-btn" id="load-rehearsal-btn">載入 30 人彩排測試名單</button>
@@ -1069,12 +2343,10 @@ class WorkspaceApp {
                     </div>
                 </div>
 
-                <!-- 雙欄管理版面：左欄人員匯入、右欄獎項金額設定與得獎報表 -->
                 <div class="lottery-admin-grid">
-                    <!-- 左欄：參與員工名單匯入與待抽池檢視 -->
                     <div class="lottery-panel-card">
                         <div class="lottery-panel-title">
-                            <span>一、參與員工名單匯入管理</span>
+                            <span>一、參與員工名單匯入管理（與問卷系統通用）</span>
                             <span class="theme-code-badge">ROSTER SETUP</span>
                         </div>
 
@@ -1119,7 +2391,6 @@ class WorkspaceApp {
                         </div>
                     </div>
 
-                    <!-- 右欄：獎項與獎金金額預設設定 ＋ 中獎歷史報表匯出 -->
                     <div class="lottery-panel-card">
                         <div class="lottery-panel-title">
                             <span>二、獎項名稱與預設金額設定</span>
@@ -1174,10 +2445,6 @@ class WorkspaceApp {
         this.bindLotteryAdminEvents(theme);
     }
 
-    /**
-     * 獨立頁面 B：大型開獎展演舞台頁 (#theme-05-draw)
-     * 支援：全畫面隱藏頂部工作列、左右懸掛搖曳鞭炮串與宮燈、可收合獎金設定抽屜、手動控制持續輪動、鴻運金榜得獎特效與全螢幕煙花
-     */
     renderLotteryGrandStagePage(theme) {
         const remainingCount = this.lotteryState.remainingPool.length;
         const totalCount = this.lotteryState.allParticipants.length;
@@ -1208,7 +2475,6 @@ class WorkspaceApp {
             `;
         }).join("");
 
-        // 渲染舞台中央大型鴻運金榜得獎人卡片
         let showcaseCardsHtml = "";
         if (this.lotteryState.latestDrawnWinners.length > 0) {
             const displayPrize = this.lotteryState.latestDrawnPrize || this.lotteryState.currentPrize;
@@ -1252,11 +2518,9 @@ class WorkspaceApp {
         const drawerToggleLabel = this.isStageDrawerCollapsed ? "展開獎項與加碼金額設定" : "收合設定列（放大舞台）";
 
         this.focusSection.innerHTML = `
-            <!-- 左右兩側懸掛式立體紅金鞭炮串與喜慶宮燈 -->
             ${this.getFestiveSideHangingsHtml()}
 
             <div class="festive-gala-panel">
-                <!-- 緊湊型節慶頂部控制橫額（已隱藏原本占空間的全局導覽列） -->
                 <div class="festive-header-ribbon">
                     <div class="festive-brand-emblem">
                         <span class="festive-emblem-badge">鴻運尾牙</span>
@@ -1278,7 +2542,6 @@ class WorkspaceApp {
                     </div>
                 </div>
 
-                <!-- 可收合式舞台獎項、臨時加碼金額與抽選人數設定抽屜 -->
                 <div class="stage-config-drawer ${this.isStageDrawerCollapsed ? "is-hidden" : ""}" id="stage-config-drawer">
                     <div class="stage-preset-bar">
                         <span class="live-input-label">快速點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
@@ -1317,7 +2580,6 @@ class WorkspaceApp {
                     </div>
                 </div>
 
-                <!-- 超大型紅金喜慶展演開獎主舞台 -->
                 <div class="grand-stage-arena">
                     <div class="stage-corner-ornament top-left" aria-hidden="true"></div>
                     <div class="stage-corner-ornament top-right" aria-hidden="true"></div>
@@ -1335,12 +2597,10 @@ class WorkspaceApp {
                         </span>
                     </div>
 
-                    <!-- 大型鴻運金榜得獎人卡片展示區 -->
                     <div class="grand-winners-showcase" id="grand-winners-showcase">
                         ${showcaseCardsHtml}
                     </div>
 
-                    <!-- 手動控制啟動輪動 / 按下確定開獎巨型按鈕 -->
                     <div class="grand-stage-controls">
                         <button
                             type="button"
@@ -1358,7 +2618,6 @@ class WorkspaceApp {
                     </div>
                 </div>
 
-                <!-- 舞台下方最近中獎紅榜紀錄快覽 -->
                 <div class="lottery-panel-card">
                     <div class="section-toolbar">
                         <span class="lottery-panel-title">尾牙榮譽紅榜紀錄 (${this.lotteryState.winnersHistory.length} 輪)</span>
@@ -1381,14 +2640,18 @@ class WorkspaceApp {
         this.bindLotteryGrandStageEvents(theme);
     }
 
-    /**
-     * 綁定「名單匯入與獎項金額設定頁」事件
-     */
     bindLotteryAdminEvents(theme) {
         const switchToDrawBtn = document.getElementById("switch-to-draw-btn");
         if (switchToDrawBtn) {
             switchToDrawBtn.addEventListener("click", () => {
                 window.location.hash = "theme-05-draw";
+            });
+        }
+
+        const jumpSurveyBtn = document.getElementById("jump-to-survey-btn");
+        if (jumpSurveyBtn) {
+            jumpSurveyBtn.addEventListener("click", () => {
+                window.location.hash = "theme-05-survey-vote";
             });
         }
 
@@ -1534,9 +2797,6 @@ class WorkspaceApp {
         }
     }
 
-    /**
-     * 綁定「大型開獎展演舞台頁」事件
-     */
     bindLotteryGrandStageEvents(theme) {
         const switchToAdminBtn = document.getElementById("switch-to-admin-btn");
         if (switchToAdminBtn) {
@@ -1643,9 +2903,6 @@ class WorkspaceApp {
         }
     }
 
-    /**
-     * 第一階段：按下按鈕後讓員工姓名在舞台卡片上持續高速輪動（直到使用者再次按下按鈕才確定）
-     */
     startContinuousRolling() {
         const pool = this.lotteryState.remainingPool;
         if (!Array.isArray(pool) || pool.length === 0) return;
@@ -1683,9 +2940,6 @@ class WorkspaceApp {
         this.rollingIntervalId = setInterval(renderRollingTick, 65);
     }
 
-    /**
-     * 第二階段：使用者按下停止按鈕時，立即抽出得獎者、展示鴻運金榜流光特效並觸發全螢幕煙花
-     */
     stopRollingAndConfirmWinners(theme) {
         this.stopRollingIfNeeded();
 
