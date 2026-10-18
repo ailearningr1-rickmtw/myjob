@@ -12,3 +12,12 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# 敏感金鑰與本地階段狀態（嚴禁上傳至公開儲存庫）
+*api_key*
+*api_keys*
+session_state.json
+*.env
+.env.*
+*.secret
+
