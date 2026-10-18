@@ -3378,10 +3378,10 @@ html[data-theme="dark"] .locked-spec-badge {
     max-width: 640px;
     margin: 2rem auto;
     background: linear-gradient(145deg, rgba(15, 23, 42, 0.04) 0%, rgba(13, 148, 136, 0.1) 100%);
-    border: 2.5px solid var(--accent-primary);
+    border: 2.5px solid var(--accent-teal);
     border-radius: var(--radius-lg);
     padding: 2.4rem 2.2rem;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-soft);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -3481,7 +3481,7 @@ html[data-theme="dark"] .rpa-bridge-pill.is-connected {
 }
 
 .rpa-big-tool-btn:hover {
-    border-color: var(--accent-primary);
+    border-color: var(--accent-teal);
     transform: translateY(-2px);
 }
 
@@ -3496,7 +3496,7 @@ html[data-theme="dark"] .rpa-bridge-pill.is-connected {
     font-size: 0.98rem;
     font-weight: 900;
     font-family: var(--font-mono);
-    color: var(--accent-primary);
+    color: var(--accent-teal);
 }
 
 .rpa-big-tool-btn.active .rpa-big-tool-num {
@@ -3569,7 +3569,7 @@ html[data-theme="dark"] .rpa-step-badge {
     flex-wrap: wrap;
     gap: 0.85rem;
     padding: 0.8rem 1rem;
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 1.5px solid var(--border-subtle);
     border-radius: var(--radius-sm);
 }
@@ -3590,7 +3590,7 @@ html[data-theme="dark"] .rpa-step-badge {
     padding: 1.1rem;
     border-radius: var(--radius-sm);
     border: 2px solid var(--border-subtle);
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     color: var(--text-primary);
     resize: vertical;
 }
@@ -3600,13 +3600,13 @@ html[data-theme="dark"] .rpa-step-badge {
     grid-column: 1 / -1;
     margin-top: 1.35rem;
     background: var(--bg-surface);
-    border: 2.5px solid var(--accent-primary);
+    border: 2.5px solid var(--accent-teal);
     border-radius: var(--radius-lg);
     padding: 1.75rem;
     display: flex;
     flex-direction: column;
     gap: 1.35rem;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-soft);
 }
 
 .rpa-deck-export-bar {
@@ -3628,7 +3628,7 @@ html[data-theme="dark"] .rpa-step-badge {
 }
 
 .rpa-deck-page-btn {
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 2px solid var(--border-subtle);
     color: var(--text-primary);
     font-size: 1.1rem;
@@ -3640,20 +3640,40 @@ html[data-theme="dark"] .rpa-step-badge {
 }
 
 .rpa-deck-page-btn:hover {
-    border-color: var(--accent-primary);
+    border-color: var(--accent-teal);
 }
 
 .rpa-deck-page-btn.active {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
     color: #ffffff;
 }
 
 .rpa-deck-preview-layout {
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: 1.5rem;
     align-items: start;
+}
+
+/* 主題二工具表單：標籤在上、輸入框全寬，避免欄位擠成一排 */
+.rpa-large-ui .stage-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.rpa-large-ui .stage-input-group .idea-input,
+.rpa-large-ui .stage-input-group .batch-textarea,
+.rpa-large-ui .stage-input-group .prize-select,
+.rpa-large-ui .rpa-prompt-textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rpa-large-ui .rpa-prompt-textarea {
+    min-height: 420px;
 }
 
 .rpa-deck-canvas-stage {
@@ -3676,7 +3696,7 @@ html[data-theme="dark"] .rpa-step-badge {
 }
 
 .rpa-deck-editor-card {
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 1.5px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 1.25rem;
@@ -3687,7 +3707,7 @@ html[data-theme="dark"] .rpa-step-badge {
 
 /* 工具 2 & 7：大型檔案選取區 */
 .rpa-dropzone {
-    border: 3px dashed var(--accent-primary);
+    border: 3px dashed var(--accent-teal);
     background: rgba(13, 148, 136, 0.06);
     border-radius: var(--radius-md);
     padding: 2rem 1.5rem;
@@ -3711,7 +3731,7 @@ html[data-theme="dark"] .rpa-step-badge {
 }
 
 .rpa-img-result-card {
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 1.5px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 1rem;
@@ -3760,7 +3780,7 @@ html[data-theme="dark"] .rpa-step-badge {
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 1.25rem;
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 1.5px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 1.15rem;
@@ -3784,7 +3804,7 @@ html[data-theme="dark"] .rpa-step-badge {
 }
 
 .rpa-dpi-option-btn {
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 2.5px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 1.1rem;
@@ -3796,7 +3816,7 @@ html[data-theme="dark"] .rpa-step-badge {
 }
 
 .rpa-dpi-option-btn.active {
-    border-color: var(--accent-primary);
+    border-color: var(--accent-teal);
     background: rgba(13, 148, 136, 0.12);
 }
 
@@ -3818,7 +3838,7 @@ html[data-theme="dark"] .rpa-step-badge {
     justify-content: space-between;
     gap: 1rem;
     padding: 0.85rem 1.1rem;
-    background: var(--bg-elevated);
+    background: var(--bg-surface-hover);
     border: 1.5px solid var(--border-subtle);
     border-radius: var(--radius-sm);
     font-size: 1.12rem;
@@ -3827,8 +3847,8 @@ html[data-theme="dark"] .rpa-step-badge {
 
 /* 工具 8：文稿轉語音朗讀與 MP3 下載播放器 */
 .rpa-voice-player-box {
-    background: var(--bg-elevated);
-    border: 2px solid var(--accent-primary);
+    background: var(--bg-surface-hover);
+    border: 2px solid var(--accent-teal);
     border-radius: var(--radius-md);
     padding: 1.25rem;
     display: flex;
