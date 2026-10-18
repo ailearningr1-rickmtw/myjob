@@ -141,9 +141,13 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
         primarySubsidyLimit: 0,
         drinkSubsidyLimit: 60,
         enableDrinkSelectors: true,
+        allowedSugars: ["無糖", "微糖 (3分)", "半糖 (5分)"],
+        allowedIces: ["少冰", "微冰", "去冰"],
+        lockOverLimitDrinks: false,
+        allowCustomItemInput: false,
         officialUrl: "https://www.google.com/search?q=%E4%B8%8A%E7%8F%AD%E6%97%8F+%E4%BA%BA%E6%B0%A3%E4%BE%BF%E7%95%B6+%E6%89%8B%E6%90%96%E9%A3%B2+%E8%8F%9C%E5%96%AE%E5%83%B9%E7%9B%AE%E8%A1%A8",
         attachmentTitle: "各家候選餐廳菜單介紹與手搖飲最新價目表總覽.doc",
-        attachmentContent: "【兩階段店家票選與點餐・完整菜單與補助規則說明】\n\n■ 第一階段（店家票選）：\n請各位同仁先從 5 家候選午餐餐廳與 5 家手搖飲料店中，各投下您最想吃／最想喝的一家店（可點擊卡片下方按鈕查看各家官方菜單介紹與最新價目表 Menu）。\n\n■ 第二階段（針對最高票當選店家進行全體點餐）：\n第一階段截止後，系統自動選出「最高票當選餐廳」與「最高票當選飲料店」，全體同仁統一只針對當選的那一家餐廳與飲料店點選具體餐點、甜度與冰塊，不會跨多家餐廳點餐！\n\n■ 飲料限額補助規則（上限 60 元）：\n・點選 60 元（含）以下飲品：全額補助，免貼差額（自付 0 元）。\n・點選超過 60 元之飲品：需自行貼補差額（例如點選 75 元飲品，需自付差額 15 元）。",
+        attachmentContent: "【兩階段店家票選與點餐・完整菜單與補助規則說明】\n\n■ 第一階段（店家票選）：\n請各位同仁先從 5 家候選午餐餐廳與 5 家手搖飲料店中，各投下您最想吃／最想喝的一家店（可點擊卡片下方按鈕查看各家官方菜單介紹與最新價目表 Menu）。\n\n■ 第二階段（針對最高票當選店家進行全體點餐）：\n第一階段截止後，系統自動選出「最高票當選餐廳」與「最高票當選飲料店」，全體同仁統一只針對當選的那一家餐廳與飲料店點選具體餐點、甜度與冰塊，不會跨多家餐廳點餐！\n\n■ 甜度冰塊與品項精簡鎖定機制：\n為減少選項過多造成點餐困難與總務訂餐負擔，系統預設已將甜度鎖定精簡為「無糖、微糖、半糖」，冰塊鎖定精簡為「少冰、微冰、去冰」，主辦人亦可一鍵鎖定單一甜度冰塊或鎖定只開放前 3 款招牌餐點。\n\n■ 飲料限額補助規則（上限 60 元）：\n・點選 60 元（含）以下飲品：全額補助，免貼差額（自付 0 元）。\n・點選超過 60 元之飲品：需自行貼補差額（主辦人亦可一鍵開啟「鎖定超額飲品」全場免收零錢）。",
         attachmentDataUrl: "",
         primaryOptions: [
             {
@@ -157,12 +161,12 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【梁社漢排骨 門市完整菜單價目表】\n1. 炸排骨便當：NT$ 115\n2. 滷排骨便當：NT$ 115\n3. 玫瑰油雞便當：NT$ 115\n4. 椒麻雞便當：NT$ 125\n5. 黃金塔塔鱈魚排便當：NT$ 120\n6. 紅糟肉便當：NT$ 110",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "m1-1", name: "炸排骨便當", price: 115, tag: "鎮店招牌", desc: "厚切里肌炸排骨，外酥內嫩肉汁飽滿，附四樣清爽季節配菜。" },
-                    { id: "m1-2", name: "滷排骨便當", price: 115, tag: "經典入味", desc: "先炸後滷獨門秘製醬汁，排骨軟嫩鹹香下飯。" },
-                    { id: "m1-3", name: "玫瑰油雞便當", price: 115, tag: "鮮嫩雞腿", desc: "港式秘製滷水玫瑰油雞腿，皮 Q 肉嫩搭配特製油蔥。" },
-                    { id: "m1-4", name: "椒麻雞便當", price: 125, tag: "微辣開胃", desc: "酥炸無骨雞腿排淋上特製花椒酸辣醬汁，開胃首選。" },
-                    { id: "m1-5", name: "黃金塔塔鱈魚排便當", price: 120, tag: "海鮮推薦", desc: "金黃酥脆鱈魚排佐酸甜塔塔醬。" },
-                    { id: "m1-6", name: "紅糟肉便當", price: 110, tag: "古早風味", desc: "紅麴醃製酥炸五花肉條，香氣濃郁。" }
+                    { id: "m1-1", name: "炸排骨便當", price: 115, tag: "鎮店招牌", desc: "厚切里肌炸排骨，外酥內嫩肉汁飽滿，附四樣清爽季節配菜。", locked: false },
+                    { id: "m1-2", name: "滷排骨便當", price: 115, tag: "經典入味", desc: "先炸後滷獨門秘製醬汁，排骨軟嫩鹹香下飯。", locked: false },
+                    { id: "m1-3", name: "玫瑰油雞便當", price: 115, tag: "鮮嫩雞腿", desc: "港式秘製滷水玫瑰油雞腿，皮 Q 肉嫩搭配特製油蔥。", locked: false },
+                    { id: "m1-4", name: "椒麻雞便當", price: 125, tag: "微辣開胃", desc: "酥炸無骨雞腿排淋上特製花椒酸辣醬汁，開胃首選。", locked: false },
+                    { id: "m1-5", name: "黃金塔塔鱈魚排便當", price: 120, tag: "海鮮推薦", desc: "金黃酥脆鱈魚排佐酸甜塔塔醬。", locked: true },
+                    { id: "m1-6", name: "紅糟肉便當", price: 110, tag: "古早風味", desc: "紅麴醃製酥炸五花肉條，香氣濃郁。", locked: true }
                 ]
             },
             {
@@ -176,11 +180,11 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【八方雲集 門市完整菜單價目表】\n1. 招牌鍋貼 10 顆 + 酸辣湯：NT$ 105\n2. 韭菜鍋貼 10 顆 + 酸辣湯：NT$ 105\n3. 韓式辣味鍋貼 10 顆 + 玉米濃湯：NT$ 105\n4. 招牌水餃 10 顆 + 酸辣湯：NT$ 105\n5. 鮮蝦水餃 10 顆 + 玉米濃湯：NT$ 140",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "m2-1", name: "招牌鍋貼 10 顆 + 酸辣湯", price: 105, tag: "人氣冠軍", desc: "現煎金黃酥脆招牌高麗菜豬肉鍋貼 10 顆搭配酸辣湯。" },
-                    { id: "m2-2", name: "韭菜鍋貼 10 顆 + 酸辣湯", price: 105, tag: "濃郁韭香", desc: "新鮮翠綠韭菜豬肉鍋貼 10 顆搭配酸辣湯。" },
-                    { id: "m2-3", name: "韓式辣味鍋貼 10 顆 + 玉米濃湯", price: 105, tag: "微辣過癮", desc: "韓式泡菜辣味鍋貼 10 顆搭配香甜玉米濃湯。" },
-                    { id: "m2-4", name: "招牌水餃 10 顆 + 酸辣湯", price: 105, tag: "Q彈水餃", desc: "皮 Q 餡多招牌水餃 10 顆搭配酸辣湯。" },
-                    { id: "m2-5", name: "鮮蝦水餃 10 顆 + 玉米濃湯", price: 140, tag: "整尾鮮蝦", desc: "每顆包入整尾鮮甜蝦仁水餃 10 顆搭配玉米濃湯。" }
+                    { id: "m2-1", name: "招牌鍋貼 10 顆 + 酸辣湯", price: 105, tag: "人氣冠軍", desc: "現煎金黃酥脆招牌高麗菜豬肉鍋貼 10 顆搭配酸辣湯。", locked: false },
+                    { id: "m2-2", name: "韭菜鍋貼 10 顆 + 酸辣湯", price: 105, tag: "濃郁韭香", desc: "新鮮翠綠韭菜豬肉鍋貼 10 顆搭配酸辣湯。", locked: false },
+                    { id: "m2-3", name: "韓式辣味鍋貼 10 顆 + 玉米濃湯", price: 105, tag: "微辣過癮", desc: "韓式泡菜辣味鍋貼 10 顆搭配香甜玉米濃湯。", locked: false },
+                    { id: "m2-4", name: "招牌水餃 10 顆 + 酸辣湯", price: 105, tag: "Q彈水餃", desc: "皮 Q 餡多招牌水餃 10 顆搭配酸辣湯。", locked: false },
+                    { id: "m2-5", name: "鮮蝦水餃 10 顆 + 玉米濃湯", price: 140, tag: "整尾鮮蝦", desc: "每顆包入整尾鮮甜蝦仁水餃 10 顆搭配玉米濃湯。", locked: true }
                 ]
             },
             {
@@ -194,10 +198,10 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【正忠排骨飯 門市完整菜單價目表】\n1. 正忠排骨飯：NT$ 110\n2. 蜜汁燒雞腿飯：NT$ 120\n3. 酥炸雞腿飯：NT$ 120\n4. 宮保雞丁飯：NT$ 105\n5. 日式豬排飯：NT$ 115",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "m3-1", name: "正忠排骨飯", price: 110, tag: "鎮店招牌", desc: "超大片獨門醃製滷炸帶骨排骨便當。" },
-                    { id: "m3-2", name: "蜜汁燒雞腿飯", price: 120, tag: "人氣烤腿", desc: "蜜汁醬烤大雞腿，外皮焦香肉質多汁。" },
-                    { id: "m3-3", name: "酥炸雞腿飯", price: 120, tag: "金黃酥脆", desc: "現炸酥脆大雞腿便當，份量十足。" },
-                    { id: "m3-4", name: "宮保雞丁飯", price: 105, tag: "香辣下飯", desc: "大火快炒花生乾辣椒與鮮嫩雞丁便當。" }
+                    { id: "m3-1", name: "正忠排骨飯", price: 110, tag: "鎮店招牌", desc: "超大片獨門醃製滷炸帶骨排骨便當。", locked: false },
+                    { id: "m3-2", name: "蜜汁燒雞腿飯", price: 120, tag: "人氣烤腿", desc: "蜜汁醬烤大雞腿，外皮焦香肉質多汁。", locked: false },
+                    { id: "m3-3", name: "酥炸雞腿飯", price: 120, tag: "金黃酥脆", desc: "現炸酥脆大雞腿便當，份量十足。", locked: false },
+                    { id: "m3-4", name: "宮保雞丁飯", price: 105, tag: "香辣下飯", desc: "大火快炒花生乾辣椒與鮮嫩雞丁便當。", locked: false }
                 ]
             },
             {
@@ -211,10 +215,10 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【鬍鬚張 門市完整菜單價目表】\n1. 唐山排骨便當：NT$ 120\n2. 黃金雞腿便當：NT$ 130\n3. 魯肉飯便當 + 苦瓜排骨湯：NT$ 145\n4. 雞肉飯便當：NT$ 95",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "m4-1", name: "唐山排骨便當", price: 120, tag: "人氣排骨", desc: "招牌粹魯飯搭配軟嫩入味唐山排骨與季節配菜。" },
-                    { id: "m4-2", name: "黃金雞腿便當", price: 130, tag: "酥炸雞腿", desc: "招牌粹魯飯搭配黃金酥炸雞腿與滷蛋筍絲。" },
-                    { id: "m4-3", name: "魯肉飯便當 + 苦瓜排骨湯", price: 145, tag: "經典湯組", desc: "魯肉飯便當搭配原盅慢燉苦瓜排骨湯。" },
-                    { id: "m4-4", name: "雞絲魯肉雙拼便當", price: 105, tag: "雙重享受", desc: "鮮嫩雞肉絲與黃金粹魯雙拼便當。" }
+                    { id: "m4-1", name: "唐山排骨便當", price: 120, tag: "人氣排骨", desc: "招牌粹魯飯搭配軟嫩入味唐山排骨與季節配菜。", locked: false },
+                    { id: "m4-2", name: "黃金雞腿便當", price: 130, tag: "酥炸雞腿", desc: "招牌粹魯飯搭配黃金酥炸雞腿與滷蛋筍絲。", locked: false },
+                    { id: "m4-3", name: "魯肉飯便當 + 苦瓜排骨湯", price: 145, tag: "經典湯組", desc: "魯肉飯便當搭配原盅慢燉苦瓜排骨湯。", locked: false },
+                    { id: "m4-4", name: "雞絲魯肉雙拼便當", price: 105, tag: "雙重享受", desc: "鮮嫩雞肉絲與黃金粹魯雙拼便當。", locked: false }
                 ]
             },
             {
@@ -228,10 +232,10 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【Subway 門市完整菜單價目表】\n1. 6 吋百味俱樂部潛艇堡：NT$ 125\n2. 6 吋嫩切雞肉潛艇堡：NT$ 120\n3. 6 吋燒烤牛肉潛艇堡：NT$ 135\n4. 6 吋鮮蔬潛艇堡 (素食可)：NT$ 99",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "m5-1", name: "6 吋百味俱樂部潛艇堡", price: 125, tag: "經典人氣", desc: "火雞胸肉、火腿與烤牛肉三種肉片搭配新鮮生菜。" },
-                    { id: "m5-2", name: "6 吋嫩切雞肉潛艇堡", price: 120, tag: "低脂清爽", desc: "鮮嫩雞胸肉片搭配生菜、番茄與自選醬料。" },
-                    { id: "m5-3", name: "6 吋燒烤牛肉潛艇堡", price: 135, tag: "醇厚牛肉", desc: "嫩切燒烤牛肉片搭配豐富鮮蔬。" },
-                    { id: "m5-4", name: "6 吋鮮蔬潛艇堡 (素食可)", price: 99, tag: "健康蔬食", desc: "滿滿生菜、番茄、青椒、黃瓜與橄欖（素食可用）。" }
+                    { id: "m5-1", name: "6 吋百味俱樂部潛艇堡", price: 125, tag: "經典人氣", desc: "火雞胸肉、火腿與烤牛肉三種肉片搭配新鮮生菜。", locked: false },
+                    { id: "m5-2", name: "6 吋嫩切雞肉潛艇堡", price: 120, tag: "低脂清爽", desc: "鮮嫩雞胸肉片搭配生菜、番茄與自選醬料。", locked: false },
+                    { id: "m5-3", name: "6 吋燒烤牛肉潛艇堡", price: 135, tag: "醇厚牛肉", desc: "嫩切燒烤牛肉片搭配豐富鮮蔬。", locked: false },
+                    { id: "m5-4", name: "6 吋鮮蔬潛艇堡 (素食可)", price: 99, tag: "健康蔬食", desc: "滿滿生菜、番茄、青椒、黃瓜與橄欖（素食可用）。", locked: false }
                 ]
             }
         ],
@@ -247,12 +251,12 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【50嵐 最新門市價目表 Menu（大杯 L 價格）】\n・四季春青茶 / 茉莉綠茶 / 阿薩姆紅茶：NT$ 40（免貼差額）\n・1號 四季春珍波椰：NT$ 50（免貼差額）\n・波霸奶茶 / 珍珠奶茶 / 燕麥奶茶：NT$ 55（免貼差額）\n・8冰綠 / 檸檬綠茶：NT$ 55（免貼差額）\n・紅茶拿鐵 / 烏龍拿鐵：NT$ 65（超過 60 元，需貼差額 5 元）\n・波霸紅茶拿鐵：NT$ 65（超過 60 元，需貼差額 5 元）",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "d1-1", name: "1號 四季春珍波椰 (大杯)", price: 50, tag: "60元內免貼", desc: "四季春青茶搭配波霸、珍珠與椰果（免貼差額）。" },
-                    { id: "d1-2", name: "波霸奶茶 / 珍珠奶茶 (大杯)", price: 55, tag: "60元內免貼", desc: "經典香醇奶茶搭配 Q 彈波霸（免貼差額）。" },
-                    { id: "d1-3", name: "四季春青茶 / 茉莉綠茶 (大杯)", price: 40, tag: "60元內免貼", desc: "清爽回甘原葉純茶（免貼差額）。" },
-                    { id: "d1-4", name: "8冰綠 / 檸檬綠茶 (大杯)", price: 55, tag: "60元內免貼", desc: "新鮮金桔梅子或檸檬綠茶，酸甜解膩（免貼差額）。" },
-                    { id: "d1-5", name: "紅茶拿鐵 / 烏龍拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "濃郁茶湯融合鮮乳（單價 65 元，超過 60 元需貼差額 5 元）。" },
-                    { id: "d1-6", name: "波霸紅茶拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "人氣鮮奶茶加波霸（單價 65 元，超過 60 元需貼差額 5 元）。" }
+                    { id: "d1-1", name: "1號 四季春珍波椰 (大杯)", price: 50, tag: "60元內免貼", desc: "四季春青茶搭配波霸、珍珠與椰果（免貼差額）。", locked: false, fixedSugar: "微糖 (3分)", fixedIce: "少冰" },
+                    { id: "d1-2", name: "波霸奶茶 / 珍珠奶茶 (大杯)", price: 55, tag: "60元內免貼", desc: "經典香醇奶茶搭配 Q 彈波霸（免貼差額）。", locked: false },
+                    { id: "d1-3", name: "四季春青茶 / 茉莉綠茶 (大杯)", price: 40, tag: "60元內免貼", desc: "清爽回甘原葉純茶（免貼差額）。", locked: false },
+                    { id: "d1-4", name: "8冰綠 / 檸檬綠茶 (大杯)", price: 55, tag: "黃金比例鎖定", desc: "新鮮金桔梅子綠茶（黃金比例鎖定微糖少冰）。", locked: false, fixedSugar: "微糖 (3分)", fixedIce: "少冰" },
+                    { id: "d1-5", name: "紅茶拿鐵 / 烏龍拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "濃郁茶湯融合鮮乳（單價 65 元，超過 60 元需貼差額 5 元）。", locked: false },
+                    { id: "d1-6", name: "波霸紅茶拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "人氣鮮奶茶加波霸（單價 65 元，超過 60 元需貼差額 5 元）。", locked: true }
                 ]
             },
             {
@@ -266,11 +270,11 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【可不可熟成紅茶 最新門市價目表 Menu（大杯 L 價格）】\n・熟成紅茶 / 麗春紅茶 / 春芽綠茶：NT$ 45（免貼差額）\n・胭脂紅茶 / 春芽冷露 / 熟成冷露：NT$ 50（免貼差額）\n・熟成歐蕾（鮮奶茶）：NT$ 65（超過 60 元，需貼差額 5 元）\n・白玉歐蕾（白玉珍珠鮮奶茶）：NT$ 75（超過 60 元，需貼差額 15 元）",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "d2-1", name: "熟成紅茶 (大杯)", price: 45, tag: "60元內免貼", desc: "經典果香與桂圓尾韻紅茶，解油膩首選（免貼差額）。" },
-                    { id: "d2-2", name: "春芽綠茶 / 麗春紅茶 (大杯)", price: 45, tag: "60元內免貼", desc: "清爽綠茶或淡雅花香紅茶（免貼差額）。" },
-                    { id: "d2-3", name: "胭脂紅茶 / 春芽冷露 (大杯)", price: 50, tag: "60元內免貼", desc: "水蜜桃果香紅茶或古早味冬瓜綠茶（免貼差額）。" },
-                    { id: "d2-4", name: "熟成歐蕾 (大杯)", price: 65, tag: "超額補 +$5", desc: "熟成紅茶融合濃醇鮮乳（單價 65 元，需貼差額 5 元）。" },
-                    { id: "d2-5", name: "白玉歐蕾 (大杯)", price: 75, tag: "超額補 +$15", desc: "熟成歐蕾搭配 Q 彈白玉珍珠（單價 75 元，需貼差額 15 元）。" }
+                    { id: "d2-1", name: "熟成紅茶 (大杯)", price: 45, tag: "60元內免貼", desc: "經典果香與桂圓尾韻紅茶，解油膩首選（免貼差額）。", locked: false },
+                    { id: "d2-2", name: "春芽綠茶 / 麗春紅茶 (大杯)", price: 45, tag: "60元內免貼", desc: "清爽綠茶或淡雅花香紅茶（免貼差額）。", locked: false },
+                    { id: "d2-3", name: "胭脂紅茶 / 春芽冷露 (大杯)", price: 50, tag: "60元內免貼", desc: "水蜜桃果香紅茶或古早味冬瓜綠茶（免貼差額）。", locked: false },
+                    { id: "d2-4", name: "熟成歐蕾 (大杯)", price: 65, tag: "超額補 +$5", desc: "熟成紅茶融合濃醇鮮乳（單價 65 元，需貼差額 5 元）。", locked: false },
+                    { id: "d2-5", name: "白玉歐蕾 (大杯)", price: 75, tag: "超額補 +$15", desc: "熟成歐蕾搭配 Q 彈白玉珍珠（單價 75 元，需貼差額 15 元）。", locked: false }
                 ]
             },
             {
@@ -284,11 +288,11 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【得正 Oolong Tea Project 最新門市價目表 Menu（大杯 L 價格）】\n・春烏龍 / 輕烏龍 / 焙烏龍：NT$ 40（免貼差額）\n・檸檬春烏龍：NT$ 55（免貼差額）\n・芝士奶蓋春烏龍 / 輕烏龍：NT$ 60（免貼差額）\n・輕烏龍鮮奶 / 焙烏龍鮮奶：NT$ 60（免貼差額）\n・輕烏龍鮮奶 + 黃金珍珠：NT$ 70（超過 60 元，需貼差額 10 元）",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "d3-1", name: "春烏龍 / 輕烏龍 / 焙烏龍 (大杯)", price: 40, tag: "60元內免貼", desc: "招牌三種焙火程度精品烏龍純茶（免貼差額）。" },
-                    { id: "d3-2", name: "檸檬春烏龍 (大杯)", price: 55, tag: "60元內免貼", desc: "新鮮屏東檸檬原汁搭配清爽春烏龍（免貼差額）。" },
-                    { id: "d3-3", name: "芝士奶蓋春烏龍 (大杯)", price: 60, tag: "60元內免貼", desc: "鹹甜綿密芝士奶蓋佐春烏龍（剛好 60 元免貼差額）。" },
-                    { id: "d3-4", name: "輕烏龍鮮奶 / 焙烏龍鮮奶 (大杯)", price: 60, tag: "60元內免貼", desc: "三分火輕烏龍融合鮮乳（剛好 60 元免貼差額）。" },
-                    { id: "d3-5", name: "輕烏龍鮮奶 + 黃金珍珠 (大杯)", price: 70, tag: "超額補 +$10", desc: "人氣烏龍鮮奶加 Q 彈黃金珍珠（單價 70 元，需貼差額 10 元）。" }
+                    { id: "d3-1", name: "春烏龍 / 輕烏龍 / 焙烏龍 (大杯)", price: 40, tag: "60元內免貼", desc: "招牌三種焙火程度精品烏龍純茶（免貼差額）。", locked: false },
+                    { id: "d3-2", name: "檸檬春烏龍 (大杯)", price: 55, tag: "黃金比例鎖定", desc: "新鮮屏東檸檬原汁搭配春烏龍（黃金比例鎖定半糖少冰）。", locked: false, fixedSugar: "半糖 (5分)", fixedIce: "少冰" },
+                    { id: "d3-3", name: "芝士奶蓋春烏龍 (大杯)", price: 60, tag: "60元內免貼", desc: "鹹甜綿密芝士奶蓋佐春烏龍（剛好 60 元免貼差額）。", locked: false },
+                    { id: "d3-4", name: "輕烏龍鮮奶 / 焙烏龍鮮奶 (大杯)", price: 60, tag: "60元內免貼", desc: "三分火輕烏龍融合鮮乳（剛好 60 元免貼差額）。", locked: false },
+                    { id: "d3-5", name: "輕烏龍鮮奶 + 黃金珍珠 (大杯)", price: 70, tag: "超額補 +$10", desc: "人氣烏龍鮮奶加 Q 彈黃金珍珠（單價 70 元，需貼差額 10 元）。", locked: false }
                 ]
             },
             {
@@ -302,11 +306,11 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【迷客夏 Milksha 最新門市價目表 Menu】\n・決明大麥 / 茉莉原淬綠茶 / 琥珀烏龍 (L)：NT$ 40（免貼差額）\n・柳丁綠茶 / 冰萃檸檬 (L)：NT$ 60（免貼差額）\n・大正紅茶拿鐵 / 伯爵紅茶拿鐵 (L)：NT$ 65（超過 60 元，需貼差額 5 元）\n・大正紅茶拿鐵 + 蜂蜜珍珠 (L)：NT$ 75（超過 60 元，需貼差額 15 元）\n・手搗芋頭鮮奶 (M)：NT$ 75（超過 60 元，需貼差額 15 元）",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "d4-1", name: "決明大麥 / 茉莉原淬綠茶 (大杯)", price: 40, tag: "60元內免貼", desc: "無咖啡因大麥茶或清爽綠茶（免貼差額）。" },
-                    { id: "d4-2", name: "柳丁綠茶 / 冰萃檸檬 (大杯)", price: 60, tag: "60元內免貼", desc: "鮮榨台灣柳丁綠茶（剛好 60 元免貼差額）。" },
-                    { id: "d4-3", name: "大正紅茶拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "綠光牧場鮮奶搭配古早味紅茶（單價 65 元，需貼差額 5 元）。" },
-                    { id: "d4-4", name: "大正紅茶拿鐵 + 蜂蜜珍珠 (大杯)", price: 75, tag: "超額補 +$15", desc: "招牌鮮奶茶加白玉蜂蜜珍珠（單價 75 元，需貼差額 15 元）。" },
-                    { id: "d4-5", name: "手搗芋頭鮮奶 (中杯)", price: 75, tag: "超額補 +$15", desc: "大甲芋頭手工壓泥配綠光鮮奶（單價 75 元，需貼差額 15 元）。" }
+                    { id: "d4-1", name: "決明大麥 / 茉莉原淬綠茶 (大杯)", price: 40, tag: "60元內免貼", desc: "無咖啡因大麥茶或清爽綠茶（免貼差額）。", locked: false },
+                    { id: "d4-2", name: "柳丁綠茶 / 冰萃檸檬 (大杯)", price: 60, tag: "60元內免貼", desc: "鮮榨台灣柳丁綠茶（剛好 60 元免貼差額）。", locked: false },
+                    { id: "d4-3", name: "大正紅茶拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "綠光牧場鮮奶搭配古早味紅茶（單價 65 元，需貼差額 5 元）。", locked: false },
+                    { id: "d4-4", name: "大正紅茶拿鐵 + 蜂蜜珍珠 (大杯)", price: 75, tag: "超額補 +$15", desc: "招牌鮮奶茶加白玉蜂蜜珍珠（單價 75 元，需貼差額 15 元）。", locked: false },
+                    { id: "d4-5", name: "手搗芋頭鮮奶 (中杯)", price: 75, tag: "超額補 +$15", desc: "大甲芋頭手工壓泥配綠光鮮奶（單價 75 元，需貼差額 15 元）。", locked: false }
                 ]
             },
             {
@@ -320,11 +324,11 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "【麻古茶坊 MACU 最新門市價目表 Menu（大杯 L 價格）】\n・高山金萱茶 / 翡翠綠茶：NT$ 35~40（免貼差額）\n・金萱雙Q (波霸+椰果)：NT$ 50（免貼差額）\n・波霸紅茶拿鐵：NT$ 65（超過 60 元，需貼差額 5 元）\n・翡翠柳橙 / 香橙果粒茶：NT$ 70~80（超過 60 元，需貼差額 10~20 元）\n・芝芝葡萄果粒 / 楊枝甘露 2.0：NT$ 85（超過 60 元，需貼差額 25 元）",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "d5-1", name: "高山金萱茶 / 翡翠綠茶 (大杯)", price: 35, tag: "60元內免貼", desc: "清香回甘台灣原葉好茶（免貼差額）。" },
-                    { id: "d5-2", name: "金萱雙Q（波霸+椰果）(大杯)", price: 50, tag: "60元內免貼", desc: "高山金萱搭配波霸與椰果（免貼差額）。" },
-                    { id: "d5-3", name: "波霸紅茶拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "香醇紅茶拿鐵加波霸（單價 65 元，需貼差額 5 元）。" },
-                    { id: "d5-4", name: "翡翠柳橙 (大杯)", price: 70, tag: "超額補 +$10", desc: "新鮮柳橙原汁搭翡翠綠茶（單價 70 元，需貼差額 10 元）。" },
-                    { id: "d5-5", name: "芝芝葡萄果粒 / 楊枝甘露 (大杯)", price: 85, tag: "超額補 +$25", desc: "巨峰葡萄果肉冰沙佐紐西蘭起司奶蓋（單價 85 元，需貼差額 25 元）。" }
+                    { id: "d5-1", name: "高山金萱茶 / 翡翠綠茶 (大杯)", price: 35, tag: "60元內免貼", desc: "清香回甘台灣原葉好茶（免貼差額）。", locked: false },
+                    { id: "d5-2", name: "金萱雙Q（波霸+椰果）(大杯)", price: 50, tag: "黃金比例鎖定", desc: "高山金萱搭配波霸與椰果（免貼差額，鎖定微糖少冰）。", locked: false, fixedSugar: "微糖 (3分)", fixedIce: "少冰" },
+                    { id: "d5-3", name: "波霸紅茶拿鐵 (大杯)", price: 65, tag: "超額補 +$5", desc: "香醇紅茶拿鐵加波霸（單價 65 元，需貼差額 5 元）。", locked: false },
+                    { id: "d5-4", name: "翡翠柳橙 (大杯)", price: 70, tag: "超額補 +$10", desc: "新鮮柳橙原汁搭翡翠綠茶（單價 70 元，需貼差額 10 元）。", locked: false },
+                    { id: "d5-5", name: "芝芝葡萄果粒 / 楊枝甘露 (大杯)", price: 85, tag: "超額補 +$25", desc: "巨峰葡萄果肉冰沙佐紐西蘭起司奶蓋（單價 85 元，需貼差額 25 元）。", locked: false }
                 ]
             }
         ],
@@ -343,6 +347,10 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
         primarySubsidyLimit: 0,
         drinkSubsidyLimit: 0,
         enableDrinkSelectors: false,
+        allowedSugars: ["無糖", "微糖 (3分)", "半糖 (5分)"],
+        allowedIces: ["少冰", "微冰", "去冰"],
+        lockOverLimitDrinks: false,
+        allowCustomItemInput: false,
         officialUrl: "https://www.google.com/search?q=%E9%83%A8%E9%96%80%E8%81%9A%E9%A4%90+%E4%BA%BA%E6%B0%A3%E9%A4%90%E5%BB%B3+%E6%8E%A8%E8%96%A6",
         attachmentTitle: "部門聚餐候選餐廳價位與交通資訊彙整表.doc",
         attachmentContent: "【部門聚餐候選餐廳彙整說明】\n1. 日式燒肉專門店：位於捷運站步行 3 分鐘，提供獨立包廂。\n2. 義式手工窯烤披薩餐酒館：適合多人分享，提供素食義大利麵選項。",
@@ -359,8 +367,8 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "設有三間獨立十人包廂。",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "om1-1", name: "極上和牛燒肉套餐", price: 800, tag: "吃牛推薦", desc: "和牛與精選豚肉拼盤。" },
-                    { id: "om1-2", name: "伊比利豬與海鮮燒肉套餐 (不吃牛)", price: 800, tag: "不吃牛推薦", desc: "伊比利松阪豬與干貝大蝦拼盤。" }
+                    { id: "om1-1", name: "極上和牛燒肉套餐", price: 800, tag: "吃牛推薦", desc: "和牛與精選豚肉拼盤。", locked: false },
+                    { id: "om1-2", name: "伊比利豬與海鮮燒肉套餐 (不吃牛)", price: 800, tag: "不吃牛推薦", desc: "伊比利松阪豬與干貝大蝦拼盤。", locked: false }
                 ]
             },
             {
@@ -374,8 +382,8 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "提供多款奶蛋素與全素窯烤料理。",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "om2-1", name: "松露牛肝菌寬扁麵套餐", price: 650, tag: "人氣招牌", desc: "手工義麵搭配開胃前菜與濃湯。" },
-                    { id: "om2-2", name: "瑪格麗特窯烤披薩套餐 (素食可)", price: 650, tag: "蔬食友善", desc: "正統拿坡里窯烤披薩套餐。" }
+                    { id: "om2-1", name: "松露牛肝菌寬扁麵套餐", price: 650, tag: "人氣招牌", desc: "手工義麵搭配開胃前菜與濃湯。", locked: false },
+                    { id: "om2-2", name: "瑪格麗特窯烤披薩套餐 (素食可)", price: 650, tag: "蔬食友善", desc: "正統拿坡里窯烤披薩套餐。", locked: false }
                 ]
             }
         ],
@@ -391,8 +399,8 @@ const DEFAULT_SURVEY_CAMPAIGNS = [
                 attachNote: "蛋奶素可食。",
                 attachDataUrl: "",
                 menuItems: [
-                    { id: "od1-1", name: "法式草莓千層塔 + 莊園濾掛咖啡", price: 150, tag: "人氣首選", desc: "新鮮草莓塔配中深焙濾掛。" },
-                    { id: "od1-2", name: "靜岡抹茶生巧塔 + 蜜香紅烏龍茶包", price: 150, tag: "茶香推薦", desc: "濃郁抹茶塔配台灣紅烏龍。" }
+                    { id: "od1-1", name: "法式草莓千層塔 + 莊園濾掛咖啡", price: 150, tag: "人氣首選", desc: "新鮮草莓塔配中深焙濾掛。", locked: false },
+                    { id: "od1-2", name: "靜岡抹茶生巧塔 + 蜜香紅烏龍茶包", price: 150, tag: "茶香推薦", desc: "濃郁抹茶塔配台灣紅烏龍。", locked: false }
                 ]
             }
         ],
@@ -408,7 +416,7 @@ const STORAGE_KEYS = {
     LOTTERY_STATE: "aero_workspace_lottery_state_v2",
     LOTTERY_PASSCODE: "aero_workspace_lottery_passcode",
     LOTTERY_UNLOCKED_SESSION: "aero_workspace_lottery_unlocked",
-    SURVEY_STATE: "aero_workspace_survey_state_v3"
+    SURVEY_STATE: "aero_workspace_survey_state_v4"
 };
 
 /**
@@ -1326,6 +1334,43 @@ class WorkspaceApp {
         };
     }
 
+    /**
+     * 確保活動具備甜度鎖定、冰塊鎖定、超額飲品鎖定與精簡輸入框預設屬性
+     */
+    ensureCampaignLockDefaults(campaign) {
+        if (!Array.isArray(campaign.allowedSugars) || campaign.allowedSugars.length === 0) {
+            campaign.allowedSugars = ["無糖", "微糖 (3分)", "半糖 (5分)"];
+        }
+        if (!Array.isArray(campaign.allowedIces) || campaign.allowedIces.length === 0) {
+            campaign.allowedIces = ["少冰", "微冰", "去冰"];
+        }
+        if (typeof campaign.lockOverLimitDrinks !== "boolean") {
+            campaign.lockOverLimitDrinks = false;
+        }
+        if (typeof campaign.allowCustomItemInput !== "boolean") {
+            campaign.allowCustomItemInput = false;
+        }
+    }
+
+    /**
+     * 取得當選店家目前「開放點選（未被鎖定、且符合超額鎖定規則）」的精簡菜單品項
+     */
+    getOpenMenuItems(vendorObj, isDrinkGroup, campaign) {
+        if (!vendorObj || !Array.isArray(vendorObj.menuItems) || vendorObj.menuItems.length === 0) {
+            return [];
+        }
+        const dLimit = Number(campaign.drinkSubsidyLimit) || 0;
+        const filtered = vendorObj.menuItems.filter((item) => {
+            if (item.locked === true) return false;
+            if (isDrinkGroup && campaign.lockOverLimitDrinks && dLimit > 0 && Number(item.price) > dLimit) {
+                return false;
+            }
+            return true;
+        });
+        // 若主辦人不小心把所有品項都鎖定了，至少保底開放第一項以免無法點餐
+        return filtered.length > 0 ? filtered : [vendorObj.menuItems[0]];
+    }
+
     renderSurveyPage(subView) {
         if (!this.focusSection) return;
         const campaign = this.getActiveCampaign();
@@ -1338,6 +1383,7 @@ class WorkspaceApp {
         if (!campaign.votes) {
             campaign.votes = {};
         }
+        this.ensureCampaignLockDefaults(campaign);
 
         const employees = this.lotteryState.allParticipants;
         const p1VotedCount = Object.keys(campaign.phase1Votes).length;
@@ -1354,50 +1400,36 @@ class WorkspaceApp {
             <!-- 問卷系統頂部導覽列 -->
             <div class="survey-header-bar">
                 <div class="festive-brand-emblem">
-                    <span class="theme-code-badge">SYS-5A // 兩階段票選與點餐中心</span>
-                    <span class="section-heading">多功能問卷調查與兩階段餐廳票選／點餐系統</span>
+                    <span class="theme-code-badge">SYS-5A // 極簡兩階段票選與點餐中心</span>
+                    <span class="section-heading">餐廳票選與精簡鎖定點餐系統</span>
                 </div>
                 <div class="lottery-subpage-tabs">
                     <button type="button" class="subpage-tab-btn ${subView === "vote" ? "active" : ""}" id="tab-survey-vote">
-                        <span>1. 同仁票選店家 ＆ 點餐大廳</span>
+                        <span>1. 同仁快速點餐／投票</span>
                     </button>
                     <button type="button" class="subpage-tab-btn ${subView === "setup" ? "active" : ""}" id="tab-survey-setup">
-                        <span>2. 設定候選餐廳、菜單價目表與名單</span>
+                        <span>2. 主辦人鎖定選項＆設定菜單</span>
                     </button>
                     <button type="button" class="subpage-tab-btn ${subView === "stats" ? "active" : ""}" id="tab-survey-stats">
-                        <span>3. 統計分析、差額收款與 LINE 通知 (票選:${p1VotedCount} / 點餐:${p2OrderedCount})</span>
+                        <span>3. 統計報表＆一鍵 LINE 通知 (${campaign.currentPhase === "phase1" ? `已投:${p1VotedCount}` : `已點:${p2OrderedCount}`}/${employees.length})</span>
                     </button>
                     <button type="button" class="secondary-btn" id="jump-to-lottery-btn">
                         <span>前往尾牙抽獎</span>
                     </button>
                     <button type="button" class="back-overview-btn" id="survey-back-hub-btn">
-                        <span>離開系統</span>
+                        <span>離開</span>
                     </button>
                 </div>
             </div>
 
-            <!-- 票選活動主題切換器 -->
-            <div class="survey-campaign-bar">
-                <div class="campaign-select-group">
-                    <label class="live-input-label" for="survey-campaign-select">切換票選主題專案：</label>
-                    <select id="survey-campaign-select" class="campaign-select">
-                        ${campaignOptionsHtml}
-                    </select>
-                    <button type="button" class="secondary-btn" id="create-new-campaign-btn">＋ 新增其他票選主題</button>
-                </div>
-                <span class="theme-route-hint">
-                    共用名單：${employees.length} 人 ｜ 階段一已投店家：${p1VotedCount} 人 ｜ 階段二已點餐：${p2OrderedCount} 人
-                </span>
-            </div>
-
-            <!-- 兩階段流程切換列（解決先點餐卻沒選上該餐廳需重點餐的問題） -->
+            <!-- 兩階段流程切換列 -->
             <div class="survey-phase-stepper">
                 <button type="button" class="phase-step-card ${campaign.currentPhase === "phase1" ? "is-active-phase" : ""}" data-switch-phase="phase1">
                     <div class="phase-step-info">
-                        <span class="phase-step-badge">STAGE 01 // 第一階段：先決定哪一家店</span>
-                        <span class="phase-step-title">第一階段：候選餐廳 ＆ 手搖飲料店票選</span>
+                        <span class="phase-step-badge">STAGE 01 // 先決定吃哪一家（不點細項）</span>
+                        <span class="phase-step-title">第一階段：投選出最高人氣「餐廳」與「飲料店」</span>
                         <span class="phase-step-desc">
-                            先投票選出大家最想吃的餐廳與飲料店（不先點餐）。目前最高票領先：【${this.escapeHtml(winInfo.primaryWinner ? winInfo.primaryWinner.vendor : "未定")}】＋【${this.escapeHtml(winInfo.secondaryWinner ? winInfo.secondaryWinner.vendor : "未定")}】
+                            目前最高票：【${this.escapeHtml(winInfo.primaryWinner ? winInfo.primaryWinner.vendor : "未定")}】(${winInfo.primaryWinnerVotes}票) ＋ 【${this.escapeHtml(winInfo.secondaryWinner ? winInfo.secondaryWinner.vendor : "未定")}】(${winInfo.secondaryWinnerVotes}票)
                         </span>
                     </div>
                     <span class="vote-count-pill">已投 ${p1VotedCount}/${employees.length} 人</span>
@@ -1405,10 +1437,10 @@ class WorkspaceApp {
 
                 <button type="button" class="phase-step-card ${campaign.currentPhase === "phase2" ? "is-active-phase" : ""}" data-switch-phase="phase2">
                     <div class="phase-step-info">
-                        <span class="phase-step-badge">STAGE 02 // 第二階段：只針對最高票當選店家點餐</span>
-                        <span class="phase-step-title">第二階段：針對最高票當選餐廳 ＆ 飲料店進行點餐</span>
+                        <span class="phase-step-badge">STAGE 02 // 只針對最高票當選店家點餐</span>
+                        <span class="phase-step-title">第二階段：全體點選【${this.escapeHtml(winInfo.primaryWinner ? winInfo.primaryWinner.vendor : "")}】＋【${this.escapeHtml(winInfo.secondaryWinner ? winInfo.secondaryWinner.vendor : "")}】</span>
                         <span class="phase-step-desc">
-                            只開放最高票當選的【${this.escapeHtml(winInfo.primaryWinner ? winInfo.primaryWinner.vendor : "")}】與【${this.escapeHtml(winInfo.secondaryWinner ? winInfo.secondaryWinner.vendor : "")}】菜單供全體同仁點餐、選甜度冰塊與計算 60 元超額差額！
+                            左欄選便當、右欄選飲料（已啟動甜度冰塊與品項精簡鎖定，支援 1 秒懶人快選）
                         </span>
                     </div>
                     <span class="vote-count-pill">已點 ${p2OrderedCount}/${employees.length} 人</span>
@@ -1420,7 +1452,19 @@ class WorkspaceApp {
         if (subView === "vote") {
             bodyContentHtml = this.getSurveyVoteViewHtml(campaign, employees, winInfo);
         } else if (subView === "setup") {
-            bodyContentHtml = this.getSurveySetupViewHtml(campaign, employees, winInfo);
+            bodyContentHtml = `
+                <div class="survey-campaign-bar">
+                    <div class="campaign-select-group">
+                        <label class="live-input-label" for="survey-campaign-select">切換票選主題專案：</label>
+                        <select id="survey-campaign-select" class="campaign-select">
+                            ${campaignOptionsHtml}
+                        </select>
+                        <button type="button" class="secondary-btn" id="create-new-campaign-btn">＋ 新增其他票選主題</button>
+                    </div>
+                    <span class="theme-route-hint">可在此管理不同活動的餐廳或一般問卷主題</span>
+                </div>
+                ${this.getSurveySetupViewHtml(campaign, employees, winInfo)}
+            `;
         } else {
             bodyContentHtml = this.getSurveyStatsViewHtml(campaign, employees, winInfo);
         }
@@ -1437,7 +1481,7 @@ class WorkspaceApp {
         if (subView === "vote") {
             this.bindSurveyVoteEvents(campaign, winInfo);
         } else if (subView === "setup") {
-            this.bindSurveySetupEvents(campaign);
+            this.bindSurveySetupEvents(campaign, winInfo);
         } else {
             this.bindSurveyStatsEvents(campaign, employees, winInfo);
             this.drawSurveyStatsCharts(campaign, winInfo);
@@ -1445,254 +1489,58 @@ class WorkspaceApp {
     }
 
     /**
-     * 子視圖 1：依當前階段顯示「第一階段：票選哪一家餐廳／飲料店」或「第二階段：只針對最高票當選餐廳／飲料店點餐」
+     * 產生「主辦人選項鎖定與精簡控制台」HTML（可於點餐頁一鍵展開，亦內嵌於設定頁最上方）
      */
-    getSurveyVoteViewHtml(campaign, employees, winInfo) {
-        if (!this.selectedVoterName && employees.length > 0) {
-            this.selectedVoterName = employees[0];
-            this.loadExistingVoteForSelectedEmployee(campaign, winInfo);
-        }
-
-        const isPhase1 = campaign.currentPhase === "phase1";
-
-        const resourcesBannerHtml = `
-            <div class="campaign-resources-banner">
-                <div class="resource-info-col">
-                    <span class="resource-title">${this.escapeHtml(campaign.title)}</span>
-                    <span class="resource-desc">${this.escapeHtml(campaign.description)}</span>
-                </div>
-                <div class="resource-actions-row">
-                    <button type="button" class="primary-btn" id="view-campaign-attachment-btn">
-                        檢視完整菜單與手搖飲價目表總覽 (${this.escapeHtml(campaign.attachmentTitle || "介紹文件")})
-                    </button>
-                    <a href="${this.escapeHtml(campaign.officialUrl || "https://www.google.com")}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
-                        <span>查詢各家餐廳／手搖飲最新價目表</span>
-                    </a>
-                </div>
-            </div>
-        `;
-
-        // =========================================================================
-        // 【第一階段視圖】只投哪一家餐廳 ＆ 哪一家飲料店（可看各家菜單介紹與價目表，不先點餐）
-        // =========================================================================
-        if (isPhase1) {
-            if (!this.selectedPrimaryOptionId && campaign.primaryOptions.length > 0) {
-                this.selectedPrimaryOptionId = campaign.primaryOptions[0].id;
-            }
-            if (!this.selectedSecondaryOptionId && campaign.secondaryOptions.length > 0) {
-                this.selectedSecondaryOptionId = campaign.secondaryOptions[0].id;
-            }
-
-            const voterOptionsP1Html = employees.length > 0
-                ? employees.map((emp) => {
-                    const p1Rec = campaign.phase1Votes && campaign.phase1Votes[emp];
-                    const statusTag = p1Rec
-                        ? `[階段一已投：${p1Rec.primaryVendorName} + ${p1Rec.secondaryVendorName}]`
-                        : "[階段一尚未投票]";
-                    return `<option value="${this.escapeHtml(emp)}" ${emp === this.selectedVoterName ? "selected" : ""}>${this.escapeHtml(emp)} ${statusTag}</option>`;
-                }).join("")
-                : `<option value="">請先至「設定頁」匯入員工姓名</option>`;
-
-            const renderVendorCardsP1 = (options, selectedId, groupType, countsMap) => options.map((opt) => {
-                const isSelected = opt.id === selectedId;
-                const voteCnt = countsMap[opt.id] || 0;
-                const isDrinkGroup = groupType === "secondary";
-                const menuBtnLabel = isDrinkGroup ? "查看最新價目表 Menu" : "查看餐廳菜單介紹附檔";
-                const webMenuLabel = isDrinkGroup ? "官方最新價目表網頁" : "連結餐廳菜單介紹";
-                const searchQueryUrl = isDrinkGroup
-                    ? `https://www.google.com/search?q=${encodeURIComponent((opt.vendor || opt.name) + " 最新菜單 價目表 必喝推薦")}`
-                    : `https://www.google.com/search?q=${encodeURIComponent((opt.vendor || opt.name) + " 菜單 餐點介紹 評價")}`;
-                const mapQueryUrl = `https://www.google.com/maps/search/${encodeURIComponent(opt.vendor || opt.name)}`;
-                const sampleMenuSummary = Array.isArray(opt.menuItems) && opt.menuItems.length > 0
-                    ? `店內招牌品項：${opt.menuItems.map((m) => `${m.name}($${m.price})`).join("、")}`
-                    : "";
-
-                return `
-                    <article class="survey-option-card ${isSelected ? "is-selected" : ""}" data-select-group="${groupType}" data-option-id="${this.escapeHtml(opt.id)}">
-                        <div class="informal-card-body">
-                            <div class="option-card-header">
-                                <div>
-                                    <div class="option-badges-row">
-                                        <span class="vendor-name-badge">${this.escapeHtml(opt.vendor || opt.name)}</span>
-                                        <span class="option-tag-pill">${this.escapeHtml(opt.tag || "候選店家")}</span>
-                                        <span class="vote-count-pill">目前得票：${voteCnt} 票</span>
-                                    </div>
-                                    <h4 class="option-title">${this.escapeHtml(opt.vendor ? `${opt.vendor} — ${opt.name}` : opt.name)}</h4>
-                                </div>
-                                <div class="option-radio-indicator" aria-hidden="true"></div>
-                            </div>
-                            <p class="option-desc">${this.escapeHtml(opt.desc)}</p>
-                            ${sampleMenuSummary ? `<p class="theme-route-hint">${this.escapeHtml(sampleMenuSummary)}</p>` : ""}
-                        </div>
-                        <div class="option-links-bar">
-                            <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(opt.id)}" data-view-opt-group="${groupType}">
-                                <span>${menuBtnLabel}</span>
-                            </button>
-                            ${opt.refUrl ? `
-                                <a href="${this.escapeHtml(opt.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
-                                    <span>${webMenuLabel}</span>
-                                </a>
-                            ` : ""}
-                            <a href="${searchQueryUrl}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
-                                <span>Google 評價查詢</span>
-                            </a>
-                            <a href="${mapQueryUrl}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
-                                <span>地圖位置</span>
-                            </a>
-                        </div>
-                    </article>
-                `;
-            }).join("");
-
-            return `
-                ${resourcesBannerHtml}
-
-                <!-- 第一階段說明橫幅 -->
-                <div class="winner-vendor-banner">
-                    <div class="resource-info-col">
-                        <span class="resource-title">【第一階段：先票選決定哪一家餐廳與飲料店】（避免同仁點了未當選餐廳的餐點還需要重新點餐）</span>
-                        <span class="resource-desc">
-                            請先從下方候選名單選出您最想吃的「午餐餐廳」與「手搖飲料店」。投票截止後，系統只會針對「得票最高的那一家餐廳與飲料店」開放第二階段全體點餐！
-                        </span>
-                    </div>
-                    <button type="button" class="secondary-btn" id="lock-winner-and-go-phase2-btn">
-                        第一階段截止：依目前最高票店家進入「第二階段點餐」
-                    </button>
-                </div>
-
-                <!-- 選擇投票員工姓名 -->
-                <div class="voter-identity-card">
-                    <div class="live-input-group">
-                        <label class="live-input-label" for="voter-employee-select">步驟一：請選擇您的員工姓名（與尾牙抽獎系統共用名單）</label>
-                        <select id="voter-employee-select" class="live-stage-input">
-                            ${voterOptionsP1Html}
-                        </select>
-                    </div>
-                    <div class="live-input-group">
-                        <span class="live-input-label">目前第一階段最高票領先店家</span>
-                        <span class="copay-highlight-pill">
-                            領先餐廳：【${this.escapeHtml(winInfo.primaryWinner ? winInfo.primaryWinner.vendor : "尚無")}】(${winInfo.primaryWinnerVotes}票) ｜ 領先飲料：【${this.escapeHtml(winInfo.secondaryWinner ? winInfo.secondaryWinner.vendor : "尚無")}】(${winInfo.secondaryWinnerVotes}票)
-                        </span>
-                    </div>
-                </div>
-
-                <!-- 候選午餐餐廳票選 -->
-                <div class="survey-category-section">
-                    <div class="lottery-panel-title">
-                        <h3 class="section-heading">步驟二：票選您想吃的「${this.escapeHtml(campaign.primaryCategoryLabel)}」（共 ${campaign.primaryOptions.length} 家候選餐廳）</h3>
-                        <span class="theme-code-badge">可點選下方按鈕查看各餐廳菜單介紹與評價</span>
-                    </div>
-                    <div class="survey-options-grid">
-                        ${renderVendorCardsP1(campaign.primaryOptions, this.selectedPrimaryOptionId, "primary", winInfo.primaryCountsMap)}
-                    </div>
-                </div>
-
-                <!-- 候選手搖飲料店票選 -->
-                <div class="survey-category-section">
-                    <div class="lottery-panel-title">
-                        <h3 class="section-heading">步驟三：票選您想喝的「${this.escapeHtml(campaign.secondaryCategoryLabel)}」（共 ${campaign.secondaryOptions.length} 家候選飲料店）</h3>
-                        <span class="theme-code-badge">可點選下方按鈕查看各飲料店最新價目表 Menu</span>
-                    </div>
-                    <div class="survey-options-grid">
-                        ${renderVendorCardsP1(campaign.secondaryOptions, this.selectedSecondaryOptionId, "secondary", winInfo.secondaryCountsMap)}
-                    </div>
-                </div>
-
-                <!-- 送出第一階段店家票選按鈕 -->
-                <div class="grand-stage-controls">
-                    <button type="button" class="primary-btn" id="submit-phase1-vote-btn" ${employees.length === 0 ? "disabled" : ""}>
-                        送出「${this.escapeHtml(this.selectedVoterName || "同仁")}」的第一階段店家票選結果
-                    </button>
-                </div>
-            `;
-        }
-
-        // =========================================================================
-        // 【第二階段視圖】只針對第一階段「最高票當選餐廳」與「最高票當選飲料店」進行點餐！
-        // =========================================================================
+    getOrganizerLockPanelHtml(campaign, winInfo) {
+        this.ensureCampaignLockDefaults(campaign);
         const winningRestaurant = winInfo.primaryWinner;
         const winningDrinkShop = winInfo.secondaryWinner;
-        const mealMenuItems = winningRestaurant ? winningRestaurant.menuItems : [];
-        const drinkMenuItems = winningDrinkShop ? winningDrinkShop.menuItems : [];
+        const allMealItems = winningRestaurant ? (winningRestaurant.menuItems || []) : [];
+        const allDrinkItems = winningDrinkShop ? (winningDrinkShop.menuItems || []) : [];
+        const dLimit = Number(campaign.drinkSubsidyLimit) || 60;
 
-        if (!this.selectedPrimaryOptionId || !mealMenuItems.some((m) => m.id === this.selectedPrimaryOptionId)) {
-            if (mealMenuItems.length > 0) {
-                this.selectedPrimaryOptionId = mealMenuItems[0].id;
-                this.customPrimaryItemName = mealMenuItems[0].name;
-                this.customPrimaryPrice = Number(mealMenuItems[0].price) || 0;
-            }
-        }
-        if (!this.selectedSecondaryOptionId || !drinkMenuItems.some((d) => d.id === this.selectedSecondaryOptionId)) {
-            if (drinkMenuItems.length > 0) {
-                this.selectedSecondaryOptionId = drinkMenuItems[0].id;
-                this.customSecondaryItemName = drinkMenuItems[0].name;
-                this.customSecondaryPrice = Number(drinkMenuItems[0].price) || 0;
-            }
-        }
-
-        const primarySubsidyLimit = Number(campaign.primarySubsidyLimit) || 0;
-        const drinkSubsidyLimit = Number(campaign.drinkSubsidyLimit) || 0;
-        const enableDrinkSelectors = campaign.enableDrinkSelectors !== false;
-
-        const currentMealItem = mealMenuItems.find((m) => m.id === this.selectedPrimaryOptionId) || mealMenuItems[0];
-        const currentDrinkItem = drinkMenuItems.find((d) => d.id === this.selectedSecondaryOptionId) || drinkMenuItems[0];
-
-        const activeMealPrice = Number(this.customPrimaryPrice) || (currentMealItem ? Number(currentMealItem.price) || 0 : 0);
-        const activeDrinkPrice = Number(this.customSecondaryPrice) || (currentDrinkItem ? Number(currentDrinkItem.price) || 0 : 0);
-
-        const mealCopay = primarySubsidyLimit > 0 ? Math.max(0, activeMealPrice - primarySubsidyLimit) : 0;
-        const drinkCopay = drinkSubsidyLimit > 0 ? Math.max(0, activeDrinkPrice - drinkSubsidyLimit) : 0;
-        const totalCopay = mealCopay + drinkCopay;
-
-        const voterOptionsP2Html = employees.length > 0
-            ? employees.map((emp) => {
-                const vRecord = campaign.votes && campaign.votes[emp];
-                const statusTag = vRecord
-                    ? `[已完成點餐：${vRecord.primaryName} + ${vRecord.secondaryName}｜${vRecord.totalCopay > 0 ? `需補差額 $${vRecord.totalCopay}` : "免補差額"}]`
-                    : "[尚未點餐]";
-                return `<option value="${this.escapeHtml(emp)}" ${emp === this.selectedVoterName ? "selected" : ""}>${this.escapeHtml(emp)} ${statusTag}</option>`;
-            }).join("")
-            : `<option value="">請先至「設定頁」匯入員工姓名</option>`;
-
-        const renderPhase2MenuCards = (menuItems, vendorObj, selectedItemId, groupType, subsidyLimit) => menuItems.map((item) => {
-            const isSelected = item.id === selectedItemId;
-            const priceVal = Number(item.price) || 0;
-            const itemCopay = subsidyLimit > 0 ? Math.max(0, priceVal - subsidyLimit) : 0;
-            const priceLabelText = priceVal > 0
-                ? (itemCopay > 0 ? `NT$ ${priceVal} (超額補 +$${itemCopay})` : `NT$ ${priceVal} (補助內免貼)`)
-                : "依菜單計價";
-
+        const sugarLockChipsHtml = SURVEY_SUGAR_OPTIONS.map((sugar) => {
+            const isAllowed = campaign.allowedSugars.includes(sugar);
             return `
-                <article class="survey-option-card ${isSelected ? "is-selected" : ""}" data-select-p2-group="${groupType}" data-item-id="${this.escapeHtml(item.id)}">
-                    <div class="informal-card-body">
-                        <div class="option-card-header">
-                            <div>
-                                <div class="option-badges-row">
-                                    <span class="vendor-name-badge">${this.escapeHtml(vendorObj ? vendorObj.vendor : "")}</span>
-                                    <span class="option-price-pill ${itemCopay > 0 ? "is-over-limit" : ""}">${this.escapeHtml(priceLabelText)}</span>
-                                    <span class="option-tag-pill">${this.escapeHtml(item.tag || "店內品項")}</span>
-                                </div>
-                                <h4 class="option-title">${this.escapeHtml(item.name)}</h4>
-                            </div>
-                            <div class="option-radio-indicator" aria-hidden="true"></div>
-                        </div>
-                        <p class="option-desc">${this.escapeHtml(item.desc || "")}</p>
-                    </div>
-                </article>
+                <button type="button" class="lock-toggle-chip ${isAllowed ? "is-allowed" : ""}" data-toggle-lock-sugar="${this.escapeHtml(sugar)}" title="點擊切換：開放點選 / 鎖定隱藏">
+                    ${isAllowed ? `[開放] ${this.escapeHtml(sugar)}` : `[已鎖定] ${this.escapeHtml(sugar)}`}
+                </button>
             `;
         }).join("");
 
-        const sugarPillsHtml = SURVEY_SUGAR_OPTIONS.map((sugar) => `
-            <button type="button" class="selector-pill-btn ${this.selectedSugar === sugar ? "active" : ""}" data-select-sugar="${this.escapeHtml(sugar)}">
-                ${this.escapeHtml(sugar)}
-            </button>
-        `).join("");
+        const iceLockChipsHtml = SURVEY_ICE_OPTIONS.map((ice) => {
+            const isAllowed = campaign.allowedIces.includes(ice);
+            return `
+                <button type="button" class="lock-toggle-chip ${isAllowed ? "is-allowed" : ""}" data-toggle-lock-ice="${this.escapeHtml(ice)}" title="點擊切換：開放點選 / 鎖定隱藏">
+                    ${isAllowed ? `[開放] ${this.escapeHtml(ice)}` : `[已鎖定] ${this.escapeHtml(ice)}`}
+                </button>
+            `;
+        }).join("");
 
-        const icePillsHtml = SURVEY_ICE_OPTIONS.map((ice) => `
-            <button type="button" class="selector-pill-btn ${this.selectedIce === ice ? "active" : ""}" data-select-ice="${this.escapeHtml(ice)}">
-                ${this.escapeHtml(ice)}
-            </button>
-        `).join("");
+        const mealLockChipsHtml = allMealItems.map((item) => {
+            const isAllowed = item.locked !== true;
+            return `
+                <button type="button" class="lock-toggle-chip ${isAllowed ? "is-allowed" : ""}" data-toggle-lock-meal="${this.escapeHtml(item.id)}" title="點擊鎖定或開放此便當品項">
+                    ${isAllowed ? `[開放] ${this.escapeHtml(item.name)} ($${item.price})` : `[已鎖定停點] ${this.escapeHtml(item.name)}`}
+                </button>
+            `;
+        }).join("");
+
+        const drinkLockChipsHtml = allDrinkItems.map((item) => {
+            const isOver = dLimit > 0 && Number(item.price) > dLimit;
+            const isAllowed = item.locked !== true && !(campaign.lockOverLimitDrinks && isOver);
+            const hasFixedSpec = Boolean(item.fixedSugar || item.fixedIce);
+            return `
+                <div class="resource-actions-row">
+                    <button type="button" class="lock-toggle-chip ${isAllowed ? "is-allowed" : ""}" data-toggle-lock-drink="${this.escapeHtml(item.id)}" title="點擊鎖定或開放此飲品">
+                        ${isAllowed ? `[開放] ${this.escapeHtml(item.name)} ($${item.price})` : `[已鎖定停點] ${this.escapeHtml(item.name)} ($${item.price})`}
+                    </button>
+                    <button type="button" class="prize-chip-btn ${hasFixedSpec ? "active" : ""}" data-toggle-fixed-spec="${this.escapeHtml(item.id)}" title="將此飲品直接鎖定為黃金比例（微糖・少冰），同仁點此杯時免選甜度冰塊">
+                        ${hasFixedSpec ? `已鎖定:${this.escapeHtml(item.fixedSugar || "微糖")}/${this.escapeHtml(item.fixedIce || "少冰")}` : "鎖定固定甜冰"}
+                    </button>
+                </div>
+            `;
+        }).join("");
 
         const overridePrimarySelectHtml = campaign.primaryOptions.map((opt) => `
             <option value="${this.escapeHtml(opt.id)}" ${winningRestaurant && opt.id === winningRestaurant.id ? "selected" : ""}>
@@ -1707,202 +1555,623 @@ class WorkspaceApp {
         `).join("");
 
         return `
-            ${resourcesBannerHtml}
-
-            <!-- 第二階段：最高票當選店家公告與該店專屬菜單連結橫幅 -->
-            <div class="winner-vendor-banner">
-                <div class="resource-info-col">
-                    <span class="resource-title">
-                        【第二階段：針對最高票當選店家進行全體點餐】當選餐廳：【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】｜當選飲料店：【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】
-                    </span>
-                    <span class="resource-desc">
-                        全體同仁統一只針對第一階段票選最高票的「${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}」與「${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}」進行點餐，不會跨多家餐廳點餐！
-                    </span>
-                </div>
-                <div class="campaign-select-group">
-                    <select id="lock-primary-vendor-select" class="campaign-select" title="預設自動選取最高票餐廳，同票時可手動指定">
-                        ${overridePrimarySelectHtml}
-                    </select>
-                    <select id="lock-secondary-vendor-select" class="campaign-select" title="預設自動選取最高票飲料店，同票時可手動指定">
-                        ${overrideSecondarySelectHtml}
-                    </select>
-                </div>
-            </div>
-
-            <!-- 步驟一：選擇點餐員工姓名與飲食備註 -->
-            <div class="voter-identity-card">
-                <div class="live-input-group">
-                    <label class="live-input-label" for="voter-employee-select">步驟一：請選擇您的員工姓名（與尾牙抽獎系統共用名單）</label>
-                    <select id="voter-employee-select" class="live-stage-input">
-                        ${voterOptionsP2Html}
-                    </select>
-                </div>
-                <div class="live-input-group">
-                    <label class="live-input-label" for="voter-custom-note-input">其他飲食備註（選填：如便當飯少、不加酸菜、加白玉珍珠等）</label>
-                    <input
-                        type="text"
-                        id="voter-custom-note-input"
-                        class="live-stage-input"
-                        value="${this.escapeHtml(this.voterCustomNote)}"
-                        placeholder="選填：輸入您的個人飲食客製備註..."
-                    />
-                </div>
-            </div>
-
-            <!-- 步驟二：只顯示「最高票當選餐廳」的店內餐點選項 -->
-            <div class="survey-category-section">
-                <div class="lottery-panel-title">
+            <div class="organizer-lock-drawer">
+                <div class="organizer-lock-header">
                     <div>
-                        <span class="vendor-name-badge">最高票當選餐廳 (${winInfo.primaryWinnerVotes} 票)</span>
-                        <h3 class="section-heading">步驟二：【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】專屬餐點點選</h3>
+                        <div class="organizer-lock-title">
+                            <span>【主辦人省事鎖定控台】一鍵鎖定甜度、冰塊、品項數量與超額飲品（減少同仁選擇障礙＆免收零錢）</span>
+                        </div>
+                        <p class="resource-desc">點擊下方綠色標籤即可「鎖定隱藏」不想開放的甜度、冰塊或餐點；亦可直接套用上方三種快速省事鎖定模式：</p>
                     </div>
                     <div class="resource-actions-row">
-                        <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(winningRestaurant ? winningRestaurant.id : "")}" data-view-opt-group="primary">
-                            <span>查看【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】上傳菜單附檔</span>
+                        <button type="button" class="express-oneclick-btn is-zero-copay" id="preset-minimal-lock-btn">
+                            一鍵套用【極簡免收錢團訂】（只留前3招牌＋3種甜冰＋鎖定禁點超額飲品）
                         </button>
-                        ${winningRestaurant && winningRestaurant.refUrl ? `
-                            <a href="${this.escapeHtml(winningRestaurant.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
-                                <span>開啟【${this.escapeHtml(winningRestaurant.vendor)}】官方菜單介紹網頁</span>
-                            </a>
-                        ` : ""}
+                        <button type="button" class="express-oneclick-btn" id="preset-single-spec-lock-btn">
+                            一鍵鎖定【全場固定微糖・少冰】（同仁完全免選甜度冰塊）
+                        </button>
+                        <button type="button" class="secondary-btn" id="preset-unlock-all-btn">
+                            一鍵全開（解除所有鎖定）
+                        </button>
                     </div>
                 </div>
-                <p class="section-subheading">請從【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】的菜單中點選您的主餐（若想點該店完整菜單上的其他品項，亦可於下方微調欄直接填入）：</p>
-                <div class="survey-options-grid">
-                    ${renderPhase2MenuCards(mealMenuItems, winningRestaurant, this.selectedPrimaryOptionId, "primary", primarySubsidyLimit)}
+
+                <div class="lock-control-grid">
+                    <!-- 1. 飲品甜度鎖定 -->
+                    <div class="lock-control-box">
+                        <div class="lock-box-header">
+                            <span class="lock-box-title">1. 飲品「甜度」鎖定（目前開放 ${campaign.allowedSugars.length} 種）</span>
+                            <button type="button" class="prize-chip-btn" id="lock-only-micro-sugar-btn">只留微糖+無糖</button>
+                        </div>
+                        <span class="theme-route-hint">被鎖定的甜度將直接從點餐畫面隱藏；若只留 1 種則自動鎖定免選：</span>
+                        <div class="selector-pills-wrap">
+                            ${sugarLockChipsHtml}
+                        </div>
+                    </div>
+
+                    <!-- 2. 飲品冰塊／溫度鎖定 -->
+                    <div class="lock-control-box">
+                        <div class="lock-box-header">
+                            <span class="lock-box-title">2. 飲品「冰塊／溫度」鎖定（目前開放 ${campaign.allowedIces.length} 種）</span>
+                            <button type="button" class="prize-chip-btn" id="lock-only-cool-ice-btn">只留少冰+去冰</button>
+                        </div>
+                        <span class="theme-route-hint">可鎖定熱飲或繁瑣冰量，減少手搖飲店員與發餐核對錯誤：</span>
+                        <div class="selector-pills-wrap">
+                            ${iceLockChipsHtml}
+                        </div>
+                    </div>
+
+                    <!-- 3. 當選餐廳主餐品項鎖定 -->
+                    <div class="lock-control-box">
+                        <div class="lock-box-header">
+                            <span class="lock-box-title">3. 【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】主餐品項鎖定</span>
+                            <button type="button" class="prize-chip-btn" id="lock-meal-top3-btn">只開放前 3 款招牌</button>
+                        </div>
+                        <span class="theme-route-hint">鎖定冷門便當，讓同仁只從主打的 3~4 款便當中快速二選一／三選一：</span>
+                        <div class="selector-pills-wrap">
+                            ${mealLockChipsHtml}
+                        </div>
+                    </div>
+
+                    <!-- 4. 當選飲料店品項與超額差額鎖定 -->
+                    <div class="lock-control-box">
+                        <div class="lock-box-header">
+                            <span class="lock-box-title">4. 【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】飲品＆差額鎖定</span>
+                            <button type="button" class="prize-chip-btn ${campaign.lockOverLimitDrinks ? "active" : ""}" id="toggle-lock-overlimit-btn">
+                                ${campaign.lockOverLimitDrinks ? `已鎖定禁點超過 $${dLimit} 飲品 (免收差額)` : `點此鎖定超過 $${dLimit} 飲品 (免收零錢)`}
+                            </button>
+                        </div>
+                        <div class="selector-pills-wrap">
+                            ${drinkLockChipsHtml}
+                        </div>
+                    </div>
                 </div>
 
-                <div class="drink-custom-panel">
-                    <div class="custom-order-adjust-grid">
-                        <div class="live-input-group">
-                            <label class="live-input-label" for="custom-primary-item-input">
-                                當選餐廳【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】— 您點選的主餐品項名稱（可依該店菜單微調）
-                            </label>
-                            <input
-                                type="text"
-                                id="custom-primary-item-input"
-                                class="live-stage-input"
-                                value="${this.escapeHtml(this.customPrimaryItemName)}"
-                            />
-                        </div>
-                        <div class="live-input-group">
-                            <label class="live-input-label" for="custom-primary-price-input">主餐單價 (NT$)</label>
-                            <input
-                                type="number"
-                                id="custom-primary-price-input"
-                                class="live-stage-input"
-                                min="0"
-                                step="1"
-                                value="${activeMealPrice}"
-                            />
-                        </div>
-                        <div class="live-input-group">
-                            <span class="live-input-label">主餐費用試算</span>
-                            <span class="copay-highlight-pill ${mealCopay > 0 ? "is-owing" : ""}" id="meal-copay-live-pill">
-                                ${mealCopay > 0 ? `超額需補差額：NT$ ${mealCopay}` : `公司全額補助（自付差額 NT$ 0）`}
-                            </span>
-                        </div>
+                <div class="quick-voter-top">
+                    <div class="campaign-select-group">
+                        <span class="live-input-label">指定／鎖定當選店家：</span>
+                        <select id="lock-primary-vendor-select" class="campaign-select">
+                            ${overridePrimarySelectHtml}
+                        </select>
+                        <select id="lock-secondary-vendor-select" class="campaign-select">
+                            ${overrideSecondarySelectHtml}
+                        </select>
+                    </div>
+                    <div class="resource-actions-row">
+                        <button type="button" class="prize-chip-btn ${campaign.allowCustomItemInput ? "active" : ""}" id="toggle-allow-custom-input-btn">
+                            ${campaign.allowCustomItemInput ? "手動改品項輸入框：已開啟" : "手動改品項輸入框：已鎖定隱藏（保持介面極簡）"}
+                        </button>
                     </div>
                 </div>
             </div>
+        `;
+    }
 
-            <!-- 步驟三：只顯示「最高票當選飲料店」的飲品選項 ＋ 甜度冰塊按鈕點選 ＋ 60元限額補助差額試算 -->
-            <div class="survey-category-section">
-                <div class="lottery-panel-title">
-                    <div>
-                        <span class="vendor-name-badge">最高票當選飲料店 (${winInfo.secondaryWinnerVotes} 票)</span>
-                        <h3 class="section-heading">步驟三：【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】飲品點選（補助上限 NT$ ${drinkSubsidyLimit}，超額自付差額）</h3>
-                    </div>
-                    <div class="resource-actions-row">
-                        <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(winningDrinkShop ? winningDrinkShop.id : "")}" data-view-opt-group="secondary">
-                            <span>查看【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】上傳最新價目表 Menu</span>
-                        </button>
-                        ${winningDrinkShop && winningDrinkShop.refUrl ? `
-                            <a href="${this.escapeHtml(winningDrinkShop.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
-                                <span>開啟【${this.escapeHtml(winningDrinkShop.vendor)}】官方最新價目表網頁</span>
-                            </a>
-                        ` : ""}
-                    </div>
-                </div>
-                <p class="section-subheading">請從【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】點選飲品，並在下方直接點選「甜度」與「冰塊」。若點選超過 ${drinkSubsidyLimit} 元之飲品，系統將自動計算需自行貼補的差額：</p>
-                <div class="survey-options-grid">
-                    ${renderPhase2MenuCards(drinkMenuItems, winningDrinkShop, this.selectedSecondaryOptionId, "secondary", drinkSubsidyLimit)}
-                </div>
+    /**
+     * 子視圖 1：同仁極簡點餐與投票大廳（徹底區隔階段一與階段二視覺，支援 1 秒懶人快選與姓名快速名牌）
+     */
+    getSurveyVoteViewHtml(campaign, employees, winInfo) {
+        this.ensureCampaignLockDefaults(campaign);
+        const isPhase1 = campaign.currentPhase === "phase1";
+        const doneMap = isPhase1 ? (campaign.phase1Votes || {}) : (campaign.votes || {});
 
-                <!-- 甜度與冰塊按鈕點選面板 + 飲料限額補助差額試算 -->
-                <div class="drink-custom-panel">
-                    ${enableDrinkSelectors ? `
-                        <div class="selector-group-row">
-                            <span class="live-input-label">點選飲品甜度（點擊按鈕直接切換）：</span>
-                            <div class="selector-pills-wrap">
-                                ${sugarPillsHtml}
+        // 若尚未選取員工，預設自動選取「第一位尚未完成投票／點餐」的同仁
+        if (!this.selectedVoterName && employees.length > 0) {
+            const firstUnvoted = employees.find((emp) => !doneMap[emp]) || employees[0];
+            this.selectedVoterName = firstUnvoted;
+            this.loadExistingVoteForSelectedEmployee(campaign, winInfo);
+        }
+
+        // 排序員工名牌：尚未完成者排在最前面，方便同仁 1 秒點自己名字
+        const sortedEmployeesForChips = [...employees].sort((a, b) => {
+            const aDone = Boolean(doneMap[a]);
+            const bDone = Boolean(doneMap[b]);
+            if (aDone === bDone) return 0;
+            return aDone ? 1 : -1;
+        });
+
+        const unvotedCount = employees.filter((emp) => !doneMap[emp]).length;
+
+        const voterNameChipsHtml = sortedEmployeesForChips.map((emp) => {
+            const isCurrent = emp === this.selectedVoterName;
+            const rec = doneMap[emp];
+            const isDone = Boolean(rec);
+            const shortStatus = isDone ? " [已完成]" : "";
+            return `
+                <button
+                    type="button"
+                    class="voter-name-chip ${isDone ? "is-done" : ""} ${isCurrent ? "is-current" : ""}"
+                    data-quick-voter="${this.escapeHtml(emp)}"
+                >
+                    <span>${this.escapeHtml(emp)}${shortStatus}</span>
+                </button>
+            `;
+        }).join("");
+
+        const voterSelectOptionsHtml = employees.length > 0
+            ? employees.map((emp) => {
+                const rec = doneMap[emp];
+                const statusTag = rec
+                    ? (isPhase1
+                        ? `[已投：${rec.primaryVendorName} + ${rec.secondaryVendorName}]`
+                        : `[已點：${rec.primaryName} + ${rec.secondaryName}]`)
+                    : "[尚未完成]";
+                return `<option value="${this.escapeHtml(emp)}" ${emp === this.selectedVoterName ? "selected" : ""}>${this.escapeHtml(emp)} ${statusTag}</option>`;
+            }).join("")
+            : `<option value="">請先至「設定頁」匯入員工姓名</option>`;
+
+        // =========================================================================
+        // 【第一階段視圖】左右對決卡：只投哪一家餐廳 ＆ 哪一家飲料店（不點細項）
+        // =========================================================================
+        if (isPhase1) {
+            if (!this.selectedPrimaryOptionId && campaign.primaryOptions.length > 0) {
+                this.selectedPrimaryOptionId = campaign.primaryOptions[0].id;
+            }
+            if (!this.selectedSecondaryOptionId && campaign.secondaryOptions.length > 0) {
+                this.selectedSecondaryOptionId = campaign.secondaryOptions[0].id;
+            }
+
+            const totalP1 = Math.max(1, winInfo.totalPhase1Votes);
+
+            const renderPhase1ColumnCards = (options, selectedId, groupType, countsMap) => options.map((opt) => {
+                const isSelected = opt.id === selectedId;
+                const voteCnt = countsMap[opt.id] || 0;
+                const pct = Math.min(100, Math.round((voteCnt / totalP1) * 100));
+                const isDrinkGroup = groupType === "secondary";
+                const menuBtnLabel = isDrinkGroup ? "看價目表 Menu" : "看餐廳菜單";
+
+                return `
+                    <article class="phase1-vendor-card ${isSelected ? "is-selected" : ""}" data-select-group="${groupType}" data-option-id="${this.escapeHtml(opt.id)}">
+                        <div class="option-card-header">
+                            <div>
+                                <div class="option-badges-row">
+                                    <span class="vendor-name-badge">${this.escapeHtml(opt.vendor || opt.name)}</span>
+                                    <span class="option-tag-pill">${this.escapeHtml(opt.tag || "候選店家")}</span>
+                                    <span class="vote-count-pill">${voteCnt} 票 (${pct}%)</span>
+                                </div>
+                                <h4 class="compact-item-name">${this.escapeHtml(opt.name)}</h4>
+                            </div>
+                            <div class="option-radio-indicator" aria-hidden="true"></div>
+                        </div>
+                        <progress class="vote-progress-bar" max="100" value="${pct}"></progress>
+                        <div class="quick-voter-top">
+                            <span class="compact-item-desc">${this.escapeHtml(opt.desc)}</span>
+                            <div class="resource-actions-row">
+                                <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(opt.id)}" data-view-opt-group="${groupType}">
+                                    <span>${menuBtnLabel}</span>
+                                </button>
+                                ${opt.refUrl ? `
+                                    <a href="${this.escapeHtml(opt.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn" data-stop-card-click="true">
+                                        <span>官網介紹</span>
+                                    </a>
+                                ` : ""}
                             </div>
                         </div>
-                        <div class="selector-group-row">
-                            <span class="live-input-label">點選飲品冰塊／溫度（點擊按鈕直接切換）：</span>
-                            <div class="selector-pills-wrap">
-                                ${icePillsHtml}
+                    </article>
+                `;
+            }).join("");
+
+            const selectedPVendor = campaign.primaryOptions.find((o) => o.id === this.selectedPrimaryOptionId);
+            const selectedSVendor = campaign.secondaryOptions.find((o) => o.id === this.selectedSecondaryOptionId);
+
+            return `
+                <!-- 頂部極簡三步導引列 -->
+                <div class="express-guide-banner">
+                    <div class="express-guide-left">
+                        <div class="express-step-pills">
+                            <span class="step-badge-num">步驟 1：點您的名字</span>
+                            <span class="step-arrow-sep">→</span>
+                            <span class="step-badge-num">步驟 2：左選餐廳、右選飲料店</span>
+                            <span class="step-arrow-sep">→</span>
+                            <span class="step-badge-num">步驟 3：按底部確認送出</span>
+                        </div>
+                        <span class="resource-desc">
+                            目前為【第一階段：先決定哪一家店】，還不用點細項餐點！待選出最高票餐廳與飲料店後，再進入第二階段全體統一向當選店家點餐。
+                        </span>
+                    </div>
+                    <div class="express-actions-wrap">
+                        <button type="button" class="secondary-btn" id="simulate-phase1-quick-btn">
+                            一鍵產生測試票數
+                        </button>
+                        <button type="button" class="express-oneclick-btn" id="lock-winner-and-go-phase2-btn">
+                            主辦人結算：依最高票進入「第二階段點餐」→
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 步驟 1：一鍵點選您的員工姓名 -->
+                <div class="quick-voter-panel">
+                    <div class="quick-voter-top">
+                        <div class="voter-step-heading">
+                            <span class="step-circle-tag">STEP 1</span>
+                            <span>點一下您的姓名（目前選取：【${this.escapeHtml(this.selectedVoterName || "未選擇")}】，尚有 ${unvotedCount} 人未投）</span>
+                        </div>
+                        <select id="voter-employee-select" class="campaign-select" aria-label="下拉選擇員工姓名">
+                            ${voterSelectOptionsHtml}
+                        </select>
+                    </div>
+                    <div class="voter-name-chips-grid">
+                        ${voterNameChipsHtml}
+                    </div>
+                </div>
+
+                <!-- 步驟 2 & 3：左右雙欄店家對決投票區 -->
+                <div class="phase1-dual-columns">
+                    <div class="order-zone-card is-meal-zone">
+                        <div class="zone-header-banner">
+                            <div>
+                                <span class="zone-step-badge">STEP 2 // 午餐餐廳二選一／多選一</span>
+                                <h3 class="zone-main-title">點選您想吃的「${this.escapeHtml(campaign.primaryCategoryLabel)}」</h3>
+                            </div>
+                            <span class="vote-count-pill">領先：${this.escapeHtml(winInfo.primaryWinner ? winInfo.primaryWinner.vendor : "")} (${winInfo.primaryWinnerVotes}票)</span>
+                        </div>
+                        <div class="compact-menu-list">
+                            ${renderPhase1ColumnCards(campaign.primaryOptions, this.selectedPrimaryOptionId, "primary", winInfo.primaryCountsMap)}
+                        </div>
+                    </div>
+
+                    <div class="order-zone-card is-drink-zone">
+                        <div class="zone-header-banner">
+                            <div>
+                                <span class="zone-step-badge">STEP 3 // 手搖飲店二選一／多選一</span>
+                                <h3 class="zone-main-title">點選您想喝的「${this.escapeHtml(campaign.secondaryCategoryLabel)}」</h3>
+                            </div>
+                            <span class="vote-count-pill">領先：${this.escapeHtml(winInfo.secondaryWinner ? winInfo.secondaryWinner.vendor : "")} (${winInfo.secondaryWinnerVotes}票)</span>
+                        </div>
+                        <div class="compact-menu-list">
+                            ${renderPhase1ColumnCards(campaign.secondaryOptions, this.selectedSecondaryOptionId, "secondary", winInfo.secondaryCountsMap)}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部大型確認送出列 -->
+                <div class="sticky-submit-checkout-bar">
+                    <div class="checkout-summary-col">
+                        <span class="checkout-voter-label">投票人：【${this.escapeHtml(this.selectedVoterName || "尚未選擇")}】（送出後將自動跳至下一位尚未投票的同仁）</span>
+                        <div class="checkout-items-preview">
+                            <span>想吃餐廳：【${this.escapeHtml(selectedPVendor ? selectedPVendor.vendor : "")}】</span>
+                            <span>＋</span>
+                            <span>想喝飲料店：【${this.escapeHtml(selectedSVendor ? selectedSVendor.vendor : "")}】</span>
+                        </div>
+                    </div>
+                    <button type="button" class="giant-submit-order-btn" id="submit-phase1-vote-btn" ${employees.length === 0 ? "disabled" : ""}>
+                        確認送出「${this.escapeHtml(this.selectedVoterName || "同仁")}」的店家投票
+                    </button>
+                </div>
+            `;
+        }
+
+        // =========================================================================
+        // 【第二階段視圖】左右雙欄點餐機（左欄暖橘：當選餐廳便當｜右欄薄荷綠：當選飲料＋鎖定甜度冰塊）
+        // =========================================================================
+        const winningRestaurant = winInfo.primaryWinner;
+        const winningDrinkShop = winInfo.secondaryWinner;
+        const openMealItems = this.getOpenMenuItems(winningRestaurant, false, campaign);
+        const openDrinkItems = this.getOpenMenuItems(winningDrinkShop, true, campaign);
+        const allMealCount = winningRestaurant && Array.isArray(winningRestaurant.menuItems) ? winningRestaurant.menuItems.length : 0;
+        const allDrinkCount = winningDrinkShop && Array.isArray(winningDrinkShop.menuItems) ? winningDrinkShop.menuItems.length : 0;
+        const lockedMealCount = Math.max(0, allMealCount - openMealItems.length);
+        const lockedDrinkCount = Math.max(0, allDrinkCount - openDrinkItems.length);
+
+        if (!this.selectedPrimaryOptionId || !openMealItems.some((m) => m.id === this.selectedPrimaryOptionId)) {
+            if (openMealItems.length > 0) {
+                this.selectedPrimaryOptionId = openMealItems[0].id;
+                this.customPrimaryItemName = openMealItems[0].name;
+                this.customPrimaryPrice = Number(openMealItems[0].price) || 0;
+            }
+        }
+        if (!this.selectedSecondaryOptionId || !openDrinkItems.some((d) => d.id === this.selectedSecondaryOptionId)) {
+            if (openDrinkItems.length > 0) {
+                this.selectedSecondaryOptionId = openDrinkItems[0].id;
+                this.customSecondaryItemName = openDrinkItems[0].name;
+                this.customSecondaryPrice = Number(openDrinkItems[0].price) || 0;
+            }
+        }
+
+        const currentMealItem = openMealItems.find((m) => m.id === this.selectedPrimaryOptionId) || openMealItems[0];
+        const currentDrinkItem = openDrinkItems.find((d) => d.id === this.selectedSecondaryOptionId) || openDrinkItems[0];
+
+        // 處理甜度與冰塊鎖定邏輯：若該飲品本身鎖定黃金比例，或主辦人鎖定特定甜度冰塊清單
+        const allowedSugars = campaign.allowedSugars;
+        const allowedIces = campaign.allowedIces;
+
+        if (currentDrinkItem && currentDrinkItem.fixedSugar) {
+            this.selectedSugar = currentDrinkItem.fixedSugar;
+        } else if (!allowedSugars.includes(this.selectedSugar)) {
+            this.selectedSugar = allowedSugars[0];
+        }
+
+        if (currentDrinkItem && currentDrinkItem.fixedIce) {
+            this.selectedIce = currentDrinkItem.fixedIce;
+        } else if (!allowedIces.includes(this.selectedIce)) {
+            this.selectedIce = allowedIces[0];
+        }
+
+        const primarySubsidyLimit = Number(campaign.primarySubsidyLimit) || 0;
+        const drinkSubsidyLimit = Number(campaign.drinkSubsidyLimit) || 0;
+        const enableDrinkSelectors = campaign.enableDrinkSelectors !== false;
+
+        const activeMealPrice = Number(this.customPrimaryPrice) || (currentMealItem ? Number(currentMealItem.price) || 0 : 0);
+        const activeDrinkPrice = Number(this.customSecondaryPrice) || (currentDrinkItem ? Number(currentDrinkItem.price) || 0 : 0);
+
+        const mealCopay = primarySubsidyLimit > 0 ? Math.max(0, activeMealPrice - primarySubsidyLimit) : 0;
+        const drinkCopay = drinkSubsidyLimit > 0 ? Math.max(0, activeDrinkPrice - drinkSubsidyLimit) : 0;
+        const totalCopay = mealCopay + drinkCopay;
+
+        // 渲染精簡高對比主餐列表
+        const mealRowsHtml = openMealItems.map((item) => {
+            const isSelected = item.id === this.selectedPrimaryOptionId;
+            const priceVal = Number(item.price) || 0;
+            const itemCopay = primarySubsidyLimit > 0 ? Math.max(0, priceVal - primarySubsidyLimit) : 0;
+            return `
+                <div class="compact-menu-item ${isSelected ? "is-selected" : ""}" data-select-p2-group="primary" data-item-id="${this.escapeHtml(item.id)}">
+                    <div class="compact-item-left">
+                        <div class="option-radio-indicator" aria-hidden="true"></div>
+                        <div class="compact-item-info">
+                            <span class="compact-item-name">${this.escapeHtml(item.name)}</span>
+                            <span class="compact-item-desc">${this.escapeHtml(item.desc || "")}</span>
+                        </div>
+                    </div>
+                    <div class="compact-item-right">
+                        <span class="option-tag-pill">${this.escapeHtml(item.tag || "人氣")}</span>
+                        <span class="option-price-pill ${itemCopay > 0 ? "is-over-limit" : ""}">
+                            $${priceVal}${itemCopay > 0 ? ` (補+$${itemCopay})` : ""}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        // 渲染精簡高對比飲品列表
+        const drinkRowsHtml = openDrinkItems.map((item) => {
+            const isSelected = item.id === this.selectedSecondaryOptionId;
+            const priceVal = Number(item.price) || 0;
+            const itemCopay = drinkSubsidyLimit > 0 ? Math.max(0, priceVal - drinkSubsidyLimit) : 0;
+            const hasFixedSpec = Boolean(item.fixedSugar || item.fixedIce);
+            return `
+                <div class="compact-menu-item ${isSelected ? "is-selected" : ""}" data-select-p2-group="secondary" data-item-id="${this.escapeHtml(item.id)}">
+                    <div class="compact-item-left">
+                        <div class="option-radio-indicator" aria-hidden="true"></div>
+                        <div class="compact-item-info">
+                            <span class="compact-item-name">${this.escapeHtml(item.name)}</span>
+                            <span class="compact-item-desc">${this.escapeHtml(item.desc || "")}</span>
+                        </div>
+                    </div>
+                    <div class="compact-item-right">
+                        ${hasFixedSpec ? `<span class="locked-spec-badge">固定:${this.escapeHtml(item.fixedSugar || "微糖")}/${this.escapeHtml(item.fixedIce || "少冰")}</span>` : ""}
+                        <span class="option-price-pill ${itemCopay > 0 ? "is-over-limit" : ""}">
+                            ${itemCopay > 0 ? `$${priceVal} (自付差額 +$${itemCopay})` : `$${priceVal} (免貼錢)`}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        // 甜度與冰塊點選區（若飲品已鎖定固定甜度冰塊、或主辦人鎖定單一規格，直接顯示鎖定免選提示！）
+        const isDrinkSpecFixedByItem = Boolean(currentDrinkItem && (currentDrinkItem.fixedSugar || currentDrinkItem.fixedIce));
+        const isSugarSingleLocked = allowedSugars.length === 1;
+        const isIceSingleLocked = allowedIces.length === 1;
+
+        const sugarSelectorSectionHtml = isDrinkSpecFixedByItem || isSugarSingleLocked
+            ? `
+                <div class="selector-group-row">
+                    <span class="live-input-label">飲品甜度（已由主辦人／黃金比例鎖定，免點選）：</span>
+                    <div>
+                        <span class="locked-spec-badge">已鎖定固定甜度：${this.escapeHtml(this.selectedSugar)}（減少選擇困難）</span>
+                    </div>
+                </div>
+            `
+            : `
+                <div class="selector-group-row">
+                    <span class="live-input-label">點選甜度（已精簡鎖定為 ${allowedSugars.length} 種常用甜度）：</span>
+                    <div class="selector-pills-wrap">
+                        ${allowedSugars.map((sugar) => `
+                            <button type="button" class="selector-pill-btn ${this.selectedSugar === sugar ? "active" : ""}" data-select-sugar="${this.escapeHtml(sugar)}">
+                                ${this.escapeHtml(sugar)}
+                            </button>
+                        `).join("")}
+                    </div>
+                </div>
+            `;
+
+        const iceSelectorSectionHtml = isDrinkSpecFixedByItem || isIceSingleLocked
+            ? `
+                <div class="selector-group-row">
+                    <span class="live-input-label">飲品冰塊（已由主辦人／黃金比例鎖定，免點選）：</span>
+                    <div>
+                        <span class="locked-spec-badge">已鎖定固定冰塊：${this.escapeHtml(this.selectedIce)}（減少選擇困難）</span>
+                    </div>
+                </div>
+            `
+            : `
+                <div class="selector-group-row">
+                    <span class="live-input-label">點選冰塊（已精簡鎖定為 ${allowedIces.length} 種常用冰量）：</span>
+                    <div class="selector-pills-wrap">
+                        ${allowedIces.map((ice) => `
+                            <button type="button" class="selector-pill-btn ${this.selectedIce === ice ? "active" : ""}" data-select-ice="${this.escapeHtml(ice)}">
+                                ${this.escapeHtml(ice)}
+                            </button>
+                        `).join("")}
+                    </div>
+                </div>
+            `;
+
+        return `
+            <!-- 頂部：極簡三步導引 ＋ 懶人 1 秒快選吧 ＋ 主辦人鎖定開關 -->
+            <div class="express-guide-banner">
+                <div class="express-guide-left">
+                    <div class="express-step-pills">
+                        <span class="step-badge-num">1. 點您的名字</span>
+                        <span class="step-arrow-sep">→</span>
+                        <span class="step-badge-num">2. 左選便當・右選飲料</span>
+                        <span class="step-arrow-sep">→</span>
+                        <span class="step-badge-num">3. 確認送出</span>
+                    </div>
+                    <span class="resource-desc">
+                        不想慢慢挑？直接點擊右側<strong>「懶人 1 秒快選」</strong>自動帶入招牌免貼錢組合並立即完成點餐！
+                    </span>
+                </div>
+                <div class="express-actions-wrap">
+                    <button type="button" class="express-oneclick-btn is-zero-copay" id="express-zero-copay-btn" title="自動選取招牌主餐＋60元內免貼錢人氣飲料（微糖少冰）並直接送出">
+                        懶人 1 秒快選：招牌便當＋免貼錢茶飲（直接送出）
+                    </button>
+                    <button type="button" class="express-oneclick-btn" id="express-follow-top-btn" title="自動跟著點目前最多同事點選的冠軍便當與飲料並直接送出">
+                        1 秒跟單：點最多人選的冠軍組合（直接送出）
+                    </button>
+                    <button type="button" class="secondary-btn" id="toggle-organizer-lock-drawer-btn">
+                        ${this.isOrganizerLockDrawerOpen ? "收合主辦人鎖定控台 ▲" : "主辦人鎖定選項 (甜度/冰塊/品項) ▼"}
+                    </button>
+                </div>
+            </div>
+
+            <!-- 主辦人快速鎖定控台（點擊上方按鈕展開） -->
+            ${this.isOrganizerLockDrawerOpen ? this.getOrganizerLockPanelHtml(campaign, winInfo) : ""}
+
+            <!-- 步驟 1：一鍵點選您的員工姓名 -->
+            <div class="quick-voter-panel">
+                <div class="quick-voter-top">
+                    <div class="voter-step-heading">
+                        <span class="step-circle-tag">STEP 1</span>
+                        <span>點一下您的姓名（目前點餐人：【${this.escapeHtml(this.selectedVoterName || "未選擇")}】，尚有 ${unvotedCount} 人未點）</span>
+                    </div>
+                    <div class="resource-actions-row">
+                        <select id="voter-employee-select" class="campaign-select" aria-label="下拉選擇員工姓名">
+                            ${voterSelectOptionsHtml}
+                        </select>
+                        <input
+                            type="text"
+                            id="voter-custom-note-input"
+                            class="campaign-select"
+                            value="${this.escapeHtml(this.voterCustomNote)}"
+                            placeholder="選填備註（如：飯少、不加酸菜）"
+                        />
+                    </div>
+                </div>
+                <div class="voter-name-chips-grid">
+                    ${voterNameChipsHtml}
+                </div>
+            </div>
+
+            <!-- 步驟 2 & 3：左右雙欄色彩分流點餐機（左欄暖橘色：當選餐廳主餐 ｜ 右欄薄荷綠：當選飲料店＋甜度冰塊） -->
+            <div class="phase2-dual-order-board">
+                <!-- 左欄：當選餐廳主餐便當區 -->
+                <div class="order-zone-card is-meal-zone">
+                    <div class="zone-header-banner">
+                        <div>
+                            <span class="zone-step-badge">STEP 2 // 主餐便當區（最高票當選餐廳）</span>
+                            <h3 class="zone-main-title">【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】精選主餐 (${openMealItems.length} 選 1)</h3>
+                            ${lockedMealCount > 0 ? `<span class="theme-route-hint">主辦人已鎖定隱藏 ${lockedMealCount} 款次要品項，讓點餐更快速</span>` : ""}
+                        </div>
+                        <div class="resource-actions-row">
+                            <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(winningRestaurant ? winningRestaurant.id : "")}" data-view-opt-group="primary">
+                                <span>看菜單附檔</span>
+                            </button>
+                            ${winningRestaurant && winningRestaurant.refUrl ? `
+                                <a href="${this.escapeHtml(winningRestaurant.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
+                                    <span>官網菜單</span>
+                                </a>
+                            ` : ""}
+                        </div>
+                    </div>
+
+                    <div class="compact-menu-list">
+                        ${mealRowsHtml}
+                    </div>
+
+                    ${campaign.allowCustomItemInput ? `
+                        <div class="custom-order-adjust-grid">
+                            <div class="live-input-group">
+                                <label class="live-input-label" for="custom-primary-item-input">自訂主餐名稱</label>
+                                <input type="text" id="custom-primary-item-input" class="live-stage-input" value="${this.escapeHtml(this.customPrimaryItemName)}" />
+                            </div>
+                            <div class="live-input-group">
+                                <label class="live-input-label" for="custom-primary-price-input">單價 ($)</label>
+                                <input type="number" id="custom-primary-price-input" class="live-stage-input" min="0" value="${activeMealPrice}" />
+                            </div>
+                            <div class="live-input-group">
+                                <span class="copay-highlight-pill ${mealCopay > 0 ? "is-owing" : ""}" id="meal-copay-live-pill">
+                                    ${mealCopay > 0 ? `補差額 $${mealCopay}` : "全額補助 $0"}
+                                </span>
                             </div>
                         </div>
                     ` : ""}
+                </div>
 
-                    <div class="custom-order-adjust-grid">
-                        <div class="live-input-group">
-                            <label class="live-input-label" for="custom-secondary-item-input">
-                                當選飲料店【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】— 您點選的飲品名稱（可依最新價目表微調）
-                            </label>
-                            <input
-                                type="text"
-                                id="custom-secondary-item-input"
-                                class="live-stage-input"
-                                value="${this.escapeHtml(this.customSecondaryItemName)}"
-                                placeholder="可對照該店最新價目表 Menu 填入其他飲品名稱..."
-                            />
+                <!-- 右欄：當選手搖飲店 ＋ 鎖定精簡甜度冰塊區 -->
+                <div class="order-zone-card is-drink-zone">
+                    <div class="zone-header-banner">
+                        <div>
+                            <span class="zone-step-badge">STEP 3 // 手搖飲品區（補助上限 NT$ ${drinkSubsidyLimit}）</span>
+                            <h3 class="zone-main-title">【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】精選飲品 (${openDrinkItems.length} 選 1)</h3>
+                            ${lockedDrinkCount > 0 ? `<span class="theme-route-hint">主辦人已鎖定隱藏 ${lockedDrinkCount} 款飲品${campaign.lockOverLimitDrinks ? "（含超額飲品鎖定）" : ""}</span>` : ""}
                         </div>
-                        <div class="live-input-group">
-                            <label class="live-input-label" for="custom-secondary-price-input">依價目表飲品單價 (NT$)</label>
-                            <input
-                                type="number"
-                                id="custom-secondary-price-input"
-                                class="live-stage-input"
-                                min="0"
-                                step="1"
-                                value="${activeDrinkPrice}"
-                            />
-                        </div>
-                        <div class="live-input-group">
-                            <span class="live-input-label">飲料限額補助（上限 NT$ ${drinkSubsidyLimit}）試算</span>
-                            <span class="copay-highlight-pill ${drinkCopay > 0 ? "is-owing" : ""}" id="drink-copay-live-pill">
-                                ${drinkCopay > 0 ? `超過上限 $${drinkSubsidyLimit}，需貼差額：NT$ ${drinkCopay}` : `未超過上限 $${drinkSubsidyLimit}，免貼差額 (NT$ 0)`}
-                            </span>
+                        <div class="resource-actions-row">
+                            <button type="button" class="external-link-btn" data-view-opt-attach="${this.escapeHtml(winningDrinkShop ? winningDrinkShop.id : "")}" data-view-opt-group="secondary">
+                                <span>看價目表 Menu</span>
+                            </button>
+                            ${winningDrinkShop && winningDrinkShop.refUrl ? `
+                                <a href="${this.escapeHtml(winningDrinkShop.refUrl)}" target="_blank" rel="noopener noreferrer" class="external-link-btn">
+                                    <span>官網價目表</span>
+                                </a>
+                            ` : ""}
                         </div>
                     </div>
+
+                    <div class="compact-menu-list">
+                        ${drinkRowsHtml}
+                    </div>
+
+                    ${enableDrinkSelectors ? `
+                        <div class="drink-custom-panel">
+                            ${sugarSelectorSectionHtml}
+                            ${iceSelectorSectionHtml}
+                        </div>
+                    ` : ""}
+
+                    ${campaign.allowCustomItemInput ? `
+                        <div class="custom-order-adjust-grid">
+                            <div class="live-input-group">
+                                <label class="live-input-label" for="custom-secondary-item-input">自訂飲品名稱</label>
+                                <input type="text" id="custom-secondary-item-input" class="live-stage-input" value="${this.escapeHtml(this.customSecondaryItemName)}" />
+                            </div>
+                            <div class="live-input-group">
+                                <label class="live-input-label" for="custom-secondary-price-input">單價 ($)</label>
+                                <input type="number" id="custom-secondary-price-input" class="live-stage-input" min="0" value="${activeDrinkPrice}" />
+                            </div>
+                            <div class="live-input-group">
+                                <span class="copay-highlight-pill ${drinkCopay > 0 ? "is-owing" : ""}" id="drink-copay-live-pill">
+                                    ${drinkCopay > 0 ? `補差額 $${drinkCopay}` : "免貼差額 $0"}
+                                </span>
+                            </div>
+                        </div>
+                    ` : ""}
                 </div>
             </div>
 
-            <!-- 即時個人點餐總結與應貼差額提示橫幅 -->
-            <div class="subsidy-live-banner ${totalCopay > 0 ? "has-copay" : ""}" id="total-subsidy-summary-banner">
-                <div class="subsidy-breakdown-text" id="total-subsidy-summary-text">
-                    <span>點餐確認：【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】${this.escapeHtml(this.customPrimaryItemName)} ($${activeMealPrice})</span>
-                    <span>＋</span>
-                    <span>【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】${this.escapeHtml(this.customSecondaryItemName)} ($${activeDrinkPrice}${enableDrinkSelectors ? `｜${this.escapeHtml(this.selectedSugar)}・${this.escapeHtml(this.selectedIce)}` : ""})</span>
+            <!-- 底部大型確認送出結帳吧 -->
+            <div class="sticky-submit-checkout-bar" id="total-subsidy-summary-banner">
+                <div class="checkout-summary-col">
+                    <span class="checkout-voter-label">
+                        點餐同仁：【${this.escapeHtml(this.selectedVoterName || "尚未選擇")}】（送出後將自動切換至下一位尚未點餐的同仁）
+                    </span>
+                    <div class="checkout-items-preview" id="total-subsidy-summary-text">
+                        <span>【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】${this.escapeHtml(this.customPrimaryItemName)} ($${activeMealPrice})</span>
+                        <span>＋</span>
+                        <span>【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】${this.escapeHtml(this.customSecondaryItemName)} ($${activeDrinkPrice}${enableDrinkSelectors ? `｜${this.escapeHtml(this.selectedSugar)}・${this.escapeHtml(this.selectedIce)}` : ""})</span>
+                        <span class="copay-highlight-pill ${totalCopay > 0 ? "is-owing" : ""}" id="total-copay-final-pill">
+                            ${totalCopay > 0 ? `需自付差額：NT$ ${totalCopay}` : `免補差額 (NT$ 0)`}
+                        </span>
+                    </div>
                 </div>
-                <span class="copay-highlight-pill ${totalCopay > 0 ? "is-owing" : ""}" id="total-copay-final-pill">
-                    ${totalCopay > 0 ? `本次點餐您需自行貼補差額：NT$ ${totalCopay}` : `本次點餐全額補助，免貼差額 (NT$ 0)`}
-                </span>
-            </div>
-
-            <!-- 送出第二階段點餐按鈕 -->
-            <div class="grand-stage-controls">
-                <button type="button" class="primary-btn" id="submit-survey-vote-btn" ${employees.length === 0 ? "disabled" : ""}>
-                    確認送出「${this.escapeHtml(this.selectedVoterName || "同仁")}」於最高票當選店家的點餐結果
+                <button type="button" class="giant-submit-order-btn" id="submit-survey-vote-btn" ${employees.length === 0 ? "disabled" : ""}>
+                    確認送出「${this.escapeHtml(this.selectedVoterName || "同仁")}」的點餐結果
                 </button>
             </div>
         `;
     }
 
     /**
-     * 子視圖 2：候選餐廳／飲料店、店內菜單品項清單、最新價目表 Menu 上傳與補助上限設定頁
+     * 子視圖 2：主辦人鎖定選項、候選餐廳／飲料店、店內菜單品項清單與補助上限設定頁
      */
     getSurveySetupViewHtml(campaign, employees, winInfo) {
         const primarySubsidyLimit = Number(campaign.primarySubsidyLimit) || 0;
@@ -1910,13 +2179,14 @@ class WorkspaceApp {
 
         const primaryListHtml = campaign.primaryOptions.map((opt, idx) => {
             const menuCnt = Array.isArray(opt.menuItems) ? opt.menuItems.length : 0;
+            const openCnt = Array.isArray(opt.menuItems) ? opt.menuItems.filter((m) => !m.locked).length : 0;
             const voteCnt = winInfo.primaryCountsMap[opt.id] || 0;
             return `
                 <li class="prize-config-item">
                     <div class="prize-config-info">
                         <span class="vendor-name-badge">${this.escapeHtml(opt.vendor || opt.name)}</span>
-                        <span class="vote-count-pill">階段一得票：${voteCnt} 票</span>
-                        <span class="option-price-pill">內建 ${menuCnt} 道菜單品項</span>
+                        <span class="vote-count-pill">得票：${voteCnt} 票</span>
+                        <span class="option-price-pill">開放 ${openCnt}/${menuCnt} 道品項</span>
                         <span class="prize-config-name">${this.escapeHtml(opt.name)}</span>
                     </div>
                     <button type="button" class="delete-idea-btn" data-del-primary-idx="${idx}">移除</button>
@@ -1926,13 +2196,14 @@ class WorkspaceApp {
 
         const secondaryListHtml = campaign.secondaryOptions.map((opt, idx) => {
             const menuCnt = Array.isArray(opt.menuItems) ? opt.menuItems.length : 0;
+            const openCnt = Array.isArray(opt.menuItems) ? opt.menuItems.filter((m) => !m.locked).length : 0;
             const voteCnt = winInfo.secondaryCountsMap[opt.id] || 0;
             return `
                 <li class="prize-config-item">
                     <div class="prize-config-info">
                         <span class="vendor-name-badge">${this.escapeHtml(opt.vendor || opt.name)}</span>
-                        <span class="vote-count-pill">階段一得票：${voteCnt} 票</span>
-                        <span class="option-price-pill">內建 ${menuCnt} 款飲品價目</span>
+                        <span class="vote-count-pill">得票：${voteCnt} 票</span>
+                        <span class="option-price-pill">開放 ${openCnt}/${menuCnt} 款飲品</span>
                         <span class="prize-config-name">${this.escapeHtml(opt.name)}</span>
                     </div>
                     <button type="button" class="delete-idea-btn" data-del-secondary-idx="${idx}">移除</button>
@@ -1946,14 +2217,17 @@ class WorkspaceApp {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                     </svg>
-                    <span>支援「第一階段：票選店家」與「第二階段：只針對最高票當選店家點餐」。可於右側按鈕一鍵模擬兩階段測試數據！</span>
+                    <span>主辦人可在此一鍵鎖定甜度、冰塊與餐點品項數量，大幅減少同仁點餐困難與總務訂餐收錢負擔！</span>
                 </div>
                 <div class="lottery-top-actions">
-                    <button type="button" class="secondary-btn" id="simulate-phase1-btn">模擬階段一：產生各店家票選數據</button>
-                    <button type="button" class="primary-btn" id="simulate- votes-btn">模擬階段二：針對最高票店家產生全體點餐＆差額數據</button>
-                    <button type="button" class="danger-outline-btn" id="clear-campaign-votes-btn">清空所有票選與點餐紀錄</button>
+                    <button type="button" class="secondary-btn" id="simulate-phase1-btn">模擬階段一：店家票選數據</button>
+                    <button type="button" class="primary-btn" id="simulate-votes-btn">模擬階段二：當選店家點餐＆差額數據</button>
+                    <button type="button" class="danger-outline-btn" id="clear-campaign-votes-btn">清空所有紀錄</button>
                 </div>
             </div>
+
+            <!-- 直接內嵌「主辦人省事鎖定控台」於設定頁最上方 -->
+            ${this.getOrganizerLockPanelHtml(campaign, winInfo)}
 
             <div class="lottery-admin-grid">
                 <!-- 左欄：新增候選餐廳／飲料店、店內點餐品項與上傳 Menu 價目表 -->
@@ -1973,7 +2247,7 @@ class WorkspaceApp {
                         </div>
                         <div class="idea-form-row">
                             <input type="text" id="new-opt-vendor" class="idea-input" placeholder="店家／餐廳名稱（如：梁社漢排骨、50嵐）" required />
-                            <input type="number" id="new-opt-price" class="idea-input" min="0" step="1" placeholder="代表均價 (如：115 或 60)" required />
+                            <input type="number" id="new-opt-price" class="idea-input" min="0" step="1" placeholder="代表均價 (如：115 或 50)" required />
                         </div>
                         <div class="idea-form-row">
                             <input type="text" id="new-opt-name" class="idea-input" placeholder="店家主打特色標題（如：厚切炸排骨／玫瑰油雞專門店）" required />
@@ -1981,11 +2255,11 @@ class WorkspaceApp {
                         </div>
                         <input type="text" id="new-opt-desc" class="idea-input" placeholder="店家簡短介紹說明..." required />
                         <input type="url" id="new-opt-url" class="idea-input" placeholder="該餐廳官方菜單介紹／飲料店最新價目表網頁連結 URL" />
-                        <textarea id="new-opt-menu-items-text" class="roster-textarea" placeholder="【當該店在第一階段獲得最高票時，第二階段開放點餐的店內品項清單】&#10;每行輸入一項，格式為：品項名稱,單價,簡短說明&#10;範例：&#10;炸排骨便當,115,人氣招牌厚切排骨&#10;玫瑰油雞便當,115,鮮嫩油雞腿"></textarea>
-                        <textarea id="new-opt-attach-note" class="roster-textarea" placeholder="完整文字版價目表 Menu 說明（同仁點擊『查看最新價目表 Menu』時彈出顯示）..."></textarea>
+                        <textarea id="new-opt-menu-items-text" class="roster-textarea" placeholder="【第二階段開放點餐的店內品項清單】&#10;每行一項，格式：品項名稱,單價,簡短說明&#10;範例：&#10;炸排骨便當,115,人氣招牌厚切排骨&#10;玫瑰油雞便當,115,鮮嫩油雞腿"></textarea>
+                        <textarea id="new-opt-attach-note" class="roster-textarea" placeholder="完整文字版價目表 Menu 說明..."></textarea>
                         <div class="file-upload-row">
                             <label class="file-upload-label" for="new-opt-file-input">
-                                <span>上傳該店最新實體 Menu 價目表圖片 (支援 JPG/PNG)</span>
+                                <span>上傳該店最新實體 Menu 價目表圖片 (JPG/PNG)</span>
                             </label>
                             <input type="file" id="new-opt-file-input" class="hidden-file-input" accept="image/*" />
                             <span class="theme-route-hint" id="new-opt-file-status">尚未選擇 Menu 圖檔</span>
@@ -2027,10 +2301,10 @@ class WorkspaceApp {
                             </div>
                         </div>
                         <div class="live-input-group">
-                            <label class="live-input-label" for="setup-enable-drink-selectors">是否顯示「飲品甜度與冰塊按鈕點選面板」</label>
+                            <label class="live-input-label" for="setup-enable-drink-selectors">是否顯示「飲品甜度與冰塊點選面板」</label>
                             <select id="setup-enable-drink-selectors" class="live-stage-input">
-                                <option value="true" ${campaign.enableDrinkSelectors !== false ? "selected" : ""}>啟用（提供正常糖/半糖/微糖/無糖、少冰/微冰/去冰/溫熱按鈕點選）</option>
-                                <option value="false" ${campaign.enableDrinkSelectors === false ? "selected" : ""}>關閉（適用於一般非餐飲類問卷投票）</option>
+                                <option value="true" ${campaign.enableDrinkSelectors !== false ? "selected" : ""}>啟用（依鎖定後開放之甜度冰塊按鈕供同仁點選）</option>
+                                <option value="false" ${campaign.enableDrinkSelectors === false ? "selected" : ""}>關閉（不選甜度冰塊，或適用於一般非餐飲問卷）</option>
                             </select>
                         </div>
                         <div class="live-input-group">
@@ -2139,7 +2413,7 @@ class WorkspaceApp {
                     <span class="copay-highlight-pill is-owing">應收自付差額：+NT$ ${item.copay}</span>
                 </li>
             `).join("")
-            : `<li class="winner-history-item"><span class="theme-desc">目前無任何同仁超過補助上限（或尚未進行第二階段點餐）。</span></li>`;
+            : `<li class="winner-history-item"><span class="theme-desc">目前無任何同仁超過補助上限（若已開啟「鎖定超額飲品」則全場免收差額）。</span></li>`;
 
         const detailedRecordsHtml = votedNames.length > 0
             ? votedNames.map((empName) => {
@@ -2170,7 +2444,7 @@ class WorkspaceApp {
                     </li>
                 `;
             }).join("")
-            : `<li class="winner-history-item"><span class="theme-desc">目前尚無第二階段點餐紀錄（可點擊上方「模擬階段二」按鈕一鍵預覽當選店家點餐與差額收款明細）。</span></li>`;
+            : `<li class="winner-history-item"><span class="theme-desc">目前尚無第二階段點餐紀錄（可點擊上方「一鍵模擬階段二」按鈕預覽當選店家點餐與差額收款明細）。</span></li>`;
 
         const unvotedChipsHtml = unvotedNames.length > 0
             ? unvotedNames.map((name) => `<span class="pool-person-chip">${this.escapeHtml(name)}</span>`).join("")
@@ -2301,6 +2575,7 @@ class WorkspaceApp {
     }
 
     loadExistingVoteForSelectedEmployee(campaign, winInfo) {
+        this.ensureCampaignLockDefaults(campaign);
         if (campaign.currentPhase === "phase1") {
             const p1Existing = campaign.phase1Votes && campaign.phase1Votes[this.selectedVoterName];
             if (p1Existing) {
@@ -2317,10 +2592,10 @@ class WorkspaceApp {
             return;
         }
 
-        // 第二階段：只針對最高票當選店家載入該店菜單品項
+        // 第二階段：只針對最高票當選店家載入該店開放中之菜單品項
         const wInfo = winInfo || this.getWinningVendors(campaign);
-        const mealItems = wInfo.primaryWinner ? wInfo.primaryWinner.menuItems : [];
-        const drinkItems = wInfo.secondaryWinner ? wInfo.secondaryWinner.menuItems : [];
+        const mealItems = this.getOpenMenuItems(wInfo.primaryWinner, false, campaign);
+        const drinkItems = this.getOpenMenuItems(wInfo.secondaryWinner, true, campaign);
 
         const existing = campaign.votes && campaign.votes[this.selectedVoterName];
         if (existing && mealItems.some((m) => m.id === existing.primaryId)) {
@@ -2330,8 +2605,8 @@ class WorkspaceApp {
             this.customPrimaryPrice = Number(existing.primaryPrice) || 0;
             this.customSecondaryItemName = existing.secondaryName || "";
             this.customSecondaryPrice = Number(existing.secondaryPrice) || 0;
-            this.selectedSugar = existing.sugar || "微糖 (3分)";
-            this.selectedIce = existing.ice || "少冰";
+            this.selectedSugar = existing.sugar || campaign.allowedSugars[0] || "微糖 (3分)";
+            this.selectedIce = existing.ice || campaign.allowedIces[0] || "少冰";
             this.voterCustomNote = existing.note || "";
         } else {
             const pItem = mealItems[0];
@@ -2345,8 +2620,252 @@ class WorkspaceApp {
                 this.selectedSecondaryOptionId = sItem.id;
                 this.customSecondaryItemName = sItem.name;
                 this.customSecondaryPrice = Number(sItem.price) || 0;
+                this.selectedSugar = sItem.fixedSugar || campaign.allowedSugars[0] || "微糖 (3分)";
+                this.selectedIce = sItem.fixedIce || campaign.allowedIces[0] || "少冰";
             }
             this.voterCustomNote = "";
+        }
+    }
+
+    /**
+     * 綁定「主辦人選項鎖定控台」之所有鎖定／解鎖與一鍵套用模式事件
+     */
+    bindOrganizerLockPanelEvents(campaign, currentSubView) {
+        this.ensureCampaignLockDefaults(campaign);
+        const winInfo = this.getWinningVendors(campaign);
+        const winningRestaurant = winInfo.primaryWinner;
+        const winningDrinkShop = winInfo.secondaryWinner;
+
+        // 1. 一鍵套用【極簡免收錢團訂模式】
+        const minimalPresetBtn = document.getElementById("preset-minimal-lock-btn");
+        if (minimalPresetBtn) {
+            minimalPresetBtn.addEventListener("click", () => {
+                campaign.allowedSugars = ["無糖", "微糖 (3分)", "半糖 (5分)"];
+                campaign.allowedIces = ["少冰", "微冰", "去冰"];
+                campaign.lockOverLimitDrinks = true;
+                campaign.allowCustomItemInput = false;
+                if (winningRestaurant && Array.isArray(winningRestaurant.menuItems)) {
+                    winningRestaurant.menuItems.forEach((item, idx) => {
+                        item.locked = idx >= 3;
+                    });
+                }
+                if (winningDrinkShop && Array.isArray(winningDrinkShop.menuItems)) {
+                    winningDrinkShop.menuItems.forEach((item, idx) => {
+                        item.locked = idx >= 3;
+                    });
+                }
+                this.selectedPrimaryOptionId = "";
+                this.selectedSecondaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 2. 一鍵鎖定【全場固定微糖・少冰】（同仁完全免選甜度冰塊）
+        const singleSpecPresetBtn = document.getElementById("preset-single-spec-lock-btn");
+        if (singleSpecPresetBtn) {
+            singleSpecPresetBtn.addEventListener("click", () => {
+                campaign.allowedSugars = ["微糖 (3分)"];
+                campaign.allowedIces = ["少冰"];
+                this.selectedSugar = "微糖 (3分)";
+                this.selectedIce = "少冰";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 3. 一鍵全開（解除所有鎖定）
+        const unlockAllBtn = document.getElementById("preset-unlock-all-btn");
+        if (unlockAllBtn) {
+            unlockAllBtn.addEventListener("click", () => {
+                campaign.allowedSugars = [...SURVEY_SUGAR_OPTIONS];
+                campaign.allowedIces = [...SURVEY_ICE_OPTIONS];
+                campaign.lockOverLimitDrinks = false;
+                if (winningRestaurant && Array.isArray(winningRestaurant.menuItems)) {
+                    winningRestaurant.menuItems.forEach((item) => { item.locked = false; });
+                }
+                if (winningDrinkShop && Array.isArray(winningDrinkShop.menuItems)) {
+                    winningDrinkShop.menuItems.forEach((item) => {
+                        item.locked = false;
+                        delete item.fixedSugar;
+                        delete item.fixedIce;
+                    });
+                }
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 快速只留微糖+無糖
+        const onlyMicroSugarBtn = document.getElementById("lock-only-micro-sugar-btn");
+        if (onlyMicroSugarBtn) {
+            onlyMicroSugarBtn.addEventListener("click", () => {
+                campaign.allowedSugars = ["無糖", "微糖 (3分)"];
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 快速只留少冰+去冰
+        const onlyCoolIceBtn = document.getElementById("lock-only-cool-ice-btn");
+        if (onlyCoolIceBtn) {
+            onlyCoolIceBtn.addEventListener("click", () => {
+                campaign.allowedIces = ["少冰", "去冰"];
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 快速只留前 3 款招牌便當
+        const mealTop3Btn = document.getElementById("lock-meal-top3-btn");
+        if (mealTop3Btn && winningRestaurant && Array.isArray(winningRestaurant.menuItems)) {
+            mealTop3Btn.addEventListener("click", () => {
+                winningRestaurant.menuItems.forEach((item, idx) => {
+                    item.locked = idx >= 3;
+                });
+                this.selectedPrimaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 切換「鎖定超過補助上限飲品（免收差額）」
+        const toggleOverLimitBtn = document.getElementById("toggle-lock-overlimit-btn");
+        if (toggleOverLimitBtn) {
+            toggleOverLimitBtn.addEventListener("click", () => {
+                campaign.lockOverLimitDrinks = !campaign.lockOverLimitDrinks;
+                this.selectedSecondaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 切換「手動改品項輸入框」鎖定
+        const toggleCustomInputBtn = document.getElementById("toggle-allow-custom-input-btn");
+        if (toggleCustomInputBtn) {
+            toggleCustomInputBtn.addEventListener("click", () => {
+                campaign.allowCustomItemInput = !campaign.allowCustomItemInput;
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        // 單獨切換任一「甜度」鎖定
+        this.focusSection.querySelectorAll("[data-toggle-lock-sugar]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const sugar = btn.getAttribute("data-toggle-lock-sugar");
+                if (!sugar) return;
+                const idx = campaign.allowedSugars.indexOf(sugar);
+                if (idx >= 0) {
+                    if (campaign.allowedSugars.length <= 1) {
+                        window.alert("請至少保留 1 種甜度供點餐使用。");
+                        return;
+                    }
+                    campaign.allowedSugars.splice(idx, 1);
+                } else {
+                    campaign.allowedSugars.push(sugar);
+                }
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        });
+
+        // 單獨切換任一「冰塊」鎖定
+        this.focusSection.querySelectorAll("[data-toggle-lock-ice]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const ice = btn.getAttribute("data-toggle-lock-ice");
+                if (!ice) return;
+                const idx = campaign.allowedIces.indexOf(ice);
+                if (idx >= 0) {
+                    if (campaign.allowedIces.length <= 1) {
+                        window.alert("請至少保留 1 種冰塊／溫度供點餐使用。");
+                        return;
+                    }
+                    campaign.allowedIces.splice(idx, 1);
+                } else {
+                    campaign.allowedIces.push(ice);
+                }
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        });
+
+        // 單獨切換任一「主餐便當品項」鎖定
+        this.focusSection.querySelectorAll("[data-toggle-lock-meal]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (!winningRestaurant || !Array.isArray(winningRestaurant.menuItems)) return;
+                const itemId = btn.getAttribute("data-toggle-lock-meal");
+                const target = winningRestaurant.menuItems.find((m) => m.id === itemId);
+                if (!target) return;
+                const openCount = winningRestaurant.menuItems.filter((m) => !m.locked).length;
+                if (!target.locked && openCount <= 1) {
+                    window.alert("請至少保留 1 道開放點選的主餐品項。");
+                    return;
+                }
+                target.locked = !target.locked;
+                this.selectedPrimaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        });
+
+        // 單獨切換任一「飲品品項」鎖定
+        this.focusSection.querySelectorAll("[data-toggle-lock-drink]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (!winningDrinkShop || !Array.isArray(winningDrinkShop.menuItems)) return;
+                const itemId = btn.getAttribute("data-toggle-lock-drink");
+                const target = winningDrinkShop.menuItems.find((d) => d.id === itemId);
+                if (!target) return;
+                const openCount = winningDrinkShop.menuItems.filter((d) => !d.locked).length;
+                if (!target.locked && openCount <= 1) {
+                    window.alert("請至少保留 1 款開放點選的飲品。");
+                    return;
+                }
+                target.locked = !target.locked;
+                this.selectedSecondaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        });
+
+        // 單獨切換某飲品的「固定甜度冰塊（黃金比例微糖少冰）」鎖定
+        this.focusSection.querySelectorAll("[data-toggle-fixed-spec]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (!winningDrinkShop || !Array.isArray(winningDrinkShop.menuItems)) return;
+                const itemId = btn.getAttribute("data-toggle-fixed-spec");
+                const target = winningDrinkShop.menuItems.find((d) => d.id === itemId);
+                if (!target) return;
+                if (target.fixedSugar || target.fixedIce) {
+                    delete target.fixedSugar;
+                    delete target.fixedIce;
+                } else {
+                    target.fixedSugar = campaign.allowedSugars[0] || "微糖 (3分)";
+                    target.fixedIce = campaign.allowedIces[0] || "少冰";
+                }
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        });
+
+        // 指定當選餐廳／飲料店下拉選單
+        const lockPrimarySelect = document.getElementById("lock-primary-vendor-select");
+        if (lockPrimarySelect) {
+            lockPrimarySelect.addEventListener("change", () => {
+                campaign.lockedPrimaryVendorId = lockPrimarySelect.value;
+                this.selectedPrimaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
+        }
+
+        const lockSecondarySelect = document.getElementById("lock-secondary-vendor-select");
+        if (lockSecondarySelect) {
+            lockSecondarySelect.addEventListener("change", () => {
+                campaign.lockedSecondaryVendorId = lockSecondarySelect.value;
+                this.selectedSecondaryOptionId = "";
+                this.saveSurveyState();
+                this.renderSurveyPage(currentSubView);
+            });
         }
     }
 
@@ -2418,6 +2937,10 @@ class WorkspaceApp {
                     primarySubsidyLimit: 0,
                     drinkSubsidyLimit: drinkLimit,
                     enableDrinkSelectors: drinkLimit > 0,
+                    allowedSugars: ["無糖", "微糖 (3分)", "半糖 (5分)"],
+                    allowedIces: ["少冰", "微冰", "去冰"],
+                    lockOverLimitDrinks: false,
+                    allowCustomItemInput: false,
                     officialUrl: "https://www.google.com",
                     attachmentTitle: `${title.trim()} — 菜單與價目表說明附檔.doc`,
                     attachmentContent: `【${title.trim()}】詳細說明資料，可於設定頁面編輯內容或上傳最新 Menu 圖片附檔。`,
@@ -2434,8 +2957,8 @@ class WorkspaceApp {
                             attachNote: "餐廳 A 菜單價目表說明",
                             attachDataUrl: "",
                             menuItems: [
-                                { id: `pm-${Date.now()}-1`, name: "招牌排骨飯", price: 110, tag: "人氣", desc: "招牌排骨便當" },
-                                { id: `pm-${Date.now()}-2`, name: "香酥雞腿飯", price: 120, tag: "推薦", desc: "現炸雞腿便當" }
+                                { id: `pm-${Date.now()}-1`, name: "招牌排骨飯", price: 110, tag: "人氣", desc: "招牌排骨便當", locked: false },
+                                { id: `pm-${Date.now()}-2`, name: "香酥雞腿飯", price: 120, tag: "推薦", desc: "現炸雞腿便當", locked: false }
                             ]
                         },
                         {
@@ -2449,7 +2972,7 @@ class WorkspaceApp {
                             attachNote: "餐廳 B 菜單價目表說明",
                             attachDataUrl: "",
                             menuItems: [
-                                { id: `pm-${Date.now()}-3`, name: "經典嫩雞餐盒", price: 115, tag: "人氣", desc: "健康少油餐盒" }
+                                { id: `pm-${Date.now()}-3`, name: "經典嫩雞餐盒", price: 115, tag: "人氣", desc: "健康少油餐盒", locked: false }
                             ]
                         }
                     ],
@@ -2465,8 +2988,8 @@ class WorkspaceApp {
                             attachNote: "飲料店 1 最新價目表說明",
                             attachDataUrl: "",
                             menuItems: [
-                                { id: `sm-${Date.now()}-1`, name: "四季春珍波椰 (L)", price: 50, tag: "60元內免貼", desc: "清爽青茶加料" },
-                                { id: `sm-${Date.now()}-2`, name: "波霸紅茶拿鐵 (L)", price: 70, tag: "超額需補差額", desc: "濃郁鮮奶茶加波霸" }
+                                { id: `sm-${Date.now()}-1`, name: "四季春珍波椰 (L)", price: 50, tag: "60元內免貼", desc: "清爽青茶加料", locked: false },
+                                { id: `sm-${Date.now()}-2`, name: "波霸紅茶拿鐵 (L)", price: 70, tag: "超額需補差額", desc: "濃郁鮮奶茶加波霸", locked: false }
                             ]
                         }
                     ],
@@ -2482,6 +3005,19 @@ class WorkspaceApp {
         }
     }
 
+    /**
+     * 送出投票或點餐後，自動跳至「下一位尚未完成」的同仁，省去手動重選名字的麻煩
+     */
+    advanceToNextUnvotedEmployee(campaign, winInfo) {
+        const employees = this.lotteryState.allParticipants;
+        const doneMap = campaign.currentPhase === "phase1" ? (campaign.phase1Votes || {}) : (campaign.votes || {});
+        const nextUnvoted = employees.find((emp) => !doneMap[emp]);
+        if (nextUnvoted) {
+            this.selectedVoterName = nextUnvoted;
+            this.loadExistingVoteForSelectedEmployee(campaign, winInfo);
+        }
+    }
+
     bindSurveyVoteEvents(campaign, winInfo) {
         const voterSelect = document.getElementById("voter-employee-select");
         const noteInput = document.getElementById("voter-custom-note-input");
@@ -2490,17 +3026,30 @@ class WorkspaceApp {
         const customSecondaryItemInput = document.getElementById("custom-secondary-item-input");
         const customSecondaryPriceInput = document.getElementById("custom-secondary-price-input");
 
-        // 點擊查看活動整體菜單附檔
-        const viewCampaignAttachBtn = document.getElementById("view-campaign-attachment-btn");
-        if (viewCampaignAttachBtn) {
-            viewCampaignAttachBtn.addEventListener("click", () => {
-                this.openAttachmentPreviewModal(
-                    campaign.attachmentTitle || "活動介紹與價目表總覽附檔",
-                    campaign.attachmentContent || "尚無文字說明",
-                    campaign.attachmentDataUrl || ""
-                );
+        // 切換展開／收合「主辦人選項鎖定控台」
+        const toggleLockDrawerBtn = document.getElementById("toggle-organizer-lock-drawer-btn");
+        if (toggleLockDrawerBtn) {
+            toggleLockDrawerBtn.addEventListener("click", () => {
+                this.isOrganizerLockDrawerOpen = !this.isOrganizerLockDrawerOpen;
+                this.renderSurveyPage("vote");
             });
         }
+
+        if (this.isOrganizerLockDrawerOpen) {
+            this.bindOrganizerLockPanelEvents(campaign, "vote");
+        }
+
+        // 點擊姓名快速名牌一鍵切換點餐同仁
+        this.focusSection.querySelectorAll("[data-quick-voter]").forEach((chip) => {
+            chip.addEventListener("click", () => {
+                const empName = chip.getAttribute("data-quick-voter");
+                if (empName) {
+                    this.selectedVoterName = empName;
+                    this.loadExistingVoteForSelectedEmployee(campaign, winInfo);
+                    this.renderSurveyPage("vote");
+                }
+            });
+        });
 
         // 點擊查看單一餐廳菜單介紹／飲料店最新價目表 Menu 附檔
         this.focusSection.querySelectorAll("[data-view-opt-attach]").forEach((btn) => {
@@ -2550,6 +3099,13 @@ class WorkspaceApp {
                 });
             });
 
+            const simP1QuickBtn = document.getElementById("simulate-phase1-quick-btn");
+            if (simP1QuickBtn) {
+                simP1QuickBtn.addEventListener("click", () => {
+                    this.runSimulationForPhase(campaign, "phase1");
+                });
+            }
+
             const lockAndGoPhase2Btn = document.getElementById("lock-winner-and-go-phase2-btn");
             if (lockAndGoPhase2Btn) {
                 lockAndGoPhase2Btn.addEventListener("click", () => {
@@ -2567,9 +3123,10 @@ class WorkspaceApp {
             if (submitP1Btn) {
                 submitP1Btn.addEventListener("click", () => {
                     if (!this.selectedVoterName) {
-                        window.alert("請先選擇您的員工姓名。");
+                        window.alert("請先點選您的員工姓名。");
                         return;
                     }
+                    const currentVoter = this.selectedVoterName;
                     const pVendorObj = campaign.primaryOptions.find((o) => o.id === this.selectedPrimaryOptionId);
                     const sVendorObj = campaign.secondaryOptions.find((o) => o.id === this.selectedSecondaryOptionId);
                     if (!pVendorObj || !sVendorObj) {
@@ -2582,20 +3139,16 @@ class WorkspaceApp {
                     if (!campaign.phase1Votes) {
                         campaign.phase1Votes = {};
                     }
-                    campaign.phase1Votes[this.selectedVoterName] = {
+                    campaign.phase1Votes[currentVoter] = {
                         primaryVendorId: pVendorObj.id,
                         primaryVendorName: pVendorObj.vendor || pVendorObj.name,
                         secondaryVendorId: sVendorObj.id,
                         secondaryVendorName: sVendorObj.vendor || sVendorObj.name,
                         time: timeStr
                     };
+                    const updatedWin = this.getWinningVendors(campaign);
+                    this.advanceToNextUnvotedEmployee(campaign, updatedWin);
                     this.saveSurveyState();
-                    window.alert(
-                        `已記錄「${this.selectedVoterName}」的第一階段店家票選：\n` +
-                        `・候選午餐餐廳：【${pVendorObj.vendor || pVendorObj.name}】\n` +
-                        `・候選手搖飲店：【${sVendorObj.vendor || sVendorObj.name}】\n\n` +
-                        `待第一階段截止選出最高票店家後，即可進入「第二階段」只針對最高票當選店家點餐！`
-                    );
                     this.renderSurveyPage("vote");
                 });
             }
@@ -2603,80 +3156,145 @@ class WorkspaceApp {
         }
 
         // =========================================================================
-        // 第二階段事件綁定（只針對最高票當選餐廳＆當選飲料店點餐、選甜度冰塊與計算差額）
+        // 第二階段事件綁定（左右雙欄點餐、1 秒懶人快選、鎖定甜度冰塊與自動跳下一位）
         // =========================================================================
         const winningRestaurant = winInfo.primaryWinner;
         const winningDrinkShop = winInfo.secondaryWinner;
-        const mealMenuItems = winningRestaurant ? winningRestaurant.menuItems : [];
-        const drinkMenuItems = winningDrinkShop ? winningDrinkShop.menuItems : [];
+        const openMealItems = this.getOpenMenuItems(winningRestaurant, false, campaign);
+        const openDrinkItems = this.getOpenMenuItems(winningDrinkShop, true, campaign);
 
-        const lockPrimarySelect = document.getElementById("lock-primary-vendor-select");
-        if (lockPrimarySelect) {
-            lockPrimarySelect.addEventListener("change", () => {
-                campaign.lockedPrimaryVendorId = lockPrimarySelect.value;
-                this.selectedPrimaryOptionId = "";
-                this.saveSurveyState();
-                this.renderSurveyPage("vote");
-            });
-        }
+        // 執行點餐儲存並自動跳下一位未點同仁的共用函式
+        const commitCurrentEmployeeOrder = () => {
+            if (!this.selectedVoterName) {
+                window.alert("請先點選您的員工姓名。");
+                return;
+            }
+            if (!winningRestaurant || !winningDrinkShop) {
+                window.alert("尚未選出當選餐廳與飲料店。");
+                return;
+            }
 
-        const lockSecondarySelect = document.getElementById("lock-secondary-vendor-select");
-        if (lockSecondarySelect) {
-            lockSecondarySelect.addEventListener("change", () => {
-                campaign.lockedSecondaryVendorId = lockSecondarySelect.value;
-                this.selectedSecondaryOptionId = "";
-                this.saveSurveyState();
-                this.renderSurveyPage("vote");
-            });
-        }
+            const currentVoter = this.selectedVoterName;
+            const currentMealItem = openMealItems.find((m) => m.id === this.selectedPrimaryOptionId) || openMealItems[0];
+            const currentDrinkItem = openDrinkItems.find((d) => d.id === this.selectedSecondaryOptionId) || openDrinkItems[0];
 
-        const updateLiveCopayDisplay = () => {
+            const finalPrimaryName = (this.customPrimaryItemName || (currentMealItem ? currentMealItem.name : "")).trim();
+            const finalPrimaryPrice = Math.max(0, Number(this.customPrimaryPrice) || (currentMealItem ? Number(currentMealItem.price) : 0));
+            const finalSecondaryName = (this.customSecondaryItemName || (currentDrinkItem ? currentDrinkItem.name : "")).trim();
+            const finalSecondaryPrice = Math.max(0, Number(this.customSecondaryPrice) || (currentDrinkItem ? Number(currentDrinkItem.price) : 0));
+
             const pLimit = Number(campaign.primarySubsidyLimit) || 0;
             const dLimit = Number(campaign.drinkSubsidyLimit) || 0;
-            const mPrice = Math.max(0, Number(this.customPrimaryPrice) || 0);
-            const dPrice = Math.max(0, Number(this.customSecondaryPrice) || 0);
-            const mCopay = pLimit > 0 ? Math.max(0, mPrice - pLimit) : 0;
-            const dCopay = dLimit > 0 ? Math.max(0, dPrice - dLimit) : 0;
-            const totalCopay = mCopay + dCopay;
+            const mealCopay = pLimit > 0 ? Math.max(0, finalPrimaryPrice - pLimit) : 0;
+            const drinkCopay = dLimit > 0 ? Math.max(0, finalSecondaryPrice - dLimit) : 0;
+            const totalCopay = mealCopay + drinkCopay;
 
-            const mealPill = document.getElementById("meal-copay-live-pill");
-            if (mealPill) {
-                mealPill.textContent = mCopay > 0 ? `超額需補差額：NT$ ${mCopay}` : `公司全額補助（自付差額 NT$ 0）`;
-                mealPill.classList.toggle("is-owing", mCopay > 0);
-            }
+            const finalSugar = (currentDrinkItem && currentDrinkItem.fixedSugar)
+                ? currentDrinkItem.fixedSugar
+                : (campaign.enableDrinkSelectors !== false ? this.selectedSugar : "");
+            const finalIce = (currentDrinkItem && currentDrinkItem.fixedIce)
+                ? currentDrinkItem.fixedIce
+                : (campaign.enableDrinkSelectors !== false ? this.selectedIce : "");
 
-            const drinkPill = document.getElementById("drink-copay-live-pill");
-            if (drinkPill) {
-                drinkPill.textContent = dCopay > 0
-                    ? `超過上限 $${dLimit}，需貼差額：NT$ ${dCopay}`
-                    : `未超過上限 $${dLimit}，免貼差額 (NT$ 0)`;
-                drinkPill.classList.toggle("is-owing", dCopay > 0);
-            }
+            const now = new Date();
+            const timeStr = `${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
-            const banner = document.getElementById("total-subsidy-summary-banner");
-            const finalPill = document.getElementById("total-copay-final-pill");
-            const summaryText = document.getElementById("total-subsidy-summary-text");
+            if (!campaign.votes) {
+                campaign.votes = {};
+            }
+            campaign.votes[currentVoter] = {
+                primaryId: currentMealItem ? currentMealItem.id : "custom-meal",
+                primaryVendor: winningRestaurant.vendor || winningRestaurant.name,
+                primaryName: finalPrimaryName,
+                primaryPrice: finalPrimaryPrice,
+                primaryCopay: mealCopay,
+                secondaryId: currentDrinkItem ? currentDrinkItem.id : "custom-drink",
+                secondaryVendor: winningDrinkShop.vendor || winningDrinkShop.name,
+                secondaryName: finalSecondaryName,
+                secondaryPrice: finalSecondaryPrice,
+                secondaryCopay: drinkCopay,
+                totalCopay,
+                sugar: finalSugar,
+                ice: finalIce,
+                note: (this.voterCustomNote || "").trim(),
+                time: timeStr
+            };
 
-            if (banner) {
-                banner.classList.toggle("has-copay", totalCopay > 0);
-            }
-            if (finalPill) {
-                finalPill.textContent = totalCopay > 0
-                    ? `本次點餐您需自行貼補差額：NT$ ${totalCopay}`
-                    : `本次點餐全額補助，免貼差額 (NT$ 0)`;
-                finalPill.classList.toggle("is-owing", totalCopay > 0);
-            }
-            if (summaryText) {
-                const sugarIcePart = campaign.enableDrinkSelectors !== false
-                    ? `｜${this.escapeHtml(this.selectedSugar)}・${this.escapeHtml(this.selectedIce)}`
-                    : "";
-                summaryText.innerHTML = `
-                    <span>點餐確認：【${this.escapeHtml(winningRestaurant ? winningRestaurant.vendor : "")}】${this.escapeHtml(this.customPrimaryItemName)} ($${mPrice})</span>
-                    <span>＋</span>
-                    <span>【${this.escapeHtml(winningDrinkShop ? winningDrinkShop.vendor : "")}】${this.escapeHtml(this.customSecondaryItemName)} ($${dPrice}${sugarIcePart})</span>
-                `;
-            }
+            this.advanceToNextUnvotedEmployee(campaign, winInfo);
+            this.saveSurveyState();
+            this.renderSurveyPage("vote");
         };
+
+        // 懶人 1 秒快選 A：招牌便當 ＋ 60元內免貼錢人氣飲料（微糖少冰），直接送出！
+        const expressZeroCopayBtn = document.getElementById("express-zero-copay-btn");
+        if (expressZeroCopayBtn) {
+            expressZeroCopayBtn.addEventListener("click", () => {
+                const dLimit = Number(campaign.drinkSubsidyLimit) || 60;
+                const bestMeal = openMealItems[0];
+                const freeDrink = openDrinkItems.find((d) => Number(d.price) <= dLimit) || openDrinkItems[0];
+                if (bestMeal) {
+                    this.selectedPrimaryOptionId = bestMeal.id;
+                    this.customPrimaryItemName = bestMeal.name;
+                    this.customPrimaryPrice = Number(bestMeal.price) || 0;
+                }
+                if (freeDrink) {
+                    this.selectedSecondaryOptionId = freeDrink.id;
+                    this.customSecondaryItemName = freeDrink.name;
+                    this.customSecondaryPrice = Number(freeDrink.price) || 0;
+                    this.selectedSugar = freeDrink.fixedSugar || campaign.allowedSugars[0] || "微糖 (3分)";
+                    this.selectedIce = freeDrink.fixedIce || campaign.allowedIces[0] || "少冰";
+                }
+                commitCurrentEmployeeOrder();
+            });
+        }
+
+        // 懶人 1 秒快選 B：1 秒跟單（直接點目前最多同事點的冠軍便當＋冠軍飲料並送出）
+        const expressFollowTopBtn = document.getElementById("express-follow-top-btn");
+        if (expressFollowTopBtn) {
+            expressFollowTopBtn.addEventListener("click", () => {
+                const votesList = Object.values(campaign.votes || {});
+                const mealFreq = {};
+                const drinkFreq = {};
+                votesList.forEach((v) => {
+                    if (v.primaryId) mealFreq[v.primaryId] = (mealFreq[v.primaryId] || 0) + 1;
+                    if (v.secondaryId) drinkFreq[v.secondaryId] = (drinkFreq[v.secondaryId] || 0) + 1;
+                });
+
+                let topMeal = openMealItems[0];
+                let maxM = -1;
+                openMealItems.forEach((m) => {
+                    const cnt = mealFreq[m.id] || 0;
+                    if (cnt > maxM) {
+                        maxM = cnt;
+                        topMeal = m;
+                    }
+                });
+
+                let topDrink = openDrinkItems[0];
+                let maxD = -1;
+                openDrinkItems.forEach((d) => {
+                    const cnt = drinkFreq[d.id] || 0;
+                    if (cnt > maxD) {
+                        maxD = cnt;
+                        topDrink = d;
+                    }
+                });
+
+                if (topMeal) {
+                    this.selectedPrimaryOptionId = topMeal.id;
+                    this.customPrimaryItemName = topMeal.name;
+                    this.customPrimaryPrice = Number(topMeal.price) || 0;
+                }
+                if (topDrink) {
+                    this.selectedSecondaryOptionId = topDrink.id;
+                    this.customSecondaryItemName = topDrink.name;
+                    this.customSecondaryPrice = Number(topDrink.price) || 0;
+                    this.selectedSugar = topDrink.fixedSugar || campaign.allowedSugars[0] || "微糖 (3分)";
+                    this.selectedIce = topDrink.fixedIce || campaign.allowedIces[0] || "少冰";
+                }
+                commitCurrentEmployeeOrder();
+            });
+        }
 
         if (noteInput) {
             noteInput.addEventListener("input", () => {
@@ -2687,28 +3305,24 @@ class WorkspaceApp {
         if (customPrimaryItemInput) {
             customPrimaryItemInput.addEventListener("input", () => {
                 this.customPrimaryItemName = customPrimaryItemInput.value;
-                updateLiveCopayDisplay();
             });
         }
 
         if (customPrimaryPriceInput) {
             customPrimaryPriceInput.addEventListener("input", () => {
                 this.customPrimaryPrice = Math.max(0, Number(customPrimaryPriceInput.value) || 0);
-                updateLiveCopayDisplay();
             });
         }
 
         if (customSecondaryItemInput) {
             customSecondaryItemInput.addEventListener("input", () => {
                 this.customSecondaryItemName = customSecondaryItemInput.value;
-                updateLiveCopayDisplay();
             });
         }
 
         if (customSecondaryPriceInput) {
             customSecondaryPriceInput.addEventListener("input", () => {
                 this.customSecondaryPrice = Math.max(0, Number(customSecondaryPriceInput.value) || 0);
-                updateLiveCopayDisplay();
             });
         }
 
@@ -2728,24 +3342,26 @@ class WorkspaceApp {
             });
         });
 
-        // 點選當選餐廳或當選飲料店的店內品項卡片
+        // 點選當選餐廳或當選飲料店的店內品項列
         this.focusSection.querySelectorAll("[data-select-p2-group]").forEach((card) => {
             card.addEventListener("click", () => {
                 const group = card.getAttribute("data-select-p2-group");
                 const itemId = card.getAttribute("data-item-id");
                 if (group === "primary") {
                     this.selectedPrimaryOptionId = itemId;
-                    const mItem = mealMenuItems.find((m) => m.id === itemId);
+                    const mItem = openMealItems.find((m) => m.id === itemId);
                     if (mItem) {
                         this.customPrimaryItemName = mItem.name;
                         this.customPrimaryPrice = Number(mItem.price) || 0;
                     }
                 } else {
                     this.selectedSecondaryOptionId = itemId;
-                    const dItem = drinkMenuItems.find((d) => d.id === itemId);
+                    const dItem = openDrinkItems.find((d) => d.id === itemId);
                     if (dItem) {
                         this.customSecondaryItemName = dItem.name;
                         this.customSecondaryPrice = Number(dItem.price) || 0;
+                        if (dItem.fixedSugar) this.selectedSugar = dItem.fixedSugar;
+                        if (dItem.fixedIce) this.selectedIce = dItem.fixedIce;
                     }
                 }
                 this.renderSurveyPage("vote");
@@ -2756,67 +3372,7 @@ class WorkspaceApp {
         const submitBtn = document.getElementById("submit-survey-vote-btn");
         if (submitBtn) {
             submitBtn.addEventListener("click", () => {
-                if (!this.selectedVoterName) {
-                    window.alert("請先選擇您的員工姓名。");
-                    return;
-                }
-                if (!winningRestaurant || !winningDrinkShop) {
-                    window.alert("尚未選出當選餐廳與飲料店。");
-                    return;
-                }
-
-                const currentMealItem = mealMenuItems.find((m) => m.id === this.selectedPrimaryOptionId) || mealMenuItems[0];
-                const currentDrinkItem = drinkMenuItems.find((d) => d.id === this.selectedSecondaryOptionId) || drinkMenuItems[0];
-
-                const finalPrimaryName = (this.customPrimaryItemName || (currentMealItem ? currentMealItem.name : "")).trim();
-                const finalPrimaryPrice = Math.max(0, Number(this.customPrimaryPrice) || (currentMealItem ? Number(currentMealItem.price) : 0));
-                const finalSecondaryName = (this.customSecondaryItemName || (currentDrinkItem ? currentDrinkItem.name : "")).trim();
-                const finalSecondaryPrice = Math.max(0, Number(this.customSecondaryPrice) || (currentDrinkItem ? Number(currentDrinkItem.price) : 0));
-
-                const pLimit = Number(campaign.primarySubsidyLimit) || 0;
-                const dLimit = Number(campaign.drinkSubsidyLimit) || 0;
-                const mealCopay = pLimit > 0 ? Math.max(0, finalPrimaryPrice - pLimit) : 0;
-                const drinkCopay = dLimit > 0 ? Math.max(0, finalSecondaryPrice - dLimit) : 0;
-                const totalCopay = mealCopay + drinkCopay;
-
-                const now = new Date();
-                const timeStr = `${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-
-                if (!campaign.votes) {
-                    campaign.votes = {};
-                }
-                campaign.votes[this.selectedVoterName] = {
-                    primaryId: currentMealItem ? currentMealItem.id : "custom-meal",
-                    primaryVendor: winningRestaurant.vendor || winningRestaurant.name,
-                    primaryName: finalPrimaryName,
-                    primaryPrice: finalPrimaryPrice,
-                    primaryCopay: mealCopay,
-                    secondaryId: currentDrinkItem ? currentDrinkItem.id : "custom-drink",
-                    secondaryVendor: winningDrinkShop.vendor || winningDrinkShop.name,
-                    secondaryName: finalSecondaryName,
-                    secondaryPrice: finalSecondaryPrice,
-                    secondaryCopay: drinkCopay,
-                    totalCopay,
-                    sugar: campaign.enableDrinkSelectors !== false ? this.selectedSugar : "",
-                    ice: campaign.enableDrinkSelectors !== false ? this.selectedIce : "",
-                    note: (this.voterCustomNote || "").trim(),
-                    time: timeStr
-                };
-
-                this.saveSurveyState();
-                const copayMsg = totalCopay > 0
-                    ? `\n・超額需自付差額：NT$ ${totalCopay}（飲料補助上限 NT$ ${dLimit}）`
-                    : `\n・補助範圍內，免貼差額 (NT$ 0)`;
-                const drinkSpecMsg = campaign.enableDrinkSelectors !== false
-                    ? ` (${this.selectedSugar}／${this.selectedIce})`
-                    : "";
-                window.alert(
-                    `已成功記錄「${this.selectedVoterName}」於最高票當選店家的點餐：\n` +
-                    `・當選餐廳【${winningRestaurant.vendor}】：${finalPrimaryName} ($${finalPrimaryPrice})\n` +
-                    `・當選飲料【${winningDrinkShop.vendor}】：${finalSecondaryName}${drinkSpecMsg} ($${finalSecondaryPrice})` +
-                    copayMsg
-                );
-                this.renderSurveyPage("vote");
+                commitCurrentEmployeeOrder();
             });
         }
     }
@@ -2859,9 +3415,10 @@ class WorkspaceApp {
     }
 
     /**
-     * 輔助模擬函式：產生第一階段（投店家）與第二階段（只針對最高票當選店家點餐＆計算 60 元差額）測試資料
+     * 輔助模擬函式：產生第一階段（投店家）與第二階段（只針對最高票當選店家之開放品項＆鎖定甜度冰塊點餐）測試資料
      */
     runSimulationForPhase(campaign, targetPhase) {
+        this.ensureCampaignLockDefaults(campaign);
         if (this.lotteryState.allParticipants.length === 0) {
             this.applyImportedParticipants(REHEARSAL_SAMPLE_NAMES, true);
         }
@@ -2870,14 +3427,13 @@ class WorkspaceApp {
         const sOpts = campaign.secondaryOptions;
         if (pOpts.length === 0 || sOpts.length === 0) return;
 
-        // 先確保第一階段有各店家的投票數據（讓第一家或特定熱門店家明顯勝出）
+        // 先確保第一階段有各店家的投票數據（讓第一家明顯勝出）
         campaign.phase1Votes = {};
         const simP1Count = Math.max(1, Math.floor(emps.length * 0.9));
         for (let i = 0; i < simP1Count; i += 1) {
             const emp = emps[i];
-            // 讓前兩家得票較高以模擬真實最高票產生
-            const pIdx = i % 3 === 0 ? 0 : this.getCryptoRandomInt(pOpts.length);
-            const sIdx = i % 3 === 0 ? 4 : this.getCryptoRandomInt(sOpts.length);
+            const pIdx = i % 2 === 0 ? 0 : this.getCryptoRandomInt(pOpts.length);
+            const sIdx = i % 2 === 0 ? 0 : this.getCryptoRandomInt(sOpts.length);
             const pVendor = pOpts[Math.min(pIdx, pOpts.length - 1)];
             const sVendor = sOpts[Math.min(sIdx, sOpts.length - 1)];
             campaign.phase1Votes[emp] = {
@@ -2897,18 +3453,20 @@ class WorkspaceApp {
             return;
         }
 
-        // 第二階段模擬：只針對第一階段票選最高票的「當選餐廳」與「當選飲料店」進行全體點餐！
+        // 第二階段模擬：只針對第一階段票選最高票店家的「開放中品項」與「開放中甜度冰塊」產生點餐數據
         campaign.currentPhase = "phase2";
         this.lineTemplateMode = "summary";
         const winInfo = this.getWinningVendors(campaign);
         const winRestaurant = winInfo.primaryWinner;
         const winDrinkShop = winInfo.secondaryWinner;
-        const mealItems = winRestaurant ? winRestaurant.menuItems : [];
-        const drinkItems = winDrinkShop ? winDrinkShop.menuItems : [];
+        const mealItems = this.getOpenMenuItems(winRestaurant, false, campaign);
+        const drinkItems = this.getOpenMenuItems(winDrinkShop, true, campaign);
 
         const pLimit = Number(campaign.primarySubsidyLimit) || 0;
         const dLimit = Number(campaign.drinkSubsidyLimit) || 0;
-        const sampleNotes = ["", "飯少", "不加酸菜", "", "加辣", ""];
+        const allowedSugars = campaign.allowedSugars;
+        const allowedIces = campaign.allowedIces;
+        const sampleNotes = ["", "飯少", "不加酸菜", "", "", ""];
 
         campaign.votes = {};
         const simP2Count = Math.max(1, Math.floor(emps.length * 0.85));
@@ -2916,8 +3474,8 @@ class WorkspaceApp {
             const emp = emps[i];
             const mPick = mealItems[this.getCryptoRandomInt(mealItems.length)];
             const dPick = drinkItems[this.getCryptoRandomInt(drinkItems.length)];
-            const sugarPick = SURVEY_SUGAR_OPTIONS[this.getCryptoRandomInt(SURVEY_SUGAR_OPTIONS.length)];
-            const icePick = SURVEY_ICE_OPTIONS[this.getCryptoRandomInt(SURVEY_ICE_OPTIONS.length)];
+            const sugarPick = dPick.fixedSugar || allowedSugars[this.getCryptoRandomInt(allowedSugars.length)];
+            const icePick = dPick.fixedIce || allowedIces[this.getCryptoRandomInt(allowedIces.length)];
             const notePick = sampleNotes[this.getCryptoRandomInt(sampleNotes.length)];
 
             const mPrice = Number(mPick.price) || 0;
@@ -2948,7 +3506,8 @@ class WorkspaceApp {
         window.location.hash = "theme-05-survey-stats";
     }
 
-    bindSurveySetupEvents(campaign) {
+    bindSurveySetupEvents(campaign, winInfo) {
+        this.bindOrganizerLockPanelEvents(campaign, "setup");
         let pendingOptionImageDataUrl = "";
         const optFileInput = document.getElementById("new-opt-file-input");
         const optFileStatus = document.getElementById("new-opt-file-status");

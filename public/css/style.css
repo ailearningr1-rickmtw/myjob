@@ -2781,6 +2781,530 @@ html[data-theme="dark"] .copay-highlight-pill.is-owing {
     border: 1px solid var(--border-active);
 }
 
+/* ==========================================================================
+   極簡化點餐體驗與視覺分流系統 (Visual Hierarchy & Option Lock UI)
+   ========================================================================== */
+
+/* 頂部極簡三步導引與懶人一鍵快選列 */
+.express-guide-banner {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(14, 165, 233, 0.12) 100%);
+    border: 2px solid var(--accent-teal);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-soft);
+}
+
+.express-guide-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.express-step-pills {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.step-badge-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.84rem;
+    font-weight: 800;
+    padding: 0.28rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--border-active);
+}
+
+.step-arrow-sep {
+    color: var(--text-muted);
+    font-weight: 900;
+    font-size: 0.9rem;
+}
+
+.express-actions-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.express-oneclick-btn {
+    appearance: none;
+    border: none;
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    padding: 0.68rem 1.2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.3);
+    transition: all var(--transition-fast);
+}
+
+.express-oneclick-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(234, 88, 12, 0.42);
+}
+
+.express-oneclick-btn.is-zero-copay {
+    background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+    box-shadow: 0 6px 16px rgba(13, 148, 136, 0.28);
+}
+
+/* 主辦人快速鎖定控台 (Organizer Quick Lock Drawer) */
+.organizer-lock-drawer {
+    background: var(--bg-secondary);
+    border: 2px dashed #f59e0b;
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.organizer-lock-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.organizer-lock-title {
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: #d97706;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+html[data-theme="dark"] .organizer-lock-title {
+    color: #fbbf24;
+}
+
+.lock-control-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.lock-control-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.lock-box-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.lock-box-title {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.lock-toggle-chip {
+    appearance: none;
+    border: 1.5px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.32rem 0.7rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: line-through;
+    opacity: 0.68;
+}
+
+.lock-toggle-chip.is-allowed {
+    background: rgba(16, 185, 129, 0.14);
+    color: var(--accent-emerald);
+    border-color: rgba(16, 185, 129, 0.45);
+    text-decoration: none;
+    opacity: 1;
+}
+
+.lock-toggle-chip:hover {
+    transform: translateY(-1px);
+    opacity: 1;
+}
+
+/* 步驟一：快速點選員工姓名名牌區 */
+.quick-voter-panel {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.quick-voter-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.voter-step-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.step-circle-tag {
+    background: var(--accent-gradient);
+    color: #ffffff;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.22rem 0.65rem;
+    border-radius: var(--radius-pill);
+}
+
+.voter-name-chips-grid {
+    display: flex;
+    align-items: center;
+    gap: 0.48rem;
+    flex-wrap: wrap;
+    max-height: 155px;
+    overflow-y: auto;
+    padding: 0.25rem 0.1rem;
+}
+
+.voter-name-chip {
+    appearance: none;
+    border: 1.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.38rem 0.78rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.voter-name-chip:hover {
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+}
+
+.voter-name-chip.is-done {
+    border-color: rgba(16, 185, 129, 0.35);
+    color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.07);
+}
+
+.voter-name-chip.is-current {
+    background: var(--accent-gradient);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.32);
+    transform: scale(1.03);
+}
+
+/* 第二階段：左右雙欄色彩分流點餐機 (左欄暖橘便當主餐 / 右欄沁涼青綠手搖飲) */
+.phase2-dual-order-board {
+    display: grid;
+    grid-template-columns: 1fr 1.08fr;
+    gap: 1.35rem;
+    align-items: start;
+}
+
+.order-zone-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.order-zone-card.is-meal-zone {
+    border: 2.5px solid rgba(245, 158, 11, 0.55);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, var(--bg-secondary) 160px);
+}
+
+.order-zone-card.is-drink-zone {
+    border: 2.5px solid rgba(16, 185, 129, 0.55);
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.06) 0%, var(--bg-secondary) 160px);
+}
+
+.zone-header-banner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-bottom: 0.8rem;
+    border-bottom: 1.5px solid var(--border-subtle);
+}
+
+.zone-step-badge {
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 0.22rem 0.65rem;
+    border-radius: var(--radius-pill);
+    display: inline-block;
+    margin-bottom: 0.3rem;
+}
+
+.is-meal-zone .zone-step-badge {
+    background: rgba(245, 158, 11, 0.18);
+    color: #d97706;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+html[data-theme="dark"] .is-meal-zone .zone-step-badge {
+    color: #fbbf24;
+}
+
+.is-drink-zone .zone-step-badge {
+    background: rgba(16, 185, 129, 0.18);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+html[data-theme="dark"] .is-drink-zone .zone-step-badge {
+    color: #34d399;
+}
+
+.zone-main-title {
+    font-size: 1.18rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+/* 極簡點餐按鈕列 (取代原本又高又複雜的卡片網格) */
+.compact-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.compact-menu-item {
+    background: var(--bg-surface);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.compact-menu-item:hover {
+    border-color: var(--accent-cyan);
+    transform: translateX(3px);
+}
+
+.is-meal-zone .compact-menu-item.is-selected {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.18);
+}
+
+.is-drink-zone .compact-menu-item.is-selected {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.18);
+}
+
+.compact-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.compact-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+}
+
+.compact-item-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.compact-item-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.compact-item-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.locked-spec-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #d97706;
+    background: rgba(245, 158, 11, 0.14);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    padding: 0.22rem 0.65rem;
+    border-radius: var(--radius-pill);
+}
+
+html[data-theme="dark"] .locked-spec-badge {
+    color: #fbbf24;
+}
+
+/* 第一階段：店家對決投票橫條卡 (與第二階段點餐畫面做出強烈區隔) */
+.phase1-dual-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.35rem;
+    align-items: start;
+}
+
+.phase1-vendor-card {
+    background: var(--bg-surface);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.phase1-vendor-card:hover {
+    border-color: var(--accent-cyan);
+    transform: translateY(-2px);
+}
+
+.phase1-vendor-card.is-selected {
+    border-color: var(--accent-teal);
+    background: rgba(20, 184, 166, 0.08);
+    box-shadow: 0 0 0 3px var(--accent-soft-bg);
+}
+
+.vote-progress-bar {
+    appearance: none;
+    width: 100%;
+    height: 7px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+
+.vote-progress-bar::-webkit-progress-bar {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-pill);
+}
+
+.vote-progress-bar::-webkit-progress-value {
+    background: var(--accent-gradient);
+    border-radius: var(--radius-pill);
+    transition: width 0.3s ease;
+}
+
+.vote-progress-bar::-moz-progress-bar {
+    background: var(--accent-gradient);
+    border-radius: var(--radius-pill);
+}
+
+/* 底部大型確認送出結帳吧 */
+.sticky-submit-checkout-bar {
+    background: var(--bg-surface-hover);
+    border: 2px solid var(--accent-teal);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-hover);
+}
+
+.checkout-summary-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+.checkout-voter-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.checkout-items-preview {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+
+.giant-submit-order-btn {
+    appearance: none;
+    border: none;
+    background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 900;
+    padding: 0.85rem 1.85rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(20, 184, 166, 0.35);
+    transition: all var(--transition-fast);
+}
+
+.giant-submit-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(20, 184, 166, 0.45);
+}
+
 /* 響應式斷點設計 */
 @media (max-width: 1100px) {
     body.is-festive-gala-mode .main-container {
@@ -2809,7 +3333,9 @@ html[data-theme="dark"] .copay-highlight-pill.is-owing {
     .survey-stats-grid,
     .custom-order-adjust-grid,
     .stats-four-grid,
-    .survey-phase-stepper {
+    .survey-phase-stepper,
+    .phase2-dual-order-board,
+    .phase1-dual-columns {
         grid-template-columns: 1fr;
     }
 
@@ -2845,6 +3371,7 @@ html[data-theme="dark"] .copay-highlight-pill.is-owing {
         font-size: 1.65rem;
     }
 }
+
 
 
 
