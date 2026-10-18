@@ -2540,6 +2540,160 @@ body.is-survey-activity-mode .main-container {
     box-shadow: 0 10px 22px rgba(6, 199, 85, 0.38);
 }
 
+/* 店家名稱、單價與超額差額標籤 */
+.option-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+}
+
+.vendor-name-badge {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+    background: var(--accent-soft-bg);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-active);
+}
+
+.option-price-pill {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.12);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.option-price-pill.is-over-limit {
+    color: #d97706;
+    background: rgba(245, 158, 11, 0.14);
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+html[data-theme="dark"] .option-price-pill.is-over-limit {
+    color: #fbbf24;
+}
+
+/* 甜度與冰塊按鈕點選面板 + 依最新價目表微調品項與金額區 */
+.drink-custom-panel {
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-active);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.selector-group-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.selector-pills-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.selector-pill-btn {
+    appearance: none;
+    border: 1.5px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.48rem 0.95rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.selector-pill-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+}
+
+.selector-pill-btn.active {
+    background: var(--accent-gradient);
+    color: var(--text-on-accent);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.28);
+}
+
+.custom-order-adjust-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 1fr;
+    gap: 0.9rem;
+    align-items: end;
+    padding-top: 0.65rem;
+    border-top: 1px dashed var(--border-subtle);
+}
+
+/* 補助上限與自付差額即時試算橫幅 */
+.subsidy-live-banner {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-active);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.subsidy-live-banner.has-copay {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.subsidy-breakdown-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.copay-highlight-pill {
+    font-family: "JetBrains Mono", "Noto Sans TC", monospace;
+    font-size: 0.92rem;
+    font-weight: 800;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-pill);
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.copay-highlight-pill.is-owing {
+    background: rgba(245, 158, 11, 0.2);
+    color: #d97706;
+    border-color: #f59e0b;
+}
+
+html[data-theme="dark"] .copay-highlight-pill.is-owing {
+    color: #fde047;
+}
+
+.stats-four-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.9rem;
+}
+
 /* 響應式斷點設計 */
 @media (max-width: 1100px) {
     body.is-festive-gala-mode .main-container {
@@ -2565,7 +2719,9 @@ body.is-survey-activity-mode .main-container {
     .lottery-admin-grid,
     .stage-live-inputs-row,
     .voter-identity-card,
-    .survey-stats-grid {
+    .survey-stats-grid,
+    .custom-order-adjust-grid,
+    .stats-four-grid {
         grid-template-columns: 1fr;
     }
 
