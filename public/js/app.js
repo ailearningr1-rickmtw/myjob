@@ -26,15 +26,15 @@ const WORKSPACE_THEMES = [
         id: "theme-02",
         code: "MOD-02",
         navShortName: "效率工具",
-        title: "主題二：自動化與 Python RPA 效率工具箱",
-        subtitle: "Automation & Python RPA Security Vault",
-        status: "安全防護工具箱已啟用",
-        description: "整合您本機 Python 備份目錄 (含 Vedio_produce_v5 子目錄) 之 10 款自動化工具。採登入前通行碼驗證與金鑰本機隔離保護，兼顧純網頁即用工具與本機視窗程式一鍵啟動。",
+        title: "主題二：五大自動化網頁工具箱",
+        subtitle: "5 Web-Native Automation Tools",
+        status: "5 大網頁工具已啟用",
+        description: "精選保留 1、2、5、7、8 五項最實用工具，全部可直接在網頁上執行完成，免回主機開視窗，並具備登入前通行碼保護。",
         iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline><line x1="14" y1="4" x2="10" y2="20"></line></svg>`,
         slots: [
-            { name: "網頁原生即用工具箱：AI 簡報提示詞 V5 / 圖片轉 PNG / 標註簡轉繁 / 動態折線圖 (已啟用)", tag: "SYS-2A", detail: "直接將您的 Python 核心邏輯移植至瀏覽器，免開環境隨時可用，資料留存本機不外洩。" },
-            { name: "本機 Python 視窗程式一鍵啟動橋接中心 (已啟用)", tag: "SYS-2B", detail: "連動本機 Python (.venv) 直接從網頁彈出 PPT 影片產製 V6.2、PDF 壓縮合併、音軌掌聲拼接等視窗工具。" },
-            { name: "三層式資安防護閘門與 Python 專案整合診斷表 (已啟用)", tag: "SYS-2C", detail: "進入前須通過專屬通行碼驗證，並嚴格隔離 api_keys.txt 與 session_state.json 防止公開外流。" }
+            { name: "1. AI 簡報提示詞 ＋ 2. 圖片轉 PNG 放大 (全網頁執行)", tag: "TOOL 1 & 2", detail: "一鍵組裝 5+1 色彩簡報提示詞；圖片直接在瀏覽器 2 倍放大銳化並下載無損 PNG。" },
+            { name: "5. 簡報講稿與教學影片產製 (全網頁執行)", tag: "TOOL 5", detail: "在網頁匯入簡報 PDF 或圖片，自動生成每頁講稿、預覽朗讀並直接合成下載字幕影片。" },
+            { name: "7. PDF 合併壓縮 ＋ 8. 文稿轉語音 MP3 (全網頁執行)", tag: "TOOL 7 & 8", detail: "多個 PDF 依時間序合併與三段壓縮下載；文稿直接在網頁朗讀或合成下載 MP3 語音檔。" }
         ]
     },
     {
@@ -1138,29 +1138,39 @@ class WorkspaceApp {
         this.voterCustomNote = "";
         this.lineTemplateMode = "summary"; // summary | copay | detailed | reminder
 
-        // 主題二：Python RPA 自動化與安全金庫互動狀態
-        this.rpaActiveTab = "web-tools"; // web-tools | local-launcher | architecture-matrix
-        this.rpaActiveWebSubtool = "ppt-prompt"; // ppt-prompt | pic-to-png | s2twp-list | line-race
-        this.rpaBridgeStatus = null;
+        // 主題二：精選 5 大全網頁工具箱 (編號 1、2、5、7、8) 狀態
+        this.rpaActiveTool = "tool-01"; // tool-01 | tool-02 | tool-05 | tool-07 | tool-08
         this.rpaPptConfig = {
             topic: "納稅者權利保護法核心實務與案例解析",
             audience: "機關同仁與第一線稅務服務人員",
-            slideCount: "12",
+            slideCount: "10",
             paletteId: "P01",
             styleId: "S01",
             toneId: "T01",
             mascotFreq: "重點頁點綴 (約 30% 頁面)",
             includeLogo: true,
             includePolyphonicHint: true,
-            sourceText: "一、納稅者權利保護法立法目的：保障賦稅人權，維護人民基本生存權，實現課稅公平及貫徹正當法律程序。\n二、基本生活費不得課稅：納稅者為維持自己及受扶養親屬享有符合人性尊嚴之基本生活所需之費用，不得加以課稅。\n三、正當法律程序與調查原則：稅捐稽徵機關調查課稅事實，應以書面通知被調查者，並給予陳述意見之機會；違法取得之證據原則上不得作為課稅基礎。\n四、納保官協助機制：納稅者遇有稅捐爭議得申請納稅者權利保護官進行溝通協調與申訴協助。"
+            sourceText: "一、納稅者權利保護法立法目的：保障賦稅人權，維護人民基本生存權，實現課稅公平及貫徹正當法律程序。\n二、基本生活費不得課稅：納稅者為維持自己及受扶養親屬享有符合人性尊嚴之基本生活所需之費用，不得加以課稅。\n三、正當法律程序與調查原則：稅捐稽徵機關調查課稅事實，應以書面通知被調查者，並給予陳述意見之機會。\n四、納保官協助機制：納稅者遇有稅捐爭議得申請納稅者權利保護官進行溝通協調與申訴協助。"
         };
         this.rpaGeneratedPrompt = "";
         this.rpaConvertedImages = [];
-        this.rpaS2tInputText = "D:\\SOVITS\\wavs\\0001.wav|speaker_dad|ZH|大家好，今天来跟各位介绍软件自动化与演示文稿视频生成的标准流程，避免重扣税款并支持调阅档案。\nD:\\SOVITS\\wavs\\0002.wav|speaker_dad|ZH|通过这套人工智能程序，我们可以快速处理高清视频与音频文件，优化整体数据质量。";
-        this.rpaS2tOutputText = "";
-        this.rpaRaceCsvText = RPA_DEFAULT_RACE_CSV;
-        this.rpaRaceAnimFrameId = null;
-        this.rpaRaceProgress = 1.0;
+
+        // 工具 5：簡報智慧講稿與教學影片產製器（網頁版）狀態
+        this.rpaVideoSlides = [];
+        this.rpaVideoBlobUrl = "";
+        this.rpaVideoIsRecording = false;
+
+        // 工具 7：PDF 時間序合併與壓縮（網頁版）狀態
+        this.rpaPdfFiles = [];
+        this.rpaPdfDpiMode = "standard"; // standard (150 DPI) | high (200 DPI) | extreme (100 DPI)
+        this.rpaPdfMergedUrl = "";
+        this.rpaPdfMergedInfo = "";
+
+        // 工具 8：文稿轉自然語音 MP3（網頁版）狀態
+        this.rpaVoiceText = "大家好，歡迎來到今日的實務講習。今天要為各位介紹納稅者權利保護法的核心重點，包含避免重扣稅款的查核原則，以及依法調閱卷宗的正當程序。";
+        this.rpaVoiceModel = "zh-TW-HsiaoChenNeural";
+        this.rpaVoiceRate = "+0%";
+        this.rpaVoiceAudioUrl = "";
 
         this.cacheDomElements();
         this.fireworks = new FireworksController(this.fireworksCanvas);
@@ -5664,96 +5674,93 @@ class WorkspaceApp {
 
     /**
      * ========================================================================
-     * 主題二：Python RPA 自動化與效率工具箱（含登入前安全驗證閘門与雙棲整合）
+     * 主題二：精選 5 大全網頁自動化工具箱（編號 1、2、5、7、8，大字體極簡版）
      * ========================================================================
      */
     renderTheme02AutomationHub(theme) {
         if (!this.focusSection || !theme) return;
 
-        // 第一關：檢查是否已通過登入前安全通行碼驗證
+        // 登入前通行碼驗證
         if (!this.isRpaUnlocked()) {
             this.renderTheme02SecurityGate(theme);
             return;
         }
 
-        // 若尚未探測本機 Python 橋接狀態，發起非同步偵測
-        if (this.rpaBridgeStatus === null) {
-            this.probeLocalRpaBridge();
-        }
-
-        const isBridgeOnline = Boolean(this.rpaBridgeStatus && this.rpaBridgeStatus.ok);
-        const bridgeStatusText = isBridgeOnline
-            ? `本機 Python 橋接服務已連線 (${this.rpaBridgeStatus.python_exe || "127.0.0.1:8000"})`
-            : "目前為純靜態網頁模式（若欲直接彈出本機 Tkinter 視窗，請於本機執行 python src/build.py --serve）";
-
         const hasLocalKey = Boolean(this.getLocalGeminiKey());
 
-        let activeTabBodyHtml = "";
-        if (this.rpaActiveTab === "web-tools") {
-            activeTabBodyHtml = this.getRpaWebToolsTabHtml();
-        } else if (this.rpaActiveTab === "local-launcher") {
-            activeTabBodyHtml = this.getRpaLocalLauncherTabHtml(isBridgeOnline);
+        let activeToolHtml = "";
+        if (this.rpaActiveTool === "tool-01") {
+            activeToolHtml = this.getRpaTool01PptPromptHtml();
+        } else if (this.rpaActiveTool === "tool-02") {
+            activeToolHtml = this.getRpaTool02PicToPngHtml();
+        } else if (this.rpaActiveTool === "tool-05") {
+            activeToolHtml = this.getRpaTool05VideoProduceHtml();
+        } else if (this.rpaActiveTool === "tool-07") {
+            activeToolHtml = this.getRpaTool07PdfMergeHtml();
         } else {
-            activeTabBodyHtml = this.getRpaArchitectureMatrixTabHtml();
+            activeToolHtml = this.getRpaTool08VoiceMp3Html();
         }
 
         this.focusSection.innerHTML = `
-            <div class="theme-focus-panel">
+            <div class="theme-focus-panel rpa-large-ui">
                 <div class="focus-header">
                     <div class="focus-title-group">
-                        <div class="theme-meta-tags">
-                            <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
-                            <span class="theme-status-badge">三層安全隔離防護中</span>
-                        </div>
-                        <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
-                        <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
+                        <h2 class="focus-title">主題二：五大自動化網頁工具箱</h2>
+                        <p class="theme-desc">點選下方 5 個大按鈕即可直接在網頁上完成作業，不需要回到主機開啟 Python 視窗。</p>
                     </div>
                     <button type="button" class="back-overview-btn" id="rpa-back-overview-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>返回五大主題總覽</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>返回總覽</span>
                     </button>
                 </div>
 
-                <!-- 頂部資安防護與本機橋接狀態列 -->
+                <!-- 頂部簡潔安全列 -->
                 <div class="rpa-security-status-bar">
                     <div class="rpa-status-left">
-                        <span class="rpa-vault-unlocked-badge">安全金庫已解鎖</span>
-                        <span class="rpa-bridge-pill ${isBridgeOnline ? "is-connected" : ""}" id="rpa-bridge-status-pill">
-                            ${this.escapeHtml(bridgeStatusText)}
-                        </span>
+                        <span class="rpa-vault-unlocked-badge">已通過登入驗證</span>
                         <span class="rpa-bridge-pill ${hasLocalKey ? "is-connected" : ""}">
-                            ${hasLocalKey ? "本機瀏覽器已設定 Gemini Key (不隨程式碼上傳)" : "未設定瀏覽器 Gemini Key (僅產製離線提示詞)"}
+                            ${hasLocalKey ? "已設定 Gemini API 金鑰（僅存於本機瀏覽器）" : "選用：可點右側設定 Gemini 金鑰自動寫稿"}
                         </span>
                     </div>
                     <div class="survey-inline-actions">
-                        <button type="button" class="secondary-btn" id="rpa-config-gemini-key-btn">設定本機 Gemini Key</button>
-                        <button type="button" class="secondary-btn" id="rpa-change-passcode-btn">變更驗證通行碼</button>
-                        <button type="button" class="danger-outline-btn" id="rpa-lock-vault-btn">立即上鎖離開</button>
+                        <button type="button" class="secondary-btn" id="rpa-config-gemini-key-btn">設定 Gemini 金鑰</button>
+                        <button type="button" class="secondary-btn" id="rpa-change-passcode-btn">修改登入密碼</button>
+                        <button type="button" class="danger-outline-btn" id="rpa-lock-vault-btn">上鎖離開</button>
                     </div>
                 </div>
 
-                <!-- 三大核心模式切換頁籤 -->
-                <div class="rpa-hub-mode-tabs">
-                    <button type="button" class="rpa-mode-tab-btn ${this.rpaActiveTab === "web-tools" ? "active" : ""}" data-rpa-tab="web-tools">
-                        <span class="rpa-mode-tab-step">MODE 01 / 網頁原生即用工具箱</span>
-                        <span class="rpa-mode-tab-title">免開 Python 直接在網頁執行 (4 款核心工具)</span>
-                        <span class="rpa-mode-tab-desc">包含 AI 簡報提示詞產製器 V5、圖片批次轉 PNG 與 2x 銳化、標註檔簡轉繁與多音字修正、動態發光折線競賽圖。</span>
+                <!-- 精選 5 大工具大按鈕切換列 (編號 1、2、5、7、8) -->
+                <div class="rpa-five-tabs-bar">
+                    <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-01" ? "active" : ""}" data-rpa-tool="tool-01">
+                        <span class="rpa-big-tool-num">工具 01</span>
+                        <span class="rpa-big-tool-title">AI 簡報提示詞</span>
+                        <span class="rpa-big-tool-sub">選配色風格・一鍵產出簡報大綱</span>
                     </button>
-                    <button type="button" class="rpa-mode-tab-btn ${this.rpaActiveTab === "local-launcher" ? "active" : ""}" data-rpa-tab="local-launcher">
-                        <span class="rpa-mode-tab-step">MODE 02 / 本機 Python 視窗一鍵啟動中心</span>
-                        <span class="rpa-mode-tab-title">從網頁一鍵喚醒本機 10 款 Python 視窗程式</span>
-                        <span class="rpa-mode-tab-desc">連動 G:\\...\\backup\\爸爸\\python (.venv)，一鍵彈出 PPT 教學影片產製 V6.2、PDF 合併壓縮、音軌掌聲拼接等工具。</span>
+                    <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-02" ? "active" : ""}" data-rpa-tool="tool-02">
+                        <span class="rpa-big-tool-num">工具 02</span>
+                        <span class="rpa-big-tool-title">圖片轉 PNG 放大</span>
+                        <span class="rpa-big-tool-sub">網頁直接 2 倍放大銳化轉 PNG</span>
                     </button>
-                    <button type="button" class="rpa-mode-tab-btn ${this.rpaActiveTab === "architecture-matrix" ? "active" : ""}" data-rpa-tab="architecture-matrix">
-                        <span class="rpa-mode-tab-step">MODE 03 / 資料夾全盤點與資安保護架構</span>
-                        <span class="rpa-mode-tab-title">10 支程式整合方案分析與金鑰保護總覽</span>
-                        <span class="rpa-mode-tab-desc">完整檢視主目錄與 Vedio_produce_v5 子目錄內所有檔案之相依性、適合方案及 api_keys.txt 隔離保護機制。</span>
+                    <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-05" ? "active" : ""}" data-rpa-tool="tool-05">
+                        <span class="rpa-big-tool-num">工具 05</span>
+                        <span class="rpa-big-tool-title">簡報講稿與影片</span>
+                        <span class="rpa-big-tool-sub">匯入簡報・自動寫稿與合成影片</span>
+                    </button>
+                    <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-07" ? "active" : ""}" data-rpa-tool="tool-07">
+                        <span class="rpa-big-tool-num">工具 07</span>
+                        <span class="rpa-big-tool-title">PDF 合併與壓縮</span>
+                        <span class="rpa-big-tool-sub">多檔依時間合併・三段瘦身下載</span>
+                    </button>
+                    <button type="button" class="rpa-big-tool-btn ${this.rpaActiveTool === "tool-08" ? "active" : ""}" data-rpa-tool="tool-08">
+                        <span class="rpa-big-tool-num">工具 08</span>
+                        <span class="rpa-big-tool-title">文稿轉語音 MP3</span>
+                        <span class="rpa-big-tool-sub">貼上文字・直接朗讀或下載 MP3</span>
                     </button>
                 </div>
 
-                <!-- 當前分頁主內容 -->
-                <div id="rpa-tab-content-container">
-                    ${activeTabBodyHtml}
+                <!-- 當前工具工作區 -->
+                <div id="rpa-active-tool-body">
+                    ${activeToolHtml}
                 </div>
             </div>
         `;
@@ -5762,58 +5769,34 @@ class WorkspaceApp {
     }
 
     /**
-     * 渲染主題二「登入前安全驗證閘門」(Pre-login Security Gate)
-     * 防止未授權訪客在公開網頁檢視您的內部工具清單、機關提示詞與自動化腳本設定
+     * 登入前大字體極簡密碼驗證畫面
      */
     renderTheme02SecurityGate(theme) {
         if (!this.focusSection) return;
 
         this.focusSection.innerHTML = `
-            <div class="theme-focus-panel">
+            <div class="theme-focus-panel rpa-large-ui">
                 <div class="focus-header">
                     <div class="focus-title-group">
-                        <div class="theme-meta-tags">
-                            <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
-                            <span class="theme-status-badge">受保護的私有工作區</span>
-                        </div>
-                        <h2 class="focus-title">${this.escapeHtml(theme.title)} — 登入前安全驗證</h2>
-                        <p class="theme-desc">為保護您的 Python 自動化工具、內部簡報提示詞結構與本機路徑不被公開瀏覽，進入本主題前請先輸入安全通行碼。</p>
+                        <h2 class="focus-title">主題二：登入前安全驗證</h2>
+                        <p class="theme-desc">此工具箱受密碼保護，不會對外公開您的資料與金鑰。請輸入通行碼進入：</p>
                     </div>
                     <button type="button" class="back-overview-btn" id="rpa-gate-back-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>返回五大主題總覽</span>
+                        <span>返回總覽</span>
                     </button>
                 </div>
 
                 <div class="rpa-security-gate-wrap">
                     <div class="rpa-security-gate-header">
                         <div class="rpa-security-shield-box">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                 <rect x="9" y="9" width="6" height="6" rx="1"></rect>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="section-heading">Python RPA 自動化安全金庫 (Security Vault Gate)</h3>
-                            <p class="section-subheading">系統已自動為您的備份資料夾啟用「三層式隱私與金鑰隔離保護」，未通過驗證前不會載入或渲染任何工具內容：</p>
-                        </div>
-                    </div>
-
-                    <div class="rpa-security-layer-list">
-                        <div class="rpa-security-layer-card">
-                            <span class="rpa-security-layer-tag">LAYER 01 / 登入前通行碼閘門</span>
-                            <span class="rpa-security-layer-title">阻絕未授權瀏覽</span>
-                            <span class="rpa-security-layer-desc">進入主題二必須先通過通行碼驗證（Session 級別保護，關閉分頁或點擊上鎖即自動鎖定）。</span>
-                        </div>
-                        <div class="rpa-security-layer-card">
-                            <span class="rpa-security-layer-tag">LAYER 02 / 敏感金鑰零上傳</span>
-                            <span class="rpa-security-layer-title">隔離 api_keys.txt</span>
-                            <span class="rpa-security-layer-desc">您目錄中的 api_keys.txt 與 session_state.json 嚴格保留於本機磁碟並列入 .gitignore，絕不上傳至 GitHub。</span>
-                        </div>
-                        <div class="rpa-security-layer-card">
-                            <span class="rpa-security-layer-tag">LAYER 03 / 本機橋接白名單</span>
-                            <span class="rpa-security-layer-title">僅限 127.0.0.1 喚醒</span>
-                            <span class="rpa-security-layer-desc">本機視窗啟動 API 僅綁定本機迴路 (127.0.0.1)，外部網路無法遠端觸發您電腦上的 Python 程式。</span>
+                            <h3 class="section-heading">請輸入通行碼解鎖</h3>
+                            <p class="section-subheading">預設通行碼為 8888（進入後可隨時點選「修改登入密碼」變更）</p>
                         </div>
                     </div>
 
@@ -5822,10 +5805,10 @@ class WorkspaceApp {
                             type="password"
                             class="idea-input"
                             id="rpa-passcode-input"
-                            placeholder="請輸入主題二安全通行碼 (預設通行碼: 8888，解鎖後可隨時自訂修改)"
+                            placeholder="請輸入通行碼 (預設: 8888)"
                             required
                         />
-                        <button type="submit" class="primary-btn">驗證並解鎖工具箱</button>
+                        <button type="submit" class="primary-btn">進入工具箱</button>
                     </form>
                     <p class="admin-feedback-msg" id="rpa-gate-feedback"></p>
                 </div>
@@ -5848,79 +5831,23 @@ class WorkspaceApp {
         if (unlockForm && passInput) {
             unlockForm.addEventListener("submit", (e) => {
                 e.preventDefault();
-                const entered = passInput.value.trim();
-                if (entered === this.getRpaPasscode()) {
+                if (passInput.value.trim() === this.getRpaPasscode()) {
                     this.setRpaUnlocked(true);
                     this.renderTheme02AutomationHub(theme);
                 } else if (feedbackEl) {
-                    feedbackEl.textContent = "安全通行碼錯誤，請重新確認後輸入（若尚未修改過，預設為 8888）。";
+                    feedbackEl.textContent = "密碼不正確，請重新輸入（預設為 8888）。";
                     feedbackEl.className = "admin-feedback-msg is-error";
                 }
             });
         }
     }
 
-    async probeLocalRpaBridge() {
-        try {
-            const resp = await fetch("/api/rpa/status", { method: "GET", cache: "no-store" });
-            if (resp.ok) {
-                const data = await resp.json();
-                this.rpaBridgeStatus = data;
-            } else {
-                this.rpaBridgeStatus = { ok: false };
-            }
-        } catch (_err) {
-            this.rpaBridgeStatus = { ok: false };
-        }
-        if (this.activeRoute === "theme-02" && this.isRpaUnlocked()) {
-            const pill = document.getElementById("rpa-bridge-status-pill");
-            if (pill && this.rpaBridgeStatus && this.rpaBridgeStatus.ok) {
-                pill.textContent = `本機 Python 橋接服務已連線 (${this.rpaBridgeStatus.python_exe || "127.0.0.1:8000"})`;
-                pill.classList.add("is-connected");
-            }
-        }
-    }
-
     /**
-     * 取得 MODE 01：網頁原生即用工具箱 HTML
+     * ========================================================================
+     * 工具 01：AI 簡報提示詞產製器（大字體極簡版）
+     * ========================================================================
      */
-    getRpaWebToolsTabHtml() {
-        let subtoolBody = "";
-        if (this.rpaActiveWebSubtool === "ppt-prompt") {
-            subtoolBody = this.getRpaWebSubtoolPptPromptHtml();
-        } else if (this.rpaActiveWebSubtool === "pic-to-png") {
-            subtoolBody = this.getRpaWebSubtoolPicToPngHtml();
-        } else if (this.rpaActiveWebSubtool === "s2twp-list") {
-            subtoolBody = this.getRpaWebSubtoolS2twpHtml();
-        } else {
-            subtoolBody = this.getRpaWebSubtoolLineRaceHtml();
-        }
-
-        return `
-            <div class="rpa-web-tools-subnav">
-                <button type="button" class="rpa-subtool-pill ${this.rpaActiveWebSubtool === "ppt-prompt" ? "active" : ""}" data-rpa-subtool="ppt-prompt">
-                    工具 1：企業級 AI 簡報提示詞產製器 V5 (含 5+1 色彩計畫)
-                </button>
-                <button type="button" class="rpa-subtool-pill ${this.rpaActiveWebSubtool === "pic-to-png" ? "active" : ""}" data-rpa-subtool="pic-to-png">
-                    工具 2：圖片批次轉無損 PNG 與 2x 放大銳化
-                </button>
-                <button type="button" class="rpa-subtool-pill ${this.rpaActiveWebSubtool === "s2twp-list" ? "active" : ""}" data-rpa-subtool="s2twp-list">
-                    工具 3：GPT-SoVITS 標註檔 (.list) 簡轉繁與破音字修正
-                </button>
-                <button type="button" class="rpa-subtool-pill ${this.rpaActiveWebSubtool === "line-race" ? "active" : ""}" data-rpa-subtool="line-race">
-                    工具 4：動態發光折線競賽圖產生器 (2000-2026)
-                </button>
-            </div>
-            <div id="rpa-web-subtool-body">
-                ${subtoolBody}
-            </div>
-        `;
-    }
-
-    /**
-     * 網頁子工具 1：企業級 AI 簡報提示詞產製器 V5 (移植自 PPT_PROMPT_PRODUCE_V5.py)
-     */
-    getRpaWebSubtoolPptPromptHtml() {
+    getRpaTool01PptPromptHtml() {
         const cfg = this.rpaPptConfig;
         const selectedPalette = RPA_PPT_THEME_PRESETS.find((p) => p.id === cfg.paletteId) || RPA_PPT_THEME_PRESETS[0];
         const selectedStyle = RPA_PPT_STYLE_PRESETS.find((s) => s.id === cfg.styleId) || RPA_PPT_STYLE_PRESETS[0];
@@ -5942,38 +5869,37 @@ class WorkspaceApp {
             <option value="${t.id}" ${t.id === cfg.toneId ? "selected" : ""}>${this.escapeHtml(t.name)}</option>
         `).join("");
 
-        // 使用 SVG fill 屬性渲染 6 格色票預覽（完全不需使用任何 Inline CSS）
         const svgRects = selectedPalette.colors.map((hex, idx) => `
-            <rect x="${idx * 35}" y="0" width="33" height="26" rx="3" fill="${hex}" stroke="#64748b" stroke-width="0.8"></rect>
+            <rect x="${idx * 40}" y="0" width="37" height="34" rx="4" fill="${hex}" stroke="#64748b" stroke-width="1"></rect>
         `).join("");
 
         return `
             <div class="rpa-ppt-studio-grid">
                 <div class="rpa-studio-card">
                     <div>
-                        <span class="theme-code-badge">移植自 PPT_PROMPT_PRODUCE_V5.py</span>
-                        <h3 class="section-heading">簡報視覺風格與 5+1 色彩計畫設定</h3>
-                        <p class="section-subheading">完整保留您 Python 程式中的 13 組「5+1 色彩計畫」、8 大簡報風格、6 種語氣與角色出現頻率設定：</p>
+                        <span class="rpa-step-badge">步驟 1：選擇簡報配色與風格</span>
+                        <h3 class="section-heading">工具 01：AI 簡報提示詞產製器</h3>
+                        <p class="section-subheading">選好配色與風格、貼上文稿，即可一鍵複製提示詞或直接讓 AI 寫出每頁簡報大綱。</p>
                     </div>
 
                     <div class="rpa-form-two-col">
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-topic">簡報核心主題名稱</label>
+                            <label class="stage-input-label" for="rpa-ppt-topic">簡報主題名稱</label>
                             <input type="text" class="idea-input" id="rpa-ppt-topic" value="${this.escapeHtml(cfg.topic)}" />
                         </div>
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-audience">目標受眾與報告對象</label>
+                            <label class="stage-input-label" for="rpa-ppt-audience">報告對象</label>
                             <input type="text" class="idea-input" id="rpa-ppt-audience" value="${this.escapeHtml(cfg.audience)}" />
                         </div>
                     </div>
 
                     <div class="rpa-form-two-col">
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-slides">預計投影片頁數</label>
+                            <label class="stage-input-label" for="rpa-ppt-slides">預計頁數</label>
                             <input type="number" class="idea-input" id="rpa-ppt-slides" min="3" max="50" value="${this.escapeHtml(cfg.slideCount)}" />
                         </div>
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-mascot">專屬角色（稅務小幫手）出現頻率</label>
+                            <label class="stage-input-label" for="rpa-ppt-mascot">小幫手角色出現頻率</label>
                             <select class="prize-select" id="rpa-ppt-mascot">
                                 <option value="重點頁點綴 (約 30% 頁面)" ${cfg.mascotFreq.includes("30%") ? "selected" : ""}>重點頁點綴 (約 30% 頁面)</option>
                                 <option value="僅封面與結尾頁出現" ${cfg.mascotFreq.includes("封面") ? "selected" : ""}>僅封面與結尾頁出現</option>
@@ -5984,28 +5910,28 @@ class WorkspaceApp {
                     </div>
 
                     <div class="stage-input-group">
-                        <label class="stage-input-label" for="rpa-ppt-palette">5+1 色彩計畫 (Theme Presets P01~P13)</label>
+                        <label class="stage-input-label" for="rpa-ppt-palette">選擇「5+1 色彩計畫」配色</label>
                         <select class="prize-select" id="rpa-ppt-palette">
                             ${paletteOptionsHtml}
                         </select>
                         <div class="rpa-palette-bar">
-                            <svg class="rpa-palette-svg" viewBox="0 0 210 26" xmlns="http://www.w3.org/2000/svg" aria-label="色彩計畫預覽">
+                            <svg class="rpa-palette-svg" viewBox="0 0 240 34" xmlns="http://www.w3.org/2000/svg">
                                 ${svgRects}
                             </svg>
-                            <span class="admin-helper-text">${this.escapeHtml(selectedPalette.colors.join(" / "))} — ${this.escapeHtml(selectedPalette.desc)}</span>
+                            <span class="admin-helper-text">${this.escapeHtml(selectedPalette.desc)}</span>
                         </div>
                     </div>
 
                     <div class="rpa-form-two-col">
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-style">簡報版面風格 (S01~S08)</label>
+                            <label class="stage-input-label" for="rpa-ppt-style">選擇版面風格</label>
                             <select class="prize-select" id="rpa-ppt-style">
                                 ${styleOptionsHtml}
                             </select>
                             <span class="admin-helper-text">${this.escapeHtml(selectedStyle.desc)}</span>
                         </div>
                         <div class="stage-input-group">
-                            <label class="stage-input-label" for="rpa-ppt-tone">講稿與文案語氣 (T01~T06)</label>
+                            <label class="stage-input-label" for="rpa-ppt-tone">選擇語氣</label>
                             <select class="prize-select" id="rpa-ppt-tone">
                                 ${toneOptionsHtml}
                             </select>
@@ -6013,29 +5939,18 @@ class WorkspaceApp {
                         </div>
                     </div>
 
-                    <div class="survey-inline-actions">
-                        <label class="lock-checkbox-pill">
-                            <input type="checkbox" id="rpa-ppt-logo-chk" ${cfg.includeLogo ? "checked" : ""} />
-                            <span>自動配置機關標準 LOGO 規範</span>
-                        </label>
-                        <label class="lock-checkbox-pill">
-                            <input type="checkbox" id="rpa-ppt-poly-chk" ${cfg.includePolyphonicHint ? "checked" : ""} />
-                            <span>附加台灣破音字提示 (重扣/調閱等)</span>
-                        </label>
-                    </div>
-
                     <div class="stage-input-group">
                         <div class="survey-section-title-row">
-                            <label class="stage-input-label" for="rpa-ppt-source">原始參考文稿或法規內容 (可貼上文字或載入本機 .txt/.md 檔)</label>
-                            <label class="secondary-btn" for="rpa-ppt-file-input">載入文稿檔案 (.txt/.md)</label>
+                            <label class="stage-input-label" for="rpa-ppt-source">貼上參考文稿內容（或點右側載入 .txt 文字檔）</label>
+                            <label class="secondary-btn" for="rpa-ppt-file-input">載入文字檔 (.txt)</label>
                             <input type="file" id="rpa-ppt-file-input" class="is-hidden" accept=".txt,.md,.csv" />
                         </div>
                         <textarea class="batch-textarea" id="rpa-ppt-source" rows="5">${this.escapeHtml(cfg.sourceText)}</textarea>
                     </div>
 
                     <div class="survey-inline-actions">
-                        <button type="button" class="primary-btn" id="rpa-generate-prompt-btn">重新組裝結構化簡報 Prompt</button>
-                        <button type="button" class="secondary-btn" id="rpa-call-gemini-btn">使用本機瀏覽器 Gemini Key 直接生成逐頁大綱</button>
+                        <button type="button" class="primary-btn" id="rpa-generate-prompt-btn">產生簡報提示詞</button>
+                        <button type="button" class="secondary-btn" id="rpa-call-gemini-btn">直接由 AI 產出逐頁簡報大綱</button>
                     </div>
                     <p class="admin-feedback-msg" id="rpa-ppt-feedback"></p>
                 </div>
@@ -6043,15 +5958,14 @@ class WorkspaceApp {
                 <div class="rpa-studio-card">
                     <div class="survey-section-title-row">
                         <div>
-                            <span class="theme-code-badge">PROMPT OUTPUT</span>
-                            <h3 class="section-heading">產出之企業級 AI 簡報提示詞</h3>
+                            <span class="rpa-step-badge">步驟 2：一鍵複製或下載結果</span>
+                            <h3 class="section-heading">產出結果區</h3>
                         </div>
                         <div class="survey-inline-actions">
-                            <button type="button" class="primary-btn" id="rpa-copy-prompt-btn">一鍵複製提示詞</button>
-                            <button type="button" class="secondary-btn" id="rpa-download-prompt-btn">下載 .txt</button>
+                            <button type="button" class="primary-btn" id="rpa-copy-prompt-btn">一鍵複製內容</button>
+                            <button type="button" class="secondary-btn" id="rpa-download-prompt-btn">下載文字檔</button>
                         </div>
                     </div>
-                    <p class="section-subheading">可直接複製貼上至 Gemini、NotebookLM、Gamma 或 Claude 產製高品質簡報：</p>
                     <textarea class="rpa-prompt-textarea" id="rpa-prompt-output-box">${this.escapeHtml(this.rpaGeneratedPrompt)}</textarea>
                 </div>
             </div>
@@ -6063,74 +5977,60 @@ class WorkspaceApp {
         const palette = RPA_PPT_THEME_PRESETS.find((p) => p.id === cfg.paletteId) || RPA_PPT_THEME_PRESETS[0];
         const style = RPA_PPT_STYLE_PRESETS.find((s) => s.id === cfg.styleId) || RPA_PPT_STYLE_PRESETS[0];
         const tone = RPA_PPT_TONE_PRESETS.find((t) => t.id === cfg.toneId) || RPA_PPT_TONE_PRESETS[0];
-
         const [bgMain, bgSub, textMain, textSub, accent1, accent2] = palette.colors;
 
-        const logoSection = cfg.includeLogo
-            ? `\n【機關識別與角色配置規範】\n- 機關標準 LOGO：每頁右上角或封面頂部預留標準機關 LOGO 視覺錨點，維持行政專業識別度。\n- 導覽吉祥物（稅務小幫手）：出現頻率設定為「${cfg.mascotFreq}」，於重點提醒框或案例解答處以親和對話框輔助說明。`
-            : `\n【角色配置規範】\n- 導覽角色出現頻率：${cfg.mascotFreq}。`;
+        return `# 企業級 AI 簡報設計與逐頁大綱提示詞
 
-        const polySection = cfg.includePolyphonicHint
-            ? `\n【台灣繁體中文與語音多音字特別規範】\n- 全文嚴格使用台灣繁體中文（zh-TW）與我國現行法規標準用語。\n- 若同時產出旁白講稿，請標註台灣常見稅務多音字正確讀音提示（例如：重複扣繳之「重扣」讀作「蟲扣」、調閱卷宗之「調閱」讀作「掉閱」）。`
-            : `\n【語言規範】\n- 全文嚴格使用台灣繁體中文（zh-TW）與我國公部門標準術語。`;
+## 一、簡報設定
+- 簡報主題：${cfg.topic}
+- 報告對象：${cfg.audience}
+- 預計頁數：${cfg.slideCount} 頁
+- 語氣設定：${tone.name}（${tone.desc}）
+- 角色配置：機關標準 LOGO ＋ 稅務小幫手（${cfg.mascotFreq}）
 
-        return `# 企業級 AI 簡報設計與逐頁分鏡提示詞 (Enterprise Presentation Prompt V5)
+## 二、版面風格與「5+1 色彩計畫」
+- 版面風格：${style.name}（${style.desc}）
+- 5+1 配色：${palette.name}
+  1. 主背景色：${bgMain}
+  2. 區塊底色：${bgSub}
+  3. 主標題色：${textMain}
+  4. 次要文字：${textSub}
+  5. 主強調色：${accent1}
+  6. 亮點警示：${accent2}
 
-## 一、簡報任務基本定義
-- **簡報核心主題**：${cfg.topic}
-- **目標受眾對象**：${cfg.audience}
-- **預計總頁數**：${cfg.slideCount} 頁（含封面、核心目錄、內容拆解頁與總結行動頁）
-- **語氣與敘事風格**：${tone.name}（${tone.desc}）
+## 三、撰寫要求
+1. 每頁重點不超過 4 點，字句精簡好讀，拒絕文字牆。
+2. 全文使用台灣繁體中文，旁白注意破音字正確讀音（如：重扣讀作蟲扣、調閱讀作掉閱）。
+3. 請依序輸出【第 1 頁】至【第 ${cfg.slideCount} 頁】之標題、精煉內文、視覺排版建議與口語講稿。
 
-## 二、視覺風格與「5+1 色彩計畫」硬性規範
-- **指定版面風格**：${style.name}
-  - 排版細節：${style.desc}
-- **指定「5+1 色彩計畫」**：${palette.name}
-  1. 主背景色 (Primary Background)：\`${bgMain}\`
-  2. 次要卡片/區塊底色 (Secondary Surface)：\`${bgSub}\`
-  3. 主標題文字色 (Primary Text)：\`${textMain}\`
-  4. 次要說明文字色 (Secondary Muted Text)：\`${textSub}\`
-  5. 主視覺強調色 (Primary Accent)：\`${accent1}\`
-  6. 關鍵警示/亮點色 (Highlight Accent +1)：\`${accent2}\`
-  - 色彩應用原則：${palette.desc}${logoSection}${polySection}
-
-## 三、核心知識轉譯與排版鐵律
-1. **去蕪存菁（拒絕文字牆）**：每頁投影片主體條列不得超過 4 點，每點字數控制在 25 字以內，將冗長條文轉化為「關鍵結論標題 + 結構化比較卡 / 流程步驟」。
-2. **視覺化優先**：每一頁皆須明確指出建議搭配的視覺元件（如：三欄式 Bento 卡片、是/非對照表、時間軸流程圖、關鍵數據大字卡）。
-3. **逐頁輸出格式**：請依序輸出【第 1 頁】至【第 ${cfg.slideCount} 頁】，每頁包含：
-   - 本頁標題 (Action Title)
-   - 投影片核心精煉內文 (Bullet Points / 表格結構)
-   - 版面配置與 5+1 配色運用指令 (Layout & Color Spec)
-   - 建議約 120~180 字之自然口語演講旁白稿 (Speaker Notes)
-
-## 四、原始參考文稿與素材內容
-\`\`\`text
-${cfg.sourceText}
-\`\`\``;
+## 四、參考文稿內容
+${cfg.sourceText}`;
     }
 
     /**
-     * 網頁子工具 2：圖片批次轉無損 PNG 與 2x 放大銳化 (移植自 pic_t_png.py)
+     * ========================================================================
+     * 工具 02：圖片轉無損 PNG 與 2 倍清晰放大（全網頁執行）
+     * ========================================================================
      */
-    getRpaWebSubtoolPicToPngHtml() {
+    getRpaTool02PicToPngHtml() {
         const cardsHtml = this.rpaConvertedImages.length > 0
-            ? this.rpaConvertedImages.map((item, idx) => `
+            ? this.rpaConvertedImages.map((item) => `
                 <div class="rpa-img-result-card">
                     <img class="rpa-img-thumb" src="${item.dataUrl}" alt="${this.escapeHtml(item.outName)}" />
                     <div class="stage-input-label">${this.escapeHtml(item.outName)}</div>
-                    <div class="admin-helper-text">原始：${item.origW}×${item.origH} → 輸出：${item.outW}×${item.outH}</div>
-                    <a class="primary-btn" href="${item.dataUrl}" download="${this.escapeHtml(item.outName)}">下載無損 PNG</a>
+                    <div class="admin-helper-text">尺寸：${item.origW}×${item.origH} → ${item.outW}×${item.outH}</div>
+                    <a class="primary-btn" href="${item.dataUrl}" download="${this.escapeHtml(item.outName)}">下載這張 PNG</a>
                 </div>
             `).join("")
-            : `<p class="admin-helper-text">尚未載入圖片，請點擊上方虛線框選取 1 至多張圖片進行瀏覽器本地端批次轉換。</p>`;
+            : "";
 
         return `
             <div class="rpa-studio-card">
                 <div class="survey-section-title-row">
                     <div>
-                        <span class="theme-code-badge">移植自 pic_t_png.py (Pillow 影像處理引擎)</span>
-                        <h3 class="section-heading">圖片批次轉無損 PNG 與 2x 放大銳化工具</h3>
-                        <p class="section-subheading">完全在您的瀏覽器記憶體內透過 HTML5 Canvas 進行無損 PNG 編碼與 3×3 銳化卷積濾鏡處理，圖片絕不離開本機電腦：</p>
+                        <span class="rpa-step-badge">全網頁直接處理・免安裝</span>
+                        <h3 class="section-heading">工具 02：圖片轉無損 PNG 與 2 倍清晰放大</h3>
+                        <p class="section-subheading">選取圖片後，網頁會自動放大 2 倍並強化清晰度，直接點擊即可下載乾淨的 PNG 圖檔。</p>
                     </div>
                     ${this.rpaConvertedImages.length > 0 ? `<button type="button" class="primary-btn" id="rpa-download-all-png-btn">一鍵下載全部 PNG (${this.rpaConvertedImages.length} 張)</button>` : ""}
                 </div>
@@ -6138,18 +6038,18 @@ ${cfg.sourceText}
                 <div class="survey-inline-actions">
                     <label class="lock-checkbox-pill">
                         <input type="checkbox" id="rpa-img-upscale-chk" checked />
-                        <span>啟用長寬 2 倍高畫質放大 (2x Upscale)</span>
+                        <span>長寬放大 2 倍 (提升解析度)</span>
                     </label>
                     <label class="lock-checkbox-pill">
                         <input type="checkbox" id="rpa-img-sharpen-chk" checked />
-                        <span>啟用輕微邊緣銳化濾鏡 (Unsharp卷積強化清晰度)</span>
+                        <span>自動銳化文字與邊緣 (更清晰)</span>
                     </label>
                 </div>
 
                 <div class="rpa-dropzone">
-                    <p class="rpa-mode-tab-title">選取多張圖片立即轉為無損 PNG (支援 JPG / WEBP / BMP / GIF / PNG)</p>
-                    <p class="admin-helper-text">適用於將簡報素材、去背圖檔或壓縮過的 JPG 轉為乾淨高解析度 PNG</p>
-                    <label class="primary-btn" for="rpa-img-batch-input">選擇本機圖片檔案 (可多選)</label>
+                    <div class="rpa-dropzone-title">點此選取 1 張或多張圖片（JPG / WEBP / BMP / PNG）</div>
+                    <p class="admin-helper-text">選完圖片後會立即在下方顯示放大後的結果</p>
+                    <label class="primary-btn" for="rpa-img-batch-input">選擇電腦中的圖片</label>
                     <input type="file" id="rpa-img-batch-input" class="is-hidden" accept="image/*" multiple />
                 </div>
 
@@ -6163,247 +6063,355 @@ ${cfg.sourceText}
     }
 
     /**
-     * 網頁子工具 3：GPT-SoVITS 標註檔 (.list) 簡轉繁與破音字修正器 (移植自 simplified_tran_traditional.py)
+     * ========================================================================
+     * 工具 05：簡報智慧講稿與教學影片產製（全網頁直接執行版）
+     * ========================================================================
      */
-    getRpaWebSubtoolS2twpHtml() {
-        if (!this.rpaS2tOutputText) {
-            this.rpaS2tOutputText = this.convertS2twpListContent(this.rpaS2tInputText, true);
-        }
-
-        const polyChipsHtml = RPA_POLYPHONIC_OVERRIDES.map((item) => `
-            <span class="rpa-bridge-pill is-connected" title="${this.escapeHtml(item.note)}">
-                ${this.escapeHtml(item.word)} → ${this.escapeHtml(item.replaceWith)}
-            </span>
-        `).join("");
-
-        return `
-            <div class="rpa-studio-card">
-                <div class="survey-section-title-row">
+    getRpaTool05VideoProduceHtml() {
+        const slidesHtml = this.rpaVideoSlides.length > 0
+            ? this.rpaVideoSlides.map((slide, idx) => `
+                <div class="rpa-slide-script-row">
                     <div>
-                        <span class="theme-code-badge">移植自 Vedio_produce_v5\\simplified_tran_traditional.py</span>
-                        <h3 class="section-heading">GPT-SoVITS 標註檔 (.list) 簡轉台灣繁體與破音字修正器</h3>
-                        <p class="section-subheading">自動剖析「音檔路徑|說話者|語言|文本內容」4 欄結構，僅轉換第 4 欄台詞（嚴格保護第 1 欄路徑不被改壞），並可一鍵套用台灣稅務多音字發音覆寫：</p>
-                    </div>
-                    <div class="survey-inline-actions">
-                        <label class="secondary-btn" for="rpa-s2t-file-input">載入 .list / .txt 標註檔</label>
-                        <input type="file" id="rpa-s2t-file-input" class="is-hidden" accept=".list,.txt,.csv" />
-                        <button type="button" class="primary-btn" id="rpa-s2t-download-btn">下載 traditional_output.list</button>
-                    </div>
-                </div>
-
-                <div class="survey-inline-actions">
-                    <label class="lock-checkbox-pill">
-                        <input type="checkbox" id="rpa-s2t-poly-chk" checked />
-                        <span>同步套用台灣破音字發音修正字典 (tts_pronunciation_overrides.json)</span>
-                    </label>
-                    <button type="button" class="primary-btn" id="rpa-s2t-run-btn">立即執行簡轉繁與欄位轉換</button>
-                    <button type="button" class="secondary-btn" id="rpa-s2t-copy-btn">複製轉換結果</button>
-                </div>
-
-                <div class="rpa-status-left">
-                    <span class="stage-input-label">內建破音字保護規則：</span>
-                    ${polyChipsHtml}
-                </div>
-
-                <div class="rpa-s2t-split-grid">
-                    <div class="stage-input-group">
-                        <label class="stage-input-label" for="rpa-s2t-input">原始輸入內容 (支援 .list 四欄格式或一般簡體文稿)</label>
-                        <textarea class="rpa-prompt-textarea" id="rpa-s2t-input">${this.escapeHtml(this.rpaS2tInputText)}</textarea>
+                        <img class="rpa-slide-thumb-img" src="${slide.dataUrl}" alt="第 ${idx + 1} 頁" />
+                        <div class="stage-input-label">第 ${idx + 1} 頁投影片</div>
                     </div>
                     <div class="stage-input-group">
-                        <label class="stage-input-label" for="rpa-s2t-output">轉換後台灣繁體輸出結果 (路徑欄位維持原樣)</label>
-                        <textarea class="rpa-prompt-textarea" id="rpa-s2t-output">${this.escapeHtml(this.rpaS2tOutputText)}</textarea>
-                    </div>
-                </div>
-                <p class="admin-feedback-msg" id="rpa-s2t-feedback"></p>
-            </div>
-        `;
-    }
-
-    convertS2twpListContent(rawText, applyPolyphonic = true) {
-        const convertSingleText = (txt) => {
-            let res = String(txt);
-            RPA_S2TWP_PHRASE_MAP.forEach(([simp, trad]) => {
-                if (res.includes(simp)) {
-                    res = res.split(simp).join(trad);
-                }
-            });
-            let charsOut = "";
-            for (let i = 0; i < res.length; i += 1) {
-                const ch = res[i];
-                charsOut += (ch && RPA_S2TWP_CHAR_MAP[ch]) ? RPA_S2TWP_CHAR_MAP[ch] : ch;
-            }
-            res = charsOut;
-            if (applyPolyphonic) {
-                RPA_POLYPHONIC_OVERRIDES.forEach((rule) => {
-                    if (res.includes(rule.word)) {
-                        res = res.split(rule.word).join(rule.replaceWith);
-                    }
-                });
-            }
-            return res;
-        };
-
-        const lines = String(rawText || "").split(/\r?\n/);
-        return lines.map((line) => {
-            if (!line.trim()) return line;
-            const parts = line.split("|");
-            if (parts.length >= 4) {
-                const head = parts.slice(0, 3);
-                const tailText = parts.slice(3).join("|");
-                return `${head.join("|")}|${convertSingleText(tailText)}`;
-            }
-            return convertSingleText(line);
-        }).join("\n");
-    }
-
-    /**
-     * 網頁子工具 4：動態發光折線競賽圖產生器 (移植自 line_race_chart_output.py)
-     */
-    getRpaWebSubtoolLineRaceHtml() {
-        return `
-            <div class="rpa-studio-card">
-                <div class="survey-section-title-row">
-                    <div>
-                        <span class="theme-code-badge">移植自 line_race_chart_output.py</span>
-                        <h3 class="section-heading">動態發光折線競賽圖產生器 (Neon Glow Line Race)</h3>
-                        <p class="section-subheading">重現您 Python 腳本的深色科技底圖 (#0d1117)、三層霓虹光暈折線、前端脈衝光點與中央年份大浮水印：</p>
-                    </div>
-                    <div class="survey-inline-actions">
-                        <button type="button" class="primary-btn" id="rpa-race-play-btn">重新播放動態追逐動畫</button>
-                        <button type="button" class="secondary-btn" id="rpa-race-export-png-btn">下載高解析 PNG 圖表</button>
-                    </div>
-                </div>
-
-                <div class="rpa-race-canvas-wrap">
-                    <canvas id="rpa-race-canvas" class="rpa-race-canvas" width="860" height="440"></canvas>
-                </div>
-
-                <div class="stage-input-group">
-                    <div class="survey-section-title-row">
-                        <label class="stage-input-label" for="rpa-race-csv-input">CSV 數據來源 (格式：年份,序列一數值,序列二數值 — 修改後點擊播放即可即時更新圖表)</label>
-                        <label class="secondary-btn" for="rpa-race-csv-file">載入本機 CSV 檔</label>
-                        <input type="file" id="rpa-race-csv-file" class="is-hidden" accept=".csv,.txt" />
-                    </div>
-                    <textarea class="batch-textarea" id="rpa-race-csv-input" rows="5">${this.escapeHtml(this.rpaRaceCsvText)}</textarea>
-                </div>
-            </div>
-        `;
-    }
-
-    /**
-     * 取得 MODE 02：本機 Python 視窗程式一鍵啟動中心 HTML
-     */
-    getRpaLocalLauncherTabHtml(isBridgeOnline) {
-        const cardsHtml = RPA_PYTHON_TOOLS_CATALOG.map((tool) => {
-            const schemeClass = tool.scheme === "hybrid" ? "scheme-hybrid" : (tool.scheme === "web" ? "scheme-web" : "scheme-local");
-            const webJumpBtn = tool.webSubtoolId
-                ? `<button type="button" class="secondary-btn" data-jump-web-subtool="${tool.webSubtoolId}">開啟網頁即用版</button>`
-                : "";
-
-            return `
-                <article class="rpa-tool-card">
-                    <div class="rpa-tool-card-top">
-                        <div class="theme-meta-tags">
-                            <span class="theme-code-badge">${this.escapeHtml(tool.folder)}</span>
-                            <span class="rpa-scheme-badge ${schemeClass}">${this.escapeHtml(tool.schemeLabel)}</span>
+                        <div class="survey-section-title-row">
+                            <label class="stage-input-label">第 ${idx + 1} 頁口語講稿（會自動印成影片底部字幕並朗讀）</label>
+                            <button type="button" class="secondary-btn" data-speak-slide-idx="${idx}">試聽本頁朗讀</button>
                         </div>
-                        <h4 class="module-placeholder-title">${this.escapeHtml(tool.name)}</h4>
-                        <code class="rpa-tool-path-code">G:\\其他電腦\\我的電腦\\dwonload\\程式相關_Python\\backup\\爸爸\\python\\${this.escapeHtml(tool.file)}</code>
-                        <p class="module-placeholder-desc">${this.escapeHtml(tool.summary)}</p>
-                        <p class="admin-helper-text">技術棧：${this.escapeHtml(tool.techStack)}</p>
-                    </div>
-                    <div class="survey-inline-actions">
-                        <button type="button" class="primary-btn" data-launch-rpa-id="${tool.id}">
-                            一鍵彈出本機 Python 視窗
-                        </button>
-                        ${webJumpBtn}
-                        <button type="button" class="secondary-btn" data-download-bat-id="${tool.id}">
-                            下載 .bat 啟動器
-                        </button>
-                    </div>
-                </article>
-            `;
-        }).join("");
-
-        return `
-            <div class="rpa-studio-card">
-                <div class="survey-section-title-row">
-                    <div>
-                        <span class="theme-code-badge">LOCAL PYTHON RPA BRIDGE (127.0.0.1)</span>
-                        <h3 class="section-heading">本機 Python 視窗程式一鍵啟動中心</h3>
-                        <p class="section-subheading">
-                            點擊下方任一工具的「一鍵彈出本機 Python 視窗」，本地端伺服器會自動使用您備份資料夾內的 <code>.venv\\Scripts\\python.exe</code> 在桌面彈出該 Tkinter 視窗程式；您也可以點擊「開啟本機 Python 資料夾」或下載專屬 <code>.bat</code> 啟動捷徑：
-                        </p>
-                    </div>
-                    <div class="survey-inline-actions">
-                        <button type="button" class="secondary-btn" id="rpa-open-main-folder-btn">開啟本機 Python 主目錄</button>
-                        <button type="button" class="secondary-btn" id="rpa-open-vedio-folder-btn">開啟 Vedio_produce_v5 子目錄</button>
+                        <textarea class="batch-textarea" rows="3" data-slide-script-idx="${idx}">${this.escapeHtml(slide.script)}</textarea>
                     </div>
                 </div>
-                <p class="admin-feedback-msg ${isBridgeOnline ? "is-success" : ""}" id="rpa-launcher-feedback">
-                    ${isBridgeOnline
-                        ? "本機橋接服務已就緒！點擊下方任一按鈕即可直接彈出您的 Python 視窗工具。"
-                        : "提示：若點擊啟動時顯示離線，請確認以 python src/build.py --serve 啟動本機伺服器，或直接點擊『下載 .bat 啟動器』於本機雙擊執行。"}
-                </p>
-                <div class="rpa-launcher-grid">
-                    ${cardsHtml}
-                </div>
-            </div>
-        `;
-    }
+            `).join("")
+            : `<p class="admin-helper-text">請先於上方「步驟 1」選取您的簡報 PDF 檔或投影片圖片，每一頁會自動顯示在這裡。</p>`;
 
-    /**
-     * 取得 MODE 03：資料夾完整盤點與安全整合方案報告 HTML
-     */
-    getRpaArchitectureMatrixTabHtml() {
-        const rowsHtml = RPA_PYTHON_TOOLS_CATALOG.map((tool, idx) => `
-            <tr>
-                <td><strong>0${idx + 1}</strong></td>
-                <td>
-                    <strong>${this.escapeHtml(tool.name)}</strong><br />
-                    <span class="admin-helper-text">${this.escapeHtml(tool.file)}</span>
-                </td>
-                <td>${this.escapeHtml(tool.folder)}</td>
-                <td>${this.escapeHtml(tool.techStack)}</td>
-                <td><span class="rpa-scheme-badge ${tool.scheme === "hybrid" ? "scheme-hybrid" : "scheme-local"}">${this.escapeHtml(tool.schemeLabel)}</span></td>
-                <td>${this.escapeHtml(tool.securityNote)}</td>
-            </tr>
-        `).join("");
+        const videoDownloadHtml = this.rpaVideoBlobUrl
+            ? `
+                <div class="rpa-voice-player-box">
+                    <div class="stage-input-label">教學影片已合成完畢！您可直接預覽或點擊下載：</div>
+                    <a class="primary-btn" href="${this.rpaVideoBlobUrl}" download="簡報教學影片_${Date.now()}.webm">下載合成好的簡報教學影片 (.webm)</a>
+                </div>
+            `
+            : "";
 
         return `
             <div class="rpa-studio-card">
                 <div>
-                    <span class="theme-code-badge">FOLDER AUDIT & SECURITY ARCHITECTURE</span>
-                    <h3 class="section-heading">您的 Python 備份資料夾（含子資料夾）完整盤點與整合方案總表</h3>
-                    <p class="section-subheading">
-                        經完整掃描 <code>G:\\其他電腦\\我的電腦\\dwonload\\程式相關_Python\\backup\\爸爸\\python</code> 及其子資料夾（<code>Vedio_produce_v5</code>、<code>Vedio_produce_v5\\code</code>、<code>dist</code>、<code>.venv</code>），我們將您的 10 套核心工具依「硬體/系統相依性」與「資安敏感度」規劃為最佳化的雙棲架構：
-                    </p>
+                    <span class="rpa-step-badge">全網頁直接生成講稿與影片</span>
+                    <h3 class="section-heading">工具 05：簡報智慧講稿與教學影片產製</h3>
+                    <p class="section-subheading">只要 3 步：① 選取簡報 PDF 或投影片圖片 → ② 點擊 AI 自動寫每頁講稿 → ③ 點擊在網頁合成字幕教學影片並下載。</p>
                 </div>
 
-                <div class="rpa-matrix-table-wrap">
-                    <table class="rpa-matrix-table">
-                        <thead>
-                            <tr>
-                                <th>序號</th>
-                                <th>程式名稱與檔案路徑</th>
-                                <th>所在位置</th>
-                                <th>核心技術與外部相依</th>
-                                <th>採用整合方案</th>
-                                <th>資安保護與整合說明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rowsHtml}
-                        </tbody>
-                    </table>
+                <div class="rpa-dropzone">
+                    <div class="rpa-dropzone-title">步驟 1：選取簡報檔案（支援 PDF 簡報檔，或多張 JPG/PNG 投影片圖片）</div>
+                    <p class="admin-helper-text">提示：PowerPoint 可直接「另存新檔 → PDF」，選取該 PDF 後網頁會自動拆出每一頁投影片！</p>
+                    <label class="primary-btn" for="rpa-video-slides-input">選取簡報 PDF 或多張投影片圖片</label>
+                    <input type="file" id="rpa-video-slides-input" class="is-hidden" accept=".pdf,image/*" multiple />
+                </div>
+
+                <div class="survey-inline-actions">
+                    <button type="button" class="primary-btn" id="rpa-video-ai-script-btn">步驟 2：請 AI 自動看圖撰寫每頁口語講稿</button>
+                    <button type="button" class="secondary-btn" id="rpa-video-fix-poly-btn">一鍵修正台灣破音字 (重扣/調閱等)</button>
+                    <button type="button" class="primary-btn" id="rpa-video-render-btn">步驟 3：直接在網頁合成字幕教學影片</button>
+                </div>
+
+                <p class="admin-feedback-msg" id="rpa-video-feedback"></p>
+
+                ${videoDownloadHtml}
+
+                <div class="rpa-video-stage-wrap ${this.rpaVideoSlides.length === 0 ? "is-hidden" : ""}">
+                    <div class="stage-input-label">影片合成與字幕預覽畫面（1280 × 720 HD）</div>
+                    <canvas id="rpa-video-preview-canvas" class="rpa-video-preview-canvas" width="1280" height="720"></canvas>
+                </div>
+
+                <div class="rpa-video-slides-list">
+                    ${slidesHtml}
                 </div>
             </div>
         `;
     }
 
     /**
-     * 綁定主題二所有互動事件
+     * ========================================================================
+     * 工具 07：PDF 時間序批次合併與壓縮（全網頁直接執行版）
+     * ========================================================================
+     */
+    getRpaTool07PdfMergeHtml() {
+        const filesListHtml = this.rpaPdfFiles.length > 0
+            ? this.rpaPdfFiles.map((f, idx) => {
+                const dateStr = new Date(f.lastModified).toLocaleString("zh-TW");
+                const kb = Math.round(f.size / 1024);
+                return `
+                    <div class="rpa-pdf-file-item">
+                        <span>順序 ${idx + 1}：${this.escapeHtml(f.name)}</span>
+                        <span class="admin-helper-text">修改時間：${this.escapeHtml(dateStr)}（${kb} KB）</span>
+                    </div>
+                `;
+            }).join("")
+            : `<p class="admin-helper-text">尚未選取 PDF 檔案。選取多個 PDF 後，系統會自動依「修改時間由舊到新」排序合併。</p>`;
+
+        const downloadHtml = this.rpaPdfMergedUrl
+            ? `
+                <div class="rpa-voice-player-box">
+                    <div class="stage-input-label">${this.escapeHtml(this.rpaPdfMergedInfo)}</div>
+                    <a class="primary-btn" href="${this.rpaPdfMergedUrl}" download="合併壓縮完成_${Date.now()}.pdf">點此下載合併壓縮後的 PDF 檔案</a>
+                </div>
+            `
+            : "";
+
+        return `
+            <div class="rpa-studio-card">
+                <div>
+                    <span class="rpa-step-badge">全網頁直接合併與瘦身</span>
+                    <h3 class="section-heading">工具 07：PDF 批次合併與高倍率壓縮</h3>
+                    <p class="section-subheading">一次選取多個 PDF 檔案，網頁會自動依檔案修改時間「由舊到新」排序，並壓縮合併成單一 PDF 供您下載。</p>
+                </div>
+
+                <div class="stage-input-group">
+                    <label class="stage-input-label">步驟 1：點選壓縮模式</label>
+                    <div class="rpa-dpi-selector-grid">
+                        <button type="button" class="rpa-dpi-option-btn ${this.rpaPdfDpiMode === "standard" ? "active" : ""}" data-pdf-dpi="standard">
+                            <span class="rpa-dpi-option-title">標準壓縮 (150 DPI・推薦)</span>
+                            <span class="admin-helper-text">畫質清晰且檔案大幅縮小，最適合一般公文與報告</span>
+                        </button>
+                        <button type="button" class="rpa-dpi-option-btn ${this.rpaPdfDpiMode === "high" ? "active" : ""}" data-pdf-dpi="high">
+                            <span class="rpa-dpi-option-title">高畫質壓縮 (200 DPI)</span>
+                            <span class="admin-helper-text">保留更細緻圖表與小字細節</span>
+                        </button>
+                        <button type="button" class="rpa-dpi-option-btn ${this.rpaPdfDpiMode === "extreme" ? "active" : ""}" data-pdf-dpi="extreme">
+                            <span class="rpa-dpi-option-title">極限瘦身 (100 DPI)</span>
+                            <span class="admin-helper-text">檔案最小，適合電郵附件有嚴格容量限制時使用</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="rpa-dropzone">
+                    <div class="rpa-dropzone-title">步驟 2：選取要合併壓縮的 PDF 檔案（可一次多選）</div>
+                    <p class="admin-helper-text">即使只選 1 個 PDF 檔案，也能單獨進行瘦身壓縮</p>
+                    <label class="primary-btn" for="rpa-pdf-files-input">選擇電腦中的 PDF 檔案 (可多選)</label>
+                    <input type="file" id="rpa-pdf-files-input" class="is-hidden" accept=".pdf" multiple />
+                </div>
+
+                <div class="rpa-pdf-file-list">
+                    ${filesListHtml}
+                </div>
+
+                <div class="survey-inline-actions">
+                    <button type="button" class="primary-btn" id="rpa-pdf-run-btn" ${this.rpaPdfFiles.length === 0 ? "disabled" : ""}>
+                        步驟 3：開始在網頁合併並壓縮 PDF
+                    </button>
+                </div>
+
+                <p class="admin-feedback-msg" id="rpa-pdf-feedback"></p>
+
+                ${downloadHtml}
+            </div>
+        `;
+    }
+
+    /**
+     * ========================================================================
+     * 工具 08：文稿轉自然語音 MP3 朗讀產製器（全網頁直接執行版）
+     * ========================================================================
+     */
+    getRpaTool08VoiceMp3Html() {
+        const audioBoxHtml = this.rpaVoiceAudioUrl
+            ? `
+                <div class="rpa-voice-player-box">
+                    <div class="stage-input-label">MP3 語音檔已產製完成！可直接試聽或點下方按鈕下載：</div>
+                    <audio class="rpa-audio-player" controls src="${this.rpaVoiceAudioUrl}"></audio>
+                    <a class="primary-btn" href="${this.rpaVoiceAudioUrl}" download="語音朗讀_${Date.now()}.mp3">下載 MP3 語音檔案</a>
+                </div>
+            `
+            : "";
+
+        return `
+            <div class="rpa-studio-card">
+                <div>
+                    <span class="rpa-step-badge">全網頁直接朗讀與下載 MP3</span>
+                    <h3 class="section-heading">工具 08：文稿轉自然語音 MP3 朗讀器</h3>
+                    <p class="section-subheading">貼上講稿或載入 .txt 文字檔，即可直接在網頁播放台灣自然語音朗讀，或一鍵下載 MP3 音檔。</p>
+                </div>
+
+                <div class="rpa-form-two-col">
+                    <div class="stage-input-group">
+                        <label class="stage-input-label" for="rpa-voice-model-select">選擇台灣語音播報員</label>
+                        <select class="prize-select" id="rpa-voice-model-select">
+                            <option value="zh-TW-HsiaoChenNeural" ${this.rpaVoiceModel === "zh-TW-HsiaoChenNeural" ? "selected" : ""}>台灣女聲 — 曉臻 (自然親切・推薦)</option>
+                            <option value="zh-TW-YunJheNeural" ${this.rpaVoiceModel === "zh-TW-YunJheNeural" ? "selected" : ""}>台灣男聲 — 雲希 (沉穩專業)</option>
+                            <option value="zh-TW-HsiaoYuNeural" ${this.rpaVoiceModel === "zh-TW-HsiaoYuNeural" ? "selected" : ""}>台灣女聲 — 曉雨 (清晰輕快)</option>
+                        </select>
+                    </div>
+                    <div class="stage-input-group">
+                        <label class="stage-input-label" for="rpa-voice-rate-select">選擇朗讀語速</label>
+                        <select class="prize-select" id="rpa-voice-rate-select">
+                            <option value="-10%" ${this.rpaVoiceRate === "-10%" ? "selected" : ""}>稍慢 (-10%・適合法規講解)</option>
+                            <option value="+0%" ${this.rpaVoiceRate === "+0%" ? "selected" : ""}>標準語速 (0%・最自然)</option>
+                            <option value="+10%" ${this.rpaVoiceRate === "+10%" ? "selected" : ""}>稍快 (+10%・適合簡報節奏)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="stage-input-group">
+                    <div class="survey-section-title-row">
+                        <label class="stage-input-label" for="rpa-voice-text-input">輸入或貼上要轉成語音的文稿</label>
+                        <div class="survey-inline-actions">
+                            <label class="secondary-btn" for="rpa-voice-file-input">載入 .txt 文稿檔</label>
+                            <input type="file" id="rpa-voice-file-input" class="is-hidden" accept=".txt,.md" />
+                            <button type="button" class="secondary-btn" id="rpa-voice-fix-poly-btn">自動修正破音字 (重扣/調閱)</button>
+                        </div>
+                    </div>
+                    <textarea class="rpa-prompt-textarea" id="rpa-voice-text-input">${this.escapeHtml(this.rpaVoiceText)}</textarea>
+                </div>
+
+                <div class="survey-inline-actions">
+                    <button type="button" class="primary-btn" id="rpa-voice-synth-mp3-btn">產生並下載 MP3 語音檔</button>
+                    <button type="button" class="secondary-btn" id="rpa-voice-browser-speak-btn">直接在瀏覽器立即試聽朗讀</button>
+                    <button type="button" class="danger-outline-btn" id="rpa-voice-stop-btn">停止朗讀</button>
+                </div>
+
+                <p class="admin-feedback-msg" id="rpa-voice-feedback"></p>
+
+                ${audioBoxHtml}
+            </div>
+        `;
+    }
+
+    /**
+     * 修正台灣常見破音字讀音輔助方法
+     */
+    applyTaiwanPolyphonicFixes(text) {
+        let out = String(text || "");
+        RPA_POLYPHONIC_OVERRIDES.forEach((rule) => {
+            if (out.includes(rule.word)) {
+                out = out.split(rule.word).join(rule.replaceWith);
+            }
+        });
+        return out;
+    }
+
+    /**
+     * 將多張 JPEG DataURL 頁面直接打包為標準多頁 PDF 二進位檔（純前端零外部寫入相依）
+     */
+    buildMultiPageJpegPdfBytes(pages) {
+        const encoder = new TextEncoder();
+        const chunks = [];
+        let offset = 0;
+        const pushStr = (str) => {
+            const bytes = encoder.encode(str);
+            chunks.push(bytes);
+            offset += bytes.length;
+        };
+        const pushBytes = (bytes) => {
+            chunks.push(bytes);
+            offset += bytes.length;
+        };
+
+        const xrefOffsets = [0];
+        const startObj = (id) => {
+            xrefOffsets[id] = offset;
+            pushStr(`${id} 0 obj\n`);
+        };
+        const endObj = () => {
+            pushStr("endobj\n");
+        };
+
+        pushStr("%PDF-1.4\n%\xFF\xFF\xFF\xFF\n");
+
+        const pageCount = pages.length;
+        const pageObjIds = [];
+        const imgObjIds = [];
+        const contentObjIds = [];
+
+        let nextId = 3;
+        for (let i = 0; i < pageCount; i += 1) {
+            pageObjIds.push(nextId++);
+            imgObjIds.push(nextId++);
+            contentObjIds.push(nextId++);
+        }
+
+        // 1: Catalog
+        startObj(1);
+        pushStr("<< /Type /Catalog /Pages 2 0 R >>\n");
+        endObj();
+
+        // 2: Pages
+        startObj(2);
+        const kidsRef = pageObjIds.map((id) => `${id} 0 R`).join(" ");
+        pushStr(`<< /Type /Pages /Kids [ ${kidsRef} ] /Count ${pageCount} >>\n`);
+        endObj();
+
+        for (let i = 0; i < pageCount; i += 1) {
+            const pg = pages[i];
+            const pageId = pageObjIds[i];
+            const imgId = imgObjIds[i];
+            const contentId = contentObjIds[i];
+
+            const ptW = Math.round(pg.widthPt || 595);
+            const ptH = Math.round(pg.heightPt || 842);
+
+            // Page object
+            startObj(pageId);
+            pushStr(
+                `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${ptW} ${ptH}] ` +
+                `/Resources << /XObject << /Im${i} ${imgId} 0 R >> >> /Contents ${contentId} 0 R >>\n`
+            );
+            endObj();
+
+            // Image XObject
+            startObj(imgId);
+            pushStr(
+                `<< /Type /XObject /Subtype /Image /Width ${pg.pixelW} /Height ${pg.pixelH} ` +
+                `/ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${pg.jpegBytes.length} >>\nstream\n`
+            );
+            pushBytes(pg.jpegBytes);
+            pushStr("\nendstream\n");
+            endObj();
+
+            // Content stream
+            const drawCmd = `q ${ptW} 0 0 ${ptH} 0 0 cm /Im${i} Do Q\n`;
+            const drawBytes = encoder.encode(drawCmd);
+            startObj(contentId);
+            pushStr(`<< /Length ${drawBytes.length} >>\nstream\n`);
+            pushBytes(drawBytes);
+            pushStr("endstream\n");
+            endObj();
+        }
+
+        const totalObjs = nextId;
+        const xrefStart = offset;
+        pushStr(`xref\n0 ${totalObjs}\n`);
+        pushStr("0000000000 65535 f \n");
+        for (let id = 1; id < totalObjs; id += 1) {
+            const offStr = String(xrefOffsets[id] || 0).padStart(10, "0");
+            pushStr(`${offStr} 00000 n \n`);
+        }
+        pushStr(`trailer\n<< /Size ${totalObjs} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`);
+
+        const totalLength = chunks.reduce((acc, c) => acc + c.length, 0);
+        const result = new Uint8Array(totalLength);
+        let pos = 0;
+        chunks.forEach((c) => {
+            result.set(c, pos);
+            pos += c.length;
+        });
+        return result;
+    }
+
+    dataUrlToUint8Array(dataUrl) {
+        const base64 = dataUrl.split(",")[1] || "";
+        const binStr = window.atob(base64);
+        const len = binStr.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i += 1) {
+            bytes[i] = binStr.charCodeAt(i);
+        }
+        return bytes;
+    }
+
+    /**
+     * 綁定主題二 5 大工具互動事件
      */
     bindTheme02HubEvents(theme) {
         const backBtn = document.getElementById("rpa-back-overview-btn");
@@ -6413,38 +6421,36 @@ ${cfg.sourceText}
             });
         }
 
-        // 立即上鎖按鈕
         const lockBtn = document.getElementById("rpa-lock-vault-btn");
         if (lockBtn) {
             lockBtn.addEventListener("click", () => {
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
                 this.setRpaUnlocked(false);
                 this.renderTheme02AutomationHub(theme);
             });
         }
 
-        // 變更通行碼按鈕
         const changePassBtn = document.getElementById("rpa-change-passcode-btn");
         if (changePassBtn) {
             changePassBtn.addEventListener("click", () => {
-                const newPass = window.prompt("請設定新的主題二安全驗證通行碼（至少 4 碼，留空則取消）：", "");
+                const newPass = window.prompt("請輸入新的主題二登入通行碼（至少 4 碼）：", "");
                 if (newPass === null) return;
                 const trimmed = newPass.trim();
                 if (trimmed.length < 4) {
-                    window.alert("通行碼長度請至少輸入 4 個字元！");
+                    window.alert("通行碼請至少輸入 4 個字元！");
                     return;
                 }
                 this.setRpaPasscode(trimmed);
-                window.alert("已成功更新主題二安全驗證通行碼！");
+                window.alert("已更新登入通行碼！");
             });
         }
 
-        // 設定本機瀏覽器專屬 Gemini API Key（僅存於本機瀏覽器 localStorage，絕不寫入原始碼）
         const geminiKeyBtn = document.getElementById("rpa-config-gemini-key-btn");
         if (geminiKeyBtn) {
             geminiKeyBtn.addEventListener("click", () => {
                 const current = this.getLocalGeminiKey();
                 const inputKey = window.prompt(
-                    "【本機隱私保護】請輸入您的 Gemini API Key（僅儲存於您當前瀏覽器的本機端 localStorage，絕不會寫入網頁原始碼或上傳至 GitHub；若要清除請留空後按確定）：",
+                    "請貼上您的 Gemini API Key（僅保存在您這台電腦的瀏覽器內，不會外流；留空按確定即可清除）：",
                     current
                 );
                 if (inputKey === null) return;
@@ -6453,37 +6459,25 @@ ${cfg.sourceText}
             });
         }
 
-        // 三大主模式切換
-        this.focusSection.querySelectorAll("[data-rpa-tab]").forEach((btn) => {
+        // 切換 5 大工具按鈕
+        this.focusSection.querySelectorAll("[data-rpa-tool]").forEach((btn) => {
             btn.addEventListener("click", () => {
-                this.stopRollingIfNeeded();
-                this.rpaActiveTab = btn.getAttribute("data-rpa-tab");
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
+                this.rpaActiveTool = btn.getAttribute("data-rpa-tool");
                 this.renderTheme02AutomationHub(theme);
             });
         });
 
-        // 網頁即用子工具切換
-        this.focusSection.querySelectorAll("[data-rpa-subtool]").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                this.stopRollingIfNeeded();
-                this.rpaActiveWebSubtool = btn.getAttribute("data-rpa-subtool");
-                this.renderTheme02AutomationHub(theme);
-            });
-        });
-
-        // 依當前開啟的子工具綁定專屬事件
-        if (this.rpaActiveTab === "web-tools") {
-            if (this.rpaActiveWebSubtool === "ppt-prompt") {
-                this.bindRpaPptPromptEvents(theme);
-            } else if (this.rpaActiveWebSubtool === "pic-to-png") {
-                this.bindRpaPicToPngEvents(theme);
-            } else if (this.rpaActiveWebSubtool === "s2twp-list") {
-                this.bindRpaS2twpEvents();
-            } else if (this.rpaActiveWebSubtool === "line-race") {
-                this.bindRpaLineRaceEvents();
-            }
-        } else if (this.rpaActiveTab === "local-launcher") {
-            this.bindRpaLocalLauncherEvents(theme);
+        if (this.rpaActiveTool === "tool-01") {
+            this.bindRpaPptPromptEvents(theme);
+        } else if (this.rpaActiveTool === "tool-02") {
+            this.bindRpaPicToPngEvents(theme);
+        } else if (this.rpaActiveTool === "tool-05") {
+            this.bindRpaTool05VideoEvents(theme);
+        } else if (this.rpaActiveTool === "tool-07") {
+            this.bindRpaTool07PdfEvents(theme);
+        } else if (this.rpaActiveTool === "tool-08") {
+            this.bindRpaTool08VoiceEvents(theme);
         }
     }
 
@@ -6496,8 +6490,6 @@ ${cfg.sourceText}
             const paletteEl = document.getElementById("rpa-ppt-palette");
             const styleEl = document.getElementById("rpa-ppt-style");
             const toneEl = document.getElementById("rpa-ppt-tone");
-            const logoChk = document.getElementById("rpa-ppt-logo-chk");
-            const polyChk = document.getElementById("rpa-ppt-poly-chk");
             const sourceEl = document.getElementById("rpa-ppt-source");
 
             if (topicEl) this.rpaPptConfig.topic = topicEl.value.trim() || "未命名簡報主題";
@@ -6507,14 +6499,12 @@ ${cfg.sourceText}
             if (paletteEl) this.rpaPptConfig.paletteId = paletteEl.value;
             if (styleEl) this.rpaPptConfig.styleId = styleEl.value;
             if (toneEl) this.rpaPptConfig.toneId = toneEl.value;
-            if (logoChk) this.rpaPptConfig.includeLogo = logoChk.checked;
-            if (polyChk) this.rpaPptConfig.includePolyphonicHint = polyChk.checked;
             if (sourceEl) this.rpaPptConfig.sourceText = sourceEl.value;
 
             this.rpaGeneratedPrompt = this.buildPptPromptText();
         };
 
-        ["rpa-ppt-palette", "rpa-ppt-style", "rpa-ppt-tone", "rpa-ppt-mascot", "rpa-ppt-logo-chk", "rpa-ppt-poly-chk"].forEach((id) => {
+        ["rpa-ppt-palette", "rpa-ppt-style", "rpa-ppt-tone", "rpa-ppt-mascot"].forEach((id) => {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener("change", () => {
@@ -6533,7 +6523,7 @@ ${cfg.sourceText}
                 syncFormToState();
                 if (outBox) outBox.value = this.rpaGeneratedPrompt;
                 if (feedbackEl) {
-                    feedbackEl.textContent = "已依最新 5+1 色彩計畫與風格設定重新組裝簡報提示詞！";
+                    feedbackEl.textContent = "已更新簡報提示詞！請點右側「一鍵複製內容」。";
                     feedbackEl.className = "admin-feedback-msg is-success";
                 }
             });
@@ -6559,7 +6549,7 @@ ${cfg.sourceText}
             copyBtn.addEventListener("click", () => {
                 navigator.clipboard.writeText(outBox.value).then(() => {
                     if (feedbackEl) {
-                        feedbackEl.textContent = "已複製完整簡報提示詞至剪貼簿！可直接貼至 Gemini 或 NotebookLM。";
+                        feedbackEl.textContent = "已複製！可直接貼到 Gemini 或 NotebookLM。";
                         feedbackEl.className = "admin-feedback-msg is-success";
                     }
                 });
@@ -6573,7 +6563,7 @@ ${cfg.sourceText}
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `AI簡報提示詞_${this.rpaPptConfig.paletteId}_${this.rpaPptConfig.styleId}.txt`;
+                a.download = `簡報提示詞_${this.rpaPptConfig.paletteId}.txt`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -6588,13 +6578,13 @@ ${cfg.sourceText}
                 const apiKey = this.getLocalGeminiKey();
                 if (!apiKey) {
                     if (feedbackEl) {
-                        feedbackEl.textContent = "請先點擊上方狀態列的「設定本機 Gemini Key」輸入您的 API Key（僅存於本機瀏覽器）。";
+                        feedbackEl.textContent = "請先點上方「設定 Gemini 金鑰」輸入您的 API Key。";
                         feedbackEl.className = "admin-feedback-msg is-error";
                     }
                     return;
                 }
                 if (feedbackEl) {
-                    feedbackEl.textContent = "正在透過本機瀏覽器呼叫 Gemini 2.5 Flash 產製逐頁簡報大綱，請稍候...";
+                    feedbackEl.textContent = "AI 正在為您撰寫逐頁簡報大綱與講稿，請稍候...";
                     feedbackEl.className = "admin-feedback-msg";
                 }
                 try {
@@ -6612,15 +6602,15 @@ ${cfg.sourceText}
                         this.rpaGeneratedPrompt = text;
                         outBox.value = text;
                         if (feedbackEl) {
-                            feedbackEl.textContent = "Gemini 2.5 Flash 逐頁簡報分鏡與講稿已產製完成！";
+                            feedbackEl.textContent = "逐頁簡報大綱已生成完畢！";
                             feedbackEl.className = "admin-feedback-msg is-success";
                         }
                     } else {
-                        throw new Error(data?.error?.message || "未取得有效回應內容");
+                        throw new Error(data?.error?.message || "未收到回應內容");
                     }
                 } catch (err) {
                     if (feedbackEl) {
-                        feedbackEl.textContent = `呼叫失敗：${err.message}`;
+                        feedbackEl.textContent = `生成失敗：${err.message}`;
                         feedbackEl.className = "admin-feedback-msg is-error";
                     }
                 }
@@ -6643,16 +6633,14 @@ ${cfg.sourceText}
                 const doSharpen = sharpenChk ? sharpenChk.checked : true;
 
                 if (feedbackEl) {
-                    feedbackEl.textContent = `正在於瀏覽器本地記憶體處理 ${files.length} 張圖片...`;
+                    feedbackEl.textContent = `正在放大並處理 ${files.length} 張圖片，請稍候...`;
                     feedbackEl.className = "admin-feedback-msg";
                 }
 
                 const results = [];
                 for (const file of files) {
                     const processed = await this.processImageToLosslessPng(file, doUpscale, doSharpen);
-                    if (processed) {
-                        results.push(processed);
-                    }
+                    if (processed) results.push(processed);
                 }
                 this.rpaConvertedImages = results;
                 this.renderTheme02AutomationHub(theme);
@@ -6670,7 +6658,7 @@ ${cfg.sourceText}
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
-                    }, idx * 180);
+                    }, idx * 200);
                 });
             });
         }
@@ -6701,7 +6689,7 @@ ${cfg.sourceText}
                     }
 
                     const baseName = file.name.replace(/\.[^/.]+$/, "");
-                    const suffix = upscale2x ? "_2x_sharp.png" : ".png";
+                    const suffix = upscale2x ? "_2x清晰.png" : ".png";
                     resolve({
                         outName: `${baseName}${suffix}`,
                         origW,
@@ -6724,7 +6712,6 @@ ${cfg.sourceText}
         const dstData = ctx.createImageData(width, height);
         const src = srcData.data;
         const dst = dstData.data;
-        // 對應 pic_t_png.py 的輕微銳化權重核心
         const mix = 0.28;
 
         for (let y = 0; y < height; y += 1) {
@@ -6754,393 +6741,485 @@ ${cfg.sourceText}
         ctx.putImageData(dstData, 0, 0);
     }
 
-    bindRpaS2twpEvents() {
-        const inEl = document.getElementById("rpa-s2t-input");
-        const outEl = document.getElementById("rpa-s2t-output");
-        const polyChk = document.getElementById("rpa-s2t-poly-chk");
-        const runBtn = document.getElementById("rpa-s2t-run-btn");
-        const copyBtn = document.getElementById("rpa-s2t-copy-btn");
-        const dlBtn = document.getElementById("rpa-s2t-download-btn");
-        const fileIn = document.getElementById("rpa-s2t-file-input");
-        const feedbackEl = document.getElementById("rpa-s2t-feedback");
+    /**
+     * 工具 05 事件綁定：在瀏覽器讀取簡報 PDF / 圖片、自動寫稿與合成 .webm 字幕教學影片
+     */
+    bindRpaTool05VideoEvents(theme) {
+        const slidesInput = document.getElementById("rpa-video-slides-input");
+        const aiScriptBtn = document.getElementById("rpa-video-ai-script-btn");
+        const fixPolyBtn = document.getElementById("rpa-video-fix-poly-btn");
+        const renderBtn = document.getElementById("rpa-video-render-btn");
+        const feedbackEl = document.getElementById("rpa-video-feedback");
 
-        const executeConvert = () => {
-            if (!inEl || !outEl) return;
-            this.rpaS2tInputText = inEl.value;
-            const usePoly = polyChk ? polyChk.checked : true;
-            this.rpaS2tOutputText = this.convertS2twpListContent(this.rpaS2tInputText, usePoly);
-            outEl.value = this.rpaS2tOutputText;
-            if (feedbackEl) {
-                feedbackEl.textContent = "已完成簡轉台灣繁體與破音字修正（第 1 欄音檔路徑已安全保留）！";
-                feedbackEl.className = "admin-feedback-msg is-success";
-            }
-        };
-
-        if (runBtn) runBtn.addEventListener("click", executeConvert);
-        if (polyChk) polyChk.addEventListener("change", executeConvert);
-
-        if (fileIn) {
-            fileIn.addEventListener("change", (e) => {
-                const file = e.target.files && e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    if (inEl) inEl.value = String(reader.result || "");
-                    executeConvert();
-                };
-                reader.readAsText(file, "utf-8");
+        // 同步各頁講稿編輯框
+        this.focusSection.querySelectorAll("[data-slide-script-idx]").forEach((ta) => {
+            ta.addEventListener("input", () => {
+                const idx = Number(ta.getAttribute("data-slide-script-idx"));
+                if (this.rpaVideoSlides[idx]) {
+                    this.rpaVideoSlides[idx].script = ta.value;
+                    this.drawSlideWithSubtitleToCanvas(this.rpaVideoSlides[idx]);
+                }
             });
+        });
+
+        // 單頁試聽朗讀
+        this.focusSection.querySelectorAll("[data-speak-slide-idx]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const idx = Number(btn.getAttribute("data-speak-slide-idx"));
+                const slide = this.rpaVideoSlides[idx];
+                if (!slide) return;
+                this.drawSlideWithSubtitleToCanvas(slide);
+                this.speakTextInBrowser(slide.script);
+            });
+        });
+
+        if (this.rpaVideoSlides.length > 0) {
+            this.drawSlideWithSubtitleToCanvas(this.rpaVideoSlides[0]);
         }
 
-        if (copyBtn && outEl) {
-            copyBtn.addEventListener("click", () => {
-                navigator.clipboard.writeText(outEl.value).then(() => {
-                    if (feedbackEl) {
-                        feedbackEl.textContent = "已複製轉換後之標註檔內容至剪貼簿！";
-                        feedbackEl.className = "admin-feedback-msg is-success";
+        if (slidesInput) {
+            slidesInput.addEventListener("change", async (e) => {
+                const files = Array.from(e.target.files || []);
+                if (files.length === 0) return;
+
+                if (feedbackEl) {
+                    feedbackEl.textContent = "正在於網頁內載入投影片畫面，請稍候...";
+                    feedbackEl.className = "admin-feedback-msg";
+                }
+
+                const loadedSlides = [];
+                for (const file of files) {
+                    if (file.name.toLowerCase().endsWith(".pdf") && window.pdfjsLib) {
+                        window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+                        const buf = await file.arrayBuffer();
+                        const pdfDoc = await window.pdfjsLib.getDocument({ data: buf }).promise;
+                        for (let p = 1; p <= pdfDoc.numPages; p += 1) {
+                            const page = await pdfDoc.getPage(p);
+                            const viewport = page.getViewport({ scale: 1.8 });
+                            const c = document.createElement("canvas");
+                            c.width = viewport.width;
+                            c.height = viewport.height;
+                            await page.render({ canvasContext: c.getContext("2d"), viewport }).promise;
+                            loadedSlides.push({
+                                dataUrl: c.toDataURL("image/jpeg", 0.88),
+                                script: `這是第 ${loadedSlides.length + 1} 頁投影片的重點說明，請在此編輯講稿或點上方按鈕由 AI 自動產生。`
+                            });
+                        }
+                    } else if (file.type.startsWith("image/")) {
+                        const dataUrl = await new Promise((res) => {
+                            const r = new FileReader();
+                            r.onload = () => res(String(r.result));
+                            r.readAsDataURL(file);
+                        });
+                        loadedSlides.push({
+                            dataUrl,
+                            script: `這是第 ${loadedSlides.length + 1} 頁投影片的重點說明，請在此編輯講稿或點上方按鈕由 AI 自動產生。`
+                        });
                     }
-                });
+                }
+
+                this.rpaVideoSlides = loadedSlides;
+                this.rpaVideoBlobUrl = "";
+                this.renderTheme02AutomationHub(theme);
             });
         }
 
-        if (dlBtn && outEl) {
-            dlBtn.addEventListener("click", () => {
-                const blob = new Blob([outEl.value], { type: "text/plain;charset=utf-8" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "traditional_s2twp.list";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+        if (fixPolyBtn) {
+            fixPolyBtn.addEventListener("click", () => {
+                this.rpaVideoSlides.forEach((s) => {
+                    s.script = this.applyTaiwanPolyphonicFixes(s.script);
+                });
+                this.renderTheme02AutomationHub(theme);
+            });
+        }
+
+        if (aiScriptBtn) {
+            aiScriptBtn.addEventListener("click", async () => {
+                if (this.rpaVideoSlides.length === 0) {
+                    if (feedbackEl) {
+                        feedbackEl.textContent = "請先在步驟 1 選取簡報 PDF 或投影片圖片！";
+                        feedbackEl.className = "admin-feedback-msg is-error";
+                    }
+                    return;
+                }
+                const apiKey = this.getLocalGeminiKey();
+                if (!apiKey) {
+                    if (feedbackEl) {
+                        feedbackEl.textContent = "請先點上方「設定 Gemini 金鑰」輸入您的 API Key，即可自動看圖寫講稿！";
+                        feedbackEl.className = "admin-feedback-msg is-error";
+                    }
+                    return;
+                }
+
+                for (let i = 0; i < this.rpaVideoSlides.length; i += 1) {
+                    if (feedbackEl) {
+                        feedbackEl.textContent = `AI 正在分析第 ${i + 1} / ${this.rpaVideoSlides.length} 頁投影片並撰寫口語講稿...`;
+                        feedbackEl.className = "admin-feedback-msg";
+                    }
+                    const slide = this.rpaVideoSlides[i];
+                    const b64 = slide.dataUrl.split(",")[1] || "";
+                    const mime = slide.dataUrl.startsWith("data:image/png") ? "image/png" : "image/jpeg";
+                    try {
+                        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+                        const resp = await fetch(endpoint, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                contents: [{
+                                    parts: [
+                                        { text: "請根據這張簡報投影片畫面，使用台灣繁體中文撰寫一段約 80 至 140 字的自然口語演講旁白稿（直接輸出講稿文字，不要加標題或符號）。" },
+                                        { inline_data: { mime_type: mime, data: b64 } }
+                                    ]
+                                }]
+                            })
+                        });
+                        const data = await resp.json();
+                        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (text) {
+                            slide.script = this.applyTaiwanPolyphonicFixes(text.trim());
+                        }
+                    } catch (_err) {
+                        // 保留原講稿
+                    }
+                }
+                this.renderTheme02AutomationHub(theme);
+            });
+        }
+
+        if (renderBtn) {
+            renderBtn.addEventListener("click", async () => {
+                if (this.rpaVideoSlides.length === 0) {
+                    if (feedbackEl) {
+                        feedbackEl.textContent = "請先在步驟 1 選取簡報 PDF 或投影片圖片！";
+                        feedbackEl.className = "admin-feedback-msg is-error";
+                    }
+                    return;
+                }
+                const canvas = document.getElementById("rpa-video-preview-canvas");
+                if (!canvas || !canvas.captureStream || typeof MediaRecorder === "undefined") {
+                    if (feedbackEl) {
+                        feedbackEl.textContent = "您的瀏覽器不支援 Canvas 錄影功能，建議使用 Google Chrome。";
+                        feedbackEl.className = "admin-feedback-msg is-error";
+                    }
+                    return;
+                }
+
+                const stream = canvas.captureStream(30);
+                const chunks = [];
+                const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+                recorder.ondataavailable = (ev) => {
+                    if (ev.data && ev.data.size > 0) chunks.push(ev.data);
+                };
+
+                recorder.start();
+
+                for (let i = 0; i < this.rpaVideoSlides.length; i += 1) {
+                    const slide = this.rpaVideoSlides[i];
+                    if (feedbackEl) {
+                        feedbackEl.textContent = `正在合成第 ${i + 1} / ${this.rpaVideoSlides.length} 頁投影片與字幕...`;
+                        feedbackEl.className = "admin-feedback-msg";
+                    }
+                    await this.drawSlideWithSubtitleToCanvas(slide);
+                    await this.speakAndWaitInBrowser(slide.script);
+                }
+
+                await new Promise((res) => {
+                    recorder.onstop = res;
+                    recorder.stop();
+                });
+
+                const blob = new Blob(chunks, { type: "video/webm" });
+                this.rpaVideoBlobUrl = URL.createObjectURL(blob);
+                this.renderTheme02AutomationHub(theme);
             });
         }
     }
 
-    bindRpaLineRaceEvents() {
-        const csvInput = document.getElementById("rpa-race-csv-input");
-        const playBtn = document.getElementById("rpa-race-play-btn");
-        const exportBtn = document.getElementById("rpa-race-export-png-btn");
-        const fileIn = document.getElementById("rpa-race-csv-file");
-
-        const startRaceAnimation = () => {
-            if (csvInput) {
-                this.rpaRaceCsvText = csvInput.value;
+    drawSlideWithSubtitleToCanvas(slide) {
+        return new Promise((resolve) => {
+            const canvas = document.getElementById("rpa-video-preview-canvas");
+            if (!canvas || !slide) {
+                resolve();
+                return;
             }
-            if (this.rpaRaceAnimFrameId) {
-                cancelAnimationFrame(this.rpaRaceAnimFrameId);
-                this.rpaRaceAnimFrameId = null;
+            const ctx = canvas.getContext("2d");
+            const W = canvas.width;
+            const H = canvas.height;
+            const img = new Image();
+            img.onload = () => {
+                ctx.fillStyle = "#0f172a";
+                ctx.fillRect(0, 0, W, H);
+
+                const scale = Math.min(W / img.width, (H - 110) / img.height);
+                const drawW = img.width * scale;
+                const drawH = img.height * scale;
+                const dx = (W - drawW) / 2;
+                const dy = (H - 110 - drawH) / 2;
+                ctx.drawImage(img, dx, dy, drawW, drawH);
+
+                // 底部字幕黑底橫條
+                ctx.fillStyle = "rgba(15, 23, 42, 0.92)";
+                ctx.fillRect(0, H - 110, W, 110);
+
+                // 繪製大字體字幕
+                ctx.fillStyle = "#fef08a";
+                ctx.font = "800 26px Noto Sans TC, sans-serif";
+                ctx.textAlign = "center";
+                const text = String(slide.script || "").trim();
+                const line1 = text.slice(0, 38);
+                const line2 = text.slice(38, 76);
+                ctx.fillText(line1, W / 2, H - 62);
+                if (line2) {
+                    ctx.fillText(line2 + (text.length > 76 ? "..." : ""), W / 2, H - 24);
+                }
+                resolve();
+            };
+            img.onerror = () => resolve();
+            img.src = slide.dataUrl;
+        });
+    }
+
+    speakAndWaitInBrowser(text) {
+        return new Promise((resolve) => {
+            const fallbackDurationMs = Math.max(2500, Math.min(8000, String(text || "").length * 160));
+            if (!window.speechSynthesis) {
+                setTimeout(resolve, fallbackDurationMs);
+                return;
             }
-            const parsed = this.parseRaceCsvData(this.rpaRaceCsvText);
-            if (parsed.rows.length < 2) return;
-
-            const durationMs = 3600;
-            const startTime = performance.now();
-
-            const stepFrame = (now) => {
-                const elapsed = now - startTime;
-                const progress = Math.min(1, elapsed / durationMs);
-                this.drawGlowLineRaceFrame(parsed, progress);
-                if (progress < 1) {
-                    this.rpaRaceAnimFrameId = requestAnimationFrame(stepFrame);
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(String(text || ""));
+            utter.lang = "zh-TW";
+            const voices = window.speechSynthesis.getVoices();
+            const twVoice = voices.find((v) => v.lang && v.lang.toLowerCase().includes("zh-tw"));
+            if (twVoice) utter.voice = twVoice;
+            let done = false;
+            const finish = () => {
+                if (!done) {
+                    done = true;
+                    resolve();
                 }
             };
-            this.rpaRaceAnimFrameId = requestAnimationFrame(stepFrame);
-        };
-
-        // 初次渲染即繪製完整圖表
-        const initialParsed = this.parseRaceCsvData(this.rpaRaceCsvText);
-        this.drawGlowLineRaceFrame(initialParsed, 1.0);
-
-        if (playBtn) {
-            playBtn.addEventListener("click", startRaceAnimation);
-        }
-
-        if (fileIn) {
-            fileIn.addEventListener("change", (e) => {
-                const file = e.target.files && e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    this.rpaRaceCsvText = String(reader.result || "");
-                    if (csvInput) csvInput.value = this.rpaRaceCsvText;
-                    startRaceAnimation();
-                };
-                reader.readAsText(file, "utf-8");
-            });
-        }
-
-        if (exportBtn) {
-            exportBtn.addEventListener("click", () => {
-                const canvas = document.getElementById("rpa-race-canvas");
-                if (!canvas) return;
-                const a = document.createElement("a");
-                a.href = canvas.toDataURL("image/png");
-                a.download = "glow_line_race_chart.png";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            });
-        }
+            utter.onend = finish;
+            utter.onerror = finish;
+            setTimeout(finish, fallbackDurationMs + 1500);
+            window.speechSynthesis.speak(utter);
+        });
     }
 
-    parseRaceCsvData(csvText) {
-        const lines = String(csvText || "").trim().split(/\r?\n/).filter((l) => l.trim());
-        if (lines.length < 2) {
-            return { headers: ["Year", "序列A", "序列B"], rows: [] };
-        }
-        const headers = lines[0].split(",").map((h) => h.trim());
-        const rows = [];
-        for (let i = 1; i < lines.length; i += 1) {
-            const cols = lines[i].split(",").map((c) => c.trim());
-            if (cols.length >= 3) {
-                rows.push({
-                    label: cols[0],
-                    val1: Number(cols[1]) || 0,
-                    val2: Number(cols[2]) || 0
-                });
-            }
-        }
-        return { headers, rows };
+    speakTextInBrowser(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(String(text || ""));
+        utter.lang = "zh-TW";
+        const voices = window.speechSynthesis.getVoices();
+        const twVoice = voices.find((v) => v.lang && v.lang.toLowerCase().includes("zh-tw"));
+        if (twVoice) utter.voice = twVoice;
+        window.speechSynthesis.speak(utter);
     }
 
-    drawGlowLineRaceFrame(parsed, progress) {
-        const canvas = document.getElementById("rpa-race-canvas");
-        if (!canvas) return;
-        const ctx = canvas.getContext("2d");
-        const W = canvas.width;
-        const H = canvas.height;
+    /**
+     * 工具 07 事件綁定：在瀏覽器內依時間由舊到新排序、渲染壓縮並打包下載單一 PDF
+     */
+    bindRpaTool07PdfEvents(theme) {
+        const fileInput = document.getElementById("rpa-pdf-files-input");
+        const runBtn = document.getElementById("rpa-pdf-run-btn");
+        const feedbackEl = document.getElementById("rpa-pdf-feedback");
 
-        // 對應 line_race_chart_output.py 的 #0d1117 深色背景
-        ctx.fillStyle = "#0d1117";
-        ctx.fillRect(0, 0, W, H);
-
-        const rows = parsed.rows;
-        if (!rows || rows.length < 2) return;
-
-        const padL = 72;
-        const padR = 95;
-        const padT = 56;
-        const padB = 54;
-        const plotW = W - padL - padR;
-        const plotH = H - padT - padB;
-
-        const totalPoints = rows.length;
-        const exactIdx = Math.max(1, progress * (totalPoints - 1));
-        const maxFloorIdx = Math.min(totalPoints - 1, Math.floor(exactIdx));
-
-        // 動態計算當前可見範圍最大值
-        let maxVal = 10;
-        for (let i = 0; i <= maxFloorIdx; i += 1) {
-            maxVal = Math.max(maxVal, rows[i].val1, rows[i].val2);
-        }
-        maxVal *= 1.12;
-
-        // 繪製水平暗色格線
-        ctx.strokeStyle = "#21262d";
-        ctx.lineWidth = 1;
-        for (let g = 0; g <= 4; g += 1) {
-            const gy = padT + (plotH * g) / 4;
-            ctx.beginPath();
-            ctx.moveTo(padL, gy);
-            ctx.lineTo(W - padR, gy);
-            ctx.stroke();
-
-            const tickVal = Math.round(maxVal * (1 - g / 4));
-            ctx.fillStyle = "#8b949e";
-            ctx.font = "12px JetBrains Mono, monospace";
-            ctx.textAlign = "right";
-            ctx.fillText(String(tickVal), padL - 10, gy + 4);
-        }
-
-        // 中央巨大年份浮水印 (移植自 line_race_chart_output.py)
-        const currentYearLabel = rows[maxFloorIdx].label;
-        ctx.save();
-        ctx.fillStyle = "rgba(255, 255, 255, 0.06)";
-        ctx.font = "900 112px JetBrains Mono, sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(currentYearLabel, W / 2, H / 2 + 36);
-        ctx.restore();
-
-        // 標題與圖例
-        ctx.fillStyle = "#f0f6fc";
-        ctx.font = "800 17px Noto Sans TC, sans-serif";
-        ctx.textAlign = "left";
-        ctx.fillText(
-            `${parsed.headers[1] || "累積投入成本"} vs ${parsed.headers[2] || "資產總市值"} (${rows[0].label} - ${currentYearLabel})`,
-            padL,
-            34
-        );
-
-        const drawNeonSeries = (key, mainColor) => {
-            const pts = [];
-            for (let i = 0; i <= maxFloorIdx; i += 1) {
-                const x = padL + (plotW * i) / (totalPoints - 1);
-                const y = padT + plotH - (rows[i][key] / maxVal) * plotH;
-                pts.push({ x, y, val: rows[i][key] });
-            }
-            if (pts.length < 2) return;
-
-            // 三層霓虹發光暈染 (對應 Python 腳本的 lw=12, 7, 4 + alpha 疊加)
-            const glowLayers = [
-                { width: 12, alpha: 0.12 },
-                { width: 7, alpha: 0.25 },
-                { width: 2.8, alpha: 1.0 }
-            ];
-
-            glowLayers.forEach((layer) => {
-                ctx.save();
-                ctx.beginPath();
-                pts.forEach((pt, idx) => {
-                    if (idx === 0) ctx.moveTo(pt.x, pt.y);
-                    else ctx.lineTo(pt.x, pt.y);
-                });
-                ctx.strokeStyle = mainColor;
-                ctx.globalAlpha = layer.alpha;
-                ctx.lineWidth = layer.width;
-                ctx.lineCap = "round";
-                ctx.lineJoin = "round";
-                ctx.stroke();
-                ctx.restore();
-            });
-
-            // 曲線前端發光圓點與即時數值標籤
-            const lastPt = pts[pts.length - 1];
-            ctx.save();
-            ctx.fillStyle = mainColor;
-            ctx.shadowColor = mainColor;
-            ctx.shadowBlur = 14;
-            ctx.beginPath();
-            ctx.arc(lastPt.x, lastPt.y, 5.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-
-            ctx.fillStyle = mainColor;
-            ctx.font = "800 13px JetBrains Mono, sans-serif";
-            ctx.textAlign = "left";
-            ctx.fillText(`${lastPt.val}`, lastPt.x + 10, lastPt.y + 4);
-        };
-
-        drawNeonSeries("val1", "#00f5d4");
-        drawNeonSeries("val2", "#ff4d6d");
-
-        // X 軸年份刻度
-        ctx.fillStyle = "#8b949e";
-        ctx.font = "12px JetBrains Mono, monospace";
-        ctx.textAlign = "center";
-        const step = Math.max(1, Math.floor(totalPoints / 6));
-        for (let i = 0; i < totalPoints; i += step) {
-            const x = padL + (plotW * i) / (totalPoints - 1);
-            ctx.fillText(rows[i].label, x, H - 18);
-        }
-    }
-
-    bindRpaLocalLauncherEvents(theme) {
-        const feedbackEl = document.getElementById("rpa-launcher-feedback");
-
-        // 切換至對應網頁即用版
-        this.focusSection.querySelectorAll("[data-jump-web-subtool]").forEach((btn) => {
+        this.focusSection.querySelectorAll("[data-pdf-dpi]").forEach((btn) => {
             btn.addEventListener("click", () => {
-                this.rpaActiveTab = "web-tools";
-                this.rpaActiveWebSubtool = btn.getAttribute("data-jump-web-subtool");
+                this.rpaPdfDpiMode = btn.getAttribute("data-pdf-dpi");
                 this.renderTheme02AutomationHub(theme);
             });
         });
 
-        // 一鍵透過本機橋接 API 彈出 Python 視窗
-        this.focusSection.querySelectorAll("[data-launch-rpa-id]").forEach((btn) => {
-            btn.addEventListener("click", async () => {
-                const toolId = btn.getAttribute("data-launch-rpa-id");
-                if (feedbackEl) {
-                    feedbackEl.textContent = "正在通知本機 Python 橋接伺服器啟動視窗程式...";
-                    feedbackEl.className = "admin-feedback-msg";
-                }
-                try {
-                    const resp = await fetch("/api/rpa/launch", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ action: "launch_tool", tool_id: toolId })
-                    });
-                    const data = await resp.json();
-                    if (resp.ok && data.ok) {
-                        if (feedbackEl) {
-                            feedbackEl.textContent = data.message;
-                            feedbackEl.className = "admin-feedback-msg is-success";
-                        }
-                    } else {
-                        throw new Error(data.message || "無法連線至本機橋接端點");
-                    }
-                } catch (_err) {
+        if (fileInput) {
+            fileInput.addEventListener("change", (e) => {
+                const rawFiles = Array.from(e.target.files || []);
+                if (rawFiles.length === 0) return;
+                // 依照修改時間 (lastModified) 由舊到新排序，完全對應 pdf_oneforall.py
+                rawFiles.sort((a, b) => a.lastModified - b.lastModified);
+                this.rpaPdfFiles = rawFiles;
+                this.rpaPdfMergedUrl = "";
+                this.renderTheme02AutomationHub(theme);
+            });
+        }
+
+        if (runBtn) {
+            runBtn.addEventListener("click", async () => {
+                if (this.rpaPdfFiles.length === 0) return;
+                if (!window.pdfjsLib) {
                     if (feedbackEl) {
-                        feedbackEl.textContent = "目前處於靜態瀏覽模式，已為您準備『下載 .bat 啟動器』按鈕，下載後雙擊即可直接開啟本機視窗！";
+                        feedbackEl.textContent = "PDF 引擎載入中，請確認網路連線並重新整理頁面。";
+                        feedbackEl.className = "admin-feedback-msg is-error";
+                    }
+                    return;
+                }
+
+                window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+                const scaleMap = { standard: 150 / 72, high: 200 / 72, extreme: 100 / 72 };
+                const qualityMap = { standard: 0.72, high: 0.84, extreme: 0.52 };
+                const renderScale = scaleMap[this.rpaPdfDpiMode] || (150 / 72);
+                const jpegQuality = qualityMap[this.rpaPdfDpiMode] || 0.72;
+
+                let origTotalBytes = 0;
+                const renderedPages = [];
+
+                try {
+                    for (let fIdx = 0; fIdx < this.rpaPdfFiles.length; fIdx += 1) {
+                        const file = this.rpaPdfFiles[fIdx];
+                        origTotalBytes += file.size;
+                        const buf = await file.arrayBuffer();
+                        const pdfDoc = await window.pdfjsLib.getDocument({ data: buf }).promise;
+
+                        for (let p = 1; p <= pdfDoc.numPages; p += 1) {
+                            if (feedbackEl) {
+                                feedbackEl.textContent = `正在處理第 ${fIdx + 1}/${this.rpaPdfFiles.length} 個檔案（第 ${p}/${pdfDoc.numPages} 頁）...`;
+                                feedbackEl.className = "admin-feedback-msg";
+                            }
+                            const page = await pdfDoc.getPage(p);
+                            const baseVp = page.getViewport({ scale: 1.0 });
+                            const scaledVp = page.getViewport({ scale: renderScale });
+
+                            const canvas = document.createElement("canvas");
+                            canvas.width = Math.round(scaledVp.width);
+                            canvas.height = Math.round(scaledVp.height);
+                            const ctx = canvas.getContext("2d");
+                            ctx.fillStyle = "#ffffff";
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                            await page.render({ canvasContext: ctx, viewport: scaledVp }).promise;
+                            const jpegDataUrl = canvas.toDataURL("image/jpeg", jpegQuality);
+                            renderedPages.push({
+                                widthPt: baseVp.width,
+                                heightPt: baseVp.height,
+                                pixelW: canvas.width,
+                                pixelH: canvas.height,
+                                jpegBytes: this.dataUrlToUint8Array(jpegDataUrl)
+                            });
+                        }
+                    }
+
+                    const pdfBytes = this.buildMultiPageJpegPdfBytes(renderedPages);
+                    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                    this.rpaPdfMergedUrl = URL.createObjectURL(blob);
+
+                    const origKB = Math.round(origTotalBytes / 1024);
+                    const newKB = Math.round(pdfBytes.byteLength / 1024);
+                    this.rpaPdfMergedInfo = `合併壓縮完成！共 ${renderedPages.length} 頁（原始總大小：${origKB} KB → 壓縮後：${newKB} KB）`;
+                    this.renderTheme02AutomationHub(theme);
+                } catch (err) {
+                    if (feedbackEl) {
+                        feedbackEl.textContent = `PDF 處理失敗：${err.message}`;
                         feedbackEl.className = "admin-feedback-msg is-error";
                     }
                 }
             });
-        });
+        }
+    }
 
-        // 開啟本機資料夾
-        const bindOpenFolder = (btnId, subDir) => {
-            const btn = document.getElementById(btnId);
-            if (!btn) return;
-            btn.addEventListener("click", async () => {
+    /**
+     * 工具 08 事件綁定：文稿轉台灣自然語音朗讀與直接下載 MP3
+     */
+    bindRpaTool08VoiceEvents(theme) {
+        const modelSel = document.getElementById("rpa-voice-model-select");
+        const rateSel = document.getElementById("rpa-voice-rate-select");
+        const textIn = document.getElementById("rpa-voice-text-input");
+        const fileIn = document.getElementById("rpa-voice-file-input");
+        const fixPolyBtn = document.getElementById("rpa-voice-fix-poly-btn");
+        const synthMp3Btn = document.getElementById("rpa-voice-synth-mp3-btn");
+        const speakBtn = document.getElementById("rpa-voice-browser-speak-btn");
+        const stopBtn = document.getElementById("rpa-voice-stop-btn");
+        const feedbackEl = document.getElementById("rpa-voice-feedback");
+
+        const syncVoiceState = () => {
+            if (modelSel) this.rpaVoiceModel = modelSel.value;
+            if (rateSel) this.rpaVoiceRate = rateSel.value;
+            if (textIn) this.rpaVoiceText = textIn.value;
+        };
+
+        if (fileIn) {
+            fileIn.addEventListener("change", (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    this.rpaVoiceText = String(reader.result || "");
+                    this.renderTheme02AutomationHub(theme);
+                };
+                reader.readAsText(file, "utf-8");
+            });
+        }
+
+        if (fixPolyBtn && textIn) {
+            fixPolyBtn.addEventListener("click", () => {
+                this.rpaVoiceText = this.applyTaiwanPolyphonicFixes(textIn.value);
+                textIn.value = this.rpaVoiceText;
+                if (feedbackEl) {
+                    feedbackEl.textContent = "已自動修正文稿中的常見破音字（如：重扣→蟲扣、調閱→掉閱）！";
+                    feedbackEl.className = "admin-feedback-msg is-success";
+                }
+            });
+        }
+
+        if (speakBtn && textIn) {
+            speakBtn.addEventListener("click", () => {
+                syncVoiceState();
+                this.speakTextInBrowser(this.rpaVoiceText);
+                if (feedbackEl) {
+                    feedbackEl.textContent = "正在使用瀏覽器台灣語音朗讀中...";
+                    feedbackEl.className = "admin-feedback-msg is-success";
+                }
+            });
+        }
+
+        if (stopBtn) {
+            stopBtn.addEventListener("click", () => {
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
+                if (feedbackEl) {
+                    feedbackEl.textContent = "已停止朗讀。";
+                    feedbackEl.className = "admin-feedback-msg";
+                }
+            });
+        }
+
+        if (synthMp3Btn) {
+            synthMp3Btn.addEventListener("click", async () => {
+                syncVoiceState();
+                if (!this.rpaVoiceText.trim()) return;
+                if (feedbackEl) {
+                    feedbackEl.textContent = "正在合成台灣自然語音 MP3 音檔，請稍候...";
+                    feedbackEl.className = "admin-feedback-msg";
+                }
                 try {
-                    const resp = await fetch("/api/rpa/launch", {
+                    const resp = await fetch("/api/rpa/tts", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ action: "open_folder", sub_dir: subDir })
+                        body: JSON.stringify({
+                            text: this.rpaVoiceText,
+                            voice: this.rpaVoiceModel,
+                            rate: this.rpaVoiceRate
+                        })
                     });
                     const data = await resp.json();
-                    if (feedbackEl) {
-                        feedbackEl.textContent = data.message || "已開啟本機資料夾。";
-                        feedbackEl.className = "admin-feedback-msg is-success";
+                    if (resp.ok && data.ok && data.audio_base64) {
+                        this.rpaVoiceAudioUrl = `data:audio/mp3;base64,${data.audio_base64}`;
+                        this.renderTheme02AutomationHub(theme);
+                    } else {
+                        throw new Error(data.message || "無法連線至語音合成服務");
                     }
                 } catch (_err) {
+                    // 若在純靜態環境下，自動啟動瀏覽器語音播放
+                    this.speakTextInBrowser(this.rpaVoiceText);
                     if (feedbackEl) {
-                        feedbackEl.textContent = "本機路徑：G:\\其他電腦\\我的電腦\\dwonload\\程式相關_Python\\backup\\爸爸\\python";
-                        feedbackEl.className = "admin-feedback-msg";
+                        feedbackEl.textContent = "已直接為您啟動瀏覽器內建台灣語音朗讀！（若需下載實體 MP3 檔，請於本機開啟伺服器模式）";
+                        feedbackEl.className = "admin-feedback-msg is-success";
                     }
                 }
             });
-        };
-        bindOpenFolder("rpa-open-main-folder-btn", "");
-        bindOpenFolder("rpa-open-vedio-folder-btn", "Vedio_produce_v5");
-
-        // 下載專屬 .bat 一鍵啟動器（供離線或 GitHub Pages 模式下直接雙擊啟動本機程式）
-        this.focusSection.querySelectorAll("[data-download-bat-id]").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const toolId = btn.getAttribute("data-download-bat-id");
-                const tool = RPA_PYTHON_TOOLS_CATALOG.find((t) => t.id === toolId);
-                if (!tool) return;
-
-                const rootDir = "G:\\其他電腦\\我的電腦\\dwonload\\程式相關_Python\\backup\\爸爸\\python";
-                const scriptRel = tool.file.split(" ")[0];
-                const workSub = scriptRel.includes("Vedio_produce_v5") ? "\\Vedio_produce_v5" : "";
-                const batContent = [
-                    "@echo off",
-                    "chcp 65001 >nul",
-                    `title 啟動 ${tool.name}`,
-                    `cd /d "${rootDir}${workSub}"`,
-                    `if exist "${rootDir}\\.venv\\Scripts\\python.exe" (`,
-                    `    "${rootDir}\\.venv\\Scripts\\python.exe" "${rootDir}\\${scriptRel}"`,
-                    ") else (",
-                    `    python "${rootDir}\\${scriptRel}"`,
-                    ")",
-                    "pause"
-                ].join("\r\n");
-
-                const blob = new Blob([batContent], { type: "application/bat;charset=utf-8" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `啟動_${tool.id}.bat`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            });
-        });
+        }
     }
 
     renderFocusSection(theme) {

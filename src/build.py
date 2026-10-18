@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import http.server
 import json
 import os
@@ -15,6 +16,7 @@ import shutil
 import socketserver
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -28,64 +30,34 @@ RPA_BACKUP_ROOT: Path = Path(r"G:\其他電腦\我的電腦\dwonload\程式相�
 
 RPA_TOOL_REGISTRY: dict[str, dict[str, str]] = {
     "ppt_prompt_v5": {
-        "name": "企業級 AI 簡報提示詞產製器 V5 (PPT_PROMPT_PRODUCE_V5.py)",
+        "name": "01. 企業級 AI 簡報提示詞產製器 V5",
         "rel_path": "PPT_PROMPT_PRODUCE_V5.py",
         "work_dir": "",
-        "category": "AI 簡報與知識轉譯",
-    },
-    "vedio_produce_v592": {
-        "name": "PPT 智慧講稿與教學影片產製系統 V5.9.2 Edge-TTS 版",
-        "rel_path": r"Vedio_produce_v5\Vedio_produce_v5.9.2_EDGETTS.py",
-        "work_dir": "Vedio_produce_v5",
-        "category": "AI 影音合成與自動化",
-    },
-    "vedio_produce_v62": {
-        "name": "PPT 智慧講稿與教學影片產製系統 V6.2 雙語音引擎旗艦版",
-        "rel_path": r"Vedio_produce_v5\code\Vedio_produce_v6_2.py",
-        "work_dir": "Vedio_produce_v5",
-        "category": "AI 影音合成與自動化",
-    },
-    "pdf_oneforall": {
-        "name": "PDF 時間序批次合併與高倍率壓縮工具 (pdf_oneforall.py)",
-        "rel_path": "pdf_oneforall.py",
-        "work_dir": "",
-        "category": "文件與語音自動化",
-    },
-    "pdf_voice": {
-        "name": "文稿轉自然語音 MP3 朗讀產製器 (pdf_voice.py)",
-        "rel_path": "pdf_voice.py",
-        "work_dir": "",
-        "category": "文件與語音自動化",
+        "category": "AI 簡報提示詞",
     },
     "pic_t_png": {
-        "name": "圖片批次轉無損 PNG 與 2x 放大銳化工具 (pic_t_png.py)",
+        "name": "02. 圖片批次轉無損 PNG 與 2x 放大銳化",
         "rel_path": "pic_t_png.py",
         "work_dir": "",
-        "category": "影像與音訊批次處理",
+        "category": "圖片清晰放大",
     },
-    "video_audio_replacer": {
-        "name": "影片音軌替換與結尾掌聲自動拼接工具 V3 (video_audio_replacer_ffmpeg.py)",
-        "rel_path": "video_audio_replacer_ffmpeg.py",
-        "work_dir": "",
-        "category": "AI 影音合成與自動化",
-    },
-    "batch_deal_wav": {
-        "name": "GPT-SoVITS 訓練語音 WAV 批次安全限幅處理器 (batch_deal_wavfile.py)",
-        "rel_path": r"Vedio_produce_v5\batch_deal_wavfile.py",
+    "vedio_produce_v592": {
+        "name": "05. 簡報智慧講稿與教學影片產製 V5.9.2",
+        "rel_path": r"Vedio_produce_v5\Vedio_produce_v5.9.2_EDGETTS.py",
         "work_dir": "Vedio_produce_v5",
-        "category": "影像與音訊批次處理",
+        "category": "簡報講稿與影片",
     },
-    "s2twp_list": {
-        "name": "GPT-SoVITS 標註檔 (.list) 簡轉繁工具 (simplified_tran_traditional.py)",
-        "rel_path": r"Vedio_produce_v5\simplified_tran_traditional.py",
-        "work_dir": "Vedio_produce_v5",
-        "category": "影像與音訊批次處理",
-    },
-    "line_race_chart": {
-        "name": "動態發光折線競賽圖產生器 (line_race_chart_output.py)",
-        "rel_path": "line_race_chart_output.py",
+    "pdf_oneforall": {
+        "name": "07. PDF 時間序批次合併與高倍率壓縮",
+        "rel_path": "pdf_oneforall.py",
         "work_dir": "",
-        "category": "數據視覺化動畫",
+        "category": "PDF 合併與壓縮",
+    },
+    "pdf_voice": {
+        "name": "08. 文稿轉自然語音 MP3 朗讀產製器",
+        "rel_path": "pdf_voice.py",
+        "work_dir": "",
+        "category": "文稿轉語音 MP3",
     },
 }
 
@@ -153,7 +125,7 @@ def validate_no_inline_css(directory: Path = PUBLIC_DIR) -> bool:
 
 
 def serve_local(port: int = 8000, directory: Path = PUBLIC_DIR) -> None:
-    """啟動本地端靜態網頁預覽伺服器，並提供僅限本機 (127.0.0.1) 的 Python RPA 啟動橋接端點。"""
+    """啟動本地端靜態網頁預覽伺服器，並提供網頁端直接合成語音與輔助端點。"""
     class CustomHandler(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *args: object, **kwargs: object) -> None:
             super().__init__(*args, directory=str(directory), **kwargs)
@@ -174,27 +146,55 @@ def serve_local(port: int = 8000, directory: Path = PUBLIC_DIR) -> None:
             super().do_GET()
 
         def do_POST(self) -> None:
-            if self.path == "/api/rpa/launch":
-                content_len = int(self.headers.get("Content-Length", "0"))
-                raw_body = self.rfile.read(content_len) if content_len > 0 else b"{}"
+            content_len = int(self.headers.get("Content-Length", "0"))
+            raw_body = self.rfile.read(content_len) if content_len > 0 else b"{}"
+            try:
+                data = json.loads(raw_body.decode("utf-8"))
+            except Exception:
+                self.send_json(400, {"ok": False, "message": "無效的 JSON 請求格式。"})
+                return
+
+            if self.path == "/api/rpa/tts":
+                text = str(data.get("text", "")).strip()
+                voice = str(data.get("voice", "zh-TW-HsiaoChenNeural")).strip()
+                rate = str(data.get("rate", "+0%")).strip()
+                if not text:
+                    self.send_json(400, {"ok": False, "message": "文稿內容不可為空。"})
+                    return
+
+                python_exe = resolve_rpa_python_executable()
+                with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp_mp3:
+                    tmp_mp3_path = Path(tmp_mp3.name)
+                with tempfile.NamedTemporaryFile(suffix=".txt", delete=False, mode="w", encoding="utf-8") as tmp_txt:
+                    tmp_txt.write(text)
+                    tmp_txt_path = Path(tmp_txt.name)
+
+                inline_code = (
+                    "import asyncio, sys, pathlib, edge_tts; "
+                    "txt = pathlib.Path(sys.argv[1]).read_text(encoding='utf-8'); "
+                    "comm = edge_tts.Communicate(txt, sys.argv[2], rate=sys.argv[3]); "
+                    "asyncio.run(comm.save(sys.argv[4]))"
+                )
                 try:
-                    data = json.loads(raw_body.decode("utf-8"))
-                except Exception:
-                    self.send_json(400, {"ok": False, "message": "無效的 JSON 請求格式。"})
-                    return
+                    proc = subprocess.run(
+                        [str(python_exe), "-c", inline_code, str(tmp_txt_path), voice, rate, str(tmp_mp3_path)],
+                        capture_output=True,
+                        text=True,
+                        timeout=90,
+                    )
+                    if proc.returncode == 0 and tmp_mp3_path.exists() and tmp_mp3_path.stat().st_size > 0:
+                        mp3_b64 = base64.b64encode(tmp_mp3_path.read_bytes()).decode("ascii")
+                        self.send_json(200, {"ok": True, "audio_base64": mp3_b64, "voice": voice})
+                    else:
+                        self.send_json(500, {"ok": False, "message": f"語音合成失敗：{proc.stderr}"})
+                except Exception as exc:
+                    self.send_json(500, {"ok": False, "message": f"語音合成異常：{exc}"})
+                finally:
+                    tmp_txt_path.unlink(missing_ok=True)
+                    tmp_mp3_path.unlink(missing_ok=True)
+                return
 
-                action = str(data.get("action", "launch_tool"))
-                if action == "open_folder":
-                    sub_dir = str(data.get("sub_dir", "")).strip()
-                    target_dir = RPA_BACKUP_ROOT / sub_dir if sub_dir else RPA_BACKUP_ROOT
-                    if not target_dir.exists():
-                        self.send_json(404, {"ok": False, "message": f"找不到本機資料夾：{target_dir}"})
-                        return
-                    if sys.platform.startswith("win"):
-                        os.startfile(str(target_dir))
-                    self.send_json(200, {"ok": True, "message": f"已為您開啟本機資料夾：{target_dir}"})
-                    return
-
+            if self.path == "/api/rpa/launch":
                 tool_id = str(data.get("tool_id", "")).strip()
                 if tool_id not in RPA_TOOL_REGISTRY:
                     self.send_json(404, {"ok": False, "message": f"未知的工具代碼：{tool_id}"})
@@ -221,7 +221,7 @@ def serve_local(port: int = 8000, directory: Path = PUBLIC_DIR) -> None:
                         {
                             "ok": True,
                             "tool_id": tool_id,
-                            "message": f"已於本機啟動「{meta['name']}」視窗程式！請查看桌面彈出視窗。",
+                            "message": f"已啟動「{meta['name']}」！",
                         },
                     )
                 except Exception as exc:
