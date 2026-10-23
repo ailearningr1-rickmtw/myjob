@@ -8297,7 +8297,7 @@ ${cfg.sourceText}`;
 
         // 登入前通行碼驗證閘門 (長度 8 碼，絕不提示密碼)
         if (!this.isVaultUnlocked()) {
-            this.renderPrivateSecurityGate(theme, "主題四：工作知識庫與技術資料", () => {
+            this.renderPrivateSecurityGate(theme, "主題四：公務機關資通安全知識庫", () => {
                 this.renderTheme04KnowledgeHub(theme);
             });
             return;
@@ -8311,59 +8311,23 @@ ${cfg.sourceText}`;
         const data = this.knowledgeData || window.WORKSPACE_KNOWLEDGE_DATA || {
             metadata: {
                 lastSyncedAt: "載入中...",
-                totalCount: 0,
-                categories: [],
-                domainCounts: { security: 0, ai: 0, python: 0 }
+                totalCount: 425,
+                primaryDomain: "security"
             },
             topics: [],
             items: []
         };
 
         const meta = data.metadata || {};
-        const domainCounts = meta.domainCounts || { security: 0, ai: 0, python: 0 };
-        const categories = meta.categories || [
-            { id: "security", title: "一、資安規範與 ISMS 體系", shortTitle: "資安規範與體系", topicsCount: 6 },
-            { id: "ai", title: "二、AI 前瞻技術與應用研發", shortTitle: "AI 前瞻研發與應用", topicsCount: 4 },
-            { id: "python", title: "三、Python 程式與 RPA 自動化", shortTitle: "Python 程式與 RPA", topicsCount: 4 }
-        ];
-
-        const activeCatId = this.knowledgeActiveCategory || "security";
-        const currentCategory = categories.find((c) => c.id === activeCatId) || categories[0];
-
-        // 取得該大類別下的結構化主題與全部檔案
+        const totalCount = meta.totalCount || 425;
         const allTopics = data.topics || [];
-        const categoryTopics = allTopics.filter((t) => t.categoryId === activeCatId);
-
-        if (!categoryTopics.some((t) => t.id === this.knowledgeActiveTopicId)) {
-            this.knowledgeActiveTopicId = categoryTopics.length > 0 ? categoryTopics[0].id : "";
-        }
-        const activeTopic = categoryTopics.find((t) => t.id === this.knowledgeActiveTopicId) || categoryTopics[0];
-
         const allItems = data.items || [];
-        const categoryFiles = allItems.filter((it) => it.domain === activeCatId);
 
-        // 頂部三大分類導覽切換卡片 HTML (1. 資安 2. AI 3. Python)
-        const categoryTabsHtml = categories.map((cat, idx) => {
-            const isActive = cat.id === activeCatId;
-            const cnt = domainCounts[cat.id] || 0;
-            const topicNum = cat.topicsCount || 4;
-            const catClass = cat.id === "security" ? "kb-cat-sec" : (cat.id === "ai" ? "kb-cat-ai" : "kb-cat-py");
-
-            return `
-                <button type="button" class="kb-category-tab-card ${catClass} ${isActive ? "is-active" : ""}" data-kb-category="${cat.id}">
-                    <div class="kb-cat-card-header">
-                        <span class="kb-cat-num">分類 0${idx + 1}</span>
-                        <span class="kb-cat-badge">${cnt} 件檔案</span>
-                    </div>
-                    <h3 class="kb-cat-card-title">${this.escapeHtml(cat.title)}</h3>
-                    <p class="kb-cat-card-desc">${this.escapeHtml(cat.description || "")}</p>
-                    <div class="kb-cat-card-footer">
-                        <span>含 ${topicNum} 大核心圖說主題</span>
-                        <span class="kb-cat-status-pill">${isActive ? "正在檢視" : "點擊切換"}</span>
-                    </div>
-                </button>
-            `;
-        }).join("");
+        // 預設選中主題
+        if (!allTopics.some((t) => t.id === this.knowledgeActiveTopicId)) {
+            this.knowledgeActiveTopicId = allTopics.length > 0 ? allTopics[0].id : "";
+        }
+        const activeTopic = allTopics.find((t) => t.id === this.knowledgeActiveTopicId) || allTopics[0];
 
         // 主版面 HTML（依模式切換：document 單檔深入研讀 / files 原始清單 / topic 核心主題雙欄）
         let mainContentHtml = "";
@@ -8372,43 +8336,25 @@ ${cfg.sourceText}`;
             // ================================================================
             // 模式三：專屬單一文件深入研讀與概念圖說專頁 (直接呈現在主畫面上)
             // ================================================================
-            const docItem = allItems.find((it) => it.id === this.knowledgeActiveDocId) || categoryFiles[0];
+            const docItem = allItems.find((it) => it.id === this.knowledgeActiveDocId) || allItems[0];
             if (docItem) {
-                const domainText = docItem.domain === "security" ? "一、資安規範與 ISMS 體系" : (docItem.domain === "ai" ? "二、AI 前瞻研發與應用" : "三、Python 程式與 RPA");
-                const domainBadgeClass = docItem.domain === "security" ? "kb-tag-security" : (docItem.domain === "ai" ? "kb-tag-ai" : "kb-tag-python");
-
-                // 圖說層級
-                const infoLayers = docItem.infographic?.layers || [
-                    { level: "治理層", name: "業務邏輯與規範", desc: "確立作業方針與控制基準", color: "#0d9488" },
-                    { level: "執行層", name: "標準操作程序", desc: "嚴格遵循作業指引步驟", color: "#14b8a6" },
-                    { level: "檢核層", name: "佐證留痕與稽核", desc: "完整填報紀錄以備查核", color: "#2dd4bf" }
-                ];
-                const layersHtml = infoLayers.map((lyr, lIdx) => `
-                    <div class="kb-info-layer-card kb-layer-accent-${lIdx % 4}">
-                        <div class="kb-layer-header">
-                            <span class="kb-layer-level-pill kb-layer-pill-${lIdx % 4}">${this.escapeHtml(lyr.level)}</span>
-                            <h5 class="kb-layer-name">${this.escapeHtml(lyr.name)}</h5>
-                        </div>
-                        <p class="kb-layer-desc">${this.escapeHtml(lyr.desc)}</p>
+                // 圖檔展示
+                const hasDiagram = Boolean(docItem.matchedDiagram);
+                const diagramHtml = hasDiagram ? `
+                    <div class="kb-diagram-card">
+                        <img src="./assets/diagrams/${this.escapeHtml(docItem.matchedDiagram)}" alt="${this.escapeHtml(docItem.title)}" class="kb-diagram-img" />
+                        <div class="kb-diagram-caption">架構圖解：${this.escapeHtml(docItem.matchedDiagram)}</div>
                     </div>
-                `).join("");
+                ` : "";
 
                 // 核心重點
-                const keyPoints = docItem.keyPoints || [
-                    "符合機關標準規範與內部業務流程要求。",
-                    "提供標準作業程序作為執行與內外部查驗佐證。",
-                    "定期檢核與滾動精進以確保品質。"
-                ];
+                const keyPoints = docItem.keyPoints || [];
                 const keyPointsHtml = keyPoints.map((kp) => `
                     <li class="kb-key-point-item">${this.escapeHtml(kp)}</li>
                 `).join("");
 
                 // SOP 步驟
-                const sopSteps = docItem.sopSteps || [
-                    { step: 1, title: "需求確認與評估", detail: "確認適用情境、風險等級與必要安全授權。" },
-                    { step: 2, title: "循序執行與留痕", detail: "依作業指引規範步驟操作並填報紀錄。" },
-                    { step: 3, title: "主管審核與歸檔", detail: "完成主管審查覆核並依法定年限妥善保管備查。" }
-                ];
+                const sopSteps = docItem.sopSteps || [];
                 const sopHtml = sopSteps.map((s) => `
                     <div class="kb-sop-step-item">
                         <div class="kb-sop-num">${s.step}</div>
@@ -8421,23 +8367,21 @@ ${cfg.sourceText}`;
 
                 mainContentHtml = `
                     <div class="kb-document-view-container" id="kb-document-view-pane">
-                        <!-- 麵包屑導覽與返回按鈕列 -->
                         <div class="kb-doc-breadcrumb-bar">
                             <div class="kb-doc-breadcrumb-left">
                                 <button type="button" class="primary-btn" id="kb-back-to-topics-btn">
-                                    ← 返回主題圖說清單
+                                    ← 返回 B 級法定專案主題
                                 </button>
                                 <button type="button" class="secondary-btn" id="kb-back-to-files-btn">
-                                    檢視全部檔案清單
+                                    檢視 425 件規章清冊
                                 </button>
                             </div>
                             <div class="kb-doc-breadcrumb-right">
-                                <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                                <span class="kb-path-tag kb-tag-security">${this.escapeHtml(docItem.docLevel || "資安規章")}</span>
                                 <span class="kb-breadcrumb-title">${this.escapeHtml(docItem.title)}</span>
                             </div>
                         </div>
 
-                        <!-- 文件深入研讀本體 (全格式大字體排版、圖像化展示) -->
                         <article class="kb-reader-article kb-doc-deep-article">
                             <header class="kb-reader-header">
                                 <div class="kb-reader-title-meta">
@@ -8447,49 +8391,41 @@ ${cfg.sourceText}`;
                                     <span class="kb-item-size">最後修改：${this.escapeHtml(docItem.lastModified)}</span>
                                 </div>
                                 <h3 class="kb-reader-title kb-doc-title-large">${this.escapeHtml(docItem.title)}</h3>
-                                <div class="kb-reader-tags-row">
-                                    ${(docItem.tags || []).map((t) => `<span class="kb-tag-item">#${this.escapeHtml(t)}</span>`).join("")}
+                                <div class="kb-legal-basis-pill">
+                                    <strong>法規依據：</strong>${this.escapeHtml(docItem.legalBasis || "資通安全法第 10 條、資通安全責任等級分級辦法附表二")}
                                 </div>
                             </header>
 
-                            <!-- 1. 文件業務核心重點摘要 -->
+                            ${diagramHtml}
+
                             <div class="kb-reader-summary-card">
-                                <h4 class="kb-summary-card-title">文件業務重點摘要</h4>
+                                <h4 class="kb-summary-card-title">業務定位與公務實務價值</h4>
                                 <p class="kb-summary-card-text">${this.escapeHtml(docItem.summary)}</p>
                             </div>
 
-                            <!-- 2. 核心概念架構圖說 (Infographic) -->
                             <section class="kb-reader-section">
-                                <div class="kb-reader-infographic-card">
-                                    <div class="kb-infographic-header">
-                                        <h4 class="kb-infographic-title">${this.escapeHtml(docItem.infographic?.title || "文件核心概念架構圖說")}</h4>
-                                        <span class="kb-helper-badge">高對比概念架構圖</span>
-                                    </div>
-                                    <div class="kb-infographic-layers-grid">
-                                        ${layersHtml}
-                                    </div>
-                                </div>
-                            </section>
-
-                            <!-- 3. 關鍵控制準則與核心概念 -->
-                            <section class="kb-reader-section">
-                                <h4 class="kb-section-heading">關鍵控制準則與概念重點</h4>
+                                <h4 class="kb-section-heading">資通安全責任等級 B 級規範與控制要點</h4>
                                 <ul class="kb-key-points-list">
                                     ${keyPointsHtml}
                                 </ul>
                             </section>
 
-                            <!-- 4. 標準作業程序 (SOP) 執行指引 -->
                             <section class="kb-reader-section">
-                                <h4 class="kb-section-heading">標準作業程序 (SOP) 執行指引</h4>
+                                <h4 class="kb-section-heading">公務體系標準作業程序 (SOP) 執行步驟</h4>
                                 <div class="kb-sop-steps-container">
                                     ${sopHtml}
                                 </div>
                             </section>
 
-                            <!-- 5. 檔案規格與本機備忘資訊 -->
                             <section class="kb-reader-section">
-                                <h4 class="kb-section-heading">實體檔案規格與路徑備忘</h4>
+                                <div class="kb-audit-warning-box">
+                                    <h4 class="kb-audit-box-title">內外部資安稽核必查重點與常見缺失防呆</h4>
+                                    <p class="kb-audit-box-text">${this.escapeHtml(docItem.auditFocus || "查驗填報完整性、簽核主管簽章、定期抽驗紀錄。")}</p>
+                                </div>
+                            </section>
+
+                            <section class="kb-reader-section">
+                                <h4 class="kb-section-heading">實體檔案規格與本機備忘</h4>
                                 <div class="kb-modal-info-grid">
                                     <div class="kb-modal-info-item">
                                         <span class="kb-info-label">檔案大小</span>
@@ -8500,8 +8436,8 @@ ${cfg.sourceText}`;
                                         <span class="kb-info-val">${this.escapeHtml(docItem.lastModified)}</span>
                                     </div>
                                     <div class="kb-modal-info-item">
-                                        <span class="kb-info-label">文件類別</span>
-                                        <span class="kb-info-val">${this.escapeHtml(docItem.subCategory || "核心文件")}</span>
+                                        <span class="kb-info-label">規章類別</span>
+                                        <span class="kb-info-val">${this.escapeHtml(docItem.subCategory || "核心規章")}</span>
                                     </div>
                                     <div class="kb-modal-info-item">
                                         <span class="kb-info-label">副檔名</span>
@@ -8516,10 +8452,9 @@ ${cfg.sourceText}`;
                                 </div>
                             </section>
 
-                            <!-- 底部導覽按鈕 -->
                             <div class="kb-doc-bottom-actions">
                                 <button type="button" class="primary-btn" id="kb-doc-bottom-back-btn">
-                                    ← 返回主題圖說清單
+                                    ← 返回 B 級法定專案主題
                                 </button>
                             </div>
                         </article>
@@ -8528,13 +8463,17 @@ ${cfg.sourceText}`;
             }
         } else if (this.knowledgeViewMode === "files") {
             // ================================================================
-            // 模式二：檢視全部原始檔案清單
+            // 模式二：檢視全部 425 件資安實體規章與表單清冊
             // ================================================================
             const fileQuery = (this.knowledgeFileSearchQuery || "").trim().toLowerCase();
             const docLevel = this.knowledgeActiveDocLevel || "all";
-            const filteredFiles = categoryFiles.filter((it) => {
-                if (activeCatId === "security" && docLevel !== "all") {
-                    if (it.docLevel !== docLevel) return false;
+            const filteredFiles = allItems.filter((it) => {
+                if (docLevel !== "all") {
+                    if (docLevel === "MS-1" && !it.docLevel.includes("Level 1")) return false;
+                    if (docLevel === "MS-2" && !it.docLevel.includes("Level 2")) return false;
+                    if (docLevel === "MS-3" && !it.docLevel.includes("Level 3")) return false;
+                    if (docLevel === "MS-4" && !it.docLevel.includes("Level 4")) return false;
+                    if (docLevel === "MS-F" && !it.docLevel.includes("外部法規")) return false;
                 }
                 if (fileQuery) {
                     const corpus = [
@@ -8550,16 +8489,17 @@ ${cfg.sourceText}`;
                 return true;
             });
 
-            const docLevelBarHtml = activeCatId === "security" ? `
+            const docLevelBarHtml = `
                 <div class="kb-doc-level-bar">
-                    <span class="kb-level-label">ISMS 四階文件階層：</span>
-                    <button type="button" class="kb-level-btn ${docLevel === "all" ? "active" : ""}" data-doc-level="all">全部階層</button>
-                    <button type="button" class="kb-level-btn ${docLevel === "Level 1" ? "active" : ""}" data-doc-level="Level 1">一階政策 (MS-1)</button>
-                    <button type="button" class="kb-level-btn ${docLevel === "Level 2" ? "active" : ""}" data-doc-level="Level 2">二階程序書 (MS-2)</button>
-                    <button type="button" class="kb-level-btn ${docLevel === "Level 3" ? "active" : ""}" data-doc-level="Level 3">三階作業說明 (MS-3)</button>
-                    <button type="button" class="kb-level-btn ${docLevel === "Level 4" ? "active" : ""}" data-doc-level="Level 4">四階表單紀錄 (MS-4)</button>
+                    <span class="kb-level-label">規章四階層級篩選：</span>
+                    <button type="button" class="kb-level-btn ${docLevel === "all" ? "active" : ""}" data-doc-level="all">全部規章 (${allItems.length})</button>
+                    <button type="button" class="kb-level-btn ${docLevel === "MS-1" ? "active" : ""}" data-doc-level="MS-1">一階政策 (MS-1)</button>
+                    <button type="button" class="kb-level-btn ${docLevel === "MS-2" ? "active" : ""}" data-doc-level="MS-2">二階程序 (MS-2)</button>
+                    <button type="button" class="kb-level-btn ${docLevel === "MS-3" ? "active" : ""}" data-doc-level="MS-3">三階作業說明 (MS-3)</button>
+                    <button type="button" class="kb-level-btn ${docLevel === "MS-4" ? "active" : ""}" data-doc-level="MS-4">四階表單紀錄 (MS-4)</button>
+                    <button type="button" class="kb-level-btn ${docLevel === "MS-F" ? "active" : ""}" data-doc-level="MS-F">外部法規指引 (MS-F)</button>
                 </div>
-            ` : "";
+            `;
 
             const filesListHtml = filteredFiles.length > 0 ? filteredFiles.map((file) => `
                 <div class="kb-file-table-row" data-inspect-file-id="${file.id}" role="button" tabindex="0">
@@ -8578,11 +8518,11 @@ ${cfg.sourceText}`;
                     </div>
                     <div class="kb-file-col-actions">
                         <button type="button" class="primary-btn kb-action-btn" data-inspect-file-id="${file.id}">
-                            檢視重點摘要與概念圖說
+                            深入檢閱規章重點與圖說
                         </button>
                     </div>
                 </div>
-            `).join("") : `<div class="kb-empty-results"><p>未找到符合條件的檔案，請嘗試清除關鍵字。</p></div>`;
+            `).join("") : `<div class="kb-empty-results"><p>未找到符合條件的資安規章，請嘗試清除關鍵字。</p></div>`;
 
             mainContentHtml = `
                 <div class="kb-files-mode-board">
@@ -8591,13 +8531,13 @@ ${cfg.sourceText}`;
                             type="search"
                             id="kb-file-search-input"
                             class="idea-input"
-                            placeholder="在「${this.escapeHtml(currentCategory.shortTitle)}」中搜尋檔案名稱、重點摘要或標籤..."
+                            placeholder="搜尋資安規章編號（如 MS-4-150、MS-4-91、MS-2-06）、名稱或關鍵字..."
                             value="${this.escapeHtml(this.knowledgeFileSearchQuery)}"
                         />
                         ${docLevelBarHtml}
                     </div>
                     <div class="kb-files-count-badge">
-                        顯示 <strong>${filteredFiles.length}</strong> / ${categoryFiles.length} 件實體檔案（點擊整列或點選按鈕即可直接閱讀重點摘要與概念圖說）
+                        顯示 <strong>${filteredFiles.length}</strong> / ${allItems.length} 件正式規章與佐證表單（點擊整列直接開啟完整深入研讀專頁）
                     </div>
                     <div class="kb-files-table-container">
                         ${filesListHtml}
@@ -8606,16 +8546,18 @@ ${cfg.sourceText}`;
             `;
         } else {
             // ================================================================
-            // 模式一（預設）：核心知識主題與圖說閱讀器 (雙欄 Master-Detail)
+            // 模式一（預設）：8 大資安核心法定專案主題雙欄閱讀器
             // ================================================================
             const topicQuery = (this.knowledgeSearchQuery || "").trim().toLowerCase();
-            const filteredTopics = categoryTopics.filter((t) => {
+            const filteredTopics = allTopics.filter((t) => {
                 if (!topicQuery) return true;
                 const searchCorpus = [
                     t.title,
                     t.subtitle,
                     t.summary,
-                    ...(t.tags || [])
+                    t.topicCode,
+                    t.badge,
+                    t.legalBasis
                 ].join(" ").toLowerCase();
                 return searchCorpus.includes(topicQuery);
             });
@@ -8623,10 +8565,10 @@ ${cfg.sourceText}`;
             const topicListHtml = filteredTopics.map((top) => {
                 const isActive = activeTopic && top.id === activeTopic.id;
                 return `
-                    <button type="button" class="kb-topic-nav-item ${isActive ? "is-active" : ""}" data-select-topic-id="${top.id}">
+                    <button type="button" class="kb-topic-nav-item kb-sec-topic-item ${isActive ? "is-active" : ""}" data-select-topic-id="${top.id}">
                         <div class="kb-topic-nav-header">
                             <span class="kb-topic-code">${this.escapeHtml(top.topicCode)}</span>
-                            <span class="kb-topic-matched-count">${(top.matchedFiles || []).length} 件關聯文件</span>
+                            <span class="kb-cat-status-pill">${this.escapeHtml(top.badge)}</span>
                         </div>
                         <h4 class="kb-topic-nav-title">${this.escapeHtml(top.title)}</h4>
                         <p class="kb-topic-nav-summary">${this.escapeHtml(top.subtitle || top.summary)}</p>
@@ -8636,16 +8578,19 @@ ${cfg.sourceText}`;
 
             let readerBodyHtml = "";
             if (activeTopic) {
-                // 圖說層級
-                const infoLayers = activeTopic.infographic?.layers || [];
-                const layersHtml = infoLayers.map((lyr, lIdx) => `
-                    <div class="kb-info-layer-card kb-layer-accent-${lIdx % 4}">
-                        <div class="kb-layer-header">
-                            <span class="kb-layer-level-pill kb-layer-pill-${lIdx % 4}">${this.escapeHtml(lyr.level)}</span>
-                            <h5 class="kb-layer-name">${this.escapeHtml(lyr.name)}</h5>
-                        </div>
-                        <p class="kb-layer-desc">${this.escapeHtml(lyr.desc)}</p>
+                // 圖檔展示
+                const hasDiagram = Boolean(activeTopic.diagramImage);
+                const diagramHtml = hasDiagram ? `
+                    <div class="kb-diagram-card">
+                        <img src="./assets/diagrams/${this.escapeHtml(activeTopic.diagramImage)}" alt="${this.escapeHtml(activeTopic.title)}" class="kb-diagram-img" />
+                        <div class="kb-diagram-caption">高解析架構圖說展示：${this.escapeHtml(activeTopic.title)}</div>
                     </div>
+                ` : "";
+
+                // B 級機關法定要求
+                const bLevelReqs = activeTopic.bLevelObligations || [];
+                const bLevelHtml = bLevelReqs.map((req) => `
+                    <li class="kb-key-point-item kb-b-level-item">${this.escapeHtml(req)}</li>
                 `).join("");
 
                 // SOP 步驟
@@ -8660,13 +8605,7 @@ ${cfg.sourceText}`;
                     </div>
                 `).join("");
 
-                // 核心重點
-                const keyPoints = activeTopic.keyPoints || [];
-                const keyPointsHtml = keyPoints.map((kp) => `
-                    <li class="kb-key-point-item">${this.escapeHtml(kp)}</li>
-                `).join("");
-
-                // 關聯實體檔案列表 (支援直接點擊檢閱重點摘要與概念圖說)
+                // 關聯實體文件清單
                 const matchedFiles = activeTopic.matchedFiles || [];
                 const matchedFilesHtml = matchedFiles.length > 0 ? matchedFiles.map((file) => `
                     <div class="kb-matched-file-card" data-inspect-file-id="${file.id}" role="button" tabindex="0">
@@ -8687,7 +8626,7 @@ ${cfg.sourceText}`;
                     </div>
                 `).join("") : `
                     <div class="kb-no-files-notice">
-                        <p>本主題為綜合架構知識指引，可透過上方「原始檔案重點清單」查閱相關細部檔案。</p>
+                        <p>本專題涵蓋全機關共通性法定制度，可切換至「425 件規章清冊」查閱所有具體實體表單。</p>
                     </div>
                 `;
 
@@ -8696,53 +8635,45 @@ ${cfg.sourceText}`;
                         <header class="kb-reader-header">
                             <div class="kb-reader-title-meta">
                                 <span class="kb-reader-code-badge">${this.escapeHtml(activeTopic.topicCode)}</span>
-                                <span class="kb-reader-cat-tag">${this.escapeHtml(activeTopic.categoryTitle)}</span>
+                                <span class="kb-reader-cat-tag">資安責任等級 B 級法定專案</span>
                             </div>
                             <h3 class="kb-reader-title">${this.escapeHtml(activeTopic.title)}</h3>
                             <p class="kb-reader-subtitle">${this.escapeHtml(activeTopic.subtitle)}</p>
-                            <div class="kb-reader-tags-row">
-                                ${(activeTopic.tags || []).map((t) => `<span class="kb-tag-item">#${this.escapeHtml(t)}</span>`).join("")}
+                            <div class="kb-legal-basis-pill">
+                                <strong>法規依據：</strong>${this.escapeHtml(activeTopic.legalBasis)}
                             </div>
                         </header>
 
-                        <!-- 業務摘要 -->
+                        ${diagramHtml}
+
                         <div class="kb-reader-summary-card">
-                            <h4 class="kb-summary-card-title">業務定位與核心價值摘要</h4>
+                            <h4 class="kb-summary-card-title">法定業務定位與體系核心價值</h4>
                             <p class="kb-summary-card-text">${this.escapeHtml(activeTopic.summary)}</p>
                         </div>
 
-                        <!-- 概念圖說可視化架構 (Infographic) -->
                         <section class="kb-reader-section">
-                            <div class="kb-reader-infographic-card">
-                                <div class="kb-infographic-header">
-                                    <h4 class="kb-infographic-title">${this.escapeHtml(activeTopic.infographic?.title || "核心架構可視化圖說")}</h4>
-                                    <span class="kb-helper-badge">高對比概念架構圖</span>
-                                </div>
-                                <div class="kb-infographic-layers-grid">
-                                    ${layersHtml}
-                                </div>
-                            </div>
+                            <h4 class="kb-section-heading">數位發展部資安署 B 級機關應行辦理事項法定剛性規範</h4>
+                            <ul class="kb-key-points-list">
+                                ${bLevelHtml}
+                            </ul>
                         </section>
 
-                        <!-- 標準作業程序 SOP 步驟流程 -->
                         <section class="kb-reader-section">
-                            <h4 class="kb-section-heading">標準作業程序 (SOP) 與執行步驟</h4>
+                            <h4 class="kb-section-heading">公務體系標準作業程序 (SOP) 實務推動步驟</h4>
                             <div class="kb-sop-steps-container">
                                 ${sopHtml}
                             </div>
                         </section>
 
-                        <!-- 核心規範要點 -->
                         <section class="kb-reader-section">
-                            <h4 class="kb-section-heading">關鍵控制準則與實務要點</h4>
-                            <ul class="kb-key-points-list">
-                                ${keyPointsHtml}
-                            </ul>
+                            <div class="kb-audit-warning-box">
+                                <h4 class="kb-audit-box-title">內外部資安稽核必查重點與常見缺失防呆</h4>
+                                <p class="kb-audit-box-text">${this.escapeHtml(activeTopic.auditFocus)}</p>
+                            </div>
                         </section>
 
-                        <!-- 關聯實體文件清單 (點擊直接深入閱讀) -->
                         <section class="kb-reader-section">
-                            <h4 class="kb-section-heading">關聯實體文件重點檢閱 (${matchedFiles.length} 份，點選直接研讀)</h4>
+                            <h4 class="kb-section-heading">對應之機關核心實體規章與表單清單 (${matchedFiles.length} 份，點選直接研讀)</h4>
                             <div class="kb-matched-files-list">
                                 ${matchedFilesHtml}
                             </div>
@@ -8750,24 +8681,24 @@ ${cfg.sourceText}`;
                     </article>
                 `;
             } else {
-                readerBodyHtml = `<div class="kb-empty-results"><p>請由左側選擇知識主題進行研讀。</p></div>`;
+                readerBodyHtml = `<div class="kb-empty-results"><p>請由左側選擇資安專題進行研讀。</p></div>`;
             }
 
             mainContentHtml = `
                 <div class="kb-split-layout">
-                    <!-- 左側主題導覽列 (可搜尋、點擊即時切換) -->
+                    <!-- 左側資安專題導覽側邊欄 (與 8 大真實專案 100% 對應) -->
                     <aside class="kb-sidebar-column">
                         <div class="kb-sidebar-header">
                             <div class="kb-sidebar-title-row">
-                                <h4 class="kb-sidebar-heading">主題導覽 (${categoryTopics.length} 篇)</h4>
-                                <span class="kb-sidebar-count">核心圖說</span>
+                                <h4 class="kb-sidebar-heading">資安專題導覽 (${allTopics.length} 大核心體系)</h4>
+                                <span class="kb-sidebar-count">B級專題</span>
                             </div>
                             <div class="kb-sidebar-search">
                                 <input
                                     type="search"
                                     id="kb-topic-search-input"
                                     class="kb-topic-search-input"
-                                    placeholder="搜尋主題關鍵字..."
+                                    placeholder="搜尋資安專題關鍵字..."
                                     value="${this.escapeHtml(this.knowledgeSearchQuery)}"
                                 />
                             </div>
@@ -8777,7 +8708,7 @@ ${cfg.sourceText}`;
                         </div>
                     </aside>
 
-                    <!-- 右側深度圖說閱讀器 (內容完整、字體放大、圖說清晰) -->
+                    <!-- 右側深度圖說閱讀器 (大字體、高對比、實際圖說) -->
                     <main class="kb-reader-column" id="kb-reader-container">
                         ${readerBodyHtml}
                     </main>
@@ -8790,8 +8721,8 @@ ${cfg.sourceText}`;
                 <!-- 頂部標頭與通行碼登入狀態 -->
                 <div class="focus-header">
                     <div class="focus-title-group">
-                        <h2 class="focus-title">主題 04：工作知識庫與技術資料</h2>
-                        <p class="theme-desc">三大領域知識庫・14 大核心圖說・587 份文件精華重點摘要（已受 8 碼通行碼保護，所有內容直接於網頁完整閱讀）</p>
+                        <h2 class="focus-title">主題 04：公務機關資通安全知識庫</h2>
+                        <p class="theme-desc">資安責任等級 B 級機關防護基準・ISMS/PIMS 四階規章體系・85 組架構流程圖解（已受 8 碼通行碼保護，所有內容直接於網頁完整研讀）</p>
                     </div>
                     <div class="kb-vault-status-bar">
                         <span class="kb-vault-unlocked-badge">已通過 8 碼安全驗證</span>
@@ -8803,25 +8734,34 @@ ${cfg.sourceText}`;
                     </div>
                 </div>
 
-                <!-- 頂部三大分類大導覽看板 (1. 資安 2. AI 3. Python) -->
-                <nav class="kb-category-tabs-grid" aria-label="知識庫三大分類導覽">
-                    ${categoryTabsHtml}
-                </nav>
+                <!-- 頂部資安三大指標資訊看板 -->
+                <div class="kb-sec-hero-metrics-grid">
+                    <div class="kb-sec-metric-card">
+                        <span class="kb-sec-metric-val">${totalCount} 件</span>
+                        <span class="kb-sec-metric-label">正式資安規章、程序書與四階表單清冊</span>
+                    </div>
+                    <div class="kb-sec-metric-card">
+                        <span class="kb-sec-metric-val">8 大體系</span>
+                        <span class="kb-sec-metric-label">數位發展部 B 級機關應辦事項與防護基準專題</span>
+                    </div>
+                    <div class="kb-sec-metric-card">
+                        <span class="kb-sec-metric-val">85 組圖說</span>
+                        <span class="kb-sec-metric-label">實體流程圖、全景關係圖與縱深防禦架構圖</span>
+                    </div>
+                </div>
 
-                <!-- 當前選取分類資訊列與視圖切換 -->
+                <!-- 當前選取分類資訊列與視圖切換 (B級法定專案閱讀器 vs 425件規章清冊) -->
                 <div class="kb-current-cat-bar">
                     <div class="kb-current-cat-title-group">
-                        <span class="kb-path-tag ${activeCatId === "security" ? "kb-tag-security" : (activeCatId === "ai" ? "kb-tag-ai" : "kb-tag-python")}">
-                            目前領域
-                        </span>
-                        <h3 class="kb-current-cat-title">${this.escapeHtml(currentCategory.title)}</h3>
+                        <span class="kb-path-tag kb-tag-security">資安核心體系</span>
+                        <h3 class="kb-current-cat-title">${this.knowledgeViewMode === "files" ? "425 件正式規章與佐證表單清冊" : (this.knowledgeViewMode === "document" ? "單一文件深度研讀專頁" : (activeTopic ? activeTopic.title : "資安責任等級 B 級法定專案"))}</h3>
                     </div>
                     <div class="kb-view-mode-toggle">
                         <button type="button" class="kb-mode-btn ${this.knowledgeViewMode === "topic" ? "active" : ""}" data-kb-view-mode="topic">
-                            核心知識圖說閱讀器
+                            B 級法定專案與圖說導覽
                         </button>
                         <button type="button" class="kb-mode-btn ${this.knowledgeViewMode === "files" ? "active" : ""}" data-kb-view-mode="files">
-                            原始檔案重點清單 (${categoryFiles.length})
+                            425 件規章檢索清冊
                         </button>
                     </div>
                 </div>
@@ -8874,22 +8814,7 @@ ${cfg.sourceText}`;
             });
         }
 
-        // 大分類卡片點擊切換 (一為資安、二為AI、三為Python)
-        this.focusSection.querySelectorAll("[data-kb-category]").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const newCat = btn.getAttribute("data-kb-category");
-                if (newCat && newCat !== this.knowledgeActiveCategory) {
-                    this.knowledgeActiveCategory = newCat;
-                    this.knowledgeSearchQuery = "";
-                    this.knowledgeFileSearchQuery = "";
-                    this.knowledgeViewMode = "topic";
-                    this.knowledgeActiveDocId = null;
-                    this.renderTheme04KnowledgeHub(theme);
-                }
-            });
-        });
-
-        // 檢視模式切換 (核心主題圖說 vs 全部原始檔案)
+        // 檢視模式切換 (B 級專題導覽 vs 425 件規章清冊)
         this.focusSection.querySelectorAll("[data-kb-view-mode]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 this.knowledgeViewMode = btn.getAttribute("data-kb-view-mode") || "topic";
@@ -8994,13 +8919,11 @@ ${cfg.sourceText}`;
                 const allItems = this.knowledgeData?.items || window.WORKSPACE_KNOWLEDGE_DATA?.items || [];
                 const item = allItems.find((it) => it.id === fileId);
                 if (item) {
-                    // 切換至深入研讀專頁並同時打開頂層彈窗
                     this.knowledgeActiveDocId = fileId;
                     this.knowledgeViewMode = "document";
                     this.renderTheme04KnowledgeHub(theme);
                     this.showKnowledgeDetailModal(item);
 
-                    // 平滑滾動到主要閱讀區頂部
                     const targetEl = document.getElementById("kb-document-view-pane") || this.focusSection;
                     if (targetEl) {
                         targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -9042,44 +8965,27 @@ ${cfg.sourceText}`;
     }
 
     /**
-     * 顯示文件重點摘要與概念圖說全螢幕彈窗 (直接掛在 document.body，徹底解決被父層樣式阻擋之問題)
+     * 顯示文件重點摘要與概念圖說全螢幕彈窗 (直接掛在 document.body)
      */
     showKnowledgeDetailModal(item) {
-        // 先移除可能存在的舊彈窗
         const oldModal = document.getElementById("kb-global-modal-overlay");
         if (oldModal) oldModal.remove();
 
-        const domainText = item.domain === "security" ? "一、資安規範與 ISMS 體系" : (item.domain === "ai" ? "二、AI 前瞻研發與應用" : "三、Python 程式與 RPA");
-        const domainBadgeClass = item.domain === "security" ? "kb-tag-security" : (item.domain === "ai" ? "kb-tag-ai" : "kb-tag-python");
-
-        const infoLayers = item.infographic?.layers || [
-            { level: "核心", name: "業務邏輯管線", desc: "標準作業與流程控制", color: "#0d9488" },
-            { level: "規範", name: "法規與安全基準", desc: "嚴格遵循內部合規基準", color: "#14b8a6" }
-        ];
-        const layersHtml = infoLayers.map((lyr, lIdx) => `
-            <div class="kb-info-layer-card kb-layer-accent-${lIdx % 4}">
-                <div class="kb-layer-header">
-                    <span class="kb-layer-level-pill kb-layer-pill-${lIdx % 4}">${this.escapeHtml(lyr.level)}</span>
-                    <h5 class="kb-layer-name">${this.escapeHtml(lyr.name)}</h5>
-                </div>
-                <p class="kb-layer-desc">${this.escapeHtml(lyr.desc)}</p>
+        // 圖檔展示
+        const hasDiagram = Boolean(item.matchedDiagram);
+        const diagramHtml = hasDiagram ? `
+            <div class="kb-diagram-card">
+                <img src="./assets/diagrams/${this.escapeHtml(item.matchedDiagram)}" alt="${this.escapeHtml(item.title)}" class="kb-diagram-img" />
+                <div class="kb-diagram-caption">高解析架構圖解：${this.escapeHtml(item.matchedDiagram)}</div>
             </div>
-        `).join("");
+        ` : "";
 
-        const keyPoints = item.keyPoints || [
-            "符合組織標準規範與業務流程要求。",
-            "提供標準作業程序作為執行與查驗佐證。",
-            "定期檢核與精進以確保品質。"
-        ];
+        const keyPoints = item.keyPoints || [];
         const keyPointsHtml = keyPoints.map((kp) => `
             <li class="kb-key-point-item">${this.escapeHtml(kp)}</li>
         `).join("");
 
-        const sopSteps = item.sopSteps || [
-            { step: 1, title: "需求確認", detail: "確認適用情境與安全要求。" },
-            { step: 2, title: "依規執行", detail: "循序執行操作並產出留痕紀錄。" },
-            { step: 3, title: "覆核存檔", detail: "完成主管審查與存檔備查。" }
-        ];
+        const sopSteps = item.sopSteps || [];
         const sopHtml = sopSteps.map((s) => `
             <div class="kb-sop-step-item">
                 <div class="kb-sop-num">${s.step}</div>
@@ -9098,9 +9004,8 @@ ${cfg.sourceText}`;
                 <div class="kb-modal-header">
                     <div class="kb-modal-title-group">
                         <div class="kb-item-badges">
-                            <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                            <span class="kb-path-tag kb-tag-security">${this.escapeHtml(item.docLevel || "資安規章")}</span>
                             <span class="kb-type-pill">${this.escapeHtml(item.fileType)}</span>
-                            ${item.docLevel ? `<span class="kb-level-pill">${this.escapeHtml(item.docLevel)}</span>` : ""}
                             ${item.subCategory ? `<span class="kb-subcat-pill">${this.escapeHtml(item.subCategory)}</span>` : ""}
                         </div>
                         <h3 class="kb-modal-title">${this.escapeHtml(item.title)}</h3>
@@ -9109,34 +9014,38 @@ ${cfg.sourceText}`;
                 </div>
 
                 <div class="kb-modal-body">
+                    <div class="kb-legal-basis-pill">
+                        <strong>法規依據：</strong>${this.escapeHtml(item.legalBasis || "資通安全法第 10 條、資通安全責任等級分級辦法附表二")}
+                    </div>
+
+                    ${diagramHtml}
+
                     <div class="kb-modal-summary-box">
-                        <h4 class="kb-summary-card-title">文件業務重點摘要</h4>
+                        <h4 class="kb-summary-card-title">業務定位與公務實務價值</h4>
                         <p class="kb-modal-summary-text">${this.escapeHtml(item.summary)}</p>
                     </div>
 
                     <div class="kb-modal-field-group">
-                        <h4 class="kb-section-heading">核心概念架構圖說</h4>
-                        <div class="kb-infographic-layers-grid">
-                            ${layersHtml}
-                        </div>
-                    </div>
-
-                    <div class="kb-modal-field-group">
-                        <h4 class="kb-section-heading">關鍵控制準則與概念重點</h4>
+                        <h4 class="kb-section-heading">資通安全責任等級 B 級規範與控制要點</h4>
                         <ul class="kb-key-points-list">
                             ${keyPointsHtml}
                         </ul>
                     </div>
 
                     <div class="kb-modal-field-group">
-                        <h4 class="kb-section-heading">標準作業程序 (SOP) 執行指引</h4>
+                        <h4 class="kb-section-heading">公務體系標準作業程序 (SOP) 執行步驟</h4>
                         <div class="kb-sop-steps-container">
                             ${sopHtml}
                         </div>
                     </div>
 
+                    <div class="kb-audit-warning-box">
+                        <h4 class="kb-audit-box-title">內外部資安稽核必查重點與常見缺失防呆</h4>
+                        <p class="kb-audit-box-text">${this.escapeHtml(item.auditFocus || "查驗填報完整性、簽核主管簽章、定期抽驗紀錄。")}</p>
+                    </div>
+
                     <div class="kb-modal-field-group">
-                        <h4 class="kb-section-heading">實體檔案規格備忘</h4>
+                        <h4 class="kb-section-heading">實體檔案規格與本機備忘</h4>
                         <div class="kb-modal-info-grid">
                             <div class="kb-modal-info-item">
                                 <span class="kb-info-label">檔案大小</span>
@@ -9147,8 +9056,8 @@ ${cfg.sourceText}`;
                                 <span class="kb-info-val">${this.escapeHtml(item.lastModified)}</span>
                             </div>
                             <div class="kb-modal-info-item">
-                                <span class="kb-info-label">文件類別</span>
-                                <span class="kb-info-val">${this.escapeHtml(item.subCategory || "核心文件")}</span>
+                                <span class="kb-info-label">規章類別</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.subCategory || "核心規章")}</span>
                             </div>
                             <div class="kb-modal-info-item">
                                 <span class="kb-info-label">副檔名</span>

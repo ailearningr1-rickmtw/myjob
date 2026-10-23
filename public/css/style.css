@@ -5902,3 +5902,148 @@ html[data-theme="dark"] .rpa-step-badge {
     border-top: 1.5px solid var(--border-subtle);
 }
 
+
+
+/* ==========================================================================
+   主題四：公務機關資通安全（B級專案、實體圖檔卡片、法規依據與稽核防呆盒）
+   ========================================================================== */
+
+/* 頂部資安三大指標資訊看板 */
+.kb-sec-hero-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .kb-sec-hero-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kb-sec-metric-card {
+    background: var(--bg-surface);
+    border: 2px solid var(--border-subtle);
+    border-top: 5px solid #0d9488;
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.kb-sec-metric-val {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #0d9488;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+}
+
+.kb-sec-metric-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+/* 側邊欄資安專題項目特色樣式 */
+.kb-sec-topic-item {
+    border-left: 5px solid #0d9488 !important;
+}
+
+.kb-sec-topic-item.is-active {
+    background: linear-gradient(180deg, rgba(20, 184, 166, 0.12) 0%, var(--bg-surface) 100%) !important;
+    border-color: #0d9488 !important;
+    box-shadow: 0 4px 16px rgba(20, 184, 166, 0.22) !important;
+}
+
+/* 實體架構流程圖檔卡片 (PNG/JPG 展示區) */
+.kb-diagram-card {
+    background: #0f172a;
+    border: 2px solid #334155;
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    margin: 0.5rem 0 1rem 0;
+}
+
+.kb-diagram-img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    padding: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.25s ease-in-out;
+}
+
+.kb-diagram-img:hover {
+    transform: scale(1.01);
+}
+
+.kb-diagram-caption {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+/* 法規依據標籤條 */
+.kb-legal-basis-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.05rem;
+    padding: 0.55rem 1rem;
+    background: rgba(14, 165, 233, 0.1);
+    color: #0284c7;
+    border: 1.5px solid rgba(14, 165, 233, 0.35);
+    border-radius: var(--radius-sm);
+    margin-top: 0.4rem;
+}
+
+.kb-legal-basis-pill strong {
+    color: #0369a1;
+}
+
+/* B 級機關法定條款項目樣式 */
+.kb-b-level-item {
+    font-size: 1.12rem !important;
+    line-height: 1.75 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 0.65rem !important;
+}
+
+/* 內外部稽核查驗重點與防呆盒子 */
+.kb-audit-warning-box {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.12) 100%);
+    border: 2px dashed #d97706;
+    border-radius: var(--radius-md);
+    padding: 1.35rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.kb-audit-box-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #b45309;
+    margin: 0;
+}
+
+.kb-audit-box-text {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin: 0;
+}
+
