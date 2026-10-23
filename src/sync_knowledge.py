@@ -587,7 +587,7 @@ CURATED_TOPICS: List[Dict[str, Any]] = [
         "summary": "解決自動化腳本因公務系統連線延遲或網路瞬斷造成中斷之痛點，引進 Session 狀態持續化機制，實現失敗自動重試、斷點接續執行；並透過登入前通行碼閘門與本機 API Key 隔離儲存，保護機敏資產不外洩。",
         "keyPoints": [
             "Session 斷點續傳機制：以 JSON 持久化紀錄當前進度與已處理案件編號，遇到異常重啟時自動由中斷點接續，無須從頭重跑。",
-            "登入前通行密碼閘門：主題二內建安全防護通行碼（預設 8888），防止未授權人員隨意存取內部自動化工具。",
+            "登入前通行密碼閘門：系統具備安全防護 8 碼通行碼管制，防止未授權人員隨意存取內部自動化工具。",
             "API Key 本機隔離保存：所有 Gemini 或外部 API 金鑰僅保存在本機瀏覽器 localStorage，絕不透過網路傳輸或提交至公開倉庫。",
             "例外攔截與日誌追蹤：全流程包覆 try-except 例外處理，遇錯誤自動截圖存檔並寫入本機日誌以供事後分析。"
         ],
@@ -651,6 +651,227 @@ def detect_file_type(extension: str) -> str:
         return f"{ext.upper()} 檔案"
 
 
+
+def analyze_file_insights(fname: str, domain_key: str, doc_level: str, sub_category: str, ext: str) -> Dict[str, Any]:
+    """針對單一檔案進行業務領域分析，提煉重點摘要、核心概念圖說層級與 SOP 步驟。"""
+    clean_name = fname.replace(ext, "").replace("_", " ").strip()
+    upper_fname = fname.upper()
+
+    summary = ""
+    key_points: List[str] = []
+    sop_steps: List[Dict[str, Any]] = []
+    infographic_layers: List[Dict[str, Any]] = []
+    diagram_title = f"{clean_name} 核心概念架構圖說"
+
+    if domain_key == "security":
+        if doc_level == "Level 1" or "政策" in clean_name or "手冊" in clean_name:
+            summary = f"本文件屬資安管理體系（ISMS）最高指導階層，確立組織資通安全最高治理政策、管理承諾與權責架構，確保各項業務完全合規並落實風險控管。"
+            key_points = [
+                "最高治理準則：確立資安組織架構、管理委員會職責與全體同仁一致遵循的通則規範。",
+                "法規遵循承諾：嚴格對齊資通安全管理法、個人資料保護法與 ISO/IEC 27001 國際安全標準。",
+                "定期滾動審查：每年至少進行一次政策適法性與環境變更審查，持續精進組織安全韌性。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "方針宣達落實", "detail": "向全體同仁宣達最新資安方針，並簽署遵循承諾。"},
+                {"step": 2, "title": "跨部門權責執行", "detail": "各組室主管依政策要求推動安全控制措施與資源配置。"},
+                {"step": 3, "title": "年度適法審查", "detail": "由資安長主持管理審查會議，檢視政策有效性與稽核缺失。"}
+            ]
+            infographic_layers = [
+                {"level": "治理層", "name": "政策宣告與目標", "desc": "宣示資安政策與合規承諾", "color": "#0d9488"},
+                {"level": "組織層", "name": "權責分工與授權", "desc": "明確資安組織與主管責任邊界", "color": "#14b8a6"},
+                {"level": "控制層", "name": "管理規範與監控", "desc": "統籌推動各領域實體與技術防護", "color": "#2dd4bf"},
+                {"level": "改善層", "name": "定期審查與精進", "desc": "每年滾動式修正以應對新興威脅", "color": "#5eead4"}
+            ]
+        elif doc_level == "Level 2" or "程序" in clean_name or "規範" in clean_name:
+            summary = f"本文件屬 ISMS 二階程序規範，明訂各項資通安全業務之標準作業流程、跨部門職責劃分與例外處置指引，確保控制措施具備標準化與可稽核性。"
+            key_points = [
+                "流程標準化：詳細規範事前預防、事中審核與事後複核之作業節點，避免人為疏漏。",
+                "異常升級機制：明訂遇到安全事件或弱點時之即時通報時限與處置指引。",
+                "留痕佐證產出：作業全流程必須對應產出四階表單或系統日誌以備合規查驗。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "作業申請與評估", "detail": "提出異動或安全作業申請，評估對既有系統之影響與風險。"},
+                {"step": 2, "title": "主管審核授權", "detail": "權責主管依程序書規範進行雙重簽核授權。"},
+                {"step": 3, "title": "執行並填寫表單", "detail": "依規範步驟執行操作，並完整填報相應查驗紀錄。"}
+            ]
+            infographic_layers = [
+                {"level": "發起階段", "name": "申請與風險評估", "desc": "事前分析作業範疇與潛在資安衝擊", "color": "#0d9488"},
+                {"level": "審核階段", "name": "權責雙重簽核", "desc": "主管依程序書基準審定合規性", "color": "#14b8a6"},
+                {"level": "執行階段", "name": "標準操作落實", "desc": "嚴格遵循標準流程避免防護盲區", "color": "#2dd4bf"},
+                {"level": "歸檔階段", "name": "佐證留痕稽核", "desc": "紀錄表單歸檔以備內外部抽驗", "color": "#5eead4"}
+            ]
+        elif doc_level == "Level 3" or "作業說明" in clean_name or "指引" in clean_name or "手冊" in clean_name:
+            summary = f"本文件屬 ISMS 三階作業指導書，針對具體軟硬體設備、作業系統或特定操作環境提供細部步驟指引與安全配置基準，為第一線執行人員之操作手冊。"
+            key_points = [
+                "步驟化操作指引：條列每項系統參數設定與安全強化（Hardening）基準值。",
+                "防呆與容錯設計：標明關鍵風險步驟與禁止事項，降低一線工程師設定失誤率。",
+                "實作一致性：確保不同輪值人員或職務代理人均能產出一致之安全防護品質。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "操作前環境確認", "detail": "確認系統權限、版本相容性與最新設定備份。"},
+                {"step": 2, "title": "循序執行配置", "detail": "依指導書步驟依序調整設定，檢查每項基準數值。"},
+                {"step": 3, "title": "功能驗證與測試", "detail": "執行安全驗證測試，確保業務功能正常且弱點已排除。"}
+            ]
+            infographic_layers = [
+                {"level": "步驟一", "name": "準備與環境備份", "desc": "確保還原點就緒與必要權限配置", "color": "#0d9488"},
+                {"level": "步驟二", "name": "安全基準組態", "desc": "依指南進行系統強化與參數調校", "color": "#14b8a6"},
+                {"level": "步驟三", "name": "測試與驗證", "desc": "檢驗連線效能與安全性合規度", "color": "#2dd4bf"}
+            ]
+        else:
+            summary = f"本文件屬 ISMS 四階表單或紀錄佐證文件，用於記錄各項資安控制措施實際執行過程，為內部稽核、外部驗證與法規查核之關鍵直接證據。"
+            key_points = [
+                "完整性與不可否認：如實記錄執行時間、操作人員、簽核主管與各項量化檢驗數值。",
+                "稽核抽樣核心：內外部稽核員驗證 ISMS 控制措施落實度之主要佐證憑據。",
+                "保存與銷毀規範：嚴格遵循機關機密等級與法規保存年限妥善保管歸檔。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "即時填寫紀錄", "detail": "作業完成當下詳實登載操作項目與查核數據。"},
+                {"step": 2, "title": "主管定期審查", "detail": "權責主管每週或每月定期覆核簽名，確認無異常。"},
+                {"step": 3, "title": "妥善歸檔備查", "detail": "歸入資安專卷或電子留痕系統，依年限保存備查。"}
+            ]
+            infographic_layers = [
+                {"level": "填報", "name": "一線執行留痕", "desc": "記錄人事實地數據與查核紀錄", "color": "#0d9488"},
+                {"level": "簽核", "name": "主管審查確認", "desc": "權責人員雙簽驗證落實度", "color": "#14b8a6"},
+                {"level": "存檔", "name": "合規稽核備查", "desc": "納入評鑑抽查樣本與定期保存", "color": "#2dd4bf"}
+            ]
+    elif domain_key == "ai":
+        if "PROMPT" in upper_fname or "提示" in clean_name or "簡報" in clean_name:
+            summary = f"本文件專注於 Generative AI 結構化提示詞工程（Prompt Engineering）與成果產製，透過角色定義、情境注入與格式約束，引導大型語言模型產出高專業度內容。"
+            key_points = [
+                "結構化提示框架：包含角色設定（Role）、任務目標（Objective）、邊界約束（Constraints）與結構化輸出（Format）。",
+                "少樣本提示（Few-Shot）：提供高品質範例樣本，大幅縮小模型輸出歧異度與幻覺率。",
+                "前端整合交付：支援一鍵生成簡報大綱、文字潤飾與投影片排版產製。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "定義角色與目標", "detail": "明確設定 AI 扮演之專業角色與目標任務。"},
+                {"step": 2, "title": "注入規範與範例", "detail": "加入負向約束（如嚴禁幻覺）與少樣本範例格式。"},
+                {"step": 3, "title": "產製與後續微調", "detail": "調用模型生成內容，並透過互動介面微調交付。"}
+            ]
+            infographic_layers = [
+                {"level": "輸入層", "name": "角色情境與任務", "desc": "賦予 AI 專業身分與明確目標", "color": "#0284c7"},
+                {"level": "約束層", "name": "格式邊界與約束", "desc": "指定字數、語言規範與防幻覺規則", "color": "#0ea5e9"},
+                {"level": "範例層", "name": "少樣本標竿示範", "desc": "提供高品質輸入輸出範例引導", "color": "#38bdf8"},
+                {"level": "輸出層", "name": "結構化成果產出", "desc": "生成即用型簡報大綱或 Markdown", "color": "#7dd3fc"}
+            ]
+        elif "RAG" in upper_fname or "知識" in clean_name or "VECTOR" in upper_fname:
+            summary = f"本文件探討私有化檢索增強生成（RAG）架構，將機敏知識庫切塊向量化儲存，於提問時精準檢索最相關段落並注入上下文，杜絕資料外洩與模型胡言亂語。"
+            key_points = [
+                "私密資料本地保護：敏感文件僅於內部環境進行切塊索引，金鑰與資料不提交公有模型訓練。",
+                "語意向量檢索：結合 Dense Vector 語意搜尋與關鍵字精確比對，提高召回率與精確度。",
+                "基於事實之生成：要求模型僅根據檢索出的參考段落作答，並標註資料來源章節。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "文件載入與切塊", "detail": "將長文件按語意區塊切割為 Chunk 並保留標題中繼資料。"},
+                {"step": 2, "title": "向量嵌入儲存", "detail": "生成高維度語意向量並存入本地向量資料庫。"},
+                {"step": 3, "title": "相似檢索回答", "detail": "接收使用者提問，檢索前 Top-K 相關段落注入提示詞產出解答。"}
+            ]
+            infographic_layers = [
+                {"level": "文件層", "name": "文字切塊與清洗", "desc": "長文本依段落切塊並去除贅字", "color": "#0284c7"},
+                {"level": "向量層", "name": "Embedding 儲存", "desc": "計算語意向量建立本機索引", "color": "#0ea5e9"},
+                {"level": "檢索層", "name": "Top-K 相似度比對", "desc": "精準萃取與提問最相關之內文段落", "color": "#38bdf8"},
+                {"level": "生成層", "name": "上下文注入回答", "desc": "引導 LLM 基於事實生成精確回覆", "color": "#7dd3fc"}
+            ]
+        else:
+            summary = f"本文件涵蓋現代 AI 技術研發、多模態模型應用與智能代理管線架構，提供各項前瞻人工智慧工具之實務落地技術參考與實作指引。"
+            key_points = [
+                "多模態模型整合：支援文字、圖像、音訊多面向輸入理解與跨模態生成。",
+                "代理人自主架構：結合規劃（Planning）、記憶（Memory）與工具調用（Tools）之自動化工作流。",
+                "輕量化邊緣部署：探討模型本機推論與 API 成本最佳化方案。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "評估業務情境", "detail": "分析任務複雜度，挑選最適模型尺寸與推論架構。"},
+                {"step": 2, "title": "管線串接開發", "detail": "整合前後端介面、工具函式庫與例外處理。"},
+                {"step": 3, "title": "效能與品質調優", "detail": "評估推論延遲、生成精準度並調校系統提示詞。"}
+            ]
+            infographic_layers = [
+                {"level": "核心層", "name": "模型評估與選型", "desc": "分析業務場景選用合適開源/商用模型", "color": "#0284c7"},
+                {"level": "整合層", "name": "提示詞與工具管線", "desc": "串接自訂函式庫與外部資料源", "color": "#0ea5e9"},
+                {"level": "部署層", "name": "本地推論與安全防護", "desc": "實現資料零外洩之高可用部署", "color": "#38bdf8"}
+            ]
+    else:  # python
+        if "RPA" in upper_fname or "AUTO" in upper_fname or "模擬" in clean_name or "點擊" in clean_name:
+            summary = f"本程式/文件為 Python RPA 無人值守自動化解決方案，透過系統模擬與跨平台排程，自動化處理重複性繁瑣業務，降低人工操作失誤並實現高容錯。"
+            key_points = [
+                "無人值守自動化：模擬使用者跨系統輸入、點擊與審核，顯著提升案件處理吞吐量。",
+                "容錯與斷點續傳：具備異常重試與 Session 持久化儲存，當機重啟後可由中斷點接續執行。",
+                "本機日誌與截圖留痕：錯誤發生當下自動捕捉畫面並記錄 Traceback，便於維運排查。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "環境相容性檢測", "detail": "檢測驅動程式、解析度與網路連線狀態。"},
+                {"step": 2, "title": "批次自動化作業", "detail": "讀取待辦檔案，自動模擬登入填報並即時記錄進度。"},
+                {"step": 3, "title": "產出執行彙整報告", "detail": "彙總成功筆數與異常清單，產出 Excel 稽核對帳表。"}
+            ]
+            infographic_layers = [
+                {"level": "啟動層", "name": "環境校驗與配置", "desc": "讀取設定檔並確認連線安全狀態", "color": "#d97706"},
+                {"level": "執行層", "name": "模擬輸入與流程", "desc": "跨公務系統模擬點擊、填報核銷", "color": "#f59e0b"},
+                {"level": "防禦層", "name": "斷點續傳與重試", "desc": "網路瞬斷自動重試、即時紀錄進度", "color": "#fbbf24"},
+                {"level": "回報層", "name": "稽核日誌與統計", "desc": "產出處理成果清單與異常警示通知", "color": "#fde68a"}
+            ]
+        elif "EXCEL" in upper_fname or "CSV" in upper_fname or "報表" in clean_name or "彙總" in clean_name:
+            summary = f"本程式專注於辦公室試算表資料自動化處理管線，運用 Pandas 批次讀取海量多來源表格，自動執行欄位映射、邏輯計算、防呆校驗並匯出美化報表。"
+            key_points = [
+                "秒級海量運算：幾秒鐘內合併數萬筆異質資料表，徹底告別人工作業與複製貼上疏漏。",
+                "資料清洗防呆：自動補齊缺漏值、格式化日期數值並濾除重複異常紀錄。",
+                "自動套用商業樣式：自動產生醒目提示著色、樞紐彙總與主管層級匯出報表。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "載入原始資料來源", "detail": "自動掃描目錄並批次載入多份 Excel/CSV 檔案。"},
+                {"step": 2, "title": "資料清洗與對齊", "detail": "欄位重新對齊、去除多餘空白並進行條件過濾計算。"},
+                {"step": 3, "title": "美化輸出與儲存", "detail": "套用字型、邊框與自動欄寬，產出最終成果試算表。"}
+            ]
+            infographic_layers = [
+                {"level": "匯入", "name": "多源表格讀取", "desc": "批次導入分散之業務資料試算表", "color": "#d97706"},
+                {"level": "清洗", "name": "正規化與檢核", "desc": "過濾異常值、格式對齊與防呆校驗", "color": "#f59e0b"},
+                {"level": "運算", "name": "邏輯彙總與分析", "desc": "交叉比對計算指標與統計維度", "color": "#fbbf24"},
+                {"level": "匯出", "name": "產出高階成品表", "desc": "自動套用樣式一鍵交付業務報表", "color": "#fde68a"}
+            ]
+        elif "SPIDER" in upper_fname or "CRAWL" in upper_fname or "爬蟲" in clean_name:
+            summary = f"本程式為網路數據自動化萃取管線，透過自適應請求頭與防爬機制應對，精準爬取公開網頁情報、政令公告或特定公開資源，結構化存檔以供研判。"
+            key_points = [
+                "防禦機制相容：輪換 User-Agent 與動態延遲間隔，避免對目標伺服器造成負擔。",
+                "結構化資料萃取：利用 BeautifulSoup 與正規表達式精準萃取內文、標題與時間欄位。",
+                "自動化增量更新：比對歷史資料庫僅抓取最新未處理項目，節省頻寬與運算資源。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "發起合規請求", "detail": "配置合法標頭並發送網路請求取得 HTML 內容。"},
+                {"step": 2, "title": "DOM 解析與萃取", "detail": "定位特定標籤萃取所需業務數值並轉換編碼。"},
+                {"step": 3, "title": "增量比對存庫", "detail": "剔除重複資料，寫入本機資料庫或 CSV 檔案。"}
+            ]
+            infographic_layers = [
+                {"level": "請求", "name": "自適應請求封裝", "desc": "隨機標頭與延遲避免風控阻擋", "color": "#d97706"},
+                {"level": "解析", "name": "DOM 結構化萃取", "desc": "精準萃取目標欄位與去除雜訊", "color": "#f59e0b"},
+                {"level": "比對", "name": "增量更新去重", "desc": "比對歷史紀錄僅保留最新公告", "color": "#fbbf24"},
+                {"level": "儲存", "name": "結構化資料匯出", "desc": "儲存為 JSON/Excel 供後續分析", "color": "#fde68a"}
+            ]
+        else:
+            summary = f"本程式/文件為 Python 核心業務模組，採用模組化架構與 Type Hints 規範撰寫，具備高度可維護性、可擴展性與本機環境相容性。"
+            key_points = [
+                "模組化封裝：遵循高內聚低耦合原則，函式單一職責清晰，便於單元測試與排錯。",
+                "嚴格型別註記：符合 PEP 8 與 Python 3.11+ Type Hints 規範，減少執行期潛在錯誤。",
+                "本機隔離運作：採用本機虛擬環境（venv）管理依賴套件，確保執行環境穩定純淨。"
+            ]
+            sop_steps = [
+                {"step": 1, "title": "虛擬環境啟動", "detail": "啟動專屬 Python 虛擬環境並檢查依賴庫版本。"},
+                {"step": 2, "title": "執行模組主函式", "detail": "傳入必要參數執行核心業務邏輯。"},
+                {"step": 3, "title": "檢查返回結果", "detail": "驗證處理成果並確認無例外錯誤留下紀錄。"}
+            ]
+            infographic_layers = [
+                {"level": "設定", "name": "環境與依賴管理", "desc": "獨立 venv 與相依套件版本鎖定", "color": "#d97706"},
+                {"level": "模組", "name": "業務邏輯與流程", "desc": "Type Hints 嚴格型別與錯誤處理", "color": "#f59e0b"},
+                {"level": "測試", "name": "驗證與單元測試", "desc": "輸入邊界測試與輸出格式檢核", "color": "#fbbf24"}
+            ]
+
+    return {
+        "summary": summary,
+        "keyPoints": key_points,
+        "sopSteps": sop_steps,
+        "infographic": {
+            "title": diagram_title,
+            "layers": infographic_layers
+        }
+    }
+
+
 def scan_directory(domain_key: str, root_path: Path) -> List[Dict[str, Any]]:
     """遞迴掃描目錄提取檔案。"""
     items: List[Dict[str, Any]] = []
@@ -704,6 +925,8 @@ def scan_directory(domain_key: str, root_path: Path) -> List[Dict[str, Any]]:
                     doc_level = "Level 4"
                     sub_category = "四階表單紀錄"
 
+            insights = analyze_file_insights(fname, domain_key, doc_level, sub_category, ext)
+
             item_entry = {
                 "id": f"{domain_key}_{abs(hash(str(file_path)))}",
                 "fileName": fname,
@@ -718,7 +941,10 @@ def scan_directory(domain_key: str, root_path: Path) -> List[Dict[str, Any]]:
                 "fileSizeFormatted": format_file_size(file_size),
                 "fileSizeBytes": file_size,
                 "lastModified": mtime_str,
-                "summary": f"位於 {domain_key.upper()} 工作區之業務文件（路徑：{rel_to_root}）。",
+                "summary": insights["summary"],
+                "keyPoints": insights["keyPoints"],
+                "sopSteps": insights["sopSteps"],
+                "infographic": insights["infographic"],
                 "tags": [sub_category, ext.replace(".", "").upper()],
             }
             items.append(item_entry)

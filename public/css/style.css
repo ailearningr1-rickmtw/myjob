@@ -5703,3 +5703,85 @@ html[data-theme="dark"] .rpa-step-badge {
 
 /* ========================================================================== */
 
+
+
+/* ==========================================================================
+   主題四與主題二：8 碼安全驗證狀態與無 Inline CSS 樣式擴充
+   ========================================================================== */
+
+.kb-vault-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.kb-vault-unlocked-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0d9488;
+    background: rgba(20, 184, 166, 0.15);
+    border: 1.5px solid rgba(20, 184, 166, 0.35);
+    border-radius: var(--radius-pill);
+}
+
+.kb-file-row-summary {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin: 0.25rem 0 0 0;
+}
+
+.kb-modal-summary-box {
+    background: var(--bg-surface-hover);
+    border-left: 5px solid var(--accent-teal);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.kb-path-copy-row-spaced {
+    margin-top: 0.85rem;
+}
+
+/* 圖說層級色彩規範（純 CSS 類別取代 Inline CSS） */
+.kb-layer-accent-0 {
+    border-left: 5px solid #0d9488 !important;
+}
+.kb-layer-pill-0 {
+    background: #0d9488 !important;
+}
+
+.kb-layer-accent-1 {
+    border-left: 5px solid #0284c7 !important;
+}
+.kb-layer-pill-1 {
+    background: #0284c7 !important;
+}
+
+.kb-layer-accent-2 {
+    border-left: 5px solid #d97706 !important;
+}
+.kb-layer-pill-2 {
+    background: #d97706 !important;
+}
+
+.kb-layer-accent-3 {
+    border-left: 5px solid #7c3aed !important;
+}
+.kb-layer-pill-3 {
+    background: #7c3aed !important;
+}
+
+/* 檔案列整體可點擊回饋 */
+.kb-file-table-row {
+    cursor: pointer;
+}
+
+.kb-matched-file-card {
+    cursor: pointer;
+}
+
