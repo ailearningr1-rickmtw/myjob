@@ -86,8 +86,14 @@
 }
 
 html {
-    font-size: 16px;
+    font-size: 19px;
     scroll-behavior: smooth;
+}
+
+@media (min-width: 1440px) {
+    html {
+        font-size: 20px;
+    }
 }
 
 body {
@@ -159,7 +165,7 @@ body.is-festive-gala-mode .site-footer {
 }
 
 .navbar-container {
-    max-width: 1400px;
+    max-width: 1620px;
     margin: 0 auto;
     padding: 0.5rem 1.25rem;
     display: flex;
@@ -325,7 +331,7 @@ body.is-festive-gala-mode .site-footer {
 
 /* 主要內容容器 */
 .main-container {
-    max-width: 1360px;
+    max-width: 1620px;
     width: 100%;
     margin: 0 auto;
     padding: 2rem 1.75rem 3.5rem;
@@ -5058,7 +5064,7 @@ html[data-theme="dark"] .rpa-step-badge {
 /* 主分欄佈局 (左側主題導覽列 + 右側深度圖說閱讀器) */
 .kb-split-layout {
     display: grid;
-    grid-template-columns: 380px 1fr;
+    grid-template-columns: 430px 1fr;
     gap: 1.5rem;
     align-items: start;
 }
@@ -6486,4 +6492,457 @@ html[data-theme="dark"] .rpa-step-badge {
     .kb-lifecycle-workflow-bar {
         grid-template-columns: 1fr;
     }
+}
+
+
+/* ==========================================================================
+   全站文字極大化與舒適閱讀增強 (Maximum Readability Typography System)
+   針對大螢幕與公務首長閱讀習慣，全面放大字級、字重與行距
+   ========================================================================== */
+
+/* 頂部導覽列字體放大 */
+.brand-title {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+}
+
+.brand-subtitle {
+    font-size: 0.82rem !important;
+}
+
+.nav-tab-btn {
+    font-size: 1.05rem !important;
+    padding: 0.55rem 1.15rem !important;
+    font-weight: 700 !important;
+}
+
+.nav-tab-code {
+    font-size: 0.85rem !important;
+}
+
+.system-clock {
+    font-size: 1rem !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* 首頁英雄橫幅與數據看板 */
+.hero-badge {
+    font-size: 0.95rem !important;
+    padding: 0.4rem 1rem !important;
+}
+
+.hero-title {
+    font-size: 2.65rem !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+}
+
+.hero-description {
+    font-size: 1.28rem !important;
+    line-height: 1.75 !important;
+    max-width: 780px !important;
+}
+
+.stat-pill {
+    padding: 0.65rem 1.2rem !important;
+}
+
+.stat-pill-label {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+}
+
+.stat-pill-value {
+    font-size: 1.35rem !important;
+    font-weight: 900 !important;
+}
+
+.scratchpad-title {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+}
+
+.scratchpad-status {
+    font-size: 0.92rem !important;
+}
+
+.scratchpad-textarea {
+    font-size: 1.12rem !important;
+    line-height: 1.7 !important;
+}
+
+.section-heading {
+    font-size: 1.95rem !important;
+    font-weight: 900 !important;
+}
+
+.section-subheading {
+    font-size: 1.2rem !important;
+    line-height: 1.65 !important;
+}
+
+.search-input {
+    font-size: 1.15rem !important;
+    padding: 0.85rem 1.25rem 0.85rem 2.85rem !important;
+}
+
+/* 四大核心專案主題卡片文字極大化 */
+.theme-code-badge,
+.theme-status-badge {
+    font-size: 0.95rem !important;
+    padding: 0.35rem 0.85rem !important;
+}
+
+.theme-title {
+    font-size: 1.85rem !important;
+    font-weight: 900 !important;
+    line-height: 1.35 !important;
+}
+
+.theme-subtitle {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    margin-top: -0.4rem !important;
+}
+
+.theme-desc {
+    font-size: 1.25rem !important;
+    line-height: 1.75 !important;
+}
+
+.slot-item {
+    font-size: 1.15rem !important;
+    padding: 0.85rem 1.15rem !important;
+    line-height: 1.6 !important;
+}
+
+.slot-tag {
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+}
+
+.theme-route-hint {
+    font-size: 1rem !important;
+}
+
+.explore-btn {
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+    padding: 0.95rem 1.85rem !important;
+}
+
+/* 主題安全門禁驗證畫面 */
+.theme-login-title {
+    font-size: 2.15rem !important;
+    font-weight: 900 !important;
+}
+
+.theme-login-desc {
+    font-size: 1.28rem !important;
+    line-height: 1.75 !important;
+}
+
+.theme-login-input {
+    font-size: 1.95rem !important;
+    padding: 1.15rem 1.5rem !important;
+    letter-spacing: 0.45em !important;
+}
+
+.theme-login-submit-btn {
+    font-size: 1.25rem !important;
+    padding: 1rem 2.4rem !important;
+}
+
+.theme-login-back-btn {
+    font-size: 1.15rem !important;
+    padding: 1rem 1.8rem !important;
+}
+
+.theme-login-error {
+    font-size: 1.15rem !important;
+}
+
+/* 主題三：資安核心智庫視覺極大化 */
+.focus-title {
+    font-size: 2.35rem !important;
+    font-weight: 900 !important;
+    line-height: 1.3 !important;
+}
+
+.kb-sec-metric-card {
+    padding: 1.5rem 1.75rem !important;
+}
+
+.kb-sec-metric-val {
+    font-size: 2.5rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-sec-metric-label {
+    font-size: 1.18rem !important;
+    line-height: 1.6 !important;
+}
+
+/* 四大治理流程導覽列 */
+.kb-phase-card {
+    padding: 1.35rem 1.25rem !important;
+}
+
+.kb-phase-badge {
+    font-size: 0.92rem !important;
+    padding: 0.3rem 0.75rem !important;
+}
+
+.kb-phase-num {
+    font-size: 1.05rem !important;
+}
+
+.kb-phase-title {
+    font-size: 1.35rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-phase-sub {
+    font-size: 1.05rem !important;
+    line-height: 1.55 !important;
+}
+
+/* 檢視模式列 */
+.kb-current-cat-title {
+    font-size: 1.55rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-mode-btn {
+    font-size: 1.15rem !important;
+    padding: 0.65rem 1.35rem !important;
+    font-weight: 800 !important;
+}
+
+/* 左側專題導覽列表 */
+.kb-sidebar-heading {
+    font-size: 1.38rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-topic-search-input {
+    font-size: 1.15rem !important;
+    padding: 0.75rem 1rem !important;
+}
+
+.kb-topic-code {
+    font-size: 1rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-cat-status-pill {
+    font-size: 0.95rem !important;
+}
+
+.kb-topic-nav-title {
+    font-size: 1.38rem !important;
+    font-weight: 900 !important;
+    line-height: 1.35 !important;
+}
+
+.kb-topic-nav-summary {
+    font-size: 1.12rem !important;
+    line-height: 1.65 !important;
+}
+
+/* 右側主閱讀器 (文章內文全面最大化) */
+.kb-reader-code-badge {
+    font-size: 1.05rem !important;
+}
+
+.kb-reader-cat-tag {
+    font-size: 1.05rem !important;
+}
+
+.kb-reader-title {
+    font-size: 2.35rem !important;
+    font-weight: 900 !important;
+    line-height: 1.35 !important;
+}
+
+.kb-reader-subtitle {
+    font-size: 1.32rem !important;
+    line-height: 1.65 !important;
+}
+
+.kb-legal-basis-pill {
+    font-size: 1.25rem !important;
+    padding: 0.75rem 1.35rem !important;
+}
+
+.kb-summary-card-title {
+    font-size: 1.48rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-summary-card-text {
+    font-size: 1.32rem !important;
+    line-height: 1.85 !important;
+}
+
+.kb-section-heading {
+    font-size: 1.65rem !important;
+    font-weight: 900 !important;
+    padding-left: 0.85rem !important;
+    border-left-width: 5px !important;
+}
+
+/* 法定應行辦理事項項目列表 */
+.kb-b-level-item {
+    font-size: 1.35rem !important;
+    line-height: 1.95 !important;
+    margin-bottom: 0.95rem !important;
+}
+
+/* SOP 步驟卡片 */
+.kb-sop-num {
+    font-size: 1.55rem !important;
+    font-weight: 900 !important;
+    width: 44px !important;
+    height: 44px !important;
+}
+
+.kb-sop-title {
+    font-size: 1.42rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-sop-detail {
+    font-size: 1.28rem !important;
+    line-height: 1.8 !important;
+}
+
+/* 稽核查驗重點警示箱 */
+.kb-audit-box-title {
+    font-size: 1.62rem !important;
+    font-weight: 900 !important;
+}
+
+.kb-audit-box-text {
+    font-size: 1.35rem !important;
+    line-height: 1.9 !important;
+}
+
+/* 圖解卡片與圖說說明 */
+.kb-diagram-caption {
+    font-size: 1.32rem !important;
+    font-weight: 900 !important;
+    padding: 0.5rem 0 !important;
+}
+
+.kb-diagram-zoom-badge {
+    font-size: 1.08rem !important;
+    padding: 0.55rem 1.15rem !important;
+}
+
+/* 實體規章對應列表卡片 */
+.kb-matched-file-name {
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    line-height: 1.4 !important;
+}
+
+.kb-file-row-summary {
+    font-size: 1.22rem !important;
+    line-height: 1.7 !important;
+}
+
+.kb-type-pill,
+.kb-level-pill {
+    font-size: 1.05rem !important;
+    padding: 0.35rem 0.85rem !important;
+}
+
+.kb-action-btn {
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+    padding: 0.85rem 1.65rem !important;
+}
+
+/* 單檔深層研讀頁面 */
+.kb-doc-title-large {
+    font-size: 2.45rem !important;
+    font-weight: 900 !important;
+    line-height: 1.35 !important;
+}
+
+.kb-key-point-item {
+    font-size: 1.35rem !important;
+    line-height: 1.95 !important;
+}
+
+.kb-doc-breadcrumb-bar {
+    font-size: 1.15rem !important;
+}
+
+/* 高解析圖說 Lightbox 全螢幕檢視器 */
+.diagram-lightbox-title {
+    font-size: 1.45rem !important;
+    font-weight: 900 !important;
+}
+
+.diagram-tool-btn {
+    font-size: 1.15rem !important;
+    padding: 0.7rem 1.25rem !important;
+}
+
+.diagram-zoom-level-pill {
+    font-size: 1.15rem !important;
+}
+
+.diagram-lightbox-footer {
+    font-size: 1.12rem !important;
+    padding: 0.85rem 2rem !important;
+}
+
+/* 鎖定專區按鈕 */
+.theme-lock-btn {
+    font-size: 1.08rem !important;
+    padding: 0.65rem 1.25rem !important;
+}
+
+/* 主題二：自動化網頁工具箱字體極大化 */
+.rpa-tool-title,
+.rpa-stage-title {
+    font-size: 1.65rem !important;
+    font-weight: 900 !important;
+}
+
+.rpa-stage-desc,
+.rpa-tool-desc {
+    font-size: 1.25rem !important;
+    line-height: 1.75 !important;
+}
+
+.rpa-prompt-textarea,
+.batch-textarea,
+.idea-input {
+    font-size: 1.22rem !important;
+    line-height: 1.75 !important;
+}
+
+/* 主題四：活動與抽獎中心字體極大化 */
+.informal-card-title {
+    font-size: 1.75rem !important;
+    font-weight: 900 !important;
+}
+
+.informal-card-desc {
+    font-size: 1.25rem !important;
+    line-height: 1.75 !important;
+}
+
+.survey-candidate-name {
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+}
+
+.survey-candidate-desc {
+    font-size: 1.18rem !important;
+    line-height: 1.65 !important;
 }
