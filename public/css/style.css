@@ -6946,3 +6946,361 @@ html[data-theme="dark"] .rpa-step-badge {
     font-size: 1.18rem !important;
     line-height: 1.65 !important;
 }
+
+
+/* ==========================================================================
+   全新資安核心知識庫三大維度導覽與高解析圖說展示樣式 (無 Emojis, 無 Inline CSS)
+   ========================================================================== */
+
+/* 側邊欄頂部三大維度切換標籤 */
+.kb-pillar-tabs-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 2px solid var(--border-subtle);
+}
+
+.kb-pillar-tab-btn {
+    background: var(--bg-surface-hover);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.6rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.kb-pillar-tab-btn:hover {
+    border-color: var(--accent-teal);
+    background: var(--bg-surface);
+}
+
+.kb-pillar-tab-btn.is-active {
+    background: var(--bg-surface);
+    border-color: var(--accent-teal);
+    border-bottom: 4px solid var(--accent-teal);
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.18);
+}
+
+.kb-pillar-tab-title {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.25;
+}
+
+.kb-pillar-tab-badge {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+    background: rgba(20, 184, 166, 0.12);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+}
+
+/* 側邊欄內部捲動區塊 (高度自適應，滾動位置永不重置) */
+.kb-sidebar-scroll-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow-y: auto;
+    padding-right: 0.35rem;
+    max-height: calc(100vh - 280px);
+}
+
+/* 週次折疊群組 (Week Accordion) */
+.kb-week-group {
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+
+.kb-week-header-btn {
+    width: 100%;
+    background: var(--bg-surface-hover);
+    border: none;
+    border-bottom: 1.5px solid var(--border-subtle);
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    transition: background var(--transition-fast);
+}
+
+.kb-week-header-btn:hover {
+    background: rgba(20, 184, 166, 0.08);
+}
+
+.kb-week-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.kb-week-code-tag {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: #ffffff;
+    background: var(--accent-teal);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+}
+
+.kb-week-name-title {
+    font-size: 1.12rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.kb-week-header-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.kb-week-diag-pill {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-subtle);
+}
+
+.kb-week-chevron {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: transform var(--transition-fast);
+}
+
+.kb-week-group.is-open .kb-week-chevron {
+    transform: rotate(180deg);
+}
+
+.kb-week-days-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.65rem 0.5rem;
+    background: var(--bg-surface);
+}
+
+.kb-week-group:not(.is-open) .kb-week-days-list {
+    display: none;
+}
+
+/* Day 導覽卡片項目 */
+.kb-day-nav-item {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.kb-day-nav-item:hover {
+    border-color: var(--accent-teal);
+    transform: translateX(4px);
+}
+
+.kb-day-nav-item.is-active {
+    background: var(--bg-surface);
+    border-color: var(--accent-teal);
+    border-left: 6px solid var(--accent-teal);
+    box-shadow: 0 4px 10px rgba(20, 184, 166, 0.15);
+}
+
+.kb-day-nav-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kb-day-code-pill {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.82rem;
+    font-weight: 900;
+    color: var(--accent-teal);
+    background: rgba(20, 184, 166, 0.12);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+}
+
+.kb-day-diag-badge {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #0284c7;
+    background: rgba(2, 132, 199, 0.12);
+    padding: 0.1rem 0.5rem;
+    border-radius: var(--radius-pill);
+}
+
+.kb-day-nav-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* 多圖說切換展覽器 (Multi-Diagram Showcase) */
+.kb-diagram-showcase-box {
+    background: var(--bg-surface-hover);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.kb-diagram-showcase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.kb-diagram-showcase-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.kb-diagram-showcase-heading {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.kb-diagram-tab-pills-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.kb-diagram-tab-pill {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 0.45rem 1rem;
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.kb-diagram-tab-pill:hover {
+    border-color: var(--accent-teal);
+    color: var(--text-primary);
+}
+
+.kb-diagram-tab-pill.is-active {
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.25);
+}
+
+/* 規章清冊專屬篩選標籤列 */
+.kb-reg-filter-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--border-subtle);
+}
+
+.kb-reg-filter-btn {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.kb-reg-filter-btn:hover {
+    border-color: var(--accent-teal);
+    color: var(--text-primary);
+}
+
+.kb-reg-filter-btn.is-active {
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
+    color: #ffffff;
+}
+
+/* 規章清冊側邊欄導覽項目 */
+.kb-reg-nav-item {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.kb-reg-nav-item:hover {
+    border-color: var(--accent-teal);
+    transform: translateX(4px);
+}
+
+.kb-reg-nav-item.is-active {
+    background: var(--bg-surface);
+    border-color: var(--accent-teal);
+    border-left: 6px solid var(--accent-teal);
+    box-shadow: 0 4px 10px rgba(20, 184, 166, 0.15);
+}
+
+.kb-reg-nav-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kb-reg-code-pill {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #0284c7;
+    background: rgba(2, 132, 199, 0.12);
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+}
+
+.kb-reg-nav-title {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin: 0;
+}
