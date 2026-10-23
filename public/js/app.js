@@ -8303,6 +8303,11 @@ ${cfg.sourceText}`;
             return;
         }
 
+        // 確保靜態快取資料就緒
+        if (!this.knowledgeData && window.WORKSPACE_KNOWLEDGE_DATA) {
+            this.knowledgeData = window.WORKSPACE_KNOWLEDGE_DATA;
+        }
+
         const data = this.knowledgeData || window.WORKSPACE_KNOWLEDGE_DATA || {
             metadata: {
                 lastSyncedAt: "載入中...",
@@ -8315,7 +8320,6 @@ ${cfg.sourceText}`;
         };
 
         const meta = data.metadata || {};
-        const totalCount = meta.totalCount || 0;
         const domainCounts = meta.domainCounts || { security: 0, ai: 0, python: 0 };
         const categories = meta.categories || [
             { id: "security", title: "一、資安規範與 ISMS 體系", shortTitle: "資安規範與體系", topicsCount: 6 },
@@ -8326,53 +8330,17 @@ ${cfg.sourceText}`;
         const activeCatId = this.knowledgeActiveCategory || "security";
         const currentCategory = categories.find((c) => c.id === activeCatId) || categories[0];
 
-        // 取得該大類別下的結構化主題清單
+        // 取得該大類別下的結構化主題與全部檔案
         const allTopics = data.topics || [];
         const categoryTopics = allTopics.filter((t) => t.categoryId === activeCatId);
 
-        // 確保有預設選中主題
         if (!categoryTopics.some((t) => t.id === this.knowledgeActiveTopicId)) {
             this.knowledgeActiveTopicId = categoryTopics.length > 0 ? categoryTopics[0].id : "";
         }
         const activeTopic = categoryTopics.find((t) => t.id === this.knowledgeActiveTopicId) || categoryTopics[0];
 
-        // 取得該大類別下的全部實體檔案
         const allItems = data.items || [];
         const categoryFiles = allItems.filter((it) => it.domain === activeCatId);
-
-        // 搜尋過濾主題
-        const topicQuery = (this.knowledgeSearchQuery || "").trim().toLowerCase();
-        const filteredTopics = categoryTopics.filter((t) => {
-            if (!topicQuery) return true;
-            const searchCorpus = [
-                t.title,
-                t.subtitle,
-                t.summary,
-                ...(t.tags || [])
-            ].join(" ").toLowerCase();
-            return searchCorpus.includes(topicQuery);
-        });
-
-        // 檔案清單搜尋過濾
-        const fileQuery = (this.knowledgeFileSearchQuery || "").trim().toLowerCase();
-        const docLevel = this.knowledgeActiveDocLevel || "all";
-        const filteredFiles = categoryFiles.filter((it) => {
-            if (activeCatId === "security" && docLevel !== "all") {
-                if (it.docLevel !== docLevel) return false;
-            }
-            if (fileQuery) {
-                const corpus = [
-                    it.title,
-                    it.fileName,
-                    it.summary,
-                    it.subCategory,
-                    it.filePath,
-                    ...(it.tags || [])
-                ].join(" ").toLowerCase();
-                if (!corpus.includes(fileQuery)) return false;
-            }
-            return true;
-        });
 
         // 頂部三大分類導覽切換卡片 HTML (1. 資安 2. AI 3. Python)
         const categoryTabsHtml = categories.map((cat, idx) => {
@@ -8397,10 +8365,191 @@ ${cfg.sourceText}`;
             `;
         }).join("");
 
-        // 主版面 HTML（依模式切換）
+        // 主版面 HTML（依模式切換：document 單檔深入研讀 / files 原始清單 / topic 核心主題雙欄）
         let mainContentHtml = "";
-        if (this.knowledgeViewMode === "files") {
+
+        if (this.knowledgeViewMode === "document" && this.knowledgeActiveDocId) {
+            // ================================================================
+            // 模式三：專屬單一文件深入研讀與概念圖說專頁 (直接呈現在主畫面上)
+            // ================================================================
+            const docItem = allItems.find((it) => it.id === this.knowledgeActiveDocId) || categoryFiles[0];
+            if (docItem) {
+                const domainText = docItem.domain === "security" ? "一、資安規範與 ISMS 體系" : (docItem.domain === "ai" ? "二、AI 前瞻研發與應用" : "三、Python 程式與 RPA");
+                const domainBadgeClass = docItem.domain === "security" ? "kb-tag-security" : (docItem.domain === "ai" ? "kb-tag-ai" : "kb-tag-python");
+
+                // 圖說層級
+                const infoLayers = docItem.infographic?.layers || [
+                    { level: "治理層", name: "業務邏輯與規範", desc: "確立作業方針與控制基準", color: "#0d9488" },
+                    { level: "執行層", name: "標準操作程序", desc: "嚴格遵循作業指引步驟", color: "#14b8a6" },
+                    { level: "檢核層", name: "佐證留痕與稽核", desc: "完整填報紀錄以備查核", color: "#2dd4bf" }
+                ];
+                const layersHtml = infoLayers.map((lyr, lIdx) => `
+                    <div class="kb-info-layer-card kb-layer-accent-${lIdx % 4}">
+                        <div class="kb-layer-header">
+                            <span class="kb-layer-level-pill kb-layer-pill-${lIdx % 4}">${this.escapeHtml(lyr.level)}</span>
+                            <h5 class="kb-layer-name">${this.escapeHtml(lyr.name)}</h5>
+                        </div>
+                        <p class="kb-layer-desc">${this.escapeHtml(lyr.desc)}</p>
+                    </div>
+                `).join("");
+
+                // 核心重點
+                const keyPoints = docItem.keyPoints || [
+                    "符合機關標準規範與內部業務流程要求。",
+                    "提供標準作業程序作為執行與內外部查驗佐證。",
+                    "定期檢核與滾動精進以確保品質。"
+                ];
+                const keyPointsHtml = keyPoints.map((kp) => `
+                    <li class="kb-key-point-item">${this.escapeHtml(kp)}</li>
+                `).join("");
+
+                // SOP 步驟
+                const sopSteps = docItem.sopSteps || [
+                    { step: 1, title: "需求確認與評估", detail: "確認適用情境、風險等級與必要安全授權。" },
+                    { step: 2, title: "循序執行與留痕", detail: "依作業指引規範步驟操作並填報紀錄。" },
+                    { step: 3, title: "主管審核與歸檔", detail: "完成主管審查覆核並依法定年限妥善保管備查。" }
+                ];
+                const sopHtml = sopSteps.map((s) => `
+                    <div class="kb-sop-step-item">
+                        <div class="kb-sop-num">${s.step}</div>
+                        <div class="kb-sop-content">
+                            <h5 class="kb-sop-title">${this.escapeHtml(s.title)}</h5>
+                            <p class="kb-sop-detail">${this.escapeHtml(s.detail)}</p>
+                        </div>
+                    </div>
+                `).join("");
+
+                mainContentHtml = `
+                    <div class="kb-document-view-container" id="kb-document-view-pane">
+                        <!-- 麵包屑導覽與返回按鈕列 -->
+                        <div class="kb-doc-breadcrumb-bar">
+                            <div class="kb-doc-breadcrumb-left">
+                                <button type="button" class="primary-btn" id="kb-back-to-topics-btn">
+                                    ← 返回主題圖說清單
+                                </button>
+                                <button type="button" class="secondary-btn" id="kb-back-to-files-btn">
+                                    檢視全部檔案清單
+                                </button>
+                            </div>
+                            <div class="kb-doc-breadcrumb-right">
+                                <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                                <span class="kb-breadcrumb-title">${this.escapeHtml(docItem.title)}</span>
+                            </div>
+                        </div>
+
+                        <!-- 文件深入研讀本體 (全格式大字體排版、圖像化展示) -->
+                        <article class="kb-reader-article kb-doc-deep-article">
+                            <header class="kb-reader-header">
+                                <div class="kb-reader-title-meta">
+                                    <span class="kb-type-pill">${this.escapeHtml(docItem.fileType)}</span>
+                                    ${docItem.docLevel ? `<span class="kb-level-pill">${this.escapeHtml(docItem.docLevel)}</span>` : ""}
+                                    <span class="kb-item-size">${this.escapeHtml(docItem.fileSizeFormatted)}</span>
+                                    <span class="kb-item-size">最後修改：${this.escapeHtml(docItem.lastModified)}</span>
+                                </div>
+                                <h3 class="kb-reader-title kb-doc-title-large">${this.escapeHtml(docItem.title)}</h3>
+                                <div class="kb-reader-tags-row">
+                                    ${(docItem.tags || []).map((t) => `<span class="kb-tag-item">#${this.escapeHtml(t)}</span>`).join("")}
+                                </div>
+                            </header>
+
+                            <!-- 1. 文件業務核心重點摘要 -->
+                            <div class="kb-reader-summary-card">
+                                <h4 class="kb-summary-card-title">文件業務重點摘要</h4>
+                                <p class="kb-summary-card-text">${this.escapeHtml(docItem.summary)}</p>
+                            </div>
+
+                            <!-- 2. 核心概念架構圖說 (Infographic) -->
+                            <section class="kb-reader-section">
+                                <div class="kb-reader-infographic-card">
+                                    <div class="kb-infographic-header">
+                                        <h4 class="kb-infographic-title">${this.escapeHtml(docItem.infographic?.title || "文件核心概念架構圖說")}</h4>
+                                        <span class="kb-helper-badge">高對比概念架構圖</span>
+                                    </div>
+                                    <div class="kb-infographic-layers-grid">
+                                        ${layersHtml}
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- 3. 關鍵控制準則與核心概念 -->
+                            <section class="kb-reader-section">
+                                <h4 class="kb-section-heading">關鍵控制準則與概念重點</h4>
+                                <ul class="kb-key-points-list">
+                                    ${keyPointsHtml}
+                                </ul>
+                            </section>
+
+                            <!-- 4. 標準作業程序 (SOP) 執行指引 -->
+                            <section class="kb-reader-section">
+                                <h4 class="kb-section-heading">標準作業程序 (SOP) 執行指引</h4>
+                                <div class="kb-sop-steps-container">
+                                    ${sopHtml}
+                                </div>
+                            </section>
+
+                            <!-- 5. 檔案規格與本機備忘資訊 -->
+                            <section class="kb-reader-section">
+                                <h4 class="kb-section-heading">實體檔案規格與路徑備忘</h4>
+                                <div class="kb-modal-info-grid">
+                                    <div class="kb-modal-info-item">
+                                        <span class="kb-info-label">檔案大小</span>
+                                        <span class="kb-info-val">${this.escapeHtml(docItem.fileSizeFormatted)}</span>
+                                    </div>
+                                    <div class="kb-modal-info-item">
+                                        <span class="kb-info-label">最後修改時間</span>
+                                        <span class="kb-info-val">${this.escapeHtml(docItem.lastModified)}</span>
+                                    </div>
+                                    <div class="kb-modal-info-item">
+                                        <span class="kb-info-label">文件類別</span>
+                                        <span class="kb-info-val">${this.escapeHtml(docItem.subCategory || "核心文件")}</span>
+                                    </div>
+                                    <div class="kb-modal-info-item">
+                                        <span class="kb-info-label">副檔名</span>
+                                        <span class="kb-info-val">.${this.escapeHtml(docItem.extension)}</span>
+                                    </div>
+                                </div>
+                                <div class="kb-path-copy-row kb-path-copy-row-spaced">
+                                    <code class="kb-modal-code-block">${this.escapeHtml(docItem.filePath)}</code>
+                                    <button type="button" class="secondary-btn" data-copy-win-path="${this.escapeHtml(docItem.filePath)}">
+                                        複製路徑備忘
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- 底部導覽按鈕 -->
+                            <div class="kb-doc-bottom-actions">
+                                <button type="button" class="primary-btn" id="kb-doc-bottom-back-btn">
+                                    ← 返回主題圖說清單
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                `;
+            }
+        } else if (this.knowledgeViewMode === "files") {
+            // ================================================================
             // 模式二：檢視全部原始檔案清單
+            // ================================================================
+            const fileQuery = (this.knowledgeFileSearchQuery || "").trim().toLowerCase();
+            const docLevel = this.knowledgeActiveDocLevel || "all";
+            const filteredFiles = categoryFiles.filter((it) => {
+                if (activeCatId === "security" && docLevel !== "all") {
+                    if (it.docLevel !== docLevel) return false;
+                }
+                if (fileQuery) {
+                    const corpus = [
+                        it.title,
+                        it.fileName,
+                        it.summary,
+                        it.subCategory,
+                        it.filePath,
+                        ...(it.tags || [])
+                    ].join(" ").toLowerCase();
+                    if (!corpus.includes(fileQuery)) return false;
+                }
+                return true;
+            });
+
             const docLevelBarHtml = activeCatId === "security" ? `
                 <div class="kb-doc-level-bar">
                     <span class="kb-level-label">ISMS 四階文件階層：</span>
@@ -8413,7 +8562,7 @@ ${cfg.sourceText}`;
             ` : "";
 
             const filesListHtml = filteredFiles.length > 0 ? filteredFiles.map((file) => `
-                <div class="kb-file-table-row" data-inspect-file-id="${file.id}">
+                <div class="kb-file-table-row" data-inspect-file-id="${file.id}" role="button" tabindex="0">
                     <div class="kb-file-col-main">
                         <div class="kb-item-badges">
                             <span class="kb-type-pill">${this.escapeHtml(file.fileType)}</span>
@@ -8448,7 +8597,7 @@ ${cfg.sourceText}`;
                         ${docLevelBarHtml}
                     </div>
                     <div class="kb-files-count-badge">
-                        顯示 <strong>${filteredFiles.length}</strong> / ${categoryFiles.length} 件實體檔案（點擊任何項目可直接檢閱重點摘要與概念圖說）
+                        顯示 <strong>${filteredFiles.length}</strong> / ${categoryFiles.length} 件實體檔案（點擊整列或點選按鈕即可直接閱讀重點摘要與概念圖說）
                     </div>
                     <div class="kb-files-table-container">
                         ${filesListHtml}
@@ -8456,7 +8605,21 @@ ${cfg.sourceText}`;
                 </div>
             `;
         } else {
+            // ================================================================
             // 模式一（預設）：核心知識主題與圖說閱讀器 (雙欄 Master-Detail)
+            // ================================================================
+            const topicQuery = (this.knowledgeSearchQuery || "").trim().toLowerCase();
+            const filteredTopics = categoryTopics.filter((t) => {
+                if (!topicQuery) return true;
+                const searchCorpus = [
+                    t.title,
+                    t.subtitle,
+                    t.summary,
+                    ...(t.tags || [])
+                ].join(" ").toLowerCase();
+                return searchCorpus.includes(topicQuery);
+            });
+
             const topicListHtml = filteredTopics.map((top) => {
                 const isActive = activeTopic && top.id === activeTopic.id;
                 return `
@@ -8471,10 +8634,9 @@ ${cfg.sourceText}`;
                 `;
             }).join("");
 
-            // 核心閱讀器右側內容
             let readerBodyHtml = "";
             if (activeTopic) {
-                // 1. 架構圖說視覺化層級卡片 (Infographic)
+                // 圖說層級
                 const infoLayers = activeTopic.infographic?.layers || [];
                 const layersHtml = infoLayers.map((lyr, lIdx) => `
                     <div class="kb-info-layer-card kb-layer-accent-${lIdx % 4}">
@@ -8486,7 +8648,7 @@ ${cfg.sourceText}`;
                     </div>
                 `).join("");
 
-                // 2. SOP 執行步驟卡片 (Numbered Steps)
+                // SOP 步驟
                 const sopSteps = activeTopic.sopSteps || [];
                 const sopHtml = sopSteps.map((s) => `
                     <div class="kb-sop-step-item">
@@ -8498,16 +8660,16 @@ ${cfg.sourceText}`;
                     </div>
                 `).join("");
 
-                // 3. 關鍵準則重點 (Key Points)
+                // 核心重點
                 const keyPoints = activeTopic.keyPoints || [];
                 const keyPointsHtml = keyPoints.map((kp) => `
                     <li class="kb-key-point-item">${this.escapeHtml(kp)}</li>
                 `).join("");
 
-                // 4. 關聯實體檔案列表 (精簡、無無效開啟按鈕)
+                // 關聯實體檔案列表 (支援直接點擊檢閱重點摘要與概念圖說)
                 const matchedFiles = activeTopic.matchedFiles || [];
                 const matchedFilesHtml = matchedFiles.length > 0 ? matchedFiles.map((file) => `
-                    <div class="kb-matched-file-card" data-inspect-file-id="${file.id}">
+                    <div class="kb-matched-file-card" data-inspect-file-id="${file.id}" role="button" tabindex="0">
                         <div class="kb-matched-file-main">
                             <div class="kb-item-badges">
                                 <span class="kb-type-pill">${this.escapeHtml(file.fileType)}</span>
@@ -8518,20 +8680,19 @@ ${cfg.sourceText}`;
                             <p class="kb-file-row-summary">${this.escapeHtml(file.summary || "")}</p>
                         </div>
                         <div class="kb-matched-file-actions">
-                            <button type="button" class="primary-btn kb-action-btn" data-inspect-file-id="${file.id}" title="查看本文件的重點摘要、核心觀念與概念圖說">
+                            <button type="button" class="primary-btn kb-action-btn" data-inspect-file-id="${file.id}">
                                 檢視文件重點摘要與圖說
                             </button>
                         </div>
                     </div>
                 `).join("") : `
                     <div class="kb-no-files-notice">
-                        <p>本主題為綜合架構知識指引，可透過上方「全部原始檔案」模式查閱相關細部檔案。</p>
+                        <p>本主題為綜合架構知識指引，可透過上方「原始檔案重點清單」查閱相關細部檔案。</p>
                     </div>
                 `;
 
                 readerBodyHtml = `
                     <article class="kb-reader-article">
-                        <!-- 標題區域 -->
                         <header class="kb-reader-header">
                             <div class="kb-reader-title-meta">
                                 <span class="kb-reader-code-badge">${this.escapeHtml(activeTopic.topicCode)}</span>
@@ -8544,7 +8705,7 @@ ${cfg.sourceText}`;
                             </div>
                         </header>
 
-                        <!-- 核心重點摘要 -->
+                        <!-- 業務摘要 -->
                         <div class="kb-reader-summary-card">
                             <h4 class="kb-summary-card-title">業務定位與核心價值摘要</h4>
                             <p class="kb-summary-card-text">${this.escapeHtml(activeTopic.summary)}</p>
@@ -8579,9 +8740,9 @@ ${cfg.sourceText}`;
                             </ul>
                         </section>
 
-                        <!-- 關聯實體文件清單 -->
+                        <!-- 關聯實體文件清單 (點擊直接深入閱讀) -->
                         <section class="kb-reader-section">
-                            <h4 class="kb-section-heading">關聯實體文件重點檢閱 (${matchedFiles.length} 份)</h4>
+                            <h4 class="kb-section-heading">關聯實體文件重點檢閱 (${matchedFiles.length} 份，點選直接研讀)</h4>
                             <div class="kb-matched-files-list">
                                 ${matchedFilesHtml}
                             </div>
@@ -8594,7 +8755,7 @@ ${cfg.sourceText}`;
 
             mainContentHtml = `
                 <div class="kb-split-layout">
-                    <!-- 左側主題導覽列 (可搜尋、可點選即時切換) -->
+                    <!-- 左側主題導覽列 (可搜尋、點擊即時切換) -->
                     <aside class="kb-sidebar-column">
                         <div class="kb-sidebar-header">
                             <div class="kb-sidebar-title-row">
@@ -8647,7 +8808,7 @@ ${cfg.sourceText}`;
                     ${categoryTabsHtml}
                 </nav>
 
-                <!-- 當前選取分類資訊列與視圖切換 (核心圖說閱讀器 vs 全部原始檔案) -->
+                <!-- 當前選取分類資訊列與視圖切換 -->
                 <div class="kb-current-cat-bar">
                     <div class="kb-current-cat-title-group">
                         <span class="kb-path-tag ${activeCatId === "security" ? "kb-tag-security" : (activeCatId === "ai" ? "kb-tag-ai" : "kb-tag-python")}">
@@ -8672,9 +8833,6 @@ ${cfg.sourceText}`;
 
                 <!-- 浮動提示框 -->
                 <div id="kb-toast-box" class="kb-toast-notification is-hidden" aria-live="assertive"></div>
-
-                <!-- 內建檔案詳細檢閱抽屜 (Modal) -->
-                <div id="kb-detail-modal-container" class="is-hidden" aria-hidden="true"></div>
             </div>
         `;
 
@@ -8724,6 +8882,8 @@ ${cfg.sourceText}`;
                     this.knowledgeActiveCategory = newCat;
                     this.knowledgeSearchQuery = "";
                     this.knowledgeFileSearchQuery = "";
+                    this.knowledgeViewMode = "topic";
+                    this.knowledgeActiveDocId = null;
                     this.renderTheme04KnowledgeHub(theme);
                 }
             });
@@ -8733,16 +8893,19 @@ ${cfg.sourceText}`;
         this.focusSection.querySelectorAll("[data-kb-view-mode]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 this.knowledgeViewMode = btn.getAttribute("data-kb-view-mode") || "topic";
+                this.knowledgeActiveDocId = null;
                 this.renderTheme04KnowledgeHub(theme);
             });
         });
 
-        // 點選左側主題項目 -> 右側立即更新圖說與內容
+        // 點選左側主題項目 -> 右側立即更新主題內容
         this.focusSection.querySelectorAll("[data-select-topic-id]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 const topicId = btn.getAttribute("data-select-topic-id");
                 if (topicId) {
                     this.knowledgeActiveTopicId = topicId;
+                    this.knowledgeViewMode = "topic";
+                    this.knowledgeActiveDocId = null;
                     this.renderTheme04KnowledgeHub(theme);
                     const readerEl = document.getElementById("kb-reader-container");
                     if (readerEl && window.innerWidth <= 960) {
@@ -8752,7 +8915,34 @@ ${cfg.sourceText}`;
             });
         });
 
-        // 左側主題關鍵字搜尋
+        // 單檔閱讀模式之返回按鈕
+        const backTopicBtn = document.getElementById("kb-back-to-topics-btn");
+        const backBottomBtn = document.getElementById("kb-doc-bottom-back-btn");
+        const backFilesBtn = document.getElementById("kb-back-to-files-btn");
+
+        if (backTopicBtn) {
+            backTopicBtn.addEventListener("click", () => {
+                this.knowledgeViewMode = "topic";
+                this.knowledgeActiveDocId = null;
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+        if (backBottomBtn) {
+            backBottomBtn.addEventListener("click", () => {
+                this.knowledgeViewMode = "topic";
+                this.knowledgeActiveDocId = null;
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+        if (backFilesBtn) {
+            backFilesBtn.addEventListener("click", () => {
+                this.knowledgeViewMode = "files";
+                this.knowledgeActiveDocId = null;
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+
+        // 左側主題搜尋
         const topicSearchInput = document.getElementById("kb-topic-search-input");
         if (topicSearchInput) {
             let timer = null;
@@ -8796,7 +8986,7 @@ ${cfg.sourceText}`;
             });
         });
 
-        // 檢閱檔案重點摘要與概念圖說 (全面支援點擊按鈕或點擊卡片整列)
+        // 核心修正：利用事件委派捕捉所有「檢視文件重點摘要與圖說」點擊 (100% 響應)
         this.focusSection.querySelectorAll("[data-inspect-file-id]").forEach((elem) => {
             elem.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -8804,12 +8994,22 @@ ${cfg.sourceText}`;
                 const allItems = this.knowledgeData?.items || window.WORKSPACE_KNOWLEDGE_DATA?.items || [];
                 const item = allItems.find((it) => it.id === fileId);
                 if (item) {
+                    // 切換至深入研讀專頁並同時打開頂層彈窗
+                    this.knowledgeActiveDocId = fileId;
+                    this.knowledgeViewMode = "document";
+                    this.renderTheme04KnowledgeHub(theme);
                     this.showKnowledgeDetailModal(item);
+
+                    // 平滑滾動到主要閱讀區頂部
+                    const targetEl = document.getElementById("kb-document-view-pane") || this.focusSection;
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
                 }
             });
         });
 
-        // 複製路徑備忘按鈕 (純文字複製，絕無開啟字眼)
+        // 複製路徑備忘按鈕
         this.focusSection.querySelectorAll("[data-copy-win-path]").forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -8842,16 +9042,16 @@ ${cfg.sourceText}`;
     }
 
     /**
-     * 顯示文件重點摘要與概念圖說抽屜 (Modal) - 徹底移除無效開啟按鈕，強化視覺化圖說
+     * 顯示文件重點摘要與概念圖說全螢幕彈窗 (直接掛在 document.body，徹底解決被父層樣式阻擋之問題)
      */
     showKnowledgeDetailModal(item) {
-        const modalContainer = document.getElementById("kb-detail-modal-container");
-        if (!modalContainer) return;
+        // 先移除可能存在的舊彈窗
+        const oldModal = document.getElementById("kb-global-modal-overlay");
+        if (oldModal) oldModal.remove();
 
         const domainText = item.domain === "security" ? "一、資安規範與 ISMS 體系" : (item.domain === "ai" ? "二、AI 前瞻研發與應用" : "三、Python 程式與 RPA");
         const domainBadgeClass = item.domain === "security" ? "kb-tag-security" : (item.domain === "ai" ? "kb-tag-ai" : "kb-tag-python");
 
-        // 1. 核心概念圖說層級渲染
         const infoLayers = item.infographic?.layers || [
             { level: "核心", name: "業務邏輯管線", desc: "標準作業與流程控制", color: "#0d9488" },
             { level: "規範", name: "法規與安全基準", desc: "嚴格遵循內部合規基準", color: "#14b8a6" }
@@ -8866,7 +9066,6 @@ ${cfg.sourceText}`;
             </div>
         `).join("");
 
-        // 2. 關鍵核心重點渲染
         const keyPoints = item.keyPoints || [
             "符合組織標準規範與業務流程要求。",
             "提供標準作業程序作為執行與查驗佐證。",
@@ -8876,7 +9075,6 @@ ${cfg.sourceText}`;
             <li class="kb-key-point-item">${this.escapeHtml(kp)}</li>
         `).join("");
 
-        // 3. SOP 執行步驟渲染
         const sopSteps = item.sopSteps || [
             { step: 1, title: "需求確認", detail: "確認適用情境與安全要求。" },
             { step: 2, title: "依規執行", detail: "循序執行操作並產出留痕紀錄。" },
@@ -8892,119 +9090,106 @@ ${cfg.sourceText}`;
             </div>
         `).join("");
 
-        modalContainer.innerHTML = `
-            <div class="kb-modal-backdrop" id="kb-modal-backdrop">
-                <div class="kb-modal-card" role="dialog" aria-modal="true">
-                    <div class="kb-modal-header">
-                        <div class="kb-modal-title-group">
-                            <div class="kb-item-badges">
-                                <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
-                                <span class="kb-type-pill">${this.escapeHtml(item.fileType)}</span>
-                                ${item.docLevel ? `<span class="kb-level-pill">${this.escapeHtml(item.docLevel)}</span>` : ""}
-                                ${item.subCategory ? `<span class="kb-subcat-pill">${this.escapeHtml(item.subCategory)}</span>` : ""}
-                            </div>
-                            <h3 class="kb-modal-title">${this.escapeHtml(item.title)}</h3>
+        const modalWrapper = document.createElement("div");
+        modalWrapper.id = "kb-global-modal-overlay";
+        modalWrapper.className = "kb-global-modal-backdrop";
+        modalWrapper.innerHTML = `
+            <div class="kb-modal-card" role="dialog" aria-modal="true">
+                <div class="kb-modal-header">
+                    <div class="kb-modal-title-group">
+                        <div class="kb-item-badges">
+                            <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                            <span class="kb-type-pill">${this.escapeHtml(item.fileType)}</span>
+                            ${item.docLevel ? `<span class="kb-level-pill">${this.escapeHtml(item.docLevel)}</span>` : ""}
+                            ${item.subCategory ? `<span class="kb-subcat-pill">${this.escapeHtml(item.subCategory)}</span>` : ""}
                         </div>
-                        <button type="button" class="kb-modal-close-btn" id="kb-modal-close-btn" aria-label="關閉視窗">✕</button>
+                        <h3 class="kb-modal-title">${this.escapeHtml(item.title)}</h3>
+                    </div>
+                    <button type="button" class="kb-modal-close-btn" id="kb-global-close-btn" aria-label="關閉視窗">✕</button>
+                </div>
+
+                <div class="kb-modal-body">
+                    <div class="kb-modal-summary-box">
+                        <h4 class="kb-summary-card-title">文件業務重點摘要</h4>
+                        <p class="kb-modal-summary-text">${this.escapeHtml(item.summary)}</p>
                     </div>
 
-                    <div class="kb-modal-body">
-                        <!-- 文件業務核心重點摘要 -->
-                        <div class="kb-modal-summary-box">
-                            <h4 class="kb-summary-card-title">文件業務重點摘要</h4>
-                            <p class="kb-modal-summary-text">${this.escapeHtml(item.summary)}</p>
-                        </div>
-
-                        <!-- 核心概念架構圖說 (Infographic) -->
-                        <div class="kb-modal-field-group">
-                            <h4 class="kb-section-heading">核心概念架構圖說</h4>
-                            <div class="kb-infographic-layers-grid">
-                                ${layersHtml}
-                            </div>
-                        </div>
-
-                        <!-- 三大核心觀念與規範要點 -->
-                        <div class="kb-modal-field-group">
-                            <h4 class="kb-section-heading">關鍵控制準則與概念重點</h4>
-                            <ul class="kb-key-points-list">
-                                ${keyPointsHtml}
-                            </ul>
-                        </div>
-
-                        <!-- 標準作業程序 (SOP) -->
-                        <div class="kb-modal-field-group">
-                            <h4 class="kb-section-heading">標準作業程序 (SOP) 執行指引</h4>
-                            <div class="kb-sop-steps-container">
-                                ${sopHtml}
-                            </div>
-                        </div>
-
-                        <!-- 文件規格備忘 -->
-                        <div class="kb-modal-field-group">
-                            <h4 class="kb-section-heading">實體檔案規格備忘</h4>
-                            <div class="kb-modal-info-grid">
-                                <div class="kb-modal-info-item">
-                                    <span class="kb-info-label">檔案大小</span>
-                                    <span class="kb-info-val">${this.escapeHtml(item.fileSizeFormatted)}</span>
-                                </div>
-                                <div class="kb-modal-info-item">
-                                    <span class="kb-info-label">最後修改時間</span>
-                                    <span class="kb-info-val">${this.escapeHtml(item.lastModified)}</span>
-                                </div>
-                                <div class="kb-modal-info-item">
-                                    <span class="kb-info-label">文件類別</span>
-                                    <span class="kb-info-val">${this.escapeHtml(item.subCategory || "核心文件")}</span>
-                                </div>
-                                <div class="kb-modal-info-item">
-                                    <span class="kb-info-label">副檔名</span>
-                                    <span class="kb-info-val">.${this.escapeHtml(item.extension)}</span>
-                                </div>
-                            </div>
-                            <div class="kb-path-copy-row kb-path-copy-row-spaced">
-                                <code class="kb-modal-code-block">${this.escapeHtml(item.filePath)}</code>
-                                <button type="button" class="secondary-btn" id="kb-modal-copy-path-btn">複製路徑備忘</button>
-                            </div>
+                    <div class="kb-modal-field-group">
+                        <h4 class="kb-section-heading">核心概念架構圖說</h4>
+                        <div class="kb-infographic-layers-grid">
+                            ${layersHtml}
                         </div>
                     </div>
 
-                    <div class="kb-modal-footer">
-                        <button type="button" class="primary-btn" id="kb-modal-close-footer-btn">關閉視窗</button>
+                    <div class="kb-modal-field-group">
+                        <h4 class="kb-section-heading">關鍵控制準則與概念重點</h4>
+                        <ul class="kb-key-points-list">
+                            ${keyPointsHtml}
+                        </ul>
                     </div>
+
+                    <div class="kb-modal-field-group">
+                        <h4 class="kb-section-heading">標準作業程序 (SOP) 執行指引</h4>
+                        <div class="kb-sop-steps-container">
+                            ${sopHtml}
+                        </div>
+                    </div>
+
+                    <div class="kb-modal-field-group">
+                        <h4 class="kb-section-heading">實體檔案規格備忘</h4>
+                        <div class="kb-modal-info-grid">
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">檔案大小</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.fileSizeFormatted)}</span>
+                            </div>
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">最後修改時間</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.lastModified)}</span>
+                            </div>
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">文件類別</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.subCategory || "核心文件")}</span>
+                            </div>
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">副檔名</span>
+                                <span class="kb-info-val">.${this.escapeHtml(item.extension)}</span>
+                            </div>
+                        </div>
+                        <div class="kb-path-copy-row kb-path-copy-row-spaced">
+                            <code class="kb-modal-code-block">${this.escapeHtml(item.filePath)}</code>
+                            <button type="button" class="secondary-btn" id="kb-global-copy-path-btn">複製路徑備忘</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kb-modal-footer">
+                    <button type="button" class="primary-btn" id="kb-global-close-footer-btn">關閉視窗</button>
                 </div>
             </div>
         `;
 
-        modalContainer.classList.remove("is-hidden");
-                modalContainer.setAttribute("aria-hidden", "false");
+        document.body.appendChild(modalWrapper);
 
-        const closeModal = () => {
-            modalContainer.classList.add("is-hidden");
-                        modalContainer.setAttribute("aria-hidden", "true");
-            modalContainer.innerHTML = "";
+        const destroyModal = () => {
+            modalWrapper.remove();
+            document.removeEventListener("keydown", handleEsc);
         };
 
-        const closeBtn = document.getElementById("kb-modal-close-btn");
-        const closeFooterBtn = document.getElementById("kb-modal-close-footer-btn");
-        const backdrop = document.getElementById("kb-modal-backdrop");
-        if (closeBtn) closeBtn.addEventListener("click", closeModal);
-        if (closeFooterBtn) closeFooterBtn.addEventListener("click", closeModal);
-        if (backdrop) {
-            backdrop.addEventListener("click", (e) => {
-                if (e.target === backdrop) closeModal();
-            });
-        }
-
-        // 支援按 ESC 鍵關閉
-        const handleKeyDown = (e) => {
-            if (e.key === "Escape") {
-                closeModal();
-                document.removeEventListener("keydown", handleKeyDown);
-            }
+        const handleEsc = (e) => {
+            if (e.key === "Escape") destroyModal();
         };
-        document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener("keydown", handleEsc);
 
-        // 複製路徑備忘 (無任何開啟字眼)
-        const copyBtn = document.getElementById("kb-modal-copy-path-btn");
+        const closeBtn = document.getElementById("kb-global-close-btn");
+        const closeFooterBtn = document.getElementById("kb-global-close-footer-btn");
+        if (closeBtn) closeBtn.addEventListener("click", destroyModal);
+        if (closeFooterBtn) closeFooterBtn.addEventListener("click", destroyModal);
+
+        modalWrapper.addEventListener("click", (e) => {
+            if (e.target === modalWrapper) destroyModal();
+        });
+
+        const copyBtn = document.getElementById("kb-global-copy-path-btn");
         if (copyBtn) {
             copyBtn.addEventListener("click", () => {
                 navigator.clipboard.writeText(item.filePath).then(() => {
