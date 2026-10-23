@@ -261,6 +261,13 @@ def main() -> int:
     if not validate_no_inline_css():
         return 1
 
+    # 自動同步三大工作目錄知識庫 (AI、資安、Python/RPA)
+    try:
+        from sync_knowledge import main as sync_knowledge_main
+        sync_knowledge_main()
+    except Exception as exc:
+        print(f"[警告] 知識庫自動同步遭遇異常：{exc}")
+
     if args.serve:
         serve_local(port=args.port)
 

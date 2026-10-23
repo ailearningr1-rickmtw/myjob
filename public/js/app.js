@@ -58,13 +58,13 @@ const WORKSPACE_THEMES = [
         navShortName: "知識文件",
         title: "主題四：知識庫與技術文件中心",
         subtitle: "Knowledge & Docs Vault",
-        status: "預留擴充區",
-        description: "集中管理標準作業流程（SOP）、技術筆記、問題排解指南與常見問答的結構化智庫。",
+        status: "核心智庫已啟用",
+        description: "整合 AI 前瞻技術、資安規範 ISMS 四階架構與 Python/RPA 自動化三大工作領域，支援雲端硬碟同步、向量業務流程圖與秒速檢索。",
         iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`,
         slots: [
-            { name: "標準作業流程 (SOP) 快速檢索", tag: "SLOT-4A", detail: "依分類標籤快速查找工作規範與執行步驟。" },
-            { name: "技術筆記與程式碼片段收藏庫", tag: "SLOT-4B", detail: "儲存常用指令、架構設計與除錯紀錄。" },
-            { name: "專案架構與常見問題知識索引", tag: "SLOT-4C", detail: "建立跨部門或個人工作交接所需的完整文件索引。" }
+            { name: "AI 前瞻技術與應用研發 (Prompt & Multimodal)", tag: "DOM-AI", detail: "收錄提示詞工程架構、Gemini 模型整合、多模態簡報與影音自動產製。" },
+            { name: "資安規範與 ISMS 體系治理 (ISO 27001 / PIMS)", tag: "DOM-SEC", detail: "收錄四階文件（政策、程序書、作業說明書、表單紀錄）與緊急應變通報處置手冊。" },
+            { name: "Python 程式開發與 RPA 自動化 (Pipelines)", tag: "DOM-PY", detail: "收錄實體隔離內外網協作架構、智慧分文系統、公務流程機器人工具箱。" }
         ]
     },
     {
@@ -1175,6 +1175,15 @@ class WorkspaceApp {
         this.rpaVoiceRate = "+0%";
         this.rpaVoiceAudioUrl = "";
 
+        // 主題四：三大核心領域知識庫與技術文件中心狀態
+        this.knowledgeData = window.WORKSPACE_KNOWLEDGE_DATA || null;
+        this.knowledgeSearchQuery = "";
+        this.knowledgeActiveTab = "all"; // all | ai | security | python | flowcharts
+        this.knowledgeActiveDocLevel = "all"; // all | Level 1 | Level 2 | Level 3 | Level 4
+        this.knowledgeActiveFlowId = "flow-ai-slide-pipeline";
+        this.knowledgeSelectedItemId = null;
+        this.isSyncingKnowledge = false;
+
         this.cacheDomElements();
         this.fireworks = new FireworksController(this.fireworksCanvas);
         this.initThemeMode();
@@ -1493,9 +1502,12 @@ class WorkspaceApp {
         this.focusSection.classList.remove("is-hidden");
 
         const theme02Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-02");
+        const theme04Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-04");
         const theme05Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-05");
         if (routeId === "theme-02") {
             this.renderTheme02AutomationHub(theme02Obj);
+        } else if (routeId === "theme-04") {
+            this.renderTheme04KnowledgeHub(theme04Obj);
         } else if (routeId === "theme-05") {
             this.renderTheme05InformalHub(theme05Obj);
         } else if (routeId === "theme-05-draw") {
@@ -8202,6 +8214,698 @@ ${cfg.sourceText}`;
                 }
             });
         });
+    }
+
+    /**
+     * ========================================================================
+     * 主題四：三大核心領域知識庫與技術文件中心 (AI / 資安 / Python-RPA)
+     * ========================================================================
+     */
+    async loadKnowledgeData(forceRefresh = false) {
+        if (!forceRefresh && this.knowledgeData && this.knowledgeData.items && this.knowledgeData.items.length > 0) {
+            return this.knowledgeData;
+        }
+        this.isSyncingKnowledge = true;
+        try {
+            const resp = await fetch(`./data/knowledge.json?t=${Date.now()}`);
+            if (resp.ok) {
+                const json = await resp.json();
+                this.knowledgeData = json;
+                this.isSyncingKnowledge = false;
+                return json;
+            }
+        } catch (err) {
+            // 在 file:// 協定或離線靜態環境自動使用注入之備援物件
+        }
+
+        if (window.WORKSPACE_KNOWLEDGE_DATA) {
+            this.knowledgeData = window.WORKSPACE_KNOWLEDGE_DATA;
+        } else {
+            this.knowledgeData = {
+                metadata: {
+                    lastSyncedAt: "離線預載狀態",
+                    totalCount: 0,
+                    domainCounts: { ai: 0, security: 0, python: 0 },
+                    roots: {}
+                },
+                flowcharts: [],
+                items: []
+            };
+        }
+        this.isSyncingKnowledge = false;
+        return this.knowledgeData;
+    }
+
+    renderTheme04KnowledgeHub(theme) {
+        if (!this.focusSection) return;
+
+        const data = this.knowledgeData || window.WORKSPACE_KNOWLEDGE_DATA || {
+            metadata: {
+                lastSyncedAt: "載入中...",
+                totalCount: 0,
+                domainCounts: { ai: 0, security: 0, python: 0 },
+                roots: {}
+            },
+            flowcharts: [],
+            items: []
+        };
+
+        const meta = data.metadata || {};
+        const totalCount = meta.totalCount || (data.items ? data.items.length : 0);
+        const domainCounts = meta.domainCounts || { ai: 0, security: 0, python: 0 };
+        const flowcharts = data.flowcharts || [];
+        const allItems = data.items || [];
+
+        // 根據目前條件過濾清單
+        const query = (this.knowledgeSearchQuery || "").trim().toLowerCase();
+        const activeTab = this.knowledgeActiveTab || "all";
+        const docLevel = this.knowledgeActiveDocLevel || "all";
+
+        let filteredItems = allItems.filter((item) => {
+            // 領域篩選
+            if (activeTab !== "all" && activeTab !== "flowcharts") {
+                if (item.domain !== activeTab) return false;
+            }
+            // 資安四階文件階層篩選
+            if (activeTab === "security" && docLevel !== "all") {
+                if (item.docLevel !== docLevel) return false;
+            }
+            // 關鍵字搜尋
+            if (query) {
+                const searchCorpus = [
+                    item.title || "",
+                    item.fileName || "",
+                    item.summary || "",
+                    item.subCategory || "",
+                    item.filePath || "",
+                    ...(Array.isArray(item.tags) ? item.tags : [])
+                ].join(" ").toLowerCase();
+                if (!searchCorpus.includes(query)) return false;
+            }
+            return true;
+        });
+
+        // 流程圖區域 HTML
+        const flowchartsHtml = this.getKnowledgeFlowchartsHtml(flowcharts);
+
+        // 知識卡片清單 HTML
+        const itemsListHtml = this.getKnowledgeItemsListHtml(filteredItems);
+
+        // 資安四階文件過濾列 HTML
+        const docLevelBarHtml = activeTab === "security" ? `
+            <div class="kb-doc-level-bar">
+                <span class="kb-level-label">ISMS 四階文件快速篩選：</span>
+                <button type="button" class="kb-level-btn ${docLevel === "all" ? "active" : ""}" data-doc-level="all">全部階層</button>
+                <button type="button" class="kb-level-btn ${docLevel === "Level 1" ? "active" : ""}" data-doc-level="Level 1">一階政策 (MS-1)</button>
+                <button type="button" class="kb-level-btn ${docLevel === "Level 2" ? "active" : ""}" data-doc-level="Level 2">二階程序書 (MS-2)</button>
+                <button type="button" class="kb-level-btn ${docLevel === "Level 3" ? "active" : ""}" data-doc-level="Level 3">三階作業說明 (MS-3)</button>
+                <button type="button" class="kb-level-btn ${docLevel === "Level 4" ? "active" : ""}" data-doc-level="Level 4">四階表單紀錄 (MS-4)</button>
+            </div>
+        ` : "";
+
+        this.focusSection.innerHTML = `
+            <div class="theme-focus-panel kb-main-panel rpa-large-ui">
+                <!-- 頂部標頭與返回按鈕 -->
+                <div class="focus-header">
+                    <div class="focus-title-group">
+                        <div class="theme-status-pill">
+                            <span class="status-indicator"></span>
+                            <span>三大核心工作領域智庫已連線</span>
+                        </div>
+                        <h2 class="focus-title">主題四：知識庫與技術文件中心</h2>
+                        <p class="theme-desc">整合 AI 前瞻技術、資安規範 ISMS 四階文件與 Python/RPA 自動化三大工作領域，支援雲端硬碟同步、向量業務流程圖與秒速檢索。</p>
+                    </div>
+                    <button type="button" class="back-overview-btn" id="kb-back-overview-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>返回總覽</span>
+                    </button>
+                </div>
+
+                <!-- 雲端硬碟同步與目錄狀態橫幅 -->
+                <div class="kb-sync-banner">
+                    <div class="kb-sync-info-left">
+                        <div class="kb-sync-icon-box" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="kb-sync-title-row">
+                                <span class="kb-sync-title">雲端硬碟三大工作目錄同步中樞</span>
+                                <span class="kb-sync-badge">最後同步時間：${this.escapeHtml(meta.lastSyncedAt || "已就緒")}</span>
+                            </div>
+                            <div class="kb-sync-paths-list">
+                                <div class="kb-path-item" title="G:\\其他電腦\\我的電腦\\dwonload\\AI">
+                                    <span class="kb-path-tag kb-tag-ai">AI 前瞻研發</span>
+                                    <code>G:\\其他電腦\\我的電腦\\dwonload\\AI (${domainCounts.ai || 0} 件)</code>
+                                </div>
+                                <div class="kb-path-item" title="G:\\我的雲端硬碟\\資安">
+                                    <span class="kb-path-tag kb-tag-security">資安與 ISMS</span>
+                                    <code>G:\\我的雲端硬碟\\資安 (${domainCounts.security || 0} 件)</code>
+                                </div>
+                                <div class="kb-path-item" title="G:\\我的雲端硬碟\\程式相關_Python">
+                                    <span class="kb-path-tag kb-tag-python">Python / RPA</span>
+                                    <code>G:\\我的雲端硬碟\\程式相關_Python (${domainCounts.python || 0} 件)</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kb-sync-actions-right">
+                        <button type="button" class="primary-btn" id="kb-refresh-sync-btn">
+                            ${this.isSyncingKnowledge ? "讀取中..." : "重新讀取最新同步"}
+                        </button>
+                        <button type="button" class="secondary-btn" id="kb-copy-sync-cmd-btn" title="複製終端機同步指令">
+                            複製同步指令
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 搜尋列與領域切換標籤 -->
+                <div class="kb-controls-bar">
+                    <div class="kb-search-box">
+                        <svg class="kb-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input
+                            type="search"
+                            id="kb-search-input"
+                            class="idea-input kb-search-input-field"
+                            placeholder="輸入關鍵字、法規名稱、檔名、標籤或路徑快速檢索知識文件..."
+                            value="${this.escapeHtml(this.knowledgeSearchQuery)}"
+                            aria-label="知識庫關鍵字搜尋"
+                        />
+                        ${this.knowledgeSearchQuery ? `
+                            <button type="button" class="kb-clear-search-btn" id="kb-clear-search-btn" title="清除搜尋條件">✕</button>
+                        ` : ""}
+                    </div>
+
+                    <div class="kb-tabs-nav" role="tablist">
+                        <button type="button" class="kb-tab-btn ${activeTab === "all" ? "active" : ""}" data-kb-tab="all">
+                            <span>全部收錄知識</span>
+                            <span class="kb-tab-count">${totalCount}</span>
+                        </button>
+                        <button type="button" class="kb-tab-btn kb-tab-ai ${activeTab === "ai" ? "active" : ""}" data-kb-tab="ai">
+                            <span>AI 前瞻技術</span>
+                            <span class="kb-tab-count">${domainCounts.ai || 0}</span>
+                        </button>
+                        <button type="button" class="kb-tab-btn kb-tab-security ${activeTab === "security" ? "active" : ""}" data-kb-tab="security">
+                            <span>資安規範與 ISMS</span>
+                            <span class="kb-tab-count">${domainCounts.security || 0}</span>
+                        </button>
+                        <button type="button" class="kb-tab-btn kb-tab-python ${activeTab === "python" ? "active" : ""}" data-kb-tab="python">
+                            <span>Python / RPA 自動化</span>
+                            <span class="kb-tab-count">${domainCounts.python || 0}</span>
+                        </button>
+                        <button type="button" class="kb-tab-btn kb-tab-flow ${activeTab === "flowcharts" ? "active" : ""}" data-kb-tab="flowcharts">
+                            <span>視覺化流程圖智庫</span>
+                            <span class="kb-tab-count">${flowcharts.length}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 資安四階文件過濾列 (若在資安標籤下自動顯示) -->
+                ${docLevelBarHtml}
+
+                <!-- 主要內容工作區 -->
+                <div class="kb-content-area">
+                    ${activeTab === "flowcharts" ? flowchartsHtml : `
+                        <!-- 流程圖快捷預覽導覽卡片 -->
+                        <div class="kb-flow-quick-card">
+                            <div class="kb-flow-quick-header">
+                                <div class="kb-flow-quick-title-group">
+                                    <span class="kb-pill-badge">圖像化流程導引</span>
+                                    <h3 class="kb-flow-quick-title">業務知識流程圖與標準作業管線</h3>
+                                </div>
+                                <button type="button" class="secondary-btn" id="kb-switch-to-flows-btn">查看全部 5 組流程圖</button>
+                            </div>
+                            <div class="kb-flow-pills-row">
+                                ${flowcharts.map((f) => `
+                                    <button type="button" class="kb-flow-pill-btn ${f.id === this.knowledgeActiveFlowId ? "active" : ""}" data-quick-flow-id="${f.id}">
+                                        ${this.escapeHtml(f.title)}
+                                    </button>
+                                `).join("")}
+                            </div>
+                            <div class="kb-active-flow-snippet">
+                                ${this.getSingleFlowchartHtml(flowcharts.find((f) => f.id === this.knowledgeActiveFlowId) || flowcharts[0])}
+                            </div>
+                        </div>
+
+                        <!-- 檔案清單計數與重置提示 -->
+                        <div class="kb-results-header">
+                            <div class="kb-results-count">
+                                顯示 <strong>${filteredItems.length}</strong> / ${totalCount} 件知識資產
+                                ${this.knowledgeSearchQuery ? `（符合搜尋條件「${this.escapeHtml(this.knowledgeSearchQuery)}」）` : ""}
+                            </div>
+                            <div class="kb-results-actions">
+                                <button type="button" class="secondary-btn" id="kb-reset-filter-btn">重置所有篩選</button>
+                            </div>
+                        </div>
+
+                        <!-- 知識庫卡片格網 -->
+                        <div class="kb-cards-grid">
+                            ${itemsListHtml}
+                        </div>
+                    `}
+                </div>
+
+                <!-- 知識詳情彈出抽屜 (Modal) 容器 -->
+                <div id="kb-detail-modal-container" class="is-hidden" aria-hidden="true"></div>
+            </div>
+        `;
+
+        this.bindTheme04KnowledgeHubEvents(theme);
+    }
+
+    /**
+     * 產製視覺化流程圖專屬展示區塊 HTML
+     */
+    getKnowledgeFlowchartsHtml(flowcharts) {
+        if (!Array.isArray(flowcharts) || flowcharts.length === 0) {
+            return `<div class="kb-empty-box">目前尚無流程圖資料。</div>`;
+        }
+
+        const activeFlow = flowcharts.find((f) => f.id === this.knowledgeActiveFlowId) || flowcharts[0];
+
+        const tabsHtml = flowcharts.map((f, idx) => `
+            <button type="button" class="kb-flow-tab-btn ${f.id === activeFlow.id ? "active" : ""}" data-flow-tab-id="${f.id}">
+                <span class="kb-flow-tab-num">0${idx + 1}</span>
+                <span class="kb-flow-tab-title">${this.escapeHtml(f.title)}</span>
+            </button>
+        `).join("");
+
+        return `
+            <div class="kb-flowcharts-studio">
+                <div class="kb-flow-tabs-bar">
+                    ${tabsHtml}
+                </div>
+                <div class="kb-flow-detail-board">
+                    ${this.getSingleFlowchartHtml(activeFlow, true)}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * 產製單一流程圖之向量卡片與節點 HTML
+     */
+    getSingleFlowchartHtml(flow, showFilterButton = false) {
+        if (!flow) return "";
+
+        const nodes = Array.isArray(flow.nodes) ? flow.nodes : [];
+        const domainBadgeClass = flow.domain === "ai" ? "kb-tag-ai" : (flow.domain === "security" ? "kb-tag-security" : "kb-tag-python");
+        const domainText = flow.domain === "ai" ? "AI 前瞻研發" : (flow.domain === "security" ? "資安規範與 ISMS" : "Python / RPA 自動化");
+
+        const nodesHtml = nodes.map((node, idx) => `
+            <div class="kb-flow-step-card">
+                <div class="kb-step-badge-row">
+                    <span class="kb-step-num-pill">STEP 0${node.step}</span>
+                    <span class="kb-step-role-badge">${this.escapeHtml(node.role)}</span>
+                </div>
+                <h4 class="kb-step-title">${this.escapeHtml(node.title)}</h4>
+                <p class="kb-step-desc">${this.escapeHtml(node.desc)}</p>
+                ${idx < nodes.length - 1 ? `
+                    <div class="kb-step-connector-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                ` : ""}
+            </div>
+        `).join("");
+
+        return `
+            <div class="kb-flow-card">
+                <div class="kb-flow-card-header">
+                    <div>
+                        <div class="kb-flow-tags-row">
+                            <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                            ${(flow.tags || []).map((t) => `<span class="kb-tag-item">#${this.escapeHtml(t)}</span>`).join("")}
+                        </div>
+                        <h3 class="kb-flow-main-title">${this.escapeHtml(flow.title)}</h3>
+                        <p class="kb-flow-main-desc">${this.escapeHtml(flow.description)}</p>
+                    </div>
+                    <div class="kb-flow-header-actions">
+                        <button type="button" class="primary-btn" data-filter-by-flow="${flow.id}">
+                            篩選本流程關聯知識文件
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 向量步驟流程節點網格 -->
+                <div class="kb-flow-steps-grid">
+                    ${nodesHtml}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * 產製知識文件卡片清單 HTML
+     */
+    getKnowledgeItemsListHtml(items) {
+        if (!Array.isArray(items) || items.length === 0) {
+            return `
+                <div class="kb-empty-results">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="kb-empty-icon">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <h3 class="section-heading">找不到符合條件的知識文件</h3>
+                    <p class="section-subheading">請嘗試縮減關鍵字、點選「全部領域」標籤或點選「重置所有篩選」重新檢視。</p>
+                </div>
+            `;
+        }
+
+        return items.map((item) => {
+            const domainBadgeClass = item.domain === "ai" ? "kb-tag-ai" : (item.domain === "security" ? "kb-tag-security" : "kb-tag-python");
+            const domainText = item.domain === "ai" ? "AI 研發" : (item.domain === "security" ? "資安規範" : "Python/RPA");
+
+            return `
+                <div class="kb-item-card ${item.isCurated ? "is-curated" : ""}" data-kb-item-id="${item.id}">
+                    <div class="kb-item-header">
+                        <div class="kb-item-badges">
+                            <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                            <span class="kb-type-pill">${this.escapeHtml(item.fileType)}</span>
+                            ${item.docLevel ? `<span class="kb-level-pill">${this.escapeHtml(item.docLevel)}</span>` : ""}
+                            ${item.subCategory ? `<span class="kb-subcat-pill">${this.escapeHtml(item.subCategory)}</span>` : ""}
+                        </div>
+                        <span class="kb-item-size">${this.escapeHtml(item.fileSizeFormatted)}</span>
+                    </div>
+
+                    <h4 class="kb-item-title" title="${this.escapeHtml(item.title)}">
+                        ${this.escapeHtml(item.title)}
+                    </h4>
+
+                    <div class="kb-item-filename-row">
+                        <span class="kb-filename-label">檔名：</span>
+                        <code class="kb-item-filename" title="${this.escapeHtml(item.fileName)}">${this.escapeHtml(item.fileName)}</code>
+                    </div>
+
+                    <p class="kb-item-summary">
+                        ${this.escapeHtml(item.summary)}
+                    </p>
+
+                    <div class="kb-item-tags-row">
+                        ${(item.tags || []).slice(0, 4).map((t) => `<span class="kb-tag-item">#${this.escapeHtml(t)}</span>`).join("")}
+                    </div>
+
+                    <div class="kb-item-footer">
+                        <span class="kb-item-mtime" title="最後修改時間：${this.escapeHtml(item.lastModified)}">
+                            ${this.escapeHtml(item.lastModified)}
+                        </span>
+                        <div class="kb-item-btn-group">
+                            <button type="button" class="secondary-btn kb-action-btn" data-copy-path="${this.escapeHtml(item.filePath)}" title="複製 Windows 檔案路徑">
+                                複製路徑
+                            </button>
+                            <a class="secondary-btn kb-action-btn" href="${this.escapeHtml(item.fileUri)}" target="_blank" rel="noopener noreferrer" title="在瀏覽器開啟或檢視">
+                                開啟
+                            </a>
+                            <button type="button" class="primary-btn kb-action-btn" data-view-detail="${item.id}">
+                                詳情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+
+    /**
+     * 綁定主題四互動事件
+     */
+    bindTheme04KnowledgeHubEvents(theme) {
+        // 返回總覽
+        const backBtn = document.getElementById("kb-back-overview-btn");
+        if (backBtn) {
+            backBtn.addEventListener("click", () => {
+                window.location.hash = "overview";
+            });
+        }
+
+        // 重新讀取同步按鈕
+        const refreshBtn = document.getElementById("kb-refresh-sync-btn");
+        if (refreshBtn) {
+            refreshBtn.addEventListener("click", async () => {
+                refreshBtn.disabled = true;
+                refreshBtn.textContent = "正在讀取中...";
+                await this.loadKnowledgeData(true);
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+
+        // 複製終端機同步指令
+        const copyCmdBtn = document.getElementById("kb-copy-sync-cmd-btn");
+        if (copyCmdBtn) {
+            copyCmdBtn.addEventListener("click", () => {
+                const cmdText = "python src/sync_knowledge.py";
+                navigator.clipboard.writeText(cmdText).then(() => {
+                    const originalText = copyCmdBtn.textContent;
+                    copyCmdBtn.textContent = "已複製同步指令！";
+                    setTimeout(() => {
+                        copyCmdBtn.textContent = originalText;
+                    }, 2200);
+                });
+            });
+        }
+
+        // 搜尋輸入框事件 (含即時過濾)
+        const searchInput = document.getElementById("kb-search-input");
+        if (searchInput) {
+            let debounceTimer = null;
+            searchInput.addEventListener("input", (e) => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    this.knowledgeSearchQuery = e.target.value;
+                    this.renderTheme04KnowledgeHub(theme);
+                    // 重新聚焦並保持游標位置
+                    const newEl = document.getElementById("kb-search-input");
+                    if (newEl) {
+                        newEl.focus();
+                        newEl.setSelectionRange(newEl.value.length, newEl.value.length);
+                    }
+                }, 220);
+            });
+        }
+
+        // 清除搜尋條件
+        const clearBtn = document.getElementById("kb-clear-search-btn");
+        if (clearBtn) {
+            clearBtn.addEventListener("click", () => {
+                this.knowledgeSearchQuery = "";
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+
+        // 領域分頁標籤切換
+        this.focusSection.querySelectorAll("[data-kb-tab]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                this.knowledgeActiveTab = btn.getAttribute("data-kb-tab") || "all";
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        });
+
+        // 資安四階文件等級切換
+        this.focusSection.querySelectorAll("[data-doc-level]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                this.knowledgeActiveDocLevel = btn.getAttribute("data-doc-level") || "all";
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        });
+
+        // 流程圖分頁切換
+        this.focusSection.querySelectorAll("[data-flow-tab-id]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                this.knowledgeActiveFlowId = btn.getAttribute("data-flow-tab-id");
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        });
+
+        // 快捷流程圖選取切換
+        this.focusSection.querySelectorAll("[data-quick-flow-id]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                this.knowledgeActiveFlowId = btn.getAttribute("data-quick-flow-id");
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        });
+
+        // 切換至完整流程圖頁面
+        const switchToFlowsBtn = document.getElementById("kb-switch-to-flows-btn");
+        if (switchToFlowsBtn) {
+            switchToFlowsBtn.addEventListener("click", () => {
+                this.knowledgeActiveTab = "flowcharts";
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+
+        // 依流程圖篩選關聯文件
+        this.focusSection.querySelectorAll("[data-filter-by-flow]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const flowId = btn.getAttribute("data-filter-by-flow");
+                this.knowledgeActiveTab = "all";
+                this.knowledgeSearchQuery = "";
+                // 找出該流程圖對應的標籤或名稱過濾
+                const flow = (this.knowledgeData?.flowcharts || []).find((f) => f.id === flowId);
+                if (flow && flow.tags && flow.tags.length > 0) {
+                    this.knowledgeSearchQuery = flow.tags[0];
+                }
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        });
+
+        // 重置所有篩選條件
+        const resetBtn = document.getElementById("kb-reset-filter-btn");
+        if (resetBtn) {
+            resetBtn.addEventListener("click", () => {
+                this.knowledgeSearchQuery = "";
+                this.knowledgeActiveTab = "all";
+                this.knowledgeActiveDocLevel = "all";
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        }
+
+        // 複製檔案路徑按鈕
+        this.focusSection.querySelectorAll("[data-copy-path]").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const path = btn.getAttribute("data-copy-path");
+                navigator.clipboard.writeText(path).then(() => {
+                    const originalText = btn.textContent;
+                    btn.textContent = "已複製！";
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                    }, 1800);
+                });
+            });
+        });
+
+        // 檢視詳情按鈕
+        this.focusSection.querySelectorAll("[data-view-detail]").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute("data-view-detail");
+                const item = (this.knowledgeData?.items || []).find((it) => it.id === id);
+                if (item) {
+                    this.showKnowledgeDetailModal(item, theme);
+                }
+            });
+        });
+    }
+
+    /**
+     * 顯示知識卡片詳細資訊抽屜 (Modal Drawer)
+     */
+    showKnowledgeDetailModal(item, theme) {
+        const modalContainer = document.getElementById("kb-detail-modal-container");
+        if (!modalContainer) return;
+
+        const domainBadgeClass = item.domain === "ai" ? "kb-tag-ai" : (item.domain === "security" ? "kb-tag-security" : "kb-tag-python");
+        const domainText = item.domain === "ai" ? "AI 前瞻研發" : (item.domain === "security" ? "資安規範與 ISMS" : "Python / RPA 自動化");
+
+        modalContainer.innerHTML = `
+            <div class="kb-modal-backdrop" id="kb-modal-backdrop">
+                <div class="kb-modal-card" role="dialog" aria-modal="true">
+                    <div class="kb-modal-header">
+                        <div class="kb-modal-title-group">
+                            <div class="kb-item-badges">
+                                <span class="kb-path-tag ${domainBadgeClass}">${domainText}</span>
+                                <span class="kb-type-pill">${this.escapeHtml(item.fileType)}</span>
+                                ${item.docLevel ? `<span class="kb-level-pill">${this.escapeHtml(item.docLevel)}</span>` : ""}
+                                ${item.subCategory ? `<span class="kb-subcat-pill">${this.escapeHtml(item.subCategory)}</span>` : ""}
+                            </div>
+                            <h3 class="kb-modal-title">${this.escapeHtml(item.title)}</h3>
+                        </div>
+                        <button type="button" class="kb-modal-close-btn" id="kb-modal-close-btn" aria-label="關閉視窗">✕</button>
+                    </div>
+
+                    <div class="kb-modal-body">
+                        <div class="kb-modal-field-group">
+                            <label class="stage-input-label">業務說明與核心價值</label>
+                            <p class="kb-modal-summary-text">${this.escapeHtml(item.summary)}</p>
+                        </div>
+
+                        <div class="kb-modal-field-group">
+                            <label class="stage-input-label">原始檔案名稱</label>
+                            <code class="kb-modal-code-block">${this.escapeHtml(item.fileName)}</code>
+                        </div>
+
+                        <div class="kb-modal-field-group">
+                            <label class="stage-input-label">本機絕對路徑 (Windows Path)</label>
+                            <div class="kb-path-copy-row">
+                                <code class="kb-modal-code-block">${this.escapeHtml(item.filePath)}</code>
+                                <button type="button" class="primary-btn" id="kb-modal-copy-path-btn">一鍵複製路徑</button>
+                            </div>
+                        </div>
+
+                        <div class="kb-modal-info-grid">
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">檔案大小</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.fileSizeFormatted)}</span>
+                            </div>
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">最後修改時間</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.lastModified)}</span>
+                            </div>
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">文件類別</span>
+                                <span class="kb-info-val">${this.escapeHtml(item.subCategory || "核心文件")}</span>
+                            </div>
+                            <div class="kb-modal-info-item">
+                                <span class="kb-info-label">副檔名</span>
+                                <span class="kb-info-val">.${this.escapeHtml(item.extension)}</span>
+                            </div>
+                        </div>
+
+                        <div class="kb-modal-field-group">
+                            <label class="stage-input-label">關鍵字與主題標籤</label>
+                            <div class="kb-item-tags-row">
+                                ${(item.tags || []).map((t) => `<span class="kb-tag-item">#${this.escapeHtml(t)}</span>`).join("")}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kb-modal-footer">
+                        <a class="primary-btn" href="${this.escapeHtml(item.fileUri)}" target="_blank" rel="noopener noreferrer">
+                            直接以預設程式開啟 (file://)
+                        </a>
+                        <button type="button" class="secondary-btn" id="kb-modal-close-footer-btn">關閉視窗</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        modalContainer.classList.remove("is-hidden");
+        modalContainer.setAttribute("aria-hidden", "false");
+
+        const closeModal = () => {
+            modalContainer.classList.add("is-hidden");
+            modalContainer.setAttribute("aria-hidden", "true");
+        };
+
+        const closeBtn = document.getElementById("kb-modal-close-btn");
+        const closeFooterBtn = document.getElementById("kb-modal-close-footer-btn");
+        const backdrop = document.getElementById("kb-modal-backdrop");
+        if (closeBtn) closeBtn.addEventListener("click", closeModal);
+        if (closeFooterBtn) closeFooterBtn.addEventListener("click", closeModal);
+        if (backdrop) {
+            backdrop.addEventListener("click", (e) => {
+                if (e.target === backdrop) closeModal();
+            });
+        }
+
+        const copyBtn = document.getElementById("kb-modal-copy-path-btn");
+        if (copyBtn) {
+            copyBtn.addEventListener("click", () => {
+                navigator.clipboard.writeText(item.filePath).then(() => {
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = "已複製路徑！";
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        }
     }
 
     escapeHtml(str) {
