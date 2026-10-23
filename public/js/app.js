@@ -13,7 +13,7 @@ const WORKSPACE_THEMES = [
         navShortName: "任務專案",
         title: "主題一：任務與專案中樞",
         subtitle: "Task & Project Nexus",
-        status: "預留擴充區",
+        status: "專案中樞",
         description: "整合日常工作待辦、專案進度追蹤、里程碑檢視與優先級排程的核心管理區塊。",
         iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>`,
         slots: [
@@ -40,46 +40,32 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-03",
         code: "MOD-03",
-        navShortName: "數據觀測",
-        title: "主題三：數據觀測與視覺化儀表板",
-        subtitle: "Metrics & Analytics Pulse",
-        status: "預留擴充區",
-        description: "呈現關鍵業務指標、系統運維狀態、工作產出統計與各類圖表分析的視覺化觀測站。",
-        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line><line x1="2" y1="20" x2="22" y2="20"></line></svg>`,
+        navShortName: "資安智庫",
+        title: "主題三：資通安全知識庫與法定合規治理中樞",
+        subtitle: "B-Level Cybersecurity & ISMS Vault",
+        status: "公務核心智庫已啟用",
+        description: "依據數位發展部資通安全署「B 級機關應行辦理事項」與「資通系統防護基準」，建構涵蓋四大治理階段、85 組真實流程架構圖與 425 件法定規章的完整知識體系。",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>`,
         slots: [
-            { name: "核心工作指標即時概覽", tag: "SLOT-3A", detail: "彙整週期性關鍵績效數據與趨勢變化。" },
-            { name: "專案資源分配與工時統計圖表", tag: "SLOT-3B", detail: "清楚掌握各工作項目投入比例與負荷狀態。" },
-            { name: "外部資料源靜態快照匯入檢視", tag: "SLOT-3C", detail: "支援讀取本地或遠端 JSON 數據檔並渲染圖表。" }
+            { name: "階段一：治理規劃與全景鑑別 (全景評鑑 / 9大議題 / 資產評估)", tag: "PHASE 1", detail: "組織分工、ISMS 驗證邊界、資產 CIA 評價與 SOA 適用性聲明。" },
+            { name: "階段二：技術防護與邊界縱深 (MFA 雙因子 / 縱深防禦 / 資料庫抽核)", tag: "PHASE 2", detail: "連錯 5 次鎖定、閒置 15 分強制登出、四層隔離與設備生命週期。" },
+            { name: "階段三：系統維運與供應鏈安全 (防護基準 / SSDLC / 委外安全)", tag: "PHASE 3", detail: "MS-4-150 檢核、禁大陸廠牌、每年4月及8月實地稽核與合約個資銷毀。" },
+            { name: "階段四：應變復原與持續改善 (1小時通報 / 3-2-1備份 / 管理審查)", tag: "PHASE 4", detail: "知悉 1 小時法定通報、年度社交工程演練、異地備援還原與管審會閉環。" }
         ]
     },
     {
         id: "theme-04",
         code: "MOD-04",
-        navShortName: "知識文件",
-        title: "主題四：知識庫與技術文件中心",
-        subtitle: "Knowledge & Docs Vault",
-        status: "核心智庫已啟用",
-        description: "整合 AI 前瞻技術、資安規範 ISMS 四階架構與 Python/RPA 自動化三大工作領域，支援雲端硬碟同步、向量業務流程圖與秒速檢索。",
-        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`,
-        slots: [
-            { name: "AI 前瞻技術與應用研發 (Prompt & Multimodal)", tag: "DOM-AI", detail: "收錄提示詞工程架構、Gemini 模型整合、多模態簡報與影音自動產製。" },
-            { name: "資安規範與 ISMS 體系治理 (ISO 27001 / PIMS)", tag: "DOM-SEC", detail: "收錄四階文件（政策、程序書、作業說明書、表單紀錄）與緊急應變通報處置手冊。" },
-            { name: "Python 程式開發與 RPA 自動化 (Pipelines)", tag: "DOM-PY", detail: "收錄實體隔離內外網協作架構、智慧分文系統、公務流程機器人工具箱。" }
-        ]
-    },
-    {
-        id: "theme-05",
-        code: "MOD-05",
         navShortName: "多元活動",
-        title: "主題五：多元活動與非正式任務中心",
+        title: "主題四：多元活動與非正式任務中心",
         subtitle: "Special Events & Informal Hub",
         status: "雙核心系統已啟用",
         description: "收納公司節慶活動、餐飲票選調查與非正式專案任務的彈性工作區。內建共用員工名單之「多功能問卷調查與餐點票選系統」與「年終尾牙自動化抽獎系統」。",
         iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
         slots: [
-            { name: "前置系統：多功能問卷調查與餐點票選 (已啟用)", tag: "SYS-5A", detail: "與尾牙共用員工名單，支援主餐與飲料設定、附檔介紹檢視、網頁評價查詢、統計圖表與一鍵複製 LINE 通知。" },
-            { name: "活動系統：歲末年終尾牙自動化抽獎 (已啟用)", tag: "SYS-5B", detail: "承接問卷名單，具備左右懸掛鞭炮串、紅金喜慶大舞台、手動控制輪動與全螢幕煙花。" },
-            { name: "擴充預留：團隊競賽計分與臨時任務看板 (預留)", tag: "SLOT-5C", detail: "預留供日後擴充活動即時排行榜、趣味問答計分與現場互動任務。" }
+            { name: "前置系統：多功能問卷調查與餐點票選 (已啟用)", tag: "SYS-4A", detail: "與尾牙共用員工名單，支援主餐與飲料設定、附檔介紹檢視、網頁評價查詢、統計圖表與一鍵複製 LINE 通知。" },
+            { name: "活動系統：歲末年終尾牙自動化抽獎 (已啟用)", tag: "SYS-4B", detail: "承接問卷名單，具備左右懸掛鞭炮串、紅金喜慶大舞台、手動控制輪動與全螢幕煙花。" },
+            { name: "擴充預留：團隊競賽計分與臨時任務看板 (預留)", tag: "SLOT-4C", detail: "預留供日後擴充活動即時排行榜、趣味問答計分與現場互動任務。" }
         ]
     }
 ];
@@ -1395,6 +1381,21 @@ class WorkspaceApp {
         return true;
     }
 
+    
+    isThemeUnlocked(themeId) {
+        if (!themeId) return false;
+        return sessionStorage.getItem(`aero_theme_unlocked_${themeId}`) === "true";
+    }
+
+    setThemeUnlocked(themeId, unlocked) {
+        if (!themeId) return;
+        if (unlocked) {
+            sessionStorage.setItem(`aero_theme_unlocked_${themeId}`, "true");
+        } else {
+            sessionStorage.removeItem(`aero_theme_unlocked_${themeId}`);
+        }
+    }
+
     isVaultUnlocked() {
         return sessionStorage.getItem(STORAGE_KEYS.VAULT_UNLOCKED_SESSION) === "true";
     }
@@ -1513,28 +1514,58 @@ class WorkspaceApp {
         this.overviewSection.classList.add("is-hidden");
         this.focusSection.classList.remove("is-hidden");
 
+        const theme01Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-01");
         const theme02Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-02");
+        const theme03Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-03");
         const theme04Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-04");
-        const theme05Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-05");
-        if (routeId === "theme-02") {
-            this.renderTheme02AutomationHub(theme02Obj);
-        } else if (routeId === "theme-04") {
-            this.renderTheme04KnowledgeHub(theme04Obj);
+
+        // 路由正規化：相容舊版 theme-04 (舊資安) 與 theme-05 (舊活動)
+        let normalizedRoute = routeId;
+        if (routeId === "theme-04") {
+            normalizedRoute = "theme-03";
         } else if (routeId === "theme-05") {
-            this.renderTheme05InformalHub(theme05Obj);
-        } else if (routeId === "theme-05-draw") {
-            this.renderLotterySubpage(theme05Obj, "draw");
-        } else if (routeId === "theme-05-admin") {
-            this.renderLotterySubpage(theme05Obj, "admin");
-        } else if (routeId === "theme-05-survey-vote") {
+            normalizedRoute = "theme-04";
+        }
+
+        if (normalizedRoute === "theme-01") {
+            if (!this.isThemeUnlocked("theme-01")) {
+                this.renderThemePasscodeGate(theme01Obj, () => this.renderFocusSection(theme01Obj));
+            } else {
+                this.renderFocusSection(theme01Obj);
+            }
+        } else if (normalizedRoute === "theme-02") {
+            if (!this.isThemeUnlocked("theme-02")) {
+                this.renderThemePasscodeGate(theme02Obj, () => this.renderTheme02AutomationHub(theme02Obj));
+            } else {
+                this.renderTheme02AutomationHub(theme02Obj);
+            }
+        } else if (normalizedRoute === "theme-03") {
+            if (!this.isThemeUnlocked("theme-03")) {
+                this.renderThemePasscodeGate(theme03Obj, () => this.renderTheme04KnowledgeHub(theme03Obj));
+            } else {
+                this.renderTheme04KnowledgeHub(theme03Obj);
+            }
+        } else if (normalizedRoute === "theme-04") {
+            if (!this.isThemeUnlocked("theme-04")) {
+                this.renderThemePasscodeGate(theme04Obj, () => this.renderTheme05InformalHub(theme04Obj));
+            } else {
+                this.renderTheme05InformalHub(theme04Obj);
+            }
+        } else if (routeId === "theme-05-draw" || routeId === "theme-04-draw") {
+            this.renderLotterySubpage(theme04Obj, "draw");
+        } else if (routeId === "theme-05-admin" || routeId === "theme-04-admin") {
+            this.renderLotterySubpage(theme04Obj, "admin");
+        } else if (routeId === "theme-05-survey-vote" || routeId === "theme-04-survey-vote") {
             this.renderSurveyPage("vote");
-        } else if (routeId === "theme-05-survey-setup") {
+        } else if (routeId === "theme-05-survey-setup" || routeId === "theme-04-survey-setup") {
             this.renderSurveyPage("setup");
-        } else if (routeId === "theme-05-survey-stats") {
+        } else if (routeId === "theme-05-survey-stats" || routeId === "theme-04-survey-stats") {
             this.renderSurveyPage("stats");
         } else {
-            const themeObj = WORKSPACE_THEMES.find((t) => t.id === routeId);
-            if (themeObj) {
+            const themeObj = WORKSPACE_THEMES.find((t) => t.id === normalizedRoute) || theme01Obj;
+            if (!this.isThemeUnlocked(themeObj.id)) {
+                this.renderThemePasscodeGate(themeObj, () => this.renderFocusSection(themeObj));
+            } else {
                 this.renderFocusSection(themeObj);
             }
         }
@@ -1669,7 +1700,7 @@ class WorkspaceApp {
             `).join("");
 
             return `
-                <article class="theme-card">
+                <article class="theme-card" data-open-theme="${theme.id}">
                     <div class="theme-card-top">
                         <div class="theme-card-header">
                             <div class="theme-icon-box">
@@ -1699,9 +1730,11 @@ class WorkspaceApp {
         }).join("");
 
         this.themesGrid.querySelectorAll("[data-open-theme]").forEach((btn) => {
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", (e) => {
                 const targetId = btn.getAttribute("data-open-theme");
-                window.location.hash = targetId;
+                if (targetId) {
+                    window.location.hash = targetId;
+                }
             });
         });
     }
@@ -1739,9 +1772,13 @@ class WorkspaceApp {
                         <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
                     </div>
+                    <button type="button" class="theme-lock-btn" id="theme-04-lock-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>鎖定專區</span>
+                    </button>
                     <button type="button" class="back-overview-btn" id="back-to-overview-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>返回五大主題總覽</span>
+                        <span>返回四大主題總覽</span>
                     </button>
                 </div>
 
@@ -1840,6 +1877,14 @@ class WorkspaceApp {
         const backBtn = document.getElementById("back-to-overview-btn");
         if (backBtn) {
             backBtn.addEventListener("click", () => {
+                window.location.hash = "overview";
+            });
+        }
+        const theme04LockBtn = document.getElementById("theme-04-lock-btn");
+        if (theme04LockBtn) {
+            theme04LockBtn.addEventListener("click", () => {
+                this.setThemeUnlocked("theme-04", false);
+                this.setThemeUnlocked("theme-05", false);
                 window.location.hash = "overview";
             });
         }
@@ -5708,8 +5753,8 @@ class WorkspaceApp {
         if (!this.focusSection || !theme) return;
 
         // 登入前通行碼驗證
-        if (!this.isRpaUnlocked()) {
-            this.renderTheme02SecurityGate(theme);
+        if (!this.isThemeUnlocked("theme-02")) {
+            this.renderThemePasscodeGate(theme, () => this.renderTheme02AutomationHub(theme));
             return;
         }
 
@@ -5801,6 +5846,225 @@ class WorkspaceApp {
     /**
      * 內部非公開資料・8 碼安全驗證登入閘門畫面（絕無密碼提示，長度限定 8 碼）
      */
+    
+    /**
+     * 高解析圖說全螢幕互動縮放檢視器 (支援無損縮放、滾輪、拖曳平移、還原、關閉)
+     */
+    openDiagramLightbox(imgSrc, title) {
+        let backdrop = document.getElementById("diagram-lightbox-backdrop");
+        if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.id = "diagram-lightbox-backdrop";
+            backdrop.className = "diagram-lightbox-backdrop";
+            backdrop.innerHTML = `
+                <div class="diagram-lightbox-header">
+                    <div class="diagram-lightbox-title-box">
+                        <span class="diagram-lightbox-tag">HIGH-RES DIAGRAM</span>
+                        <h3 class="diagram-lightbox-title" id="lightbox-image-title">圖解檢視器</h3>
+                    </div>
+                    <div class="diagram-lightbox-tools">
+                        <button type="button" class="diagram-tool-btn" id="lightbox-zoom-out" title="縮小 (滾輪向下)">－ 縮小</button>
+                        <span class="diagram-zoom-level-pill" id="lightbox-zoom-level">100%</span>
+                        <button type="button" class="diagram-tool-btn" id="lightbox-zoom-in" title="放大 (滾輪向上)">＋ 放大</button>
+                        <button type="button" class="diagram-tool-btn" id="lightbox-zoom-reset" title="重設縮放">1:1 重設</button>
+                        <button type="button" class="diagram-tool-btn is-close" id="lightbox-close-btn" title="關閉 (ESC)">✕ 關閉</button>
+                    </div>
+                </div>
+                <div class="diagram-lightbox-viewport" id="lightbox-viewport">
+                    <img id="lightbox-img" class="diagram-lightbox-img" src="" alt="架構流程圖" draggable="false" />
+                </div>
+                <div class="diagram-lightbox-footer">
+                    <span>提示：支援使用滑鼠滾輪自由放大縮小，在放大狀態下可直接按住滑鼠左鍵拖曳平移視野。</span>
+                    <span>按 ESC 鍵或點擊右上角關閉按鈕即可返回。</span>
+                </div>
+            `;
+            document.body.appendChild(backdrop);
+
+            let scale = 1;
+            let translateX = 0;
+            let translateY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+
+            const imgEl = document.getElementById("lightbox-img");
+            const levelEl = document.getElementById("lightbox-zoom-level");
+            const viewport = document.getElementById("lightbox-viewport");
+
+            const updateTransform = () => {
+                if (imgEl) {
+                    imgEl.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                }
+                if (levelEl) {
+                    levelEl.textContent = `${Math.round(scale * 100)}%`;
+                }
+            };
+
+            const resetTransform = () => {
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
+            };
+
+            document.getElementById("lightbox-zoom-in").addEventListener("click", () => {
+                scale = Math.min(scale * 1.3, 5);
+                updateTransform();
+            });
+
+            document.getElementById("lightbox-zoom-out").addEventListener("click", () => {
+                scale = Math.max(scale / 1.3, 0.4);
+                updateTransform();
+            });
+
+            document.getElementById("lightbox-zoom-reset").addEventListener("click", resetTransform);
+
+            const closeLightbox = () => {
+                backdrop.classList.remove("is-active");
+                resetTransform();
+            };
+
+            document.getElementById("lightbox-close-btn").addEventListener("click", closeLightbox);
+
+            window.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && backdrop.classList.contains("is-active")) {
+                    closeLightbox();
+                }
+            });
+
+            viewport.addEventListener("wheel", (e) => {
+                e.preventDefault();
+                const delta = e.deltaY < 0 ? 1.15 : 0.87;
+                scale = Math.min(Math.max(scale * delta, 0.4), 5);
+                updateTransform();
+            }, { passive: false });
+
+            viewport.addEventListener("mousedown", (e) => {
+                if (e.target.closest(".diagram-tool-btn")) return;
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+            });
+
+            window.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+            });
+
+            window.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+        }
+
+        const titleEl = document.getElementById("lightbox-image-title");
+        const imgEl = document.getElementById("lightbox-img");
+        if (titleEl) titleEl.textContent = title || "高解析架構圖說檢視";
+        if (imgEl) {
+            imgEl.src = encodeURI(imgSrc);
+            imgEl.onerror = () => {
+                imgEl.onerror = null;
+                imgEl.src = "./assets/diagrams/管審會9大議題.png";
+            };
+        }
+        backdrop.classList.add("is-active");
+    }
+
+    
+    /**
+     * 四大主題通用安全驗證登入介面（長度 8 碼，不提醒密碼）
+     */
+    renderThemePasscodeGate(theme, onUnlockedCallback) {
+        if (!this.focusSection) return;
+
+        this.focusSection.innerHTML = `
+            <div class="theme-focus-panel">
+                <div class="focus-header">
+                    <div class="focus-title-group">
+                        <div class="theme-meta-tags">
+                            <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
+                            <span class="theme-status-badge">內部身分驗證</span>
+                        </div>
+                        <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
+                        <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
+                    </div>
+                    <button type="button" class="back-overview-btn" id="theme-gate-back-btn">
+                        <span>返回四大主題總覽</span>
+                    </button>
+                </div>
+
+                <div class="theme-login-gate-wrap">
+                    <div class="theme-login-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="theme-login-title">請輸入 8 碼通行碼進行身分驗證</h3>
+                        <p class="theme-login-desc">本專區內容受內部安全規範控管，請輸入 8 碼通行碼。驗證通過後即可於本次工作階段瀏覽完整專案架構、規章清冊與實體工具。</p>
+                    </div>
+                    <form class="theme-login-form" id="theme-login-gate-form">
+                        <input
+                            type="password"
+                            class="theme-login-input"
+                            id="theme-gate-passcode-input"
+                            maxlength="8"
+                            minlength="8"
+                            placeholder="請輸入 8 碼通行碼"
+                            required
+                            autocomplete="current-password"
+                        />
+                        <p class="theme-login-error is-hidden" id="theme-gate-error-msg">通行碼不正確，請重新輸入。</p>
+                        <div class="theme-login-btn-row">
+                            <button type="submit" class="theme-login-submit-btn">確認驗證登入</button>
+                            <button type="button" class="theme-login-back-btn" id="theme-gate-cancel-btn">返回總覽</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+
+        const gateForm = document.getElementById("theme-login-gate-form");
+        const gateInput = document.getElementById("theme-gate-passcode-input");
+        const errorMsg = document.getElementById("theme-gate-error-msg");
+        const backBtn = document.getElementById("theme-gate-back-btn");
+        const cancelBtn = document.getElementById("theme-gate-cancel-btn");
+
+        if (gateInput) {
+            setTimeout(() => gateInput.focus(), 80);
+        }
+
+        const handleBack = () => {
+            window.location.hash = "overview";
+        };
+        if (backBtn) backBtn.addEventListener("click", handleBack);
+        if (cancelBtn) cancelBtn.addEventListener("click", handleBack);
+
+        if (gateForm) {
+            gateForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const entered = (gateInput?.value || "").trim();
+                if (entered === this.getVaultPasscode()) {
+                    this.setThemeUnlocked(theme.id, true);
+                    this.showToast(`身分驗證通過，已進入${theme.navShortName}工作區`);
+                    if (typeof onUnlockedCallback === "function") {
+                        onUnlockedCallback();
+                    }
+                } else {
+                    if (errorMsg) {
+                        errorMsg.classList.remove("is-hidden");
+                    }
+                    if (gateInput) {
+                        gateInput.value = "";
+                        gateInput.focus();
+                    }
+                }
+            });
+        }
+    }
+
     renderPrivateSecurityGate(theme, domainTitle, onUnlockedCallback) {
         if (!this.focusSection) return;
 
@@ -7153,6 +7417,13 @@ ${cfg.sourceText}`;
                 window.location.hash = "overview";
             });
         }
+        const theme02LockBtn = document.getElementById("theme-02-lock-btn");
+        if (theme02LockBtn) {
+            theme02LockBtn.addEventListener("click", () => {
+                this.setThemeUnlocked("theme-02", false);
+                window.location.hash = "overview";
+            });
+        }
 
         const lockBtn = document.getElementById("rpa-lock-vault-btn");
         if (lockBtn) {
@@ -8323,6 +8594,39 @@ ${cfg.sourceText}`;
         const allTopics = data.topics || [];
         const allItems = data.items || [];
 
+        // 產製四大治理生命週期流程地圖導覽列
+        const phases = data.phases || [];
+        const activePhaseId = this.knowledgeActivePhaseId || "all";
+        const phaseCardsHtml = phases.map((phase) => {
+            const isActive = activePhaseId === phase.id;
+            return `
+                <div class="kb-phase-card ${isActive ? 'is-active' : ''}" data-select-phase-id="${phase.id}">
+                    <div class="kb-phase-badge-row">
+                        <span class="kb-phase-badge">${this.escapeHtml(phase.code)}</span>
+                        <span class="kb-phase-num">${phase.phaseNumber}</span>
+                    </div>
+                    <h4 class="kb-phase-title">${this.escapeHtml(phase.title)}</h4>
+                    <p class="kb-phase-sub">${this.escapeHtml(phase.subtitle)}</p>
+                </div>
+            `;
+        }).join("");
+
+        const allPhaseActive = activePhaseId === "all";
+        const lifecycleWorkflowHtml = `
+            <div class="kb-lifecycle-workflow-bar">
+                <div class="kb-phase-card ${allPhaseActive ? 'is-active' : ''}" data-select-phase-id="all">
+                    <div class="kb-phase-badge-row">
+                        <span class="kb-phase-badge">PDCA 閉環</span>
+                        <span class="kb-phase-num">ALL</span>
+                    </div>
+                    <h4 class="kb-phase-title">公務 B 級法定治理全景流程</h4>
+                    <p class="kb-phase-sub">涵蓋 4 大治理階段・12 核心專案・425 件法定規章</p>
+                </div>
+                ${phaseCardsHtml}
+            </div>
+        `;
+
+
         // 預設選中主題
         if (!allTopics.some((t) => t.id === this.knowledgeActiveTopicId)) {
             this.knowledgeActiveTopicId = allTopics.length > 0 ? allTopics[0].id : "";
@@ -8338,12 +8642,17 @@ ${cfg.sourceText}`;
             // ================================================================
             const docItem = allItems.find((it) => it.id === this.knowledgeActiveDocId) || allItems[0];
             if (docItem) {
-                // 圖檔展示
+                // 圖檔展示 (支援全螢幕無損縮放與拖曳)
                 const hasDiagram = Boolean(docItem.matchedDiagram);
+                const safeDocDiagSrc = hasDiagram ? `./assets/diagrams/${encodeURI(docItem.matchedDiagram)}` : "";
                 const diagramHtml = hasDiagram ? `
-                    <div class="kb-diagram-card">
-                        <img src="./assets/diagrams/${this.escapeHtml(docItem.matchedDiagram)}" alt="${this.escapeHtml(docItem.title)}" class="kb-diagram-img" />
-                        <div class="kb-diagram-caption">架構圖解：${this.escapeHtml(docItem.matchedDiagram)}</div>
+                    <div class="kb-diagram-card" data-zoom-src="${safeDocDiagSrc}" data-zoom-title="${this.escapeHtml(docItem.title)}">
+                        <div class="kb-diagram-zoom-badge">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>點擊放大檢視高解析圖解 (滾輪縮放與拖曳)</span>
+                        </div>
+                        <img src="${safeDocDiagSrc}" alt="${this.escapeHtml(docItem.title)}" class="kb-diagram-img" onerror="this.onerror=null; this.src='./assets/diagrams/管審會9大議題.png';" />
+                        <div class="kb-diagram-caption">高解析架構圖解：${this.escapeHtml(docItem.matchedDiagram)}（點擊任意處可開啟全螢幕互動檢視器）</div>
                     </div>
                 ` : "";
 
@@ -8549,7 +8858,14 @@ ${cfg.sourceText}`;
             // 模式一（預設）：8 大資安核心法定專案主題雙欄閱讀器
             // ================================================================
             const topicQuery = (this.knowledgeSearchQuery || "").trim().toLowerCase();
+            const currentPhaseObj = (data.phases || []).find((p) => p.id === activePhaseId);
+
             const filteredTopics = allTopics.filter((t) => {
+                if (activePhaseId !== "all" && currentPhaseObj) {
+                    if (!(currentPhaseObj.topicIds || []).includes(t.id)) {
+                        return false;
+                    }
+                }
                 if (!topicQuery) return true;
                 const searchCorpus = [
                     t.title,
@@ -8578,12 +8894,17 @@ ${cfg.sourceText}`;
 
             let readerBodyHtml = "";
             if (activeTopic) {
-                // 圖檔展示
+                // 圖檔展示 (支援全螢幕無損縮放與拖曳)
                 const hasDiagram = Boolean(activeTopic.diagramImage);
+                const safeTopicDiagSrc = hasDiagram ? `./assets/diagrams/${encodeURI(activeTopic.diagramImage)}` : "";
                 const diagramHtml = hasDiagram ? `
-                    <div class="kb-diagram-card">
-                        <img src="./assets/diagrams/${this.escapeHtml(activeTopic.diagramImage)}" alt="${this.escapeHtml(activeTopic.title)}" class="kb-diagram-img" />
-                        <div class="kb-diagram-caption">高解析架構圖說展示：${this.escapeHtml(activeTopic.title)}</div>
+                    <div class="kb-diagram-card" data-zoom-src="${safeTopicDiagSrc}" data-zoom-title="${this.escapeHtml(activeTopic.title)}">
+                        <div class="kb-diagram-zoom-badge">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>點擊放大檢視高解析圖解 (滾輪縮放與拖曳)</span>
+                        </div>
+                        <img src="${safeTopicDiagSrc}" alt="${this.escapeHtml(activeTopic.title)}" class="kb-diagram-img" onerror="this.onerror=null; this.src='./assets/diagrams/管審會9大議題.png';" />
+                        <div class="kb-diagram-caption">高解析架構圖說：${this.escapeHtml(activeTopic.title)}（點擊任意處可開啟全螢幕互動檢視器）</div>
                     </div>
                 ` : "";
 
@@ -8721,7 +9042,7 @@ ${cfg.sourceText}`;
                 <!-- 頂部標頭與通行碼登入狀態 -->
                 <div class="focus-header">
                     <div class="focus-title-group">
-                        <h2 class="focus-title">主題 04：公務機關資通安全知識庫</h2>
+                        <h2 class="focus-title">主題 03：資通安全知識庫與法定合規治理中樞</h2>
                         <p class="theme-desc">資安責任等級 B 級機關防護基準・ISMS/PIMS 四階規章體系・85 組架構流程圖解（已受 8 碼通行碼保護，所有內容直接於網頁完整研讀）</p>
                     </div>
                     <div class="kb-vault-status-bar">
@@ -8741,7 +9062,7 @@ ${cfg.sourceText}`;
                         <span class="kb-sec-metric-label">正式資安規章、程序書與四階表單清冊</span>
                     </div>
                     <div class="kb-sec-metric-card">
-                        <span class="kb-sec-metric-val">8 大體系</span>
+                        <span class="kb-sec-metric-val">4 階段・12 專題</span>
                         <span class="kb-sec-metric-label">數位發展部 B 級機關應辦事項與防護基準專題</span>
                     </div>
                     <div class="kb-sec-metric-card">
@@ -8780,6 +9101,36 @@ ${cfg.sourceText}`;
     }
 
     bindTheme04KnowledgeHubEvents(theme) {
+
+        // 綁定全螢幕高解析圖說縮放檢視器點擊
+        this.focusSection.querySelectorAll(".kb-diagram-card").forEach((card) => {
+            card.addEventListener("click", () => {
+                const src = card.getAttribute("data-zoom-src");
+                const title = card.getAttribute("data-zoom-title");
+                if (src) {
+                    this.openDiagramLightbox(src, title);
+                }
+            });
+        });
+
+        // 綁定四大治理階段流程地圖切換
+        this.focusSection.querySelectorAll("[data-select-phase-id]").forEach((card) => {
+            card.addEventListener("click", () => {
+                const phaseId = card.getAttribute("data-select-phase-id");
+                this.knowledgeActivePhaseId = phaseId;
+                if (phaseId !== "all") {
+                    const data = this.knowledgeData || window.WORKSPACE_KNOWLEDGE_DATA || {};
+                    const phase = (data.phases || []).find((p) => p.id === phaseId);
+                    if (phase && phase.topicIds && phase.topicIds.length > 0) {
+                        this.knowledgeActiveTopicId = phase.topicIds[0];
+                    }
+                }
+                this.knowledgeViewMode = "topic";
+                this.knowledgeActiveDocId = null;
+                this.renderTheme04KnowledgeHub(theme);
+            });
+        });
+
         // 返回總覽按鈕
         const backBtn = document.getElementById("kb-back-overview-btn");
         if (backBtn) {
@@ -8973,10 +9324,15 @@ ${cfg.sourceText}`;
 
         // 圖檔展示
         const hasDiagram = Boolean(item.matchedDiagram);
+        const safeModalDiagSrc = hasDiagram ? `./assets/diagrams/${encodeURI(item.matchedDiagram)}` : "";
         const diagramHtml = hasDiagram ? `
-            <div class="kb-diagram-card">
-                <img src="./assets/diagrams/${this.escapeHtml(item.matchedDiagram)}" alt="${this.escapeHtml(item.title)}" class="kb-diagram-img" />
-                <div class="kb-diagram-caption">高解析架構圖解：${this.escapeHtml(item.matchedDiagram)}</div>
+            <div class="kb-diagram-card" data-zoom-src="${safeModalDiagSrc}" data-zoom-title="${this.escapeHtml(item.title)}">
+                <div class="kb-diagram-zoom-badge">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>點擊放大檢視高解析圖解 (滾輪縮放與拖曳)</span>
+                </div>
+                <img src="${safeModalDiagSrc}" alt="${this.escapeHtml(item.title)}" class="kb-diagram-img" onerror="this.onerror=null; this.src='./assets/diagrams/管審會9大議題.png';" />
+                <div class="kb-diagram-caption">高解析架構圖解：${this.escapeHtml(item.matchedDiagram)}（點擊任意處可開啟全螢幕互動檢視器）</div>
             </div>
         ` : "";
 
