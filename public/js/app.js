@@ -1453,6 +1453,18 @@ class WorkspaceApp {
             this.stopRollingIfNeeded();
             this.syncRouteFromHash();
         });
+
+        // 全域委派：點擊任何架構圖卡片均正確開啟對應圖檔的高解析檢視器
+        document.body.addEventListener("click", (e) => {
+            const card = e.target.closest(".kb-diagram-card");
+            if (card) {
+                const src = card.getAttribute("data-zoom-src");
+                const title = card.getAttribute("data-zoom-title");
+                if (src) {
+                    this.openDiagramLightbox(src, title);
+                }
+            }
+        });
     }
 
     stopRollingIfNeeded() {
@@ -4639,8 +4651,8 @@ class WorkspaceApp {
                 `----------------------------------------`,
                 `各位同仁好，第一階段「餐廳與飲料店人氣票選」已完成統計（共 ${p1Names.length} 人投票）！`,
                 ``,
-                `★ 最高票當選午餐餐廳：【${winRest ? winRest.vendor : ""}】（${wInfo.primaryWinnerVotes} 票）`,
-                `★ 最高票當選手搖飲店：【${winDrink ? winDrink.vendor : ""}】（${wInfo.secondaryWinnerVotes} 票）`,
+                `最高票當選午餐餐廳：【${winRest ? winRest.vendor : ""}】（${wInfo.primaryWinnerVotes} 票）`,
+                `最高票當選手搖飲店：【${winDrink ? winDrink.vendor : ""}】（${wInfo.secondaryWinnerVotes} 票）`,
                 ``,
                 `【各候選餐廳得票數】`,
                 ...p1RankLines,
@@ -5851,6 +5863,7 @@ class WorkspaceApp {
      * 高解析圖說全螢幕互動縮放檢視器 (支援無損縮放、滾輪、拖曳平移、還原、關閉)
      */
     openDiagramLightbox(imgSrc, title) {
+        if (!imgSrc) return;
         let backdrop = document.getElementById("diagram-lightbox-backdrop");
         if (!backdrop) {
             backdrop = document.createElement("div");
@@ -5880,9 +5893,9 @@ class WorkspaceApp {
             `;
             document.body.appendChild(backdrop);
 
-            let scale = 1;
-            let translateX = 0;
-            let translateY = 0;
+            this.lightboxScale = 1;
+            this.lightboxTranslateX = 0;
+            this.lightboxTranslateY = 0;
             let isDragging = false;
             let startX = 0;
             let startY = 0;
@@ -5891,37 +5904,39 @@ class WorkspaceApp {
             const levelEl = document.getElementById("lightbox-zoom-level");
             const viewport = document.getElementById("lightbox-viewport");
 
-            const updateTransform = () => {
+            this.updateLightboxTransform = () => {
                 if (imgEl) {
-                    imgEl.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                    imgEl.style.transform = `translate(${this.lightboxTranslateX}px, ${this.lightboxTranslateY}px) scale(${this.lightboxScale})`;
                 }
                 if (levelEl) {
-                    levelEl.textContent = `${Math.round(scale * 100)}%`;
+                    levelEl.textContent = `${Math.round(this.lightboxScale * 100)}%`;
                 }
             };
 
-            const resetTransform = () => {
-                scale = 1;
-                translateX = 0;
-                translateY = 0;
-                updateTransform();
+            this.resetLightboxTransform = () => {
+                this.lightboxScale = 1;
+                this.lightboxTranslateX = 0;
+                this.lightboxTranslateY = 0;
+                this.updateLightboxTransform();
             };
 
             document.getElementById("lightbox-zoom-in").addEventListener("click", () => {
-                scale = Math.min(scale * 1.3, 5);
-                updateTransform();
+                this.lightboxScale = Math.min(this.lightboxScale * 1.3, 5);
+                this.updateLightboxTransform();
             });
 
             document.getElementById("lightbox-zoom-out").addEventListener("click", () => {
-                scale = Math.max(scale / 1.3, 0.4);
-                updateTransform();
+                this.lightboxScale = Math.max(this.lightboxScale / 1.3, 0.4);
+                this.updateLightboxTransform();
             });
 
-            document.getElementById("lightbox-zoom-reset").addEventListener("click", resetTransform);
+            document.getElementById("lightbox-zoom-reset").addEventListener("click", () => {
+                this.resetLightboxTransform();
+            });
 
             const closeLightbox = () => {
                 backdrop.classList.remove("is-active");
-                resetTransform();
+                this.resetLightboxTransform();
             };
 
             document.getElementById("lightbox-close-btn").addEventListener("click", closeLightbox);
@@ -5935,22 +5950,22 @@ class WorkspaceApp {
             viewport.addEventListener("wheel", (e) => {
                 e.preventDefault();
                 const delta = e.deltaY < 0 ? 1.15 : 0.87;
-                scale = Math.min(Math.max(scale * delta, 0.4), 5);
-                updateTransform();
+                this.lightboxScale = Math.min(Math.max(this.lightboxScale * delta, 0.4), 5);
+                this.updateLightboxTransform();
             }, { passive: false });
 
             viewport.addEventListener("mousedown", (e) => {
                 if (e.target.closest(".diagram-tool-btn")) return;
                 isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
+                startX = e.clientX - this.lightboxTranslateX;
+                startY = e.clientY - this.lightboxTranslateY;
             });
 
             window.addEventListener("mousemove", (e) => {
                 if (!isDragging) return;
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
+                this.lightboxTranslateX = e.clientX - startX;
+                this.lightboxTranslateY = e.clientY - startY;
+                this.updateLightboxTransform();
             });
 
             window.addEventListener("mouseup", () => {
@@ -5958,16 +5973,24 @@ class WorkspaceApp {
             });
         }
 
+        // 每次開啟新圖檔時，重設縮放位置與視野
+        if (typeof this.resetLightboxTransform === "function") {
+            this.resetLightboxTransform();
+        }
+
         const titleEl = document.getElementById("lightbox-image-title");
         const imgEl = document.getElementById("lightbox-img");
         if (titleEl) titleEl.textContent = title || "高解析架構圖說檢視";
         if (imgEl) {
-            imgEl.src = encodeURI(imgSrc);
-            imgEl.onerror = () => {
-                imgEl.onerror = null;
-                imgEl.src = "./assets/diagrams/管審會9大議題.png";
-            };
+            imgEl.onerror = null;
+            // 進行一次乾淨的 URI 解碼再編碼，防止二次 encodeURI 產生 %25 破圖
+            let cleanSrc = imgSrc;
+            try {
+                cleanSrc = decodeURI(imgSrc);
+            } catch (err) {}
+            imgEl.src = encodeURI(cleanSrc);
         }
+
         backdrop.classList.add("is-active");
     }
 
@@ -6048,6 +6071,7 @@ class WorkspaceApp {
                 const entered = (gateInput?.value || "").trim();
                 if (entered === this.getVaultPasscode()) {
                     this.setThemeUnlocked(theme.id, true);
+                    this.setVaultUnlocked(true);
                     this.showToast(`身分驗證通過，已進入${theme.navShortName}工作區`);
                     if (typeof onUnlockedCallback === "function") {
                         onUnlockedCallback();
@@ -8567,8 +8591,8 @@ ${cfg.sourceText}`;
         if (!this.focusSection) return;
 
         // 登入前通行碼驗證閘門 (長度 8 碼，絕不提示密碼)
-        if (!this.isVaultUnlocked()) {
-            this.renderPrivateSecurityGate(theme, "主題四：公務機關資通安全知識庫", () => {
+        if (!this.isThemeUnlocked(theme.id) && !this.isVaultUnlocked()) {
+            this.renderThemePasscodeGate(theme, () => {
                 this.renderTheme04KnowledgeHub(theme);
             });
             return;

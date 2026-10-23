@@ -1,8 +1,8 @@
-// 資安核心知識庫靜態快取 (最後同步：2026-10-23 15:50:18)
+// 資安核心知識庫靜態快取 (最後同步：2026-10-23 16:33:34)
 window.WORKSPACE_KNOWLEDGE_DATA = {
   "metadata": {
     "version": "4.2.0",
-    "lastSyncedAt": "2026-10-23 15:50:18",
+    "lastSyncedAt": "2026-10-23 16:33:34",
     "totalCount": 425,
     "primaryDomain": "security",
     "totalPhases": 4,
@@ -126,7 +126,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-967807",
+          "id": "sec-127387",
           "title": "ms-4-150資通系統安全防護基準應辦事項檢核表_v32_加雲端",
           "fileName": "ms-4-150資通系統安全防護基準應辦事項檢核表_v32_加雲端.docx",
           "domain": "security",
@@ -171,7 +171,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-734156",
+          "id": "sec-839784",
           "title": "115年管審會應辦事項與資料",
           "fileName": "115年管審會應辦事項與資料.gdoc",
           "domain": "security",
@@ -216,7 +216,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-524174",
+          "id": "sec-508520",
           "title": "MS-F-44資通安全責任等級分級辦法_V1",
           "fileName": "MS-F-44資通安全責任等級分級辦法_V1.pdf",
           "domain": "security",
@@ -261,7 +261,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-610203",
+          "id": "sec-300189",
           "title": "MS-F-05各機關處理資通安全事件危機通報緊急應變作業注意事項_",
           "fileName": "MS-F-05各機關處理資通安全事件危機通報緊急應變作業注意事項_.pdf",
           "domain": "security",
@@ -306,7 +306,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-291296",
+          "id": "sec-350474",
           "title": "MS-3-18電力緊急應變計畫作業說明書_V4",
           "fileName": "MS-3-18電力緊急應變計畫作業說明書_V4.pdf",
           "domain": "security",
@@ -351,7 +351,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-344468",
+          "id": "sec-157405",
           "title": "MS-3-42個資事件緊急應變計畫作業說明書_V3",
           "fileName": "MS-3-42個資事件緊急應變計畫作業說明書_V3.pdf",
           "domain": "security",
@@ -396,7 +396,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-890302",
+          "id": "sec-744003",
           "title": "MS-4-72(線上表單)緊急應變成員聯絡電話測試表_V2",
           "fileName": "MS-4-72(線上表單)緊急應變成員聯絡電話測試表_V2.pdf",
           "domain": "security",
@@ -441,7 +441,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-901698",
+          "id": "sec-535963",
           "title": "MS-4-56緊急應變成員聯絡電話表",
           "fileName": "MS-4-56緊急應變成員聯絡電話表.pdf",
           "domain": "security",
@@ -486,7 +486,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-132288",
+          "id": "sec-203953",
           "title": "MS-4-107(線上表單)個資事件通報單_V4",
           "fileName": "MS-4-107(線上表單)個資事件通報單_V4.pdf",
           "domain": "security",
@@ -531,7 +531,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-263526",
+          "id": "sec-014474",
           "title": "MS-4-06異常事件通報單_v5_1030822_",
           "fileName": "MS-4-06異常事件通報單_v5_1030822_.pdf",
           "domain": "security",
@@ -576,7 +576,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-548312",
+          "id": "sec-152872",
           "title": "MS-3-49防火牆緊急應變計畫作業說明書_V1",
           "fileName": "MS-3-49防火牆緊急應變計畫作業說明書_V1.pdf",
           "domain": "security",
@@ -621,7 +621,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-092527",
+          "id": "sec-640408",
           "title": "MS-3-16資料庫緊急應變計畫作業說明書_V6",
           "fileName": "MS-3-16資料庫緊急應變計畫作業說明書_V6.pdf",
           "domain": "security",
@@ -666,7 +666,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-922134",
+          "id": "sec-494693",
           "title": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106",
           "fileName": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106.pdf",
           "domain": "security",
@@ -711,7 +711,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-334241",
+          "id": "sec-624962",
           "title": "MS-3-17消防緊急應變計畫作業說明書_v4",
           "fileName": "MS-3-17消防緊急應變計畫作業說明書_v4.pdf",
           "domain": "security",
@@ -756,7 +756,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-719698",
+          "id": "sec-710857",
           "title": "MS-3-23業務單位人工作業緊急應變計畫作業說明書_V6_1130822",
           "fileName": "MS-3-23業務單位人工作業緊急應變計畫作業說明書_V6_1130822.pdf",
           "domain": "security",
@@ -852,7 +852,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-127914",
+          "id": "sec-392478",
           "title": "MS-4-127 全景評鑑表",
           "fileName": "MS-4-127 全景評鑑表.gdoc",
           "domain": "security",
@@ -897,7 +897,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-558326",
+          "id": "sec-956972",
           "title": "全景評鑑關係圖",
           "fileName": "全景評鑑關係圖.jpg",
           "domain": "security",
@@ -942,7 +942,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-734156",
+          "id": "sec-839784",
           "title": "115年管審會應辦事項與資料",
           "fileName": "115年管審會應辦事項與資料.gdoc",
           "domain": "security",
@@ -987,7 +987,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-439469",
+          "id": "sec-283916",
           "title": "114年管審會議紀錄(簽准)",
           "fileName": "114年管審會議紀錄(簽准).pdf",
           "domain": "security",
@@ -1032,7 +1032,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-261498",
+          "id": "sec-186751",
           "title": "114年管審會議程_0908(final)",
           "fileName": "114年管審會議程_0908(final).docx",
           "domain": "security",
@@ -1077,7 +1077,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-601683",
+          "id": "sec-024389",
           "title": "管審會9大議題",
           "fileName": "管審會9大議題.png",
           "domain": "security",
@@ -1122,7 +1122,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-448312",
+          "id": "sec-347767",
           "title": "MS-4-126全局業務流程清冊_V1",
           "fileName": "MS-4-126全局業務流程清冊_V1.pdf",
           "domain": "security",
@@ -1167,7 +1167,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-849105",
+          "id": "sec-643896",
           "title": "MS-4-127(線上表單)全景評鑑表_V4",
           "fileName": "MS-4-127(線上表單)全景評鑑表_V4.pdf",
           "domain": "security",
@@ -1212,7 +1212,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-266465",
+          "id": "sec-907378",
           "title": "MS-2-17全景評鑑程序書_v9_115902",
           "fileName": "MS-2-17全景評鑑程序書_v9_115902.pdf",
           "domain": "security",
@@ -1257,7 +1257,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-744635",
+          "id": "sec-235134",
           "title": "Day02_全景評鑑與業務衝擊分析(BIA)決策計算流程圖",
           "fileName": "Day02_全景評鑑與業務衝擊分析(BIA)決策計算流程圖.png",
           "domain": "security",
@@ -1302,7 +1302,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-746502",
+          "id": "sec-314178",
           "title": "Day02_深度學習精華講義與圖表解析：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17)",
           "fileName": "Day02_深度學習精華講義與圖表解析：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17).gdoc",
           "domain": "security",
@@ -1347,7 +1347,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-083441",
+          "id": "sec-525104",
           "title": "Day02_精讀簡報：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17)",
           "fileName": "Day02_精讀簡報：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17).gslides",
           "domain": "security",
@@ -1444,7 +1444,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-575387",
+          "id": "sec-723073",
           "title": "高風險系統風險評鑑與評估流程",
           "fileName": "高風險系統風險評鑑與評估流程.gdoc",
           "domain": "security",
@@ -1489,7 +1489,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-257031",
+          "id": "sec-221593",
           "title": "資訊資產管理與分級作業規範",
           "fileName": "資訊資產管理與分級作業規範.gdoc",
           "domain": "security",
@@ -1534,7 +1534,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-481501",
+          "id": "sec-734572",
           "title": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南 (1)",
           "fileName": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南 (1).gdoc",
           "domain": "security",
@@ -1579,7 +1579,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-742227",
+          "id": "sec-497840",
           "title": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南",
           "fileName": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南.gdoc",
           "domain": "security",
@@ -1624,7 +1624,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-649247",
+          "id": "sec-306035",
           "title": "資訊資產盤點與防禦矩陣 (CDM版)",
           "fileName": "資訊資產盤點與防禦矩陣 (CDM版).gsheet",
           "domain": "security",
@@ -1669,7 +1669,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-171564",
+          "id": "sec-559696",
           "title": "資訊資產盤點與防禦矩陣 (含組態與元件管理_V2)",
           "fileName": "資訊資產盤點與防禦矩陣 (含組態與元件管理_V2).gsheet",
           "domain": "security",
@@ -1714,7 +1714,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-947705",
+          "id": "sec-491990",
           "title": "MS-4-157-委外廠商個人資料處理切結書_V1",
           "fileName": "MS-4-157-委外廠商個人資料處理切結書_V1.pdf",
           "domain": "security",
@@ -1759,7 +1759,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-735866",
+          "id": "sec-553577",
           "title": "MS-4-15風險等級定義表_v15_1150615",
           "fileName": "MS-4-15風險等級定義表_v15_1150615.pdf",
           "domain": "security",
@@ -1804,7 +1804,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-578541",
+          "id": "sec-368824",
           "title": "MS-4-16適用性聲明書_v9_1150904",
           "fileName": "MS-4-16適用性聲明書_v9_1150904.pdf",
           "domain": "security",
@@ -1849,7 +1849,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-946811",
+          "id": "sec-583113",
           "title": "MS-4-159廠商專案管理自行檢核表_V1_1150825",
           "fileName": "MS-4-159廠商專案管理自行檢核表_V1_1150825.pdf",
           "domain": "security",
@@ -1894,7 +1894,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-204350",
+          "id": "sec-451353",
           "title": "MS-4-152系統功能異動盤點表_V1",
           "fileName": "MS-4-152系統功能異動盤點表_V1.pdf",
           "domain": "security",
@@ -1939,7 +1939,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-267240",
+          "id": "sec-093080",
           "title": "MS-4-156%204類資訊資產與個資作業流程關聯表_V1",
           "fileName": "MS-4-156%204類資訊資產與個資作業流程關聯表_V1.pdf",
           "domain": "security",
@@ -1984,7 +1984,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-029120",
+          "id": "sec-146212",
           "title": "MS-4-155資訊安全與個資保護管理系統委外廠商稽核列管事項檢核表_V1",
           "fileName": "MS-4-155資訊安全與個資保護管理系統委外廠商稽核列管事項檢核表_V1.pdf",
           "domain": "security",
@@ -2029,7 +2029,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-242738",
+          "id": "sec-747878",
           "title": "MS-4-154專案執行事項確認表_V2_1150312",
           "fileName": "MS-4-154專案執行事項確認表_V2_1150312.pdf",
           "domain": "security",
@@ -2074,7 +2074,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-323990",
+          "id": "sec-535784",
           "title": "MS-4-158%20未涉及異常事件之資安威脅情資通知單_v1_1150807",
           "fileName": "MS-4-158%20未涉及異常事件之資安威脅情資通知單_v1_1150807.pdf",
           "domain": "security",
@@ -2174,7 +2174,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-841695",
+          "id": "sec-016061",
           "title": "MS-4-132委外服務之供應商刪除保有個人資料紀錄表_V2_1030715",
           "fileName": "MS-4-132委外服務之供應商刪除保有個人資料紀錄表_V2_1030715.pdf",
           "domain": "security",
@@ -2219,7 +2219,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-269664",
+          "id": "sec-159751",
           "title": "MS-4-133(線上表單)個人資料特定目的外利用申請書_V1",
           "fileName": "MS-4-133(線上表單)個人資料特定目的外利用申請書_V1.pdf",
           "domain": "security",
@@ -2264,7 +2264,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-539504",
+          "id": "sec-743677",
           "title": "MS-4-135(線上表單)SDM設備管理系統全面盤點報告_V2",
           "fileName": "MS-4-135(線上表單)SDM設備管理系統全面盤點報告_V2.pdf",
           "domain": "security",
@@ -2309,7 +2309,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-281239",
+          "id": "sec-311577",
           "title": "MS-4-130人員進出庫房紀錄單(檔案庫房)_V2_1121110",
           "fileName": "MS-4-130人員進出庫房紀錄單(檔案庫房)_V2_1121110.pdf",
           "domain": "security",
@@ -2354,7 +2354,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-861626",
+          "id": "sec-427671",
           "title": "MS-4-137地方稅平台緊急作業需求申請單_V1",
           "fileName": "MS-4-137地方稅平台緊急作業需求申請單_V1.pdf",
           "domain": "security",
@@ -2399,7 +2399,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-367590",
+          "id": "sec-453203",
           "title": "MS-4-135SDM設備管理系統全面盤點報告_V1",
           "fileName": "MS-4-135SDM設備管理系統全面盤點報告_V1.pdf",
           "domain": "security",
@@ -2444,7 +2444,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-298261",
+          "id": "sec-348579",
           "title": "MS-4-136 (線上表單)通訊軟體電腦版安裝註銷申請單_V2",
           "fileName": "MS-4-136 (線上表單)通訊軟體電腦版安裝註銷申請單_V2.pdf",
           "domain": "security",
@@ -2489,7 +2489,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-254597",
+          "id": "sec-131392",
           "title": "MS-4-134(線上表單)SDM設備管理系統內部稽核報告_V2",
           "fileName": "MS-4-134(線上表單)SDM設備管理系統內部稽核報告_V2.pdf",
           "domain": "security",
@@ -2534,7 +2534,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-130948",
+          "id": "sec-781118",
           "title": "MS-4-131檔案庫房設施維護紀錄單_V1",
           "fileName": "MS-4-131檔案庫房設施維護紀錄單_V1.pdf",
           "domain": "security",
@@ -2579,7 +2579,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-677965",
+          "id": "sec-840820",
           "title": "MS-4-91稅務資料庫存取紀錄抽核結果清單_V2",
           "fileName": "MS-4-91稅務資料庫存取紀錄抽核結果清單_V2.pdf",
           "domain": "security",
@@ -2624,7 +2624,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-289322",
+          "id": "sec-331397",
           "title": "MS-4-90報廢資訊資產資訊清除抽核檢查表_V1",
           "fileName": "MS-4-90報廢資訊資產資訊清除抽核檢查表_V1.pdf",
           "domain": "security",
@@ -2669,7 +2669,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-601080",
+          "id": "sec-413304",
           "title": "MS-4-61臺中市政府地方稅務局資料庫不定期檢核項目表_V4",
           "fileName": "MS-4-61臺中市政府地方稅務局資料庫不定期檢核項目表_V4.pdf",
           "domain": "security",
@@ -2714,7 +2714,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-499421",
+          "id": "sec-302447",
           "title": "MS-4-60資料庫每季檢核項目表_V3",
           "fileName": "MS-4-60資料庫每季檢核項目表_V3.pdf",
           "domain": "security",
@@ -2759,7 +2759,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-412722",
+          "id": "sec-702967",
           "title": "MS-4-31(線上表單)應用系統程式需求暨賦稅資料庫資料複製管理申請表_V15",
           "fileName": "MS-4-31(線上表單)應用系統程式需求暨賦稅資料庫資料複製管理申請表_V15.pdf",
           "domain": "security",
@@ -2804,7 +2804,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-603406",
+          "id": "sec-446452",
           "title": "MS-4-40應用系統資料庫異動申請單_V6",
           "fileName": "MS-4-40應用系統資料庫異動申請單_V6.pdf",
           "domain": "security",
@@ -2901,7 +2901,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-548312",
+          "id": "sec-152872",
           "title": "MS-3-49防火牆緊急應變計畫作業說明書_V1",
           "fileName": "MS-3-49防火牆緊急應變計畫作業說明書_V1.pdf",
           "domain": "security",
@@ -2946,7 +2946,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-356260",
+          "id": "sec-729114",
           "title": "MS-4-55緊急應變計劃測試報告_網路設備_防火牆",
           "fileName": "MS-4-55緊急應變計劃測試報告_網路設備_防火牆.pdf",
           "domain": "security",
@@ -2991,7 +2991,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-427029",
+          "id": "sec-359152",
           "title": "Day05_ISMS_PIMS_網路安全防護架構與邊界隔離全景圖",
           "fileName": "Day05_ISMS_PIMS_網路安全防護架構與邊界隔離全景圖.png",
           "domain": "security",
@@ -3036,7 +3036,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-661980",
+          "id": "sec-999653",
           "title": "Day05_網路設備安全維護與防火牆檢核流程圖",
           "fileName": "Day05_網路設備安全維護與防火牆檢核流程圖.png",
           "domain": "security",
@@ -3081,7 +3081,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-583492",
+          "id": "sec-267178",
           "title": "四層縱深防禦安全架構圖",
           "fileName": "四層縱深防禦安全架構圖.png",
           "domain": "security",
@@ -3126,7 +3126,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-028630",
+          "id": "sec-852487",
           "title": "Day13_邊際交換器與防火牆手動切換備援SOP架構圖",
           "fileName": "Day13_邊際交換器與防火牆手動切換備援SOP架構圖.png",
           "domain": "security",
@@ -3171,7 +3171,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-098133",
+          "id": "sec-845318",
           "title": "Day15_外點連線防火牆閘道與HA雙機備援防護架構圖",
           "fileName": "Day15_外點連線防火牆閘道與HA雙機備援防護架構圖.png",
           "domain": "security",
@@ -3216,7 +3216,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-837139",
+          "id": "sec-408233",
           "title": "Day16_防火牆設定變更版本控制與SOC情資聯防SOP",
           "fileName": "Day16_防火牆設定變更版本控制與SOC情資聯防SOP.png",
           "domain": "security",
@@ -3261,7 +3261,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-072858",
+          "id": "sec-562290",
           "title": "Day16_防火牆政策每季四大檢核要點與停用處置圖",
           "fileName": "Day16_防火牆政策每季四大檢核要點與停用處置圖.png",
           "domain": "security",
@@ -3306,7 +3306,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-350149",
+          "id": "sec-234219",
           "title": "Day16_精讀簡報：防火牆政策管理與每季四檢作業(MS-3-61)",
           "fileName": "Day16_精讀簡報：防火牆政策管理與每季四檢作業(MS-3-61).gslides",
           "domain": "security",
@@ -3351,7 +3351,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-018894",
+          "id": "sec-330947",
           "title": "Day16_深度學習精華講義與圖表解析：防火牆政策管理與每季四檢作業(MS-3-61)",
           "fileName": "Day16_深度學習精華講義與圖表解析：防火牆政策管理與每季四檢作業(MS-3-61).gdoc",
           "domain": "security",
@@ -3396,7 +3396,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-751622",
+          "id": "sec-049052",
           "title": "Day19_WAF網站應用程式防火牆部署與SOC聯防架構圖",
           "fileName": "Day19_WAF網站應用程式防火牆部署與SOC聯防架構圖.png",
           "domain": "security",
@@ -3441,7 +3441,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-053489",
+          "id": "sec-611668",
           "title": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP精煉簡報",
           "fileName": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP精煉簡報.gslides",
           "domain": "security",
@@ -3486,7 +3486,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-119405",
+          "id": "sec-886543",
           "title": "Week05_回溯補救特刊_SDLC開發GCB與委外審查SOP流程圖_v2",
           "fileName": "Week05_回溯補救特刊_SDLC開發GCB與委外審查SOP流程圖_v2.png",
           "domain": "security",
@@ -3531,7 +3531,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-135311",
+          "id": "sec-634704",
           "title": "Week05_SDLC開發GCB與委外維運SOP流程圖_高解析",
           "fileName": "Week05_SDLC開發GCB與委外維運SOP流程圖_高解析.png",
           "domain": "security",
@@ -3629,7 +3629,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-281239",
+          "id": "sec-311577",
           "title": "MS-4-130人員進出庫房紀錄單(檔案庫房)_V2_1121110",
           "fileName": "MS-4-130人員進出庫房紀錄單(檔案庫房)_V2_1121110.pdf",
           "domain": "security",
@@ -3674,7 +3674,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-939154",
+          "id": "sec-529844",
           "title": "MS-4-54資訊科機房管理日檢查表_V21",
           "fileName": "MS-4-54資訊科機房管理日檢查表_V21.pdf",
           "domain": "security",
@@ -3719,7 +3719,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-091453",
+          "id": "sec-026457",
           "title": "MS-4-50資訊科主機房值班交接日誌_V5",
           "fileName": "MS-4-50資訊科主機房值班交接日誌_V5.pdf",
           "domain": "security",
@@ -3764,7 +3764,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-740755",
+          "id": "sec-966417",
           "title": "MS-4-46進出機房人員登記簿_V3",
           "fileName": "MS-4-46進出機房人員登記簿_V3.pdf",
           "domain": "security",
@@ -3809,7 +3809,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-937573",
+          "id": "sec-927562",
           "title": "MS-4-77(線上表單)機房設備安裝(移除)申請單_V8_1130821",
           "fileName": "MS-4-77(線上表單)機房設備安裝(移除)申請單_V8_1130821.pdf",
           "domain": "security",
@@ -3854,7 +3854,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-427115",
+          "id": "sec-384633",
           "title": "MS-4-51(線上表單)門禁磁卡申請異動單_V5",
           "fileName": "MS-4-51(線上表單)門禁磁卡申請異動單_V5.pdf",
           "domain": "security",
@@ -3899,7 +3899,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-040833",
+          "id": "sec-795102",
           "title": "MS-4-76分局機房管理檢查表_V4",
           "fileName": "MS-4-76分局機房管理檢查表_V4.pdf",
           "domain": "security",
@@ -3944,7 +3944,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-673084",
+          "id": "sec-293443",
           "title": "MS-4-45(線上表單)機房物品攜出入申請單_V8",
           "fileName": "MS-4-45(線上表單)機房物品攜出入申請單_V8.pdf",
           "domain": "security",
@@ -3989,7 +3989,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-185833",
+          "id": "sec-491287",
           "title": "MS-4-17機房管理週(月)檢查表_V28",
           "fileName": "MS-4-17機房管理週(月)檢查表_V28.pdf",
           "domain": "security",
@@ -4034,7 +4034,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-896167",
+          "id": "sec-848741",
           "title": "MS-3-12機房與實體安全管理作業說明書_V20",
           "fileName": "MS-3-12機房與實體安全管理作業說明書_V20.pdf",
           "domain": "security",
@@ -4079,7 +4079,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-366042",
+          "id": "sec-017234",
           "title": "Day08_機房門禁物品攜出入與錄影勾稽SOP流程圖",
           "fileName": "Day08_機房門禁物品攜出入與錄影勾稽SOP流程圖.png",
           "domain": "security",
@@ -4124,7 +4124,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-232835",
+          "id": "sec-580830",
           "title": "Day08_精讀簡報：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12)",
           "fileName": "Day08_精讀簡報：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12).gslides",
           "domain": "security",
@@ -4169,7 +4169,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-226132",
+          "id": "sec-422920",
           "title": "Day08_深度學習精華講義與圖表解析：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12)",
           "fileName": "Day08_深度學習精華講義與圖表解析：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12).gdoc",
           "domain": "security",
@@ -4214,7 +4214,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-690848",
+          "id": "sec-892833",
           "title": "Day09_儲存媒體資料抹除與資產報廢銷毀SOP圖",
           "fileName": "Day09_儲存媒體資料抹除與資產報廢銷毀SOP圖.png",
           "domain": "security",
@@ -4259,7 +4259,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-380982",
+          "id": "sec-445675",
           "title": "Day09_精讀簡報：資訊設備生命週期管理(MS-3-24)與資產報廢銷毀(MS-3-05)",
           "fileName": "Day09_精讀簡報：資訊設備生命週期管理(MS-3-24)與資產報廢銷毀(MS-3-05).gslides",
           "domain": "security",
@@ -4359,7 +4359,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-208353",
+          "id": "sec-419072",
           "title": "完整的SSDLC學習與知識",
           "fileName": "完整的SSDLC學習與知識.gdoc",
           "domain": "security",
@@ -4404,7 +4404,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-967807",
+          "id": "sec-127387",
           "title": "ms-4-150資通系統安全防護基準應辦事項檢核表_v32_加雲端",
           "fileName": "ms-4-150資通系統安全防護基準應辦事項檢核表_v32_加雲端.docx",
           "domain": "security",
@@ -4449,7 +4449,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-376206",
+          "id": "sec-534325",
           "title": "資通系統防護基準驗證實務v1.3_1150603",
           "fileName": "資通系統防護基準驗證實務v1.3_1150603.pdf",
           "domain": "security",
@@ -4494,7 +4494,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-588631",
+          "id": "sec-195496",
           "title": "MS-4-124資訊系統安全等級評估表_V4",
           "fileName": "MS-4-124資訊系統安全等級評估表_V4.pdf",
           "domain": "security",
@@ -4539,7 +4539,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-672876",
+          "id": "sec-490186",
           "title": "MS-4-129(線上表單)測試區及操作區使用申請單_V5_1150708",
           "fileName": "MS-4-129(線上表單)測試區及操作區使用申請單_V5_1150708.pdf",
           "domain": "security",
@@ -4584,7 +4584,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-087878",
+          "id": "sec-115871",
           "title": "MS-F-47資通系統防護基準驗證實務_v1.1",
           "fileName": "MS-F-47資通系統防護基準驗證實務_v1.1.pdf",
           "domain": "security",
@@ -4629,7 +4629,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-507412",
+          "id": "sec-851185",
           "title": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211",
           "fileName": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211.pdf",
           "domain": "security",
@@ -4674,7 +4674,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-470068",
+          "id": "sec-812172",
           "title": "MS-4-150資通系統安全防護基準應辦事項檢核表(含維運階段)_V2",
           "fileName": "MS-4-150資通系統安全防護基準應辦事項檢核表(含維運階段)_V2.pdf",
           "domain": "security",
@@ -4719,7 +4719,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-026412",
+          "id": "sec-157725",
           "title": "Day29_精讀簡報：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07)",
           "fileName": "Day29_精讀簡報：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07).gslides",
           "domain": "security",
@@ -4764,7 +4764,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-940606",
+          "id": "sec-981180",
           "title": "Day29_安全軟體開發生命週期(SSDLC)全流程防護架構圖",
           "fileName": "Day29_安全軟體開發生命週期(SSDLC)全流程防護架構圖.png",
           "domain": "security",
@@ -4809,7 +4809,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-136293",
+          "id": "sec-245020",
           "title": "Day29_深度學習精華講義與圖表解析：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07)",
           "fileName": "Day29_深度學習精華講義與圖表解析：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07).gdoc",
           "domain": "security",
@@ -4854,7 +4854,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-944011",
+          "id": "sec-945132",
           "title": "Day30_精讀簡報：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07)",
           "fileName": "Day30_精讀簡報：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07).gslides",
           "domain": "security",
@@ -4899,7 +4899,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-057676",
+          "id": "sec-123054",
           "title": "Day30_深度學習精華講義與圖表解析：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07)",
           "fileName": "Day30_深度學習精華講義與圖表解析：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07).gdoc",
           "domain": "security",
@@ -4944,7 +4944,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-979102",
+          "id": "sec-552582",
           "title": "Day30_原始碼檢測(SAST)與開源套件(OSS)安全掃描流程圖",
           "fileName": "Day30_原始碼檢測(SAST)與開源套件(OSS)安全掃描流程圖.png",
           "domain": "security",
@@ -5044,7 +5044,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-841695",
+          "id": "sec-016061",
           "title": "MS-4-132委外服務之供應商刪除保有個人資料紀錄表_V2_1030715",
           "fileName": "MS-4-132委外服務之供應商刪除保有個人資料紀錄表_V2_1030715.pdf",
           "domain": "security",
@@ -5089,7 +5089,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-947705",
+          "id": "sec-491990",
           "title": "MS-4-157-委外廠商個人資料處理切結書_V1",
           "fileName": "MS-4-157-委外廠商個人資料處理切結書_V1.pdf",
           "domain": "security",
@@ -5134,7 +5134,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-946811",
+          "id": "sec-583113",
           "title": "MS-4-159廠商專案管理自行檢核表_V1_1150825",
           "fileName": "MS-4-159廠商專案管理自行檢核表_V1_1150825.pdf",
           "domain": "security",
@@ -5179,7 +5179,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-029120",
+          "id": "sec-146212",
           "title": "MS-4-155資訊安全與個資保護管理系統委外廠商稽核列管事項檢核表_V1",
           "fileName": "MS-4-155資訊安全與個資保護管理系統委外廠商稽核列管事項檢核表_V1.pdf",
           "domain": "security",
@@ -5224,7 +5224,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-744249",
+          "id": "sec-587073",
           "title": "MS-4-36委外廠商保密同意書_V8",
           "fileName": "MS-4-36委外廠商保密同意書_V8.pdf",
           "domain": "security",
@@ -5269,7 +5269,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-194309",
+          "id": "sec-804860",
           "title": "MS-4-116委外服務案之廠商資訊安全暨個人資料保護實地稽核紀錄表_v6",
           "fileName": "MS-4-116委外服務案之廠商資訊安全暨個人資料保護實地稽核紀錄表_v6.pdf",
           "domain": "security",
@@ -5314,7 +5314,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-086961",
+          "id": "sec-892016",
           "title": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905",
           "fileName": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905.pdf",
           "domain": "security",
@@ -5359,7 +5359,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-475694",
+          "id": "sec-287102",
           "title": "MS-4-22臺中市政府地方稅務局工友、約（聘）僱人員、行政助理、工讀生及短期約用人員保密切結書_v8_1140424",
           "fileName": "MS-4-22臺中市政府地方稅務局工友、約（聘）僱人員、行政助理、工讀生及短期約用人員保密切結書_v8_1140424.pdf",
           "domain": "security",
@@ -5404,7 +5404,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-503237",
+          "id": "sec-403516",
           "title": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19",
           "fileName": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19.pdf",
           "domain": "security",
@@ -5449,7 +5449,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-993467",
+          "id": "sec-280017",
           "title": "MS-3-08委外安全管理作業說明書_V14",
           "fileName": "MS-3-08委外安全管理作業說明書_V14.pdf",
           "domain": "security",
@@ -5494,7 +5494,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-381571",
+          "id": "sec-696002",
           "title": "Day23_使用者帳號生命週期與維護廠商帳號管制流程圖",
           "fileName": "Day23_使用者帳號生命週期與維護廠商帳號管制流程圖.png",
           "domain": "security",
@@ -5539,7 +5539,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-680270",
+          "id": "sec-562202",
           "title": "【業務核心專題深研】從系統開發到廠商維運：軟體、資料庫與組態全生命週期安全管理實務指南",
           "fileName": "【業務核心專題深研】從系統開發到廠商維運：軟體、資料庫與組態全生命週期安全管理實務指南.gdoc",
           "domain": "security",
@@ -5584,7 +5584,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-053489",
+          "id": "sec-611668",
           "title": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP精煉簡報",
           "fileName": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP精煉簡報.gslides",
           "domain": "security",
@@ -5629,7 +5629,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-119405",
+          "id": "sec-886543",
           "title": "Week05_回溯補救特刊_SDLC開發GCB與委外審查SOP流程圖_v2",
           "fileName": "Week05_回溯補救特刊_SDLC開發GCB與委外審查SOP流程圖_v2.png",
           "domain": "security",
@@ -5674,7 +5674,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-135311",
+          "id": "sec-634704",
           "title": "Week05_SDLC開發GCB與委外維運SOP流程圖_高解析",
           "fileName": "Week05_SDLC開發GCB與委外維運SOP流程圖_高解析.png",
           "domain": "security",
@@ -5771,7 +5771,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-610203",
+          "id": "sec-300189",
           "title": "MS-F-05各機關處理資通安全事件危機通報緊急應變作業注意事項_",
           "fileName": "MS-F-05各機關處理資通安全事件危機通報緊急應變作業注意事項_.pdf",
           "domain": "security",
@@ -5816,7 +5816,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-132288",
+          "id": "sec-203953",
           "title": "MS-4-107(線上表單)個資事件通報單_V4",
           "fileName": "MS-4-107(線上表單)個資事件通報單_V4.pdf",
           "domain": "security",
@@ -5861,7 +5861,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-263526",
+          "id": "sec-014474",
           "title": "MS-4-06異常事件通報單_v5_1030822_",
           "fileName": "MS-4-06異常事件通報單_v5_1030822_.pdf",
           "domain": "security",
@@ -5906,7 +5906,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-507412",
+          "id": "sec-851185",
           "title": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211",
           "fileName": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211.pdf",
           "domain": "security",
@@ -5951,7 +5951,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-263601",
+          "id": "sec-239192",
           "title": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3)",
           "fileName": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3).pdf",
           "domain": "security",
@@ -5996,7 +5996,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-623099",
+          "id": "sec-065868",
           "title": "MS-F-04國家資通安全通報應變網站操作手冊_V2",
           "fileName": "MS-F-04國家資通安全通報應變網站操作手冊_V2.pdf",
           "domain": "security",
@@ -6041,7 +6041,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-944410",
+          "id": "sec-384261",
           "title": "Day12_RTO_MTD_RPO指標與緊急應變通報管理架構圖",
           "fileName": "Day12_RTO_MTD_RPO指標與緊急應變通報管理架構圖.png",
           "domain": "security",
@@ -6086,7 +6086,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-446089",
+          "id": "sec-193097",
           "title": "Day13_深度學習精華講義與圖表解析：網路設備緊急應變計畫(MS-3-19)與備援切換演練",
           "fileName": "Day13_深度學習精華講義與圖表解析：網路設備緊急應變計畫(MS-3-19)與備援切換演練.gdoc",
           "domain": "security",
@@ -6131,7 +6131,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-484976",
+          "id": "sec-719793",
           "title": "Day13_精讀簡報：網路設備緊急應變計畫(MS-3-19)與備援切換演練",
           "fileName": "Day13_精讀簡報：網路設備緊急應變計畫(MS-3-19)與備援切換演練.gslides",
           "domain": "security",
@@ -6230,7 +6230,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-409428",
+          "id": "sec-114150",
           "title": "MS-4-71媒體入出庫申請單_V2",
           "fileName": "MS-4-71媒體入出庫申請單_V2.pdf",
           "domain": "security",
@@ -6275,7 +6275,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-044186",
+          "id": "sec-183276",
           "title": "MS-4-27(線上表單)備份媒體回存紀錄單_V5",
           "fileName": "MS-4-27(線上表單)備份媒體回存紀錄單_V5.pdf",
           "domain": "security",
@@ -6320,7 +6320,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-255572",
+          "id": "sec-513729",
           "title": "MS-4-63備份媒體異地存放清單_V2",
           "fileName": "MS-4-63備份媒體異地存放清單_V2.pdf",
           "domain": "security",
@@ -6365,7 +6365,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-484450",
+          "id": "sec-389494",
           "title": "MS-4-112(線上表單)資訊系統備份作業申請單_V2",
           "fileName": "MS-4-112(線上表單)資訊系統備份作業申請單_V2.pdf",
           "domain": "security",
@@ -6410,7 +6410,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-890695",
+          "id": "sec-129047",
           "title": "MS-4-28(線上表單)備份媒體盤點清單_V3",
           "fileName": "MS-4-28(線上表單)備份媒體盤點清單_V3.pdf",
           "domain": "security",
@@ -6455,7 +6455,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-725536",
+          "id": "sec-828537",
           "title": "MS-3-47公文及檔管系統異地備援緊急應變作業說明書_V1",
           "fileName": "MS-3-47公文及檔管系統異地備援緊急應變作業說明書_V1.pdf",
           "domain": "security",
@@ -6500,7 +6500,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-343151",
+          "id": "sec-371278",
           "title": "MS-3-04_媒體及備份管理作業說明書_v13_1110408",
           "fileName": "MS-3-04_媒體及備份管理作業說明書_v13_1110408.pdf",
           "domain": "security",
@@ -6545,7 +6545,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-488666",
+          "id": "sec-882905",
           "title": "Day06_帳號清查週期與稽核日誌保存備份流程圖",
           "fileName": "Day06_帳號清查週期與稽核日誌保存備份流程圖.png",
           "domain": "security",
@@ -6590,7 +6590,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-593671",
+          "id": "sec-111767",
           "title": "Day10_備份媒體七碼編號管理與異地備援回存驗證架構圖",
           "fileName": "Day10_備份媒體七碼編號管理與異地備援回存驗證架構圖.png",
           "domain": "security",
@@ -6635,7 +6635,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-251859",
+          "id": "sec-481605",
           "title": "Day10_精讀簡報：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04)",
           "fileName": "Day10_精讀簡報：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04).gslides",
           "domain": "security",
@@ -6680,7 +6680,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-422802",
+          "id": "sec-732668",
           "title": "Day10_深度學習精華講義與圖表解析：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04)",
           "fileName": "Day10_深度學習精華講義與圖表解析：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04).gdoc",
           "domain": "security",
@@ -6725,7 +6725,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-944410",
+          "id": "sec-384261",
           "title": "Day12_RTO_MTD_RPO指標與緊急應變通報管理架構圖",
           "fileName": "Day12_RTO_MTD_RPO指標與緊急應變通報管理架構圖.png",
           "domain": "security",
@@ -6770,7 +6770,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-826785",
+          "id": "sec-926858",
           "title": "Day27_資料庫稽核日誌至少保存1年與異質備份架構圖",
           "fileName": "Day27_資料庫稽核日誌至少保存1年與異質備份架構圖.png",
           "domain": "security",
@@ -6815,7 +6815,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-428988",
+          "id": "sec-003682",
           "title": "Day30_程式庫集中控管與伺服器D槽版本備份架構圖",
           "fileName": "Day30_程式庫集中控管與伺服器D槽版本備份架構圖.png",
           "domain": "security",
@@ -6912,7 +6912,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-101366",
+          "id": "sec-955963",
           "title": "本次的內部稽核內容，我負責的部分是直接貼上的圖檔部分，我想要針對這些內容，將這些應該參考的資安文件...",
           "fileName": "本次的內部稽核內容，我負責的部分是直接貼上的圖檔部分，我想要針對這些內容，將這些應該參考的資安文件....gdoc",
           "domain": "security",
@@ -6957,7 +6957,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-254597",
+          "id": "sec-131392",
           "title": "MS-4-134(線上表單)SDM設備管理系統內部稽核報告_V2",
           "fileName": "MS-4-134(線上表單)SDM設備管理系統內部稽核報告_V2.pdf",
           "domain": "security",
@@ -7002,7 +7002,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-898538",
+          "id": "sec-134773",
           "title": "MS-4-08矯正措施單_V8",
           "fileName": "MS-4-08矯正措施單_V8.pdf",
           "domain": "security",
@@ -7047,7 +7047,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-488890",
+          "id": "sec-142044",
           "title": "MS-4-141-系統測試確認單_V3",
           "fileName": "MS-4-141-系統測試確認單_V3.pdf",
           "domain": "security",
@@ -7092,7 +7092,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-600909",
+          "id": "sec-584653",
           "title": "MS-4-143組態管理清單_V2",
           "fileName": "MS-4-143組態管理清單_V2.pdf",
           "domain": "security",
@@ -7137,7 +7137,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-507412",
+          "id": "sec-851185",
           "title": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211",
           "fileName": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211.pdf",
           "domain": "security",
@@ -7182,7 +7182,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-549378",
+          "id": "sec-160579",
           "title": "MS-4-147資通系統安全威脅分析表_V1_1120905",
           "fileName": "MS-4-147資通系統安全威脅分析表_V1_1120905.pdf",
           "domain": "security",
@@ -7227,7 +7227,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-803206",
+          "id": "sec-269930",
           "title": "MS-4-145組態變更申請表_V1_1120905",
           "fileName": "MS-4-145組態變更申請表_V1_1120905.pdf",
           "domain": "security",
@@ -7272,7 +7272,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-578663",
+          "id": "sec-431166",
           "title": "MS-4-140(線上表單)系統金鑰及憑證清查表_V2",
           "fileName": "MS-4-140(線上表單)系統金鑰及憑證清查表_V2.pdf",
           "domain": "security",
@@ -7317,7 +7317,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-881374",
+          "id": "sec-331287",
           "title": "MS-4-14(線上表單)資訊資產清單_V3",
           "fileName": "MS-4-14(線上表單)資訊資產清單_V3.pdf",
           "domain": "security",
@@ -7362,7 +7362,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-251916",
+          "id": "sec-990824",
           "title": "MS-4-144組態變更申請表_V3_1141030",
           "fileName": "MS-4-144組態變更申請表_V3_1141030.pdf",
           "domain": "security",
@@ -7407,7 +7407,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-806734",
+          "id": "sec-776510",
           "title": "MS-4-148系統問題回報單_V1_1120905",
           "fileName": "MS-4-148系統問題回報單_V1_1120905.pdf",
           "domain": "security",
@@ -7452,7 +7452,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-338875",
+          "id": "sec-220272",
           "title": "MS-4-146臺中市政府地方稅務局自行稽核報告表_V1_1120905",
           "fileName": "MS-4-146臺中市政府地方稅務局自行稽核報告表_V1_1120905.pdf",
           "domain": "security",
@@ -7497,7 +7497,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-830208",
+          "id": "sec-140230",
           "title": "MS-4-149內部業務檢查結果辦理情形或改進事項表_V1",
           "fileName": "MS-4-149內部業務檢查結果辦理情形或改進事項表_V1.pdf",
           "domain": "security",
@@ -7542,7 +7542,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-200781",
+          "id": "sec-004583",
           "title": "MS-4-19資訊安全與個資保護管理系統稽核查檢表_V8_1150821",
           "fileName": "MS-4-19資訊安全與個資保護管理系統稽核查檢表_V8_1150821.pdf",
           "domain": "security",
@@ -7643,7 +7643,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ],
       "matchedFiles": [
         {
-          "id": "sec-547279",
+          "id": "sec-985205",
           "title": "Day01_深度學習精華講義與圖表解析：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01)",
           "fileName": "Day01_深度學習精華講義與圖表解析：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01).gdoc",
           "domain": "security",
@@ -7688,7 +7688,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-344472",
+          "id": "sec-869262",
           "title": "Day01_精讀簡報：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01)",
           "fileName": "Day01_精讀簡報：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01).gslides",
           "domain": "security",
@@ -7733,7 +7733,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-039408",
+          "id": "sec-483255",
           "title": "Day01_ISMS_PIMS_文件體系架構與跨階關聯圖",
           "fileName": "Day01_ISMS_PIMS_文件體系架構與跨階關聯圖.png",
           "domain": "security",
@@ -7778,7 +7778,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-945929",
+          "id": "sec-246188",
           "title": "Day01_文件生命週期與核准決行權責流程圖",
           "fileName": "Day01_文件生命週期與核准決行權責流程圖.png",
           "domain": "security",
@@ -7823,7 +7823,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-407412",
+          "id": "sec-262710",
           "title": "Day02_ISMS_PIMS_組織治理架構與權責分工全景圖",
           "fileName": "Day02_ISMS_PIMS_組織治理架構與權責分工全景圖.png",
           "domain": "security",
@@ -7868,7 +7868,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-744635",
+          "id": "sec-235134",
           "title": "Day02_全景評鑑與業務衝擊分析(BIA)決策計算流程圖",
           "fileName": "Day02_全景評鑑與業務衝擊分析(BIA)決策計算流程圖.png",
           "domain": "security",
@@ -7913,7 +7913,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-746502",
+          "id": "sec-314178",
           "title": "Day02_深度學習精華講義與圖表解析：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17)",
           "fileName": "Day02_深度學習精華講義與圖表解析：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17).gdoc",
           "domain": "security",
@@ -7958,7 +7958,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-083441",
+          "id": "sec-525104",
           "title": "Day02_精讀簡報：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17)",
           "fileName": "Day02_精讀簡報：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17).gslides",
           "domain": "security",
@@ -8003,7 +8003,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-096553",
+          "id": "sec-470795",
           "title": "Day03_ISMS_PIMS_稽核作業全流程與角色權責架構圖",
           "fileName": "Day03_ISMS_PIMS_稽核作業全流程與角色權責架構圖.png",
           "domain": "security",
@@ -8048,7 +8048,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-679344",
+          "id": "sec-347543",
           "title": "Day03_矯正措施管理與七大啟動時機閉環流向圖",
           "fileName": "Day03_矯正措施管理與七大啟動時機閉環流向圖.png",
           "domain": "security",
@@ -8093,7 +8093,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-249281",
+          "id": "sec-212129",
           "title": "Day03_深度學習精華講義與圖表解析：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09)",
           "fileName": "Day03_深度學習精華講義與圖表解析：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09).gdoc",
           "domain": "security",
@@ -8138,7 +8138,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-946104",
+          "id": "sec-989527",
           "title": "Day03_精讀簡報：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09)",
           "fileName": "Day03_精讀簡報：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09).gslides",
           "domain": "security",
@@ -8183,7 +8183,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-571568",
+          "id": "sec-635562",
           "title": "Day04_ISMS_PIMS_資訊資產六大類別與編碼架構圖",
           "fileName": "Day04_ISMS_PIMS_資訊資產六大類別與編碼架構圖.png",
           "domain": "security",
@@ -8228,7 +8228,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-986104",
+          "id": "sec-493478",
           "title": "Day04_資訊資產價值評定與CIA分級決策矩陣圖",
           "fileName": "Day04_資訊資產價值評定與CIA分級決策矩陣圖.png",
           "domain": "security",
@@ -8273,7 +8273,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
           ]
         },
         {
-          "id": "sec-792045",
+          "id": "sec-192546",
           "title": "Day04_深度學習精華講義與圖表解析：資訊資產管理程序(MS-2-10)暨分類分級作業",
           "fileName": "Day04_深度學習精華講義與圖表解析：資訊資產管理程序(MS-2-10)暨分類分級作業.gdoc",
           "domain": "security",
@@ -8322,7 +8322,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
   ],
   "items": [
     {
-      "id": "sec-388886",
+      "id": "sec-455734",
       "title": "資通安全概論證書_1131024",
       "fileName": "資通安全概論證書_1131024.pdf",
       "domain": "security",
@@ -8367,7 +8367,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-208353",
+      "id": "sec-419072",
       "title": "完整的SSDLC學習與知識",
       "fileName": "完整的SSDLC學習與知識.gdoc",
       "domain": "security",
@@ -8412,7 +8412,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-101366",
+      "id": "sec-955963",
       "title": "本次的內部稽核內容，我負責的部分是直接貼上的圖檔部分，我想要針對這些內容，將這些應該參考的資安文件...",
       "fileName": "本次的內部稽核內容，我負責的部分是直接貼上的圖檔部分，我想要針對這些內容，將這些應該參考的資安文件....gdoc",
       "domain": "security",
@@ -8457,7 +8457,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-494727",
+      "id": "sec-518588",
       "title": "內稽分析_請檢視是否有缺漏",
       "fileName": "內稽分析_請檢視是否有缺漏.pdf",
       "domain": "security",
@@ -8502,7 +8502,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-967807",
+      "id": "sec-127387",
       "title": "ms-4-150資通系統安全防護基準應辦事項檢核表_v32_加雲端",
       "fileName": "ms-4-150資通系統安全防護基準應辦事項檢核表_v32_加雲端.docx",
       "domain": "security",
@@ -8547,7 +8547,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-155913",
+      "id": "sec-290768",
       "title": "1788790938431",
       "fileName": "1788790938431.jpg",
       "domain": "security",
@@ -8592,7 +8592,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-020771",
+      "id": "sec-734210",
       "title": "7.0.財政部稅務獎勵金申請表-公文案由檢核及修正",
       "fileName": "7.0.財政部稅務獎勵金申請表-公文案由檢核及修正.docx",
       "domain": "security",
@@ -8637,7 +8637,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-376206",
+      "id": "sec-534325",
       "title": "資通系統防護基準驗證實務v1.3_1150603",
       "fileName": "資通系統防護基準驗證實務v1.3_1150603.pdf",
       "domain": "security",
@@ -8682,7 +8682,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-127914",
+      "id": "sec-392478",
       "title": "MS-4-127 全景評鑑表",
       "fileName": "MS-4-127 全景評鑑表.gdoc",
       "domain": "security",
@@ -8727,7 +8727,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-558326",
+      "id": "sec-956972",
       "title": "全景評鑑關係圖",
       "fileName": "全景評鑑關係圖.jpg",
       "domain": "security",
@@ -8772,7 +8772,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-734156",
+      "id": "sec-839784",
       "title": "115年管審會應辦事項與資料",
       "fileName": "115年管審會應辦事項與資料.gdoc",
       "domain": "security",
@@ -8817,7 +8817,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-439469",
+      "id": "sec-283916",
       "title": "114年管審會議紀錄(簽准)",
       "fileName": "114年管審會議紀錄(簽准).pdf",
       "domain": "security",
@@ -8862,7 +8862,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-261498",
+      "id": "sec-186751",
       "title": "114年管審會議程_0908(final)",
       "fileName": "114年管審會議程_0908(final).docx",
       "domain": "security",
@@ -8907,7 +8907,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-601683",
+      "id": "sec-024389",
       "title": "管審會9大議題",
       "fileName": "管審會9大議題.png",
       "domain": "security",
@@ -8952,7 +8952,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-575387",
+      "id": "sec-723073",
       "title": "高風險系統風險評鑑與評估流程",
       "fileName": "高風險系統風險評鑑與評估流程.gdoc",
       "domain": "security",
@@ -8997,7 +8997,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-257031",
+      "id": "sec-221593",
       "title": "資訊資產管理與分級作業規範",
       "fileName": "資訊資產管理與分級作業規範.gdoc",
       "domain": "security",
@@ -9042,7 +9042,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-481501",
+      "id": "sec-734572",
       "title": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南 (1)",
       "fileName": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南 (1).gdoc",
       "domain": "security",
@@ -9087,7 +9087,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-742227",
+      "id": "sec-497840",
       "title": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南",
       "fileName": "資產盤點與風險評鑑實務執行手冊：從鑑別到持續改善的全框架指南.gdoc",
       "domain": "security",
@@ -9132,7 +9132,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-649247",
+      "id": "sec-306035",
       "title": "資訊資產盤點與防禦矩陣 (CDM版)",
       "fileName": "資訊資產盤點與防禦矩陣 (CDM版).gsheet",
       "domain": "security",
@@ -9177,7 +9177,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-171564",
+      "id": "sec-559696",
       "title": "資訊資產盤點與防禦矩陣 (含組態與元件管理_V2)",
       "fileName": "資訊資產盤點與防禦矩陣 (含組態與元件管理_V2).gsheet",
       "domain": "security",
@@ -9222,7 +9222,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-784140",
+      "id": "sec-727883",
       "title": "風險等級定義表_精簡調整版_V2",
       "fileName": "風險等級定義表_精簡調整版_V2.gdoc",
       "domain": "security",
@@ -9267,7 +9267,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-841695",
+      "id": "sec-016061",
       "title": "MS-4-132委外服務之供應商刪除保有個人資料紀錄表_V2_1030715",
       "fileName": "MS-4-132委外服務之供應商刪除保有個人資料紀錄表_V2_1030715.pdf",
       "domain": "security",
@@ -9312,7 +9312,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-309322",
+      "id": "sec-063353",
       "title": "MS-4-128當事人個人資料請求事項申請單_V1",
       "fileName": "MS-4-128當事人個人資料請求事項申請單_V1.pdf",
       "domain": "security",
@@ -9357,7 +9357,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-588631",
+      "id": "sec-195496",
       "title": "MS-4-124資訊系統安全等級評估表_V4",
       "fileName": "MS-4-124資訊系統安全等級評估表_V4.pdf",
       "domain": "security",
@@ -9402,7 +9402,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-269664",
+      "id": "sec-159751",
       "title": "MS-4-133(線上表單)個人資料特定目的外利用申請書_V1",
       "fileName": "MS-4-133(線上表單)個人資料特定目的外利用申請書_V1.pdf",
       "domain": "security",
@@ -9447,7 +9447,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-435796",
+      "id": "sec-925381",
       "title": "MS-4-125(線上表單)關鍵業務清單_V4",
       "fileName": "MS-4-125(線上表單)關鍵業務清單_V4.pdf",
       "domain": "security",
@@ -9492,7 +9492,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-448312",
+      "id": "sec-347767",
       "title": "MS-4-126全局業務流程清冊_V1",
       "fileName": "MS-4-126全局業務流程清冊_V1.pdf",
       "domain": "security",
@@ -9537,7 +9537,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-849105",
+      "id": "sec-643896",
       "title": "MS-4-127(線上表單)全景評鑑表_V4",
       "fileName": "MS-4-127(線上表單)全景評鑑表_V4.pdf",
       "domain": "security",
@@ -9582,7 +9582,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-539504",
+      "id": "sec-743677",
       "title": "MS-4-135(線上表單)SDM設備管理系統全面盤點報告_V2",
       "fileName": "MS-4-135(線上表單)SDM設備管理系統全面盤點報告_V2.pdf",
       "domain": "security",
@@ -9627,7 +9627,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-260811",
+      "id": "sec-342982",
       "title": "MS-4-123(線上表單)業務流程清冊_V3",
       "fileName": "MS-4-123(線上表單)業務流程清冊_V3.pdf",
       "domain": "security",
@@ -9672,7 +9672,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-281239",
+      "id": "sec-311577",
       "title": "MS-4-130人員進出庫房紀錄單(檔案庫房)_V2_1121110",
       "fileName": "MS-4-130人員進出庫房紀錄單(檔案庫房)_V2_1121110.pdf",
       "domain": "security",
@@ -9717,7 +9717,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-861626",
+      "id": "sec-427671",
       "title": "MS-4-137地方稅平台緊急作業需求申請單_V1",
       "fileName": "MS-4-137地方稅平台緊急作業需求申請單_V1.pdf",
       "domain": "security",
@@ -9762,7 +9762,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-367590",
+      "id": "sec-453203",
       "title": "MS-4-135SDM設備管理系統全面盤點報告_V1",
       "fileName": "MS-4-135SDM設備管理系統全面盤點報告_V1.pdf",
       "domain": "security",
@@ -9807,7 +9807,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-672876",
+      "id": "sec-490186",
       "title": "MS-4-129(線上表單)測試區及操作區使用申請單_V5_1150708",
       "fileName": "MS-4-129(線上表單)測試區及操作區使用申請單_V5_1150708.pdf",
       "domain": "security",
@@ -9852,7 +9852,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-298261",
+      "id": "sec-348579",
       "title": "MS-4-136 (線上表單)通訊軟體電腦版安裝註銷申請單_V2",
       "fileName": "MS-4-136 (線上表單)通訊軟體電腦版安裝註銷申請單_V2.pdf",
       "domain": "security",
@@ -9897,7 +9897,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-694134",
+      "id": "sec-353048",
       "title": "MS-4-59電子簽章法釋疑與應用參考指引",
       "fileName": "MS-4-59電子簽章法釋疑與應用參考指引.pdf",
       "domain": "security",
@@ -9942,7 +9942,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-254597",
+      "id": "sec-131392",
       "title": "MS-4-134(線上表單)SDM設備管理系統內部稽核報告_V2",
       "fileName": "MS-4-134(線上表單)SDM設備管理系統內部稽核報告_V2.pdf",
       "domain": "security",
@@ -9987,7 +9987,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-130948",
+      "id": "sec-781118",
       "title": "MS-4-131檔案庫房設施維護紀錄單_V1",
       "fileName": "MS-4-131檔案庫房設施維護紀錄單_V1.pdf",
       "domain": "security",
@@ -10032,7 +10032,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-679317",
+      "id": "sec-022140",
       "title": "MS-F-62臺中市政府電子郵件使用管理要點",
       "fileName": "MS-F-62臺中市政府電子郵件使用管理要點.pdf",
       "domain": "security",
@@ -10077,7 +10077,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-524174",
+      "id": "sec-508520",
       "title": "MS-F-44資通安全責任等級分級辦法_V1",
       "fileName": "MS-F-44資通安全責任等級分級辦法_V1.pdf",
       "domain": "security",
@@ -10122,7 +10122,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-087878",
+      "id": "sec-115871",
       "title": "MS-F-47資通系統防護基準驗證實務_v1.1",
       "fileName": "MS-F-47資通系統防護基準驗證實務_v1.1.pdf",
       "domain": "security",
@@ -10167,7 +10167,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-677965",
+      "id": "sec-840820",
       "title": "MS-4-91稅務資料庫存取紀錄抽核結果清單_V2",
       "fileName": "MS-4-91稅務資料庫存取紀錄抽核結果清單_V2.pdf",
       "domain": "security",
@@ -10212,7 +10212,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-987622",
+      "id": "sec-433482",
       "title": "MS-F-21臺中市政府文書處理實施要點_V1",
       "fileName": "MS-F-21臺中市政府文書處理實施要點_V1.pdf",
       "domain": "security",
@@ -10257,7 +10257,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-559105",
+      "id": "sec-661127",
       "title": "MS-F-07政府網際服務網管理規範_V5",
       "fileName": "MS-F-07政府網際服務網管理規範_V5.pdf",
       "domain": "security",
@@ -10302,7 +10302,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-589040",
+      "id": "sec-961506",
       "title": "MS-F-41個人資料保護法之特定目的及個人資料之類別_V1",
       "fileName": "MS-F-41個人資料保護法之特定目的及個人資料之類別_V1.pdf",
       "domain": "security",
@@ -10347,7 +10347,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-947705",
+      "id": "sec-491990",
       "title": "MS-4-157-委外廠商個人資料處理切結書_V1",
       "fileName": "MS-4-157-委外廠商個人資料處理切結書_V1.pdf",
       "domain": "security",
@@ -10392,7 +10392,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-007789",
+      "id": "sec-542660",
       "title": "MS-3-45跨機關查調管理流程作業說明書_V4",
       "fileName": "MS-3-45跨機關查調管理流程作業說明書_V4.pdf",
       "domain": "security",
@@ -10437,7 +10437,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-735866",
+      "id": "sec-553577",
       "title": "MS-4-15風險等級定義表_v15_1150615",
       "fileName": "MS-4-15風險等級定義表_v15_1150615.pdf",
       "domain": "security",
@@ -10482,7 +10482,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-578541",
+      "id": "sec-368824",
       "title": "MS-4-16適用性聲明書_v9_1150904",
       "fileName": "MS-4-16適用性聲明書_v9_1150904.pdf",
       "domain": "security",
@@ -10527,7 +10527,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-944698",
+      "id": "sec-797534",
       "title": "MS-3-40消費稅籍處理流程作業說明書_V11_1150825",
       "fileName": "MS-3-40消費稅籍處理流程作業說明書_V11_1150825.pdf",
       "domain": "security",
@@ -10572,7 +10572,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-610203",
+      "id": "sec-300189",
       "title": "MS-F-05各機關處理資通安全事件危機通報緊急應變作業注意事項_",
       "fileName": "MS-F-05各機關處理資通安全事件危機通報緊急應變作業注意事項_.pdf",
       "domain": "security",
@@ -10617,7 +10617,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-409428",
+      "id": "sec-114150",
       "title": "MS-4-71媒體入出庫申請單_V2",
       "fileName": "MS-4-71媒體入出庫申請單_V2.pdf",
       "domain": "security",
@@ -10662,7 +10662,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-404977",
+      "id": "sec-205861",
       "title": "MS-4-67合法授權軟體紀錄表_V3",
       "fileName": "MS-4-67合法授權軟體紀錄表_V3.pdf",
       "domain": "security",
@@ -10707,7 +10707,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-275324",
+      "id": "sec-589984",
       "title": "MS-F-23臺中市政府檔案管理作業要點_V1",
       "fileName": "MS-F-23臺中市政府檔案管理作業要點_V1.pdf",
       "domain": "security",
@@ -10752,7 +10752,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-100132",
+      "id": "sec-115397",
       "title": "MS-4-23(線上表單)職務說明與代理人清單_V3",
       "fileName": "MS-4-23(線上表單)職務說明與代理人清單_V3.pdf",
       "domain": "security",
@@ -10797,7 +10797,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-946811",
+      "id": "sec-583113",
       "title": "MS-4-159廠商專案管理自行檢核表_V1_1150825",
       "fileName": "MS-4-159廠商專案管理自行檢核表_V1_1150825.pdf",
       "domain": "security",
@@ -10842,7 +10842,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-175737",
+      "id": "sec-091023",
       "title": "MS-3-37財產申報管理流程作業說明書V8_1120825",
       "fileName": "MS-3-37財產申報管理流程作業說明書V8_1120825.pdf",
       "domain": "security",
@@ -10887,7 +10887,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-641021",
+      "id": "sec-900327",
       "title": "MS-3-21稅務資料處理與交換作業說明書_V12_1120724",
       "fileName": "MS-3-21稅務資料處理與交換作業說明書_V12_1120724.pdf",
       "domain": "security",
@@ -10932,7 +10932,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-204350",
+      "id": "sec-451353",
       "title": "MS-4-152系統功能異動盤點表_V1",
       "fileName": "MS-4-152系統功能異動盤點表_V1.pdf",
       "domain": "security",
@@ -10977,7 +10977,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-352685",
+      "id": "sec-719179",
       "title": "MS-4-18(線上表單)合法軟體清查表_V4",
       "fileName": "MS-4-18(線上表單)合法軟體清查表_V4.pdf",
       "domain": "security",
@@ -11022,7 +11022,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-880824",
+      "id": "sec-271135",
       "title": "MS-3-41國家賠償流程管理作業說明書_V3",
       "fileName": "MS-3-41國家賠償流程管理作業說明書_V3.pdf",
       "domain": "security",
@@ -11067,7 +11067,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-484641",
+      "id": "sec-853427",
       "title": "MS-4-81(線上表單)主機系統異動申請單_V6",
       "fileName": "MS-4-81(線上表單)主機系統異動申請單_V6.pdf",
       "domain": "security",
@@ -11112,7 +11112,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-316512",
+      "id": "sec-596671",
       "title": "MS-4-70電腦軟體保管單_V3_1110408",
       "fileName": "MS-4-70電腦軟體保管單_V3_1110408.pdf",
       "domain": "security",
@@ -11157,7 +11157,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-267240",
+      "id": "sec-093080",
       "title": "MS-4-156%204類資訊資產與個資作業流程關聯表_V1",
       "fileName": "MS-4-156%204類資訊資產與個資作業流程關聯表_V1.pdf",
       "domain": "security",
@@ -11202,7 +11202,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-987285",
+      "id": "sec-407047",
       "title": "MS-4-21(線上表單)臺中市政府地方稅務局員工就職通知書_V5",
       "fileName": "MS-4-21(線上表單)臺中市政府地方稅務局員工就職通知書_V5.pdf",
       "domain": "security",
@@ -11247,7 +11247,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-744449",
+      "id": "sec-095814",
       "title": "MS-3-24硬體資訊設備管理作業說明書_V10_1121023",
       "fileName": "MS-3-24硬體資訊設備管理作業說明書_V10_1121023.pdf",
       "domain": "security",
@@ -11292,7 +11292,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-655583",
+      "id": "sec-773384",
       "title": "MS-4-85硬體設備異動申請單_V2",
       "fileName": "MS-4-85硬體設備異動申請單_V2.pdf",
       "domain": "security",
@@ -11337,7 +11337,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-103674",
+      "id": "sec-791579",
       "title": "MS-4-83(線上表單)主機上傳下載檔案檢查表_V2",
       "fileName": "MS-4-83(線上表單)主機上傳下載檔案檢查表_V2.pdf",
       "domain": "security",
@@ -11382,7 +11382,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-044186",
+      "id": "sec-183276",
       "title": "MS-4-27(線上表單)備份媒體回存紀錄單_V5",
       "fileName": "MS-4-27(線上表單)備份媒體回存紀錄單_V5.pdf",
       "domain": "security",
@@ -11427,7 +11427,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-822292",
+      "id": "sec-736579",
       "title": "MS-3-28志工管理流程作業說明書_V8_1120605",
       "fileName": "MS-3-28志工管理流程作業說明書_V8_1120605.pdf",
       "domain": "security",
@@ -11472,7 +11472,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-029120",
+      "id": "sec-146212",
       "title": "MS-4-155資訊安全與個資保護管理系統委外廠商稽核列管事項檢核表_V1",
       "fileName": "MS-4-155資訊安全與個資保護管理系統委外廠商稽核列管事項檢核表_V1.pdf",
       "domain": "security",
@@ -11517,7 +11517,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-291296",
+      "id": "sec-350474",
       "title": "MS-3-18電力緊急應變計畫作業說明書_V4",
       "fileName": "MS-3-18電力緊急應變計畫作業說明書_V4.pdf",
       "domain": "security",
@@ -11562,7 +11562,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-344468",
+      "id": "sec-157405",
       "title": "MS-3-42個資事件緊急應變計畫作業說明書_V3",
       "fileName": "MS-3-42個資事件緊急應變計畫作業說明書_V3.pdf",
       "domain": "security",
@@ -11607,7 +11607,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-475711",
+      "id": "sec-584574",
       "title": "MS-4-82全球資訊網權限申請單_V8_1150121",
       "fileName": "MS-4-82全球資訊網權限申請單_V8_1150121.pdf",
       "domain": "security",
@@ -11652,7 +11652,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-744249",
+      "id": "sec-587073",
       "title": "MS-4-36委外廠商保密同意書_V8",
       "fileName": "MS-4-36委外廠商保密同意書_V8.pdf",
       "domain": "security",
@@ -11697,7 +11697,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-409829",
+      "id": "sec-786983",
       "title": "MS-F-01行政院及所屬各機關資訊安全管理要點_",
       "fileName": "MS-F-01行政院及所屬各機關資訊安全管理要點_.pdf",
       "domain": "security",
@@ -11742,7 +11742,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-727310",
+      "id": "sec-989146",
       "title": "MS-4-86(線上表單)遞送法務部行政執行署各分署稅務電子資料申請單_V3",
       "fileName": "MS-4-86(線上表單)遞送法務部行政執行署各分署稅務電子資料申請單_V3.pdf",
       "domain": "security",
@@ -11787,7 +11787,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-079171",
+      "id": "sec-112721",
       "title": "MS-4-87系統員工帳號勾稽差異表_V1",
       "fileName": "MS-4-87系統員工帳號勾稽差異表_V1.pdf",
       "domain": "security",
@@ -11832,7 +11832,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-289322",
+      "id": "sec-331397",
       "title": "MS-4-90報廢資訊資產資訊清除抽核檢查表_V1",
       "fileName": "MS-4-90報廢資訊資產資訊清除抽核檢查表_V1.pdf",
       "domain": "security",
@@ -11877,7 +11877,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-782710",
+      "id": "sec-394308",
       "title": "MS-4-79受理房屋稅稅籍證明啟動人工作業申請表_V1",
       "fileName": "MS-4-79受理房屋稅稅籍證明啟動人工作業申請表_V1.pdf",
       "domain": "security",
@@ -11922,7 +11922,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-136116",
+      "id": "sec-476553",
       "title": "MS-F-02行政院及所屬各機關資訊安全管理規範_",
       "fileName": "MS-F-02行政院及所屬各機關資訊安全管理規範_.pdf",
       "domain": "security",
@@ -11967,7 +11967,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-985125",
+      "id": "sec-582228",
       "title": "MS-4-92簿冊倉庫及公用公務櫃等出入管制登記簿_V5",
       "fileName": "MS-4-92簿冊倉庫及公用公務櫃等出入管制登記簿_V5.pdf",
       "domain": "security",
@@ -12012,7 +12012,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-302554",
+      "id": "sec-691826",
       "title": "MS-4-89程式館逾期未入館明細清單_V1",
       "fileName": "MS-4-89程式館逾期未入館明細清單_V1.pdf",
       "domain": "security",
@@ -12057,7 +12057,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-847533",
+      "id": "sec-015772",
       "title": "MS-4-99(線上表單)個資蒐集處理利用彙整表_V6",
       "fileName": "MS-4-99(線上表單)個資蒐集處理利用彙整表_V6.pdf",
       "domain": "security",
@@ -12102,7 +12102,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-939154",
+      "id": "sec-529844",
       "title": "MS-4-54資訊科機房管理日檢查表_V21",
       "fileName": "MS-4-54資訊科機房管理日檢查表_V21.pdf",
       "domain": "security",
@@ -12147,7 +12147,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-737072",
+      "id": "sec-278391",
       "title": "MS-4-95%5b角色-群組%5d新增異動申請單_V2",
       "fileName": "MS-4-95%5b角色-群組%5d新增異動申請單_V2.pdf",
       "domain": "security",
@@ -12192,7 +12192,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-534175",
+      "id": "sec-716588",
       "title": "MS-4-80(線上表單)應用系統程式需求管制月報表_V5",
       "fileName": "MS-4-80(線上表單)應用系統程式需求管制月報表_V5.pdf",
       "domain": "security",
@@ -12237,7 +12237,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-558623",
+      "id": "sec-941523",
       "title": "MS-4-88(線上表單)內外網大型檔案交換申請表_V2",
       "fileName": "MS-4-88(線上表單)內外網大型檔案交換申請表_V2.pdf",
       "domain": "security",
@@ -12282,7 +12282,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-256064",
+      "id": "sec-389493",
       "title": "MS-4-52資訊科進出管制簿_V4",
       "fileName": "MS-4-52資訊科進出管制簿_V4.pdf",
       "domain": "security",
@@ -12327,7 +12327,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-968008",
+      "id": "sec-813738",
       "title": "MS-4-74(線上表單)資訊系統日誌檢查表_V2",
       "fileName": "MS-4-74(線上表單)資訊系統日誌檢查表_V2.pdf",
       "domain": "security",
@@ -12372,7 +12372,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-117001",
+      "id": "sec-532865",
       "title": "MS-4-94內外網檔案交換查核報告_V2",
       "fileName": "MS-4-94內外網檔案交換查核報告_V2.pdf",
       "domain": "security",
@@ -12417,7 +12417,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-091453",
+      "id": "sec-026457",
       "title": "MS-4-50資訊科主機房值班交接日誌_V5",
       "fileName": "MS-4-50資訊科主機房值班交接日誌_V5.pdf",
       "domain": "security",
@@ -12462,7 +12462,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-933963",
+      "id": "sec-998991",
       "title": "MS-4-58(線上表單)資安與個資量測指標評估表_V5",
       "fileName": "MS-4-58(線上表單)資安與個資量測指標評估表_V5.pdf",
       "domain": "security",
@@ -12507,7 +12507,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-740755",
+      "id": "sec-966417",
       "title": "MS-4-46進出機房人員登記簿_V3",
       "fileName": "MS-4-46進出機房人員登記簿_V3.pdf",
       "domain": "security",
@@ -12552,7 +12552,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-639110",
+      "id": "sec-313301",
       "title": "MS-4-97臨時憑證異動清單_V3",
       "fileName": "MS-4-97臨時憑證異動清單_V3.pdf",
       "domain": "security",
@@ -12597,7 +12597,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-457104",
+      "id": "sec-851976",
       "title": "MS-4-84硬體設備申請單_V2",
       "fileName": "MS-4-84硬體設備申請單_V2.pdf",
       "domain": "security",
@@ -12642,7 +12642,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-266347",
+      "id": "sec-220678",
       "title": "MS-4-93網路磁碟資料夾或檔案新增、註銷申請單_V4",
       "fileName": "MS-4-93網路磁碟資料夾或檔案新增、註銷申請單_V4.pdf",
       "domain": "security",
@@ -12687,7 +12687,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-937573",
+      "id": "sec-927562",
       "title": "MS-4-77(線上表單)機房設備安裝(移除)申請單_V8_1130821",
       "fileName": "MS-4-77(線上表單)機房設備安裝(移除)申請單_V8_1130821.pdf",
       "domain": "security",
@@ -12732,7 +12732,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-170274",
+      "id": "sec-225479",
       "title": "MS-4-64(線上表單)軟體需求表_V5",
       "fileName": "MS-4-64(線上表單)軟體需求表_V5.pdf",
       "domain": "security",
@@ -12777,7 +12777,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-427303",
+      "id": "sec-695179",
       "title": "MS-4-48(線上表單)資訊設備設定檢核表_V5",
       "fileName": "MS-4-48(線上表單)資訊設備設定檢核表_V5.pdf",
       "domain": "security",
@@ -12822,7 +12822,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-729528",
+      "id": "sec-818784",
       "title": "MS-4-62媒體需求與燒錄申請單_V3",
       "fileName": "MS-4-62媒體需求與燒錄申請單_V3.pdf",
       "domain": "security",
@@ -12867,7 +12867,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-124369",
+      "id": "sec-355918",
       "title": "MS-4-98地方稅系統臨場作業檔案查調申請單_V1",
       "fileName": "MS-4-98地方稅系統臨場作業檔案查調申請單_V1.pdf",
       "domain": "security",
@@ -12912,7 +12912,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-644021",
+      "id": "sec-497196",
       "title": "MS-4-96臨時憑證申請單_V3",
       "fileName": "MS-4-96臨時憑證申請單_V3.pdf",
       "domain": "security",
@@ -12957,7 +12957,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-950671",
+      "id": "sec-332720",
       "title": "MS-4-66年度資訊資產報廢清冊_V3",
       "fileName": "MS-4-66年度資訊資產報廢清冊_V3.pdf",
       "domain": "security",
@@ -13002,7 +13002,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-255572",
+      "id": "sec-513729",
       "title": "MS-4-63備份媒體異地存放清單_V2",
       "fileName": "MS-4-63備份媒體異地存放清單_V2.pdf",
       "domain": "security",
@@ -13047,7 +13047,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-427115",
+      "id": "sec-384633",
       "title": "MS-4-51(線上表單)門禁磁卡申請異動單_V5",
       "fileName": "MS-4-51(線上表單)門禁磁卡申請異動單_V5.pdf",
       "domain": "security",
@@ -13092,7 +13092,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-040833",
+      "id": "sec-795102",
       "title": "MS-4-76分局機房管理檢查表_V4",
       "fileName": "MS-4-76分局機房管理檢查表_V4.pdf",
       "domain": "security",
@@ -13137,7 +13137,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-890302",
+      "id": "sec-744003",
       "title": "MS-4-72(線上表單)緊急應變成員聯絡電話測試表_V2",
       "fileName": "MS-4-72(線上表單)緊急應變成員聯絡電話測試表_V2.pdf",
       "domain": "security",
@@ -13182,7 +13182,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-673084",
+      "id": "sec-293443",
       "title": "MS-4-45(線上表單)機房物品攜出入申請單_V8",
       "fileName": "MS-4-45(線上表單)機房物品攜出入申請單_V8.pdf",
       "domain": "security",
@@ -13227,7 +13227,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-371722",
+      "id": "sec-834871",
       "title": "MS-4-65軟體需求註銷申請單_V4",
       "fileName": "MS-4-65軟體需求註銷申請單_V4.pdf",
       "domain": "security",
@@ -13272,7 +13272,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-601080",
+      "id": "sec-413304",
       "title": "MS-4-61臺中市政府地方稅務局資料庫不定期檢核項目表_V4",
       "fileName": "MS-4-61臺中市政府地方稅務局資料庫不定期檢核項目表_V4.pdf",
       "domain": "security",
@@ -13317,7 +13317,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-499421",
+      "id": "sec-302447",
       "title": "MS-4-60資料庫每季檢核項目表_V3",
       "fileName": "MS-4-60資料庫每季檢核項目表_V3.pdf",
       "domain": "security",
@@ -13362,7 +13362,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-783396",
+      "id": "sec-860137",
       "title": "MS-4-47資訊設備設定變更申請表_V6_1120725",
       "fileName": "MS-4-47資訊設備設定變更申請表_V6_1120725.pdf",
       "domain": "security",
@@ -13407,7 +13407,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-644370",
+      "id": "sec-347985",
       "title": "MS-4-75稅務_電子資料遞送申請單_V2_1120721",
       "fileName": "MS-4-75稅務_電子資料遞送申請單_V2_1120721.pdf",
       "domain": "security",
@@ -13452,7 +13452,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-391918",
+      "id": "sec-641499",
       "title": "MS-4-73(線上表單)列管文件使用∕保管申請表_V2",
       "fileName": "MS-4-73(線上表單)列管文件使用∕保管申請表_V2.pdf",
       "domain": "security",
@@ -13497,7 +13497,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-032197",
+      "id": "sec-447720",
       "title": "MS-4-110業務衝擊分析表_V1",
       "fileName": "MS-4-110業務衝擊分析表_V1.pdf",
       "domain": "security",
@@ -13542,7 +13542,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-406299",
+      "id": "sec-922034",
       "title": "MS-4-115資安與個資議題之關注方意見反映單填寫說明_V4_1121027",
       "fileName": "MS-4-115資安與個資議題之關注方意見反映單填寫說明_V4_1121027.pdf",
       "domain": "security",
@@ -13587,7 +13587,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-462031",
+      "id": "sec-257709",
       "title": "MS-4-12(線上表單)使用者權限新增異動申請單_V9",
       "fileName": "MS-4-12(線上表單)使用者權限新增異動申請單_V9.pdf",
       "domain": "security",
@@ -13632,7 +13632,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-194309",
+      "id": "sec-804860",
       "title": "MS-4-116委外服務案之廠商資訊安全暨個人資料保護實地稽核紀錄表_v6",
       "fileName": "MS-4-116委外服務案之廠商資訊安全暨個人資料保護實地稽核紀錄表_v6.pdf",
       "domain": "security",
@@ -13677,7 +13677,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-434928",
+      "id": "sec-212378",
       "title": "MS-4-121臺中市政府地方稅務局志願服務人員簽到、退表_V2_1110609",
       "fileName": "MS-4-121臺中市政府地方稅務局志願服務人員簽到、退表_V2_1110609.pdf",
       "domain": "security",
@@ -13722,7 +13722,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-529278",
+      "id": "sec-087819",
       "title": "MS-4-113庫房溫溼度週紀錄單_V1",
       "fileName": "MS-4-113庫房溫溼度週紀錄單_V1.pdf",
       "domain": "security",
@@ -13767,7 +13767,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-901698",
+      "id": "sec-535963",
       "title": "MS-4-56緊急應變成員聯絡電話表",
       "fileName": "MS-4-56緊急應變成員聯絡電話表.pdf",
       "domain": "security",
@@ -13812,7 +13812,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-132288",
+      "id": "sec-203953",
       "title": "MS-4-107(線上表單)個資事件通報單_V4",
       "fileName": "MS-4-107(線上表單)個資事件通報單_V4.pdf",
       "domain": "security",
@@ -13857,7 +13857,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-137485",
+      "id": "sec-671059",
       "title": "MS-4-119臺中市政府地方稅務局志願服務人員資料卡_V3_1110609",
       "fileName": "MS-4-119臺中市政府地方稅務局志願服務人員資料卡_V3_1110609.pdf",
       "domain": "security",
@@ -13902,7 +13902,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-569222",
+      "id": "sec-402987",
       "title": "MS-4-108服務事項紀錄表_V5",
       "fileName": "MS-4-108服務事項紀錄表_V5.pdf",
       "domain": "security",
@@ -13947,7 +13947,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-356868",
+      "id": "sec-923800",
       "title": "MS-4-109資安與個資議題之關注方意見反映單_V7_1150731",
       "fileName": "MS-4-109資安與個資議題之關注方意見反映單_V7_1150731.pdf",
       "domain": "security",
@@ -13992,7 +13992,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-484450",
+      "id": "sec-389494",
       "title": "MS-4-112(線上表單)資訊系統備份作業申請單_V2",
       "fileName": "MS-4-112(線上表單)資訊系統備份作業申請單_V2.pdf",
       "domain": "security",
@@ -14037,7 +14037,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-167630",
+      "id": "sec-040763",
       "title": "MS-4-122臺中市政府地方稅務局志願服務人員服務品質表_V2_1110609",
       "fileName": "MS-4-122臺中市政府地方稅務局志願服務人員服務品質表_V2_1110609.pdf",
       "domain": "security",
@@ -14082,7 +14082,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-624800",
+      "id": "sec-412277",
       "title": "MS-4-11群組新增異動申請單_V6",
       "fileName": "MS-4-11群組新增異動申請單_V6.pdf",
       "domain": "security",
@@ -14127,7 +14127,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-086961",
+      "id": "sec-892016",
       "title": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905",
       "fileName": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905.pdf",
       "domain": "security",
@@ -14172,7 +14172,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-034642",
+      "id": "sec-605678",
       "title": "MS-4-101事務設備移出確認單_V1",
       "fileName": "MS-4-101事務設備移出確認單_V1.pdf",
       "domain": "security",
@@ -14217,7 +14217,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-486576",
+      "id": "sec-642669",
       "title": "MS-4-102(線上表單)臨時憑證申請分析統計表_V4_1120508",
       "fileName": "MS-4-102(線上表單)臨時憑證申請分析統計表_V4_1120508.pdf",
       "domain": "security",
@@ -14262,7 +14262,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-902197",
+      "id": "sec-911112",
       "title": "MS-4-104資訊設備權利文件保管單_V1",
       "fileName": "MS-4-104資訊設備權利文件保管單_V1.pdf",
       "domain": "security",
@@ -14307,7 +14307,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-898538",
+      "id": "sec-134773",
       "title": "MS-4-08矯正措施單_V8",
       "fileName": "MS-4-08矯正措施單_V8.pdf",
       "domain": "security",
@@ -14352,7 +14352,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-844088",
+      "id": "sec-101828",
       "title": "MS-4-02資訊安全與個資保護管理系統文件一覽表_V4",
       "fileName": "MS-4-02資訊安全與個資保護管理系統文件一覽表_V4.pdf",
       "domain": "security",
@@ -14397,7 +14397,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-707648",
+      "id": "sec-684880",
       "title": "MS-3-69%20臺中市政府地方稅務局各稅賦更案件內部審核作業說明書_V1",
       "fileName": "MS-3-69%20臺中市政府地方稅務局各稅賦更案件內部審核作業說明書_V1.pdf",
       "domain": "security",
@@ -14442,7 +14442,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-600904",
+      "id": "sec-704090",
       "title": "MS-4-03(線上表單)資訊資產報廢申請單_V3",
       "fileName": "MS-4-03(線上表單)資訊資產報廢申請單_V3.pdf",
       "domain": "security",
@@ -14487,7 +14487,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-362430",
+      "id": "sec-721871",
       "title": "MS-4-106蒐集個人資料應告知當事人事項表_V3_場所進出範本(無須提供證件)",
       "fileName": "MS-4-106蒐集個人資料應告知當事人事項表_V3_場所進出範本(無須提供證件).pdf",
       "domain": "security",
@@ -14532,7 +14532,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-263526",
+      "id": "sec-014474",
       "title": "MS-4-06異常事件通報單_v5_1030822_",
       "fileName": "MS-4-06異常事件通報單_v5_1030822_.pdf",
       "domain": "security",
@@ -14577,7 +14577,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-498974",
+      "id": "sec-847528",
       "title": "MS-4-01資訊安全與個資保護文件制∕修訂建議單_V10",
       "fileName": "MS-4-01資訊安全與個資保護文件制∕修訂建議單_V10.pdf",
       "domain": "security",
@@ -14622,7 +14622,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-343772",
+      "id": "sec-413866",
       "title": "MS-4-100個資蒐集處理利用彙整表填寫說明_V6",
       "fileName": "MS-4-100個資蒐集處理利用彙整表填寫說明_V6.pdf",
       "domain": "security",
@@ -14667,7 +14667,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-121194",
+      "id": "sec-731585",
       "title": "MS-4-105(線上表單)個資問題反映單_V1",
       "fileName": "MS-4-105(線上表單)個資問題反映單_V1.pdf",
       "domain": "security",
@@ -14712,7 +14712,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-374320",
+      "id": "sec-171928",
       "title": "MS-4-10(線上表單)程式館版本回復申請單_V3",
       "fileName": "MS-4-10(線上表單)程式館版本回復申請單_V3.pdf",
       "domain": "security",
@@ -14757,7 +14757,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-025681",
+      "id": "sec-794213",
       "title": "MS-4-103全球資訊網隱私權保護宣告_V3",
       "fileName": "MS-4-103全球資訊網隱私權保護宣告_V3.pdf",
       "domain": "security",
@@ -14802,7 +14802,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-255124",
+      "id": "sec-269944",
       "title": "MS-4-09(線上表單)系統程式館管制單_V6",
       "fileName": "MS-4-09(線上表單)系統程式館管制單_V6.pdf",
       "domain": "security",
@@ -14847,7 +14847,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-412722",
+      "id": "sec-702967",
       "title": "MS-4-31(線上表單)應用系統程式需求暨賦稅資料庫資料複製管理申請表_V15",
       "fileName": "MS-4-31(線上表單)應用系統程式需求暨賦稅資料庫資料複製管理申請表_V15.pdf",
       "domain": "security",
@@ -14892,7 +14892,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-602698",
+      "id": "sec-322651",
       "title": "MS-4-26學員簽到名冊_V4",
       "fileName": "MS-4-26學員簽到名冊_V4.pdf",
       "domain": "security",
@@ -14937,7 +14937,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-603406",
+      "id": "sec-446452",
       "title": "MS-4-40應用系統資料庫異動申請單_V6",
       "fileName": "MS-4-40應用系統資料庫異動申請單_V6.pdf",
       "domain": "security",
@@ -14982,7 +14982,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-890695",
+      "id": "sec-129047",
       "title": "MS-4-28(線上表單)備份媒體盤點清單_V3",
       "fileName": "MS-4-28(線上表單)備份媒體盤點清單_V3.pdf",
       "domain": "security",
@@ -15027,7 +15027,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-196182",
+      "id": "sec-220556",
       "title": "MS-4-25臺中市政府地方稅務局員工離職通知書_V6",
       "fileName": "MS-4-25臺中市政府地方稅務局員工離職通知書_V6.pdf",
       "domain": "security",
@@ -15072,7 +15072,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-513082",
+      "id": "sec-569785",
       "title": "MS-4-30臺中市政府e化公務入口網解除帳號鎖定申請單_V4",
       "fileName": "MS-4-30臺中市政府e化公務入口網解除帳號鎖定申請單_V4.pdf",
       "domain": "security",
@@ -15117,7 +15117,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-917196",
+      "id": "sec-379256",
       "title": "MS-4-44解除帳號鎖定申請_V3",
       "fileName": "MS-4-44解除帳號鎖定申請_V3.pdf",
       "domain": "security",
@@ -15162,7 +15162,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-504597",
+      "id": "sec-986978",
       "title": "MS-4-39(線上表單)使用者密碼重新設定申請單_V4",
       "fileName": "MS-4-39(線上表單)使用者密碼重新設定申請單_V4.pdf",
       "domain": "security",
@@ -15207,7 +15207,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-327429",
+      "id": "sec-862034",
       "title": "MS-4-38(線上表單)特殊權限申請單_V8",
       "fileName": "MS-4-38(線上表單)特殊權限申請單_V8.pdf",
       "domain": "security",
@@ -15252,7 +15252,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-448976",
+      "id": "sec-883146",
       "title": "MS-3-33全功能服務櫃台管理流程作業說明書_V5_1120606",
       "fileName": "MS-3-33全功能服務櫃台管理流程作業說明書_V5_1120606.pdf",
       "domain": "security",
@@ -15297,7 +15297,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-618002",
+      "id": "sec-794087",
       "title": "MS-4-42(線上表單)資料庫每週檢核項目表_V9",
       "fileName": "MS-4-42(線上表單)資料庫每週檢核項目表_V9.pdf",
       "domain": "security",
@@ -15342,7 +15342,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-374750",
+      "id": "sec-554553",
       "title": "MS-4-33(線上表單)可攜式設備權限使用 停用申請單_V10",
       "fileName": "MS-4-33(線上表單)可攜式設備權限使用 停用申請單_V10.pdf",
       "domain": "security",
@@ -15387,7 +15387,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-548312",
+      "id": "sec-152872",
       "title": "MS-3-49防火牆緊急應變計畫作業說明書_V1",
       "fileName": "MS-3-49防火牆緊急應變計畫作業說明書_V1.pdf",
       "domain": "security",
@@ -15432,7 +15432,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-242738",
+      "id": "sec-747878",
       "title": "MS-4-154專案執行事項確認表_V2_1150312",
       "fileName": "MS-4-154專案執行事項確認表_V2_1150312.pdf",
       "domain": "security",
@@ -15477,7 +15477,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-092527",
+      "id": "sec-640408",
       "title": "MS-3-16資料庫緊急應變計畫作業說明書_V6",
       "fileName": "MS-3-16資料庫緊急應變計畫作業說明書_V6.pdf",
       "domain": "security",
@@ -15522,7 +15522,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-323990",
+      "id": "sec-535784",
       "title": "MS-4-158%20未涉及異常事件之資安威脅情資通知單_v1_1150807",
       "fileName": "MS-4-158%20未涉及異常事件之資安威脅情資通知單_v1_1150807.pdf",
       "domain": "security",
@@ -15567,7 +15567,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-822864",
+      "id": "sec-453685",
       "title": "MS-4-153專案執行前評估及確認表_V1",
       "fileName": "MS-4-153專案執行前評估及確認表_V1.pdf",
       "domain": "security",
@@ -15612,7 +15612,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-488890",
+      "id": "sec-142044",
       "title": "MS-4-141-系統測試確認單_V3",
       "fileName": "MS-4-141-系統測試確認單_V3.pdf",
       "domain": "security",
@@ -15657,7 +15657,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-733208",
+      "id": "sec-033097",
       "title": "MS-4-13帳號授權清查表_V7_1150717",
       "fileName": "MS-4-13帳號授權清查表_V7_1150717.pdf",
       "domain": "security",
@@ -15702,7 +15702,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-600909",
+      "id": "sec-584653",
       "title": "MS-4-143組態管理清單_V2",
       "fileName": "MS-4-143組態管理清單_V2.pdf",
       "domain": "security",
@@ -15747,7 +15747,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-922134",
+      "id": "sec-494693",
       "title": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106",
       "fileName": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106.pdf",
       "domain": "security",
@@ -15792,7 +15792,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-185833",
+      "id": "sec-491287",
       "title": "MS-4-17機房管理週(月)檢查表_V28",
       "fileName": "MS-4-17機房管理週(月)檢查表_V28.pdf",
       "domain": "security",
@@ -15837,7 +15837,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-507412",
+      "id": "sec-851185",
       "title": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211",
       "fileName": "MS-4-142資通系統防護基準控制措施查檢表-v3_1110211.pdf",
       "domain": "security",
@@ -15882,7 +15882,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-613908",
+      "id": "sec-942509",
       "title": "MS-4-24臺中市政府地方稅務局員工離職手續單_V16",
       "fileName": "MS-4-24臺中市政府地方稅務局員工離職手續單_V16.pdf",
       "domain": "security",
@@ -15927,7 +15927,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-334241",
+      "id": "sec-624962",
       "title": "MS-3-17消防緊急應變計畫作業說明書_v4",
       "fileName": "MS-3-17消防緊急應變計畫作業說明書_v4.pdf",
       "domain": "security",
@@ -15972,7 +15972,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-549378",
+      "id": "sec-160579",
       "title": "MS-4-147資通系統安全威脅分析表_V1_1120905",
       "fileName": "MS-4-147資通系統安全威脅分析表_V1_1120905.pdf",
       "domain": "security",
@@ -16017,7 +16017,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-475694",
+      "id": "sec-287102",
       "title": "MS-4-22臺中市政府地方稅務局工友、約（聘）僱人員、行政助理、工讀生及短期約用人員保密切結書_v8_1140424",
       "fileName": "MS-4-22臺中市政府地方稅務局工友、約（聘）僱人員、行政助理、工讀生及短期約用人員保密切結書_v8_1140424.pdf",
       "domain": "security",
@@ -16062,7 +16062,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-499101",
+      "id": "sec-553155",
       "title": "MS-4-43(線上表單)資料庫每月檢核項目表_V10",
       "fileName": "MS-4-43(線上表單)資料庫每月檢核項目表_V10.pdf",
       "domain": "security",
@@ -16107,7 +16107,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-719698",
+      "id": "sec-710857",
       "title": "MS-3-23業務單位人工作業緊急應變計畫作業說明書_V6_1130822",
       "fileName": "MS-3-23業務單位人工作業緊急應變計畫作業說明書_V6_1130822.pdf",
       "domain": "security",
@@ -16152,7 +16152,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-503237",
+      "id": "sec-403516",
       "title": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19",
       "fileName": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19.pdf",
       "domain": "security",
@@ -16197,7 +16197,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-800215",
+      "id": "sec-187295",
       "title": "MS-4-151稅務管理系統新增修撰需求及問題反應提案表_V1",
       "fileName": "MS-4-151稅務管理系統新增修撰需求及問題反應提案表_V1.pdf",
       "domain": "security",
@@ -16242,7 +16242,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-035108",
+      "id": "sec-350587",
       "title": "MS-4-37外部人員保密同意書_V5",
       "fileName": "MS-4-37外部人員保密同意書_V5.pdf",
       "domain": "security",
@@ -16287,7 +16287,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-470068",
+      "id": "sec-812172",
       "title": "MS-4-150資通系統安全防護基準應辦事項檢核表(含維運階段)_V2",
       "fileName": "MS-4-150資通系統安全防護基準應辦事項檢核表(含維運階段)_V2.pdf",
       "domain": "security",
@@ -16332,7 +16332,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-803206",
+      "id": "sec-269930",
       "title": "MS-4-145組態變更申請表_V1_1120905",
       "fileName": "MS-4-145組態變更申請表_V1_1120905.pdf",
       "domain": "security",
@@ -16377,7 +16377,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-503844",
+      "id": "sec-515691",
       "title": "MS-4-138(線上表單)影音網站開放註銷申請單_V1",
       "fileName": "MS-4-138(線上表單)影音網站開放註銷申請單_V1.pdf",
       "domain": "security",
@@ -16422,7 +16422,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-578663",
+      "id": "sec-431166",
       "title": "MS-4-140(線上表單)系統金鑰及憑證清查表_V2",
       "fileName": "MS-4-140(線上表單)系統金鑰及憑證清查表_V2.pdf",
       "domain": "security",
@@ -16467,7 +16467,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-263601",
+      "id": "sec-239192",
       "title": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3)",
       "fileName": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3).pdf",
       "domain": "security",
@@ -16512,7 +16512,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-881374",
+      "id": "sec-331287",
       "title": "MS-4-14(線上表單)資訊資產清單_V3",
       "fileName": "MS-4-14(線上表單)資訊資產清單_V3.pdf",
       "domain": "security",
@@ -16557,7 +16557,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-251916",
+      "id": "sec-990824",
       "title": "MS-4-144組態變更申請表_V3_1141030",
       "fileName": "MS-4-144組態變更申請表_V3_1141030.pdf",
       "domain": "security",
@@ -16602,7 +16602,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-623099",
+      "id": "sec-065868",
       "title": "MS-F-04國家資通安全通報應變網站操作手冊_V2",
       "fileName": "MS-F-04國家資通安全通報應變網站操作手冊_V2.pdf",
       "domain": "security",
@@ -16647,7 +16647,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-806734",
+      "id": "sec-776510",
       "title": "MS-4-148系統問題回報單_V1_1120905",
       "fileName": "MS-4-148系統問題回報單_V1_1120905.pdf",
       "domain": "security",
@@ -16692,7 +16692,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-356260",
+      "id": "sec-729114",
       "title": "MS-4-55緊急應變計劃測試報告_網路設備_防火牆",
       "fileName": "MS-4-55緊急應變計劃測試報告_網路設備_防火牆.pdf",
       "domain": "security",
@@ -16737,7 +16737,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-338875",
+      "id": "sec-220272",
       "title": "MS-4-146臺中市政府地方稅務局自行稽核報告表_V1_1120905",
       "fileName": "MS-4-146臺中市政府地方稅務局自行稽核報告表_V1_1120905.pdf",
       "domain": "security",
@@ -16782,7 +16782,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-776305",
+      "id": "sec-860674",
       "title": "MS-4-139(線上表單)社群網站開放註銷申請單_V1",
       "fileName": "MS-4-139(線上表單)社群網站開放註銷申請單_V1.pdf",
       "domain": "security",
@@ -16827,7 +16827,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-830208",
+      "id": "sec-140230",
       "title": "MS-4-149內部業務檢查結果辦理情形或改進事項表_V1",
       "fileName": "MS-4-149內部業務檢查結果辦理情形或改進事項表_V1.pdf",
       "domain": "security",
@@ -16872,7 +16872,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-199288",
+      "id": "sec-919680",
       "title": "MS-3-31電話客服流程管理作業說明書_V11",
       "fileName": "MS-3-31電話客服流程管理作業說明書_V11.pdf",
       "domain": "security",
@@ -16917,7 +16917,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-191713",
+      "id": "sec-414163",
       "title": "MS-3-50納稅者權利保護業務流程作業說明書_V3",
       "fileName": "MS-3-50納稅者權利保護業務流程作業說明書_V3.pdf",
       "domain": "security",
@@ -16962,7 +16962,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-662538",
+      "id": "sec-530764",
       "title": "MS-3-34行政救濟管理流程作業說明書_V5",
       "fileName": "MS-3-34行政救濟管理流程作業說明書_V5.pdf",
       "domain": "security",
@@ -17007,7 +17007,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-210704",
+      "id": "sec-309862",
       "title": "MS-3-26人事管理流程作業說明書_v4_1100603",
       "fileName": "MS-3-26人事管理流程作業說明書_v4_1100603.pdf",
       "domain": "security",
@@ -17052,7 +17052,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-349356",
+      "id": "sec-576412",
       "title": "MS-3-48中稅e把照緊急應變計畫作業說明書_V1",
       "fileName": "MS-3-48中稅e把照緊急應變計畫作業說明書_V1.pdf",
       "domain": "security",
@@ -17097,7 +17097,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-725536",
+      "id": "sec-828537",
       "title": "MS-3-47公文及檔管系統異地備援緊急應變作業說明書_V1",
       "fileName": "MS-3-47公文及檔管系統異地備援緊急應變作業說明書_V1.pdf",
       "domain": "security",
@@ -17142,7 +17142,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-381912",
+      "id": "sec-643850",
       "title": "MS-3-25新聞媒體對應作業說明書_V1",
       "fileName": "MS-3-25新聞媒體對應作業說明書_V1.pdf",
       "domain": "security",
@@ -17187,7 +17187,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-301992",
+      "id": "sec-041063",
       "title": "MS-3-51系統金鑰及憑證管理作業說明書_V2",
       "fileName": "MS-3-51系統金鑰及憑證管理作業說明書_V2.pdf",
       "domain": "security",
@@ -17232,7 +17232,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-354869",
+      "id": "sec-985229",
       "title": "MS-3-27文書管理流程作業說明書_V5",
       "fileName": "MS-3-27文書管理流程作業說明書_V5.pdf",
       "domain": "security",
@@ -17277,7 +17277,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-664478",
+      "id": "sec-834480",
       "title": "MS-3-20傳染病疫情擴散緊急應變計畫作業說明書-v7_1110804",
       "fileName": "MS-3-20傳染病疫情擴散緊急應變計畫作業說明書-v7_1110804.pdf",
       "domain": "security",
@@ -17322,7 +17322,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-522248",
+      "id": "sec-069157",
       "title": "MS-3-38政令宣導管理流程作業說明書_V5_1120612",
       "fileName": "MS-3-38政令宣導管理流程作業說明書_V5_1120612.pdf",
       "domain": "security",
@@ -17367,7 +17367,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-708655",
+      "id": "sec-078494",
       "title": "MS-3-29陳情管理流程作業說明書_V11",
       "fileName": "MS-3-29陳情管理流程作業說明書_V11.pdf",
       "domain": "security",
@@ -17412,7 +17412,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-270151",
+      "id": "sec-745717",
       "title": "MS-3-36採購管理流程作業說明書_V3",
       "fileName": "MS-3-36採購管理流程作業說明書_V3.pdf",
       "domain": "security",
@@ -17457,7 +17457,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-902804",
+      "id": "sec-995895",
       "title": "MS-3-35稅務違章案件審理流程作業說明書_V7",
       "fileName": "MS-3-35稅務違章案件審理流程作業說明書_V7.pdf",
       "domain": "security",
@@ -17502,7 +17502,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-140029",
+      "id": "sec-321223",
       "title": "MS-3-46稅務系統處理流程作業說明書_V5_1150725",
       "fileName": "MS-3-46稅務系統處理流程作業說明書_V5_1150725.pdf",
       "domain": "security",
@@ -17547,7 +17547,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-553219",
+      "id": "sec-651554",
       "title": "MS-3-58_使用全國財產稅總歸戶系統管理作業說明書_V1_1120905",
       "fileName": "MS-3-58_使用全國財產稅總歸戶系統管理作業說明書_V1_1120905.pdf",
       "domain": "security",
@@ -17592,7 +17592,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-172736",
+      "id": "sec-696197",
       "title": "MS-3-52_防疫實聯制管理作業說明書_V2_1110811",
       "fileName": "MS-3-52_防疫實聯制管理作業說明書_V2_1110811.pdf",
       "domain": "security",
@@ -17637,7 +17637,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-311063",
+      "id": "sec-516861",
       "title": "MS-3-57_使用健保勞保局集保及房地交易資料管理作業說明書_V1_1120905",
       "fileName": "MS-3-57_使用健保勞保局集保及房地交易資料管理作業說明書_V1_1120905.pdf",
       "domain": "security",
@@ -17682,7 +17682,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-360115",
+      "id": "sec-634770",
       "title": "MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業要點_V1_1130916",
       "fileName": "MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業要點_V1_1130916.pdf",
       "domain": "security",
@@ -17727,7 +17727,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-118224",
+      "id": "sec-104584",
       "title": "MS-3-59組態管理作業說明書_V3",
       "fileName": "MS-3-59組態管理作業說明書_V3.pdf",
       "domain": "security",
@@ -17772,7 +17772,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-894572",
+      "id": "sec-996377",
       "title": "MS-3-62-Utax自動櫃員機緊急應變計畫作業說明書_V1_1120905",
       "fileName": "MS-3-62-Utax自動櫃員機緊急應變計畫作業說明書_V1_1120905.pdf",
       "domain": "security",
@@ -17817,7 +17817,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-586085",
+      "id": "sec-280210",
       "title": "MS-3-64系統開發與維護作業說明書_v4_1150825",
       "fileName": "MS-3-64系統開發與維護作業說明書_v4_1150825.pdf",
       "domain": "security",
@@ -17862,7 +17862,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-134661",
+      "id": "sec-057021",
       "title": "MS-3-61網路安全管理作業說明書_V3",
       "fileName": "MS-3-61網路安全管理作業說明書_V3.pdf",
       "domain": "security",
@@ -17907,7 +17907,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-449984",
+      "id": "sec-409274",
       "title": "MS-3-55臺中市政府地方稅務局使用國稅地方稅資訊交流運用系統管理作業說明書_V1_1120905",
       "fileName": "MS-3-55臺中市政府地方稅務局使用國稅地方稅資訊交流運用系統管理作業說明書_V1_1120905.pdf",
       "domain": "security",
@@ -17952,7 +17952,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-027442",
+      "id": "sec-905746",
       "title": "MS-3-53土地稅及印花稅稽徵流程作業說明書_V3_1150728",
       "fileName": "MS-3-53土地稅及印花稅稽徵流程作業說明書_V3_1150728.pdf",
       "domain": "security",
@@ -17997,7 +17997,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-151752",
+      "id": "sec-407024",
       "title": "MS-3-60-友善稅務智慧個人雲平臺緊急應變計畫作業說明書_V1_1120905",
       "fileName": "MS-3-60-友善稅務智慧個人雲平臺緊急應變計畫作業說明書_V1_1120905.pdf",
       "domain": "security",
@@ -18042,7 +18042,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-587273",
+      "id": "sec-048352",
       "title": "MS-3-56使用金融機構存款資料管理作業說明書_V1_1120905",
       "fileName": "MS-3-56使用金融機構存款資料管理作業說明書_V1_1120905.pdf",
       "domain": "security",
@@ -18087,7 +18087,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-200781",
+      "id": "sec-004583",
       "title": "MS-4-19資訊安全與個資保護管理系統稽核查檢表_V8_1150821",
       "fileName": "MS-4-19資訊安全與個資保護管理系統稽核查檢表_V8_1150821.pdf",
       "domain": "security",
@@ -18132,7 +18132,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-825911",
+      "id": "sec-688670",
       "title": "MS-3-65使用法務部收容人歷監日期資料管理作業說明書_V1",
       "fileName": "MS-3-65使用法務部收容人歷監日期資料管理作業說明書_V1.pdf",
       "domain": "security",
@@ -18177,7 +18177,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-821543",
+      "id": "sec-662693",
       "title": "MS-3-68_使用T-Road地政資料管理作業說明書_V1",
       "fileName": "MS-3-68_使用T-Road地政資料管理作業說明書_V1.pdf",
       "domain": "security",
@@ -18222,7 +18222,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-726438",
+      "id": "sec-355057",
       "title": "MS-3-63_銷號賦更重溢繳退稅查欠及抵繳欠稅作業說明書_V1_1130813",
       "fileName": "MS-3-63_銷號賦更重溢繳退稅查欠及抵繳欠稅作業說明書_V1_1130813.pdf",
       "domain": "security",
@@ -18267,7 +18267,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-243507",
+      "id": "sec-106530",
       "title": "MS-3-66自動櫃員機管理流程作業說明書_v1",
       "fileName": "MS-3-66自動櫃員機管理流程作業說明書_v1.pdf",
       "domain": "security",
@@ -18312,7 +18312,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-542081",
+      "id": "sec-013055",
       "title": "MS-3-54臺中市政府地方稅務局使用親等關聯資料暨戶役政資訊管理作業說明書_V2",
       "fileName": "MS-3-54臺中市政府地方稅務局使用親等關聯資料暨戶役政資訊管理作業說明書_V2.pdf",
       "domain": "security",
@@ -18357,7 +18357,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-919183",
+      "id": "sec-324314",
       "title": "MS-3-03電腦軟體、弱點、威脅情資與資訊設備相關權利文件等管理作業說明書_V28_1150807",
       "fileName": "MS-3-03電腦軟體、弱點、威脅情資與資訊設備相關權利文件等管理作業說明書_V28_1150807.pdf",
       "domain": "security",
@@ -18402,7 +18402,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-953644",
+      "id": "sec-362899",
       "title": "MS-3-02使用者帳號及權限管理作業說明書_V17_1150717",
       "fileName": "MS-3-02使用者帳號及權限管理作業說明書_V17_1150717.pdf",
       "domain": "security",
@@ -18447,7 +18447,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-378237",
+      "id": "sec-747122",
       "title": "MS-3-05資訊資產報廢作業說明書_V8",
       "fileName": "MS-3-05資訊資產報廢作業說明書_V8.pdf",
       "domain": "security",
@@ -18492,7 +18492,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-178748",
+      "id": "sec-530053",
       "title": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725",
       "fileName": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725.pdf",
       "domain": "security",
@@ -18537,7 +18537,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-042574",
+      "id": "sec-356932",
       "title": "MS-3-10設備安全維護作業說明書_V11_1120725",
       "fileName": "MS-3-10設備安全維護作業說明書_V11_1120725.pdf",
       "domain": "security",
@@ -18582,7 +18582,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-993467",
+      "id": "sec-280017",
       "title": "MS-3-08委外安全管理作業說明書_V14",
       "fileName": "MS-3-08委外安全管理作業說明書_V14.pdf",
       "domain": "security",
@@ -18627,7 +18627,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-377372",
+      "id": "sec-431523",
       "title": "MS-3-01系統程式館管理作業說明書_V15",
       "fileName": "MS-3-01系統程式館管理作業說明書_V15.pdf",
       "domain": "security",
@@ -18672,7 +18672,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-278375",
+      "id": "sec-904155",
       "title": "MS-3-07可攜式資訊設備管理作業說明書_V16",
       "fileName": "MS-3-07可攜式資訊設備管理作業說明書_V16.pdf",
       "domain": "security",
@@ -18717,7 +18717,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-223802",
+      "id": "sec-640311",
       "title": "MS-3-39房屋稅及契稅稽徵流程作業說明書_V11_1150626",
       "fileName": "MS-3-39房屋稅及契稅稽徵流程作業說明書_V11_1150626.pdf",
       "domain": "security",
@@ -18762,7 +18762,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-896167",
+      "id": "sec-848741",
       "title": "MS-3-12機房與實體安全管理作業說明書_V20",
       "fileName": "MS-3-12機房與實體安全管理作業說明書_V20.pdf",
       "domain": "security",
@@ -18807,7 +18807,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-844544",
+      "id": "sec-513854",
       "title": "MS-2-16個資蒐集、處理與利用管理程序書_V11",
       "fileName": "MS-2-16個資蒐集、處理與利用管理程序書_V11.pdf",
       "domain": "security",
@@ -18852,7 +18852,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-406759",
+      "id": "sec-785924",
       "title": "MS-3-15主機緊急應變計畫作業說明書_V5",
       "fileName": "MS-3-15主機緊急應變計畫作業說明書_V5.pdf",
       "domain": "security",
@@ -18897,7 +18897,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-611374",
+      "id": "sec-498267",
       "title": "MS-3-11主機作業系統管理作業說明書_V14",
       "fileName": "MS-3-11主機作業系統管理作業說明書_V14.pdf",
       "domain": "security",
@@ -18942,7 +18942,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-343151",
+      "id": "sec-371278",
       "title": "MS-3-04_媒體及備份管理作業說明書_v13_1110408",
       "fileName": "MS-3-04_媒體及備份管理作業說明書_v13_1110408.pdf",
       "domain": "security",
@@ -18987,7 +18987,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-764835",
+      "id": "sec-087298",
       "title": "MS-3-09資料庫管理作業說明書_V15_1140901",
       "fileName": "MS-3-09資料庫管理作業說明書_V15_1140901.pdf",
       "domain": "security",
@@ -19032,7 +19032,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-229954",
+      "id": "sec-851039",
       "title": "MS-3-44_全球資訊網緊急應變計畫作業說明書_V3_1140728",
       "fileName": "MS-3-44_全球資訊網緊急應變計畫作業說明書_V3_1140728.pdf",
       "domain": "security",
@@ -19077,7 +19077,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-355245",
+      "id": "sec-817489",
       "title": "MS-3-32檢舉案件處理流程管理作業說明書_V6_1110810",
       "fileName": "MS-3-32檢舉案件處理流程管理作業說明書_V6_1110810.pdf",
       "domain": "security",
@@ -19122,7 +19122,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-527600",
+      "id": "sec-577830",
       "title": "MS-3-43事務設備管理作業說明書_V1",
       "fileName": "MS-3-43事務設備管理作業說明書_V1.pdf",
       "domain": "security",
@@ -19167,7 +19167,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-260389",
+      "id": "sec-839975",
       "title": "MS-2-06存取控制程序書_v8_1110919",
       "fileName": "MS-2-06存取控制程序書_v8_1110919.pdf",
       "domain": "security",
@@ -19212,7 +19212,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-658963",
+      "id": "sec-726774",
       "title": "MS-2-12業務永續經營程序書_V11_1110627",
       "fileName": "MS-2-12業務永續經營程序書_V11_1110627.pdf",
       "domain": "security",
@@ -19257,7 +19257,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-079903",
+      "id": "sec-966317",
       "title": "MS-2-07系統開發與維護程序書_v11_1130913",
       "fileName": "MS-2-07系統開發與維護程序書_v11_1130913.pdf",
       "domain": "security",
@@ -19302,7 +19302,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-587292",
+      "id": "sec-835502",
       "title": "MS-3-30稅務管理流程作業說明書_V14",
       "fileName": "MS-3-30稅務管理流程作業說明書_V14.pdf",
       "domain": "security",
@@ -19347,7 +19347,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-206487",
+      "id": "sec-807770",
       "title": "MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205",
       "fileName": "MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205.pdf",
       "domain": "security",
@@ -19392,7 +19392,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-348027",
+      "id": "sec-908783",
       "title": "MS-2-09矯正措施管理程序書_V12_1130319",
       "fileName": "MS-2-09矯正措施管理程序書_V12_1130319.pdf",
       "domain": "security",
@@ -19437,7 +19437,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-620893",
+      "id": "sec-247354",
       "title": "MS-3-06電子郵件管理作業說明書_V12",
       "fileName": "MS-3-06電子郵件管理作業說明書_V12.pdf",
       "domain": "security",
@@ -19482,7 +19482,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-047233",
+      "id": "sec-672225",
       "title": "MS-2-13人員安全管理與教育訓練程序書_V17",
       "fileName": "MS-2-13人員安全管理與教育訓練程序書_V17.pdf",
       "domain": "security",
@@ -19527,7 +19527,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-377591",
+      "id": "sec-211597",
       "title": "MS-2-14個資保護管理程序書_V2",
       "fileName": "MS-2-14個資保護管理程序書_V2.pdf",
       "domain": "security",
@@ -19572,7 +19572,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-266465",
+      "id": "sec-907378",
       "title": "MS-2-17全景評鑑程序書_v9_115902",
       "fileName": "MS-2-17全景評鑑程序書_v9_115902.pdf",
       "domain": "security",
@@ -19617,7 +19617,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-959112",
+      "id": "sec-554456",
       "title": "MS-2-08安全事件緊急應變程序書_V22_1150722",
       "fileName": "MS-2-08安全事件緊急應變程序書_V22_1150722.pdf",
       "domain": "security",
@@ -19662,7 +19662,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-725475",
+      "id": "sec-604411",
       "title": "MS-2-02資訊安全與個資保護組織程序書",
       "fileName": "MS-2-02資訊安全與個資保護組織程序書.pdf",
       "domain": "security",
@@ -19707,7 +19707,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-850079",
+      "id": "sec-191824",
       "title": "MS-2-05網路安全管理程序書_v7_1130814",
       "fileName": "MS-2-05網路安全管理程序書_v7_1130814.pdf",
       "domain": "security",
@@ -19752,7 +19752,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-641369",
+      "id": "sec-265021",
       "title": "MS-2-15個資流程鑑別程序書_v5_1110912",
       "fileName": "MS-2-15個資流程鑑別程序書_v5_1110912.pdf",
       "domain": "security",
@@ -19797,7 +19797,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-436053",
+      "id": "sec-002098",
       "title": "MS-2-03實體及環境安全管理程序書_V5",
       "fileName": "MS-2-03實體及環境安全管理程序書_V5.pdf",
       "domain": "security",
@@ -19842,7 +19842,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-497283",
+      "id": "sec-533235",
       "title": "MS-2-01文件控管程序書_V16_1150813",
       "fileName": "MS-2-01文件控管程序書_V16_1150813.pdf",
       "domain": "security",
@@ -19887,7 +19887,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-687598",
+      "id": "sec-851564",
       "title": "MS-2-10資訊資產管理程序書_V19",
       "fileName": "MS-2-10資訊資產管理程序書_V19.pdf",
       "domain": "security",
@@ -19932,7 +19932,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-994513",
+      "id": "sec-213494",
       "title": "MS-4-114(線上表單)資安與個資量測指標評估結果彙總表_V1",
       "fileName": "MS-4-114(線上表單)資安與個資量測指標評估結果彙總表_V1.pdf",
       "domain": "security",
@@ -19977,7 +19977,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-899487",
+      "id": "sec-235953",
       "title": "MS-2-11風險評鑑暨管理程序書_V13",
       "fileName": "MS-2-11風險評鑑暨管理程序書_V13.pdf",
       "domain": "security",
@@ -20022,7 +20022,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-745327",
+      "id": "sec-430914",
       "title": "MS-1-01資訊安全與個資保護政策_V18_111.0530",
       "fileName": "MS-1-01資訊安全與個資保護政策_V18_111.0530.pdf",
       "domain": "security",
@@ -20067,7 +20067,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-240327",
+      "id": "sec-469071",
       "title": "MS-4-120臺中市政府地方稅務局志願服務人員申請表_V2",
       "fileName": "MS-4-120臺中市政府地方稅務局志願服務人員申請表_V2.pdf",
       "domain": "security",
@@ -20112,7 +20112,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-547279",
+      "id": "sec-985205",
       "title": "Day01_深度學習精華講義與圖表解析：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01)",
       "fileName": "Day01_深度學習精華講義與圖表解析：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01).gdoc",
       "domain": "security",
@@ -20157,7 +20157,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-344472",
+      "id": "sec-869262",
       "title": "Day01_精讀簡報：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01)",
       "fileName": "Day01_精讀簡報：資安與個資保護政策(MS-1-01)暨文件管制作業(MS-2-01).gslides",
       "domain": "security",
@@ -20202,7 +20202,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-039408",
+      "id": "sec-483255",
       "title": "Day01_ISMS_PIMS_文件體系架構與跨階關聯圖",
       "fileName": "Day01_ISMS_PIMS_文件體系架構與跨階關聯圖.png",
       "domain": "security",
@@ -20247,7 +20247,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-945929",
+      "id": "sec-246188",
       "title": "Day01_文件生命週期與核准決行權責流程圖",
       "fileName": "Day01_文件生命週期與核准決行權責流程圖.png",
       "domain": "security",
@@ -20292,7 +20292,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-407412",
+      "id": "sec-262710",
       "title": "Day02_ISMS_PIMS_組織治理架構與權責分工全景圖",
       "fileName": "Day02_ISMS_PIMS_組織治理架構與權責分工全景圖.png",
       "domain": "security",
@@ -20337,7 +20337,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-744635",
+      "id": "sec-235134",
       "title": "Day02_全景評鑑與業務衝擊分析(BIA)決策計算流程圖",
       "fileName": "Day02_全景評鑑與業務衝擊分析(BIA)決策計算流程圖.png",
       "domain": "security",
@@ -20382,7 +20382,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-746502",
+      "id": "sec-314178",
       "title": "Day02_深度學習精華講義與圖表解析：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17)",
       "fileName": "Day02_深度學習精華講義與圖表解析：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17).gdoc",
       "domain": "security",
@@ -20427,7 +20427,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-083441",
+      "id": "sec-525104",
       "title": "Day02_精讀簡報：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17)",
       "fileName": "Day02_精讀簡報：資安與個資組織架構(MS-2-02)暨全景評鑑作業(MS-2-17).gslides",
       "domain": "security",
@@ -20472,7 +20472,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-096553",
+      "id": "sec-470795",
       "title": "Day03_ISMS_PIMS_稽核作業全流程與角色權責架構圖",
       "fileName": "Day03_ISMS_PIMS_稽核作業全流程與角色權責架構圖.png",
       "domain": "security",
@@ -20517,7 +20517,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-679344",
+      "id": "sec-347543",
       "title": "Day03_矯正措施管理與七大啟動時機閉環流向圖",
       "fileName": "Day03_矯正措施管理與七大啟動時機閉環流向圖.png",
       "domain": "security",
@@ -20562,7 +20562,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-249281",
+      "id": "sec-212129",
       "title": "Day03_深度學習精華講義與圖表解析：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09)",
       "fileName": "Day03_深度學習精華講義與圖表解析：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09).gdoc",
       "domain": "security",
@@ -20607,7 +20607,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-946104",
+      "id": "sec-989527",
       "title": "Day03_精讀簡報：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09)",
       "fileName": "Day03_精讀簡報：資安與個資稽核作業(MS-2-04)暨矯正措施管理(MS-2-09).gslides",
       "domain": "security",
@@ -20652,7 +20652,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-571568",
+      "id": "sec-635562",
       "title": "Day04_ISMS_PIMS_資訊資產六大類別與編碼架構圖",
       "fileName": "Day04_ISMS_PIMS_資訊資產六大類別與編碼架構圖.png",
       "domain": "security",
@@ -20697,7 +20697,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-986104",
+      "id": "sec-493478",
       "title": "Day04_資訊資產價值評定與CIA分級決策矩陣圖",
       "fileName": "Day04_資訊資產價值評定與CIA分級決策矩陣圖.png",
       "domain": "security",
@@ -20742,7 +20742,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-792045",
+      "id": "sec-192546",
       "title": "Day04_深度學習精華講義與圖表解析：資訊資產管理程序(MS-2-10)暨分類分級作業",
       "fileName": "Day04_深度學習精華講義與圖表解析：資訊資產管理程序(MS-2-10)暨分類分級作業.gdoc",
       "domain": "security",
@@ -20787,7 +20787,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-668061",
+      "id": "sec-283473",
       "title": "Day04_精讀簡報：資訊資產管理程序(MS-2-10)暨分類分級作業",
       "fileName": "Day04_精讀簡報：資訊資產管理程序(MS-2-10)暨分類分級作業.gslides",
       "domain": "security",
@@ -20832,7 +20832,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-427029",
+      "id": "sec-359152",
       "title": "Day05_ISMS_PIMS_網路安全防護架構與邊界隔離全景圖",
       "fileName": "Day05_ISMS_PIMS_網路安全防護架構與邊界隔離全景圖.png",
       "domain": "security",
@@ -20877,7 +20877,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-661980",
+      "id": "sec-999653",
       "title": "Day05_網路設備安全維護與防火牆檢核流程圖",
       "fileName": "Day05_網路設備安全維護與防火牆檢核流程圖.png",
       "domain": "security",
@@ -20922,7 +20922,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-743705",
+      "id": "sec-681596",
       "title": "Day05_深度學習精華講義與圖表解析：網路安全管理程序(MS-2-05)暨邊界防護控管",
       "fileName": "Day05_深度學習精華講義與圖表解析：網路安全管理程序(MS-2-05)暨邊界防護控管.gdoc",
       "domain": "security",
@@ -20967,7 +20967,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-328901",
+      "id": "sec-011575",
       "title": "Day05_精讀簡報：網路安全管理程序(MS-2-05)暨邊界防護控管",
       "fileName": "Day05_精讀簡報：網路安全管理程序(MS-2-05)暨邊界防護控管.gslides",
       "domain": "security",
@@ -21012,7 +21012,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-762648",
+      "id": "sec-547407",
       "title": "Day07_精讀簡報：風險評鑑暨管理程序(MS-2-11)與適用性聲明",
       "fileName": "Day07_精讀簡報：風險評鑑暨管理程序(MS-2-11)與適用性聲明.gslides",
       "domain": "security",
@@ -21057,7 +21057,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-770449",
+      "id": "sec-320386",
       "title": "Day07_深度學習精華講義與圖表解析：風險評鑑暨管理程序(MS-2-11)與適用性聲明",
       "fileName": "Day07_深度學習精華講義與圖表解析：風險評鑑暨管理程序(MS-2-11)與適用性聲明.gdoc",
       "domain": "security",
@@ -21102,7 +21102,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-193539",
+      "id": "sec-648338",
       "title": "Day07_ISMS_PIMS_風險評鑑架構與三維量化計算全景圖",
       "fileName": "Day07_ISMS_PIMS_風險評鑑架構與三維量化計算全景圖.png",
       "domain": "security",
@@ -21147,7 +21147,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-416312",
+      "id": "sec-069154",
       "title": "Day07_風險改善處理與適用性聲明(SOA)閉環流程圖",
       "fileName": "Day07_風險改善處理與適用性聲明(SOA)閉環流程圖.png",
       "domain": "security",
@@ -21192,7 +21192,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-468492",
+      "id": "sec-509016",
       "title": "Day06_精讀簡報：存取控制程序(MS-2-06)暨身分權限管理",
       "fileName": "Day06_精讀簡報：存取控制程序(MS-2-06)暨身分權限管理.gslides",
       "domain": "security",
@@ -21237,7 +21237,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-811466",
+      "id": "sec-356685",
       "title": "Day06_深度學習精華講義與圖表解析：存取控制程序(MS-2-06)暨身分權限管理",
       "fileName": "Day06_深度學習精華講義與圖表解析：存取控制程序(MS-2-06)暨身分權限管理.gdoc",
       "domain": "security",
@@ -21282,7 +21282,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-488666",
+      "id": "sec-882905",
       "title": "Day06_帳號清查週期與稽核日誌保存備份流程圖",
       "fileName": "Day06_帳號清查週期與稽核日誌保存備份流程圖.png",
       "domain": "security",
@@ -21327,7 +21327,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-319058",
+      "id": "sec-609512",
       "title": "Day06_ISMS_PIMS_身分驗證與角色權限存取控制全景圖",
       "fileName": "Day06_ISMS_PIMS_身分驗證與角色權限存取控制全景圖.png",
       "domain": "security",
@@ -21372,7 +21372,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-100781",
+      "id": "sec-030443",
       "title": "Week01_ISMS治理與個資生命週期SOP流程圖_高解析",
       "fileName": "Week01_ISMS治理與個資生命週期SOP流程圖_高解析.png",
       "domain": "security",
@@ -21417,7 +21417,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-344052",
+      "id": "sec-930851",
       "title": "Week01_回溯補救特刊_治理與個資生命週期SOP流程圖_v2",
       "fileName": "Week01_回溯補救特刊_治理與個資生命週期SOP流程圖_v2.png",
       "domain": "security",
@@ -21462,7 +21462,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-219073",
+      "id": "sec-090723",
       "title": "Week01_回溯補救特刊_治理與個資生命週期SOP流程圖",
       "fileName": "Week01_回溯補救特刊_治理與個資生命週期SOP流程圖.png",
       "domain": "security",
@@ -21507,7 +21507,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-374122",
+      "id": "sec-396890",
       "title": "【補救特刊01】ISMS_PIMS治理、文件管制與個資生命週期管理精煉簡報",
       "fileName": "【補救特刊01】ISMS_PIMS治理、文件管制與個資生命週期管理精煉簡報.gslides",
       "domain": "security",
@@ -21552,7 +21552,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-386399",
+      "id": "sec-757797",
       "title": "【補救特刊01】ISMS_PIMS治理、文件管制與個資生命週期管理深度導讀講義",
       "fileName": "【補救特刊01】ISMS_PIMS治理、文件管制與個資生命週期管理深度導讀講義.gdoc",
       "domain": "security",
@@ -21597,7 +21597,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-366042",
+      "id": "sec-017234",
       "title": "Day08_機房門禁物品攜出入與錄影勾稽SOP流程圖",
       "fileName": "Day08_機房門禁物品攜出入與錄影勾稽SOP流程圖.png",
       "domain": "security",
@@ -21642,7 +21642,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-232835",
+      "id": "sec-580830",
       "title": "Day08_精讀簡報：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12)",
       "fileName": "Day08_精讀簡報：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12).gslides",
       "domain": "security",
@@ -21687,7 +21687,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-226132",
+      "id": "sec-422920",
       "title": "Day08_深度學習精華講義與圖表解析：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12)",
       "fileName": "Day08_深度學習精華講義與圖表解析：實體及環境安全管理程序(MS-2-03)與機房實體安全(MS-3-12).gdoc",
       "domain": "security",
@@ -21732,7 +21732,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-583492",
+      "id": "sec-267178",
       "title": "四層縱深防禦安全架構圖",
       "fileName": "四層縱深防禦安全架構圖.png",
       "domain": "security",
@@ -21777,7 +21777,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-690848",
+      "id": "sec-892833",
       "title": "Day09_儲存媒體資料抹除與資產報廢銷毀SOP圖",
       "fileName": "Day09_儲存媒體資料抹除與資產報廢銷毀SOP圖.png",
       "domain": "security",
@@ -21822,7 +21822,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-607480",
+      "id": "sec-133547",
       "title": "Day09_資訊設備全生命週期五大階段管制作業圖",
       "fileName": "Day09_資訊設備全生命週期五大階段管制作業圖.png",
       "domain": "security",
@@ -21867,7 +21867,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-380982",
+      "id": "sec-445675",
       "title": "Day09_精讀簡報：資訊設備生命週期管理(MS-3-24)與資產報廢銷毀(MS-3-05)",
       "fileName": "Day09_精讀簡報：資訊設備生命週期管理(MS-3-24)與資產報廢銷毀(MS-3-05).gslides",
       "domain": "security",
@@ -21912,7 +21912,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-458906",
+      "id": "sec-918762",
       "title": "Day09_深度學習精華講義與圖表解析：資訊設備生命週期管理(MS-3-24)與資產報廢銷毀(MS-3-05)",
       "fileName": "Day09_深度學習精華講義與圖表解析：資訊設備生命週期管理(MS-3-24)與資產報廢銷毀(MS-3-05).gdoc",
       "domain": "security",
@@ -21957,7 +21957,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-593671",
+      "id": "sec-111767",
       "title": "Day10_備份媒體七碼編號管理與異地備援回存驗證架構圖",
       "fileName": "Day10_備份媒體七碼編號管理與異地備援回存驗證架構圖.png",
       "domain": "security",
@@ -22002,7 +22002,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-449476",
+      "id": "sec-664932",
       "title": "Day10_可攜式設備安全管控與內外網10MB交換查核流程圖",
       "fileName": "Day10_可攜式設備安全管控與內外網10MB交換查核流程圖.png",
       "domain": "security",
@@ -22047,7 +22047,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-251859",
+      "id": "sec-481605",
       "title": "Day10_精讀簡報：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04)",
       "fileName": "Day10_精讀簡報：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04).gslides",
       "domain": "security",
@@ -22092,7 +22092,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-422802",
+      "id": "sec-732668",
       "title": "Day10_深度學習精華講義與圖表解析：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04)",
       "fileName": "Day10_深度學習精華講義與圖表解析：可攜式設備安全(MS-3-07)與媒體備份管理(MS-3-04).gdoc",
       "domain": "security",
@@ -22137,7 +22137,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-101065",
+      "id": "sec-529882",
       "title": "Day11_設備安全維護與電源網路線路色標標準圖",
       "fileName": "Day11_設備安全維護與電源網路線路色標標準圖.png",
       "domain": "security",
@@ -22182,7 +22182,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-168268",
+      "id": "sec-370533",
       "title": "Day11_通訊軟體社群網站管制與遠距工作安全流程圖",
       "fileName": "Day11_通訊軟體社群網站管制與遠距工作安全流程圖.png",
       "domain": "security",
@@ -22227,7 +22227,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-849906",
+      "id": "sec-101716",
       "title": "Day11_深度學習精華講義與圖表解析：設備安全維護(MS-3-10)與通訊社群及遠距工作安全",
       "fileName": "Day11_深度學習精華講義與圖表解析：設備安全維護(MS-3-10)與通訊社群及遠距工作安全.gdoc",
       "domain": "security",
@@ -22272,7 +22272,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-544705",
+      "id": "sec-999966",
       "title": "Day11_精讀簡報：設備安全維護(MS-3-10)與通訊社群及遠距工作安全",
       "fileName": "Day11_精讀簡報：設備安全維護(MS-3-10)與通訊社群及遠距工作安全.gslides",
       "domain": "security",
@@ -22317,7 +22317,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-944410",
+      "id": "sec-384261",
       "title": "Day12_RTO_MTD_RPO指標與緊急應變通報管理架構圖",
       "fileName": "Day12_RTO_MTD_RPO指標與緊急應變通報管理架構圖.png",
       "domain": "security",
@@ -22362,7 +22362,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-975529",
+      "id": "sec-383229",
       "title": "Day12_業務永續經營程序與關鍵業務衝擊分析BIA流程圖",
       "fileName": "Day12_業務永續經營程序與關鍵業務衝擊分析BIA流程圖.png",
       "domain": "security",
@@ -22407,7 +22407,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-440500",
+      "id": "sec-708848",
       "title": "Day12_深度學習精華講義與圖表解析：業務永續經營(MS-2-12)與關鍵業務衝擊分析(BIA)",
       "fileName": "Day12_深度學習精華講義與圖表解析：業務永續經營(MS-2-12)與關鍵業務衝擊分析(BIA).gdoc",
       "domain": "security",
@@ -22452,7 +22452,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-397331",
+      "id": "sec-488601",
       "title": "Day12_精讀簡報：業務永續經營(MS-2-12)與關鍵業務衝擊分析(BIA)",
       "fileName": "Day12_精讀簡報：業務永續經營(MS-2-12)與關鍵業務衝擊分析(BIA).gslides",
       "domain": "security",
@@ -22497,7 +22497,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-028630",
+      "id": "sec-852487",
       "title": "Day13_邊際交換器與防火牆手動切換備援SOP架構圖",
       "fileName": "Day13_邊際交換器與防火牆手動切換備援SOP架構圖.png",
       "domain": "security",
@@ -22542,7 +22542,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-305947",
+      "id": "sec-446461",
       "title": "Day13_核心網路設備堆疊故障與BD8806切換復原流程圖",
       "fileName": "Day13_核心網路設備堆疊故障與BD8806切換復原流程圖.png",
       "domain": "security",
@@ -22587,7 +22587,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-446089",
+      "id": "sec-193097",
       "title": "Day13_深度學習精華講義與圖表解析：網路設備緊急應變計畫(MS-3-19)與備援切換演練",
       "fileName": "Day13_深度學習精華講義與圖表解析：網路設備緊急應變計畫(MS-3-19)與備援切換演練.gdoc",
       "domain": "security",
@@ -22632,7 +22632,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-484976",
+      "id": "sec-719793",
       "title": "Day13_精讀簡報：網路設備緊急應變計畫(MS-3-19)與備援切換演練",
       "fileName": "Day13_精讀簡報：網路設備緊急應變計畫(MS-3-19)與備援切換演練.gslides",
       "domain": "security",
@@ -22677,7 +22677,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-709005",
+      "id": "sec-322824",
       "title": "Day14_Week02_實體機房與資產生命週期全景知識地圖",
       "fileName": "Day14_Week02_實體機房與資產生命週期全景知識地圖.png",
       "domain": "security",
@@ -22722,7 +22722,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-796925",
+      "id": "sec-338309",
       "title": "Day14_第二週實務稽核必查重點與六大盲點對策矩陣圖",
       "fileName": "Day14_第二週實務稽核必查重點與六大盲點對策矩陣圖.png",
       "domain": "security",
@@ -22767,7 +22767,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-162838",
+      "id": "sec-345110",
       "title": "Day14_深度學習精華講義與圖表解析：第二週實體機房與資產生命週期總結複習暨綜合稽核檢核",
       "fileName": "Day14_深度學習精華講義與圖表解析：第二週實體機房與資產生命週期總結複習暨綜合稽核檢核.gdoc",
       "domain": "security",
@@ -22812,7 +22812,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-647635",
+      "id": "sec-238200",
       "title": "Day14_精讀簡報：第二週實體機房與資產生命週期總結複習暨綜合稽核檢核",
       "fileName": "Day14_精讀簡報：第二週實體機房與資產生命週期總結複習暨綜合稽核檢核.gslides",
       "domain": "security",
@@ -22857,7 +22857,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-508744",
+      "id": "sec-675823",
       "title": "Week02_機房門禁與設備載具安全SOP流程圖_高解析",
       "fileName": "Week02_機房門禁與設備載具安全SOP流程圖_高解析.png",
       "domain": "security",
@@ -22902,7 +22902,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-867222",
+      "id": "sec-689030",
       "title": "Week02_回溯補救特刊_機房門禁與設備載具安全SOP流程圖_v2",
       "fileName": "Week02_回溯補救特刊_機房門禁與設備載具安全SOP流程圖_v2.png",
       "domain": "security",
@@ -22947,7 +22947,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-310322",
+      "id": "sec-931816",
       "title": "Week02_回溯補救特刊_機房門禁與設備載具安全SOP流程圖",
       "fileName": "Week02_回溯補救特刊_機房門禁與設備載具安全SOP流程圖.png",
       "domain": "security",
@@ -22992,7 +22992,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-537377",
+      "id": "sec-679155",
       "title": "【補救特刊02】實體機房管制、設備維護與處所載具安全精煉簡報",
       "fileName": "【補救特刊02】實體機房管制、設備維護與處所載具安全精煉簡報.gslides",
       "domain": "security",
@@ -23037,7 +23037,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-152659",
+      "id": "sec-195345",
       "title": "【補救特刊02】實體機房管制、設備維護與處所載具安全深度導讀講義",
       "fileName": "【補救特刊02】實體機房管制、設備維護與處所載具安全深度導讀講義.gdoc",
       "domain": "security",
@@ -23082,7 +23082,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-098133",
+      "id": "sec-845318",
       "title": "Day15_外點連線防火牆閘道與HA雙機備援防護架構圖",
       "fileName": "Day15_外點連線防火牆閘道與HA雙機備援防護架構圖.png",
       "domain": "security",
@@ -23127,7 +23127,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-628103",
+      "id": "sec-713832",
       "title": "Day15_網路實體隔離拓撲與多層邊界防護全景圖",
       "fileName": "Day15_網路實體隔離拓撲與多層邊界防護全景圖.png",
       "domain": "security",
@@ -23172,7 +23172,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-320916",
+      "id": "sec-734929",
       "title": "Day15_深度學習精華講義與圖表解析：網路安全架構與邊界防護程序(MS-2-05進階)",
       "fileName": "Day15_深度學習精華講義與圖表解析：網路安全架構與邊界防護程序(MS-2-05進階).gdoc",
       "domain": "security",
@@ -23217,7 +23217,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-735903",
+      "id": "sec-463871",
       "title": "Day15_精讀簡報：網路安全架構與邊界防護程序(MS-2-05進階)",
       "fileName": "Day15_精讀簡報：網路安全架構與邊界防護程序(MS-2-05進階).gslides",
       "domain": "security",
@@ -23262,7 +23262,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-108542",
+      "id": "sec-727254",
       "title": "Day21_第三週網路安全實務稽核必查重點與六大盲點對策矩陣圖",
       "fileName": "Day21_第三週網路安全實務稽核必查重點與六大盲點對策矩陣圖.png",
       "domain": "security",
@@ -23307,7 +23307,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-924905",
+      "id": "sec-141755",
       "title": "Day21_第三週網路安全與傳輸加密防護全景知識地圖",
       "fileName": "Day21_第三週網路安全與傳輸加密防護全景知識地圖.png",
       "domain": "security",
@@ -23352,7 +23352,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-215135",
+      "id": "sec-574131",
       "title": "Day21_深度學習精華講義與圖表解析：第三週網路安全防護總結複習暨綜合稽核檢核",
       "fileName": "Day21_深度學習精華講義與圖表解析：第三週網路安全防護總結複習暨綜合稽核檢核.gdoc",
       "domain": "security",
@@ -23397,7 +23397,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-495937",
+      "id": "sec-517916",
       "title": "Day21_精讀簡報：第三週網路安全防護總結複習暨綜合稽核檢核",
       "fileName": "Day21_精讀簡報：第三週網路安全防護總結複習暨綜合稽核檢核.gslides",
       "domain": "security",
@@ -23442,7 +23442,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-837139",
+      "id": "sec-408233",
       "title": "Day16_防火牆設定變更版本控制與SOC情資聯防SOP",
       "fileName": "Day16_防火牆設定變更版本控制與SOC情資聯防SOP.png",
       "domain": "security",
@@ -23487,7 +23487,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-072858",
+      "id": "sec-562290",
       "title": "Day16_防火牆政策每季四大檢核要點與停用處置圖",
       "fileName": "Day16_防火牆政策每季四大檢核要點與停用處置圖.png",
       "domain": "security",
@@ -23532,7 +23532,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-350149",
+      "id": "sec-234219",
       "title": "Day16_精讀簡報：防火牆政策管理與每季四檢作業(MS-3-61)",
       "fileName": "Day16_精讀簡報：防火牆政策管理與每季四檢作業(MS-3-61).gslides",
       "domain": "security",
@@ -23577,7 +23577,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-018894",
+      "id": "sec-330947",
       "title": "Day16_深度學習精華講義與圖表解析：防火牆政策管理與每季四檢作業(MS-3-61)",
       "fileName": "Day16_深度學習精華講義與圖表解析：防火牆政策管理與每季四檢作業(MS-3-61).gdoc",
       "domain": "security",
@@ -23622,7 +23622,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-751622",
+      "id": "sec-049052",
       "title": "Day19_WAF網站應用程式防火牆部署與SOC聯防架構圖",
       "fileName": "Day19_WAF網站應用程式防火牆部署與SOC聯防架構圖.png",
       "domain": "security",
@@ -23667,7 +23667,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-739118",
+      "id": "sec-112101",
       "title": "Day19_入侵防護系統IPS深度檢測與特徵碼更新機制圖",
       "fileName": "Day19_入侵防護系統IPS深度檢測與特徵碼更新機制圖.png",
       "domain": "security",
@@ -23712,7 +23712,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-480985",
+      "id": "sec-270291",
       "title": "Day19_深度學習精華講義與圖表解析：惡意軟體防範與入侵防護系統(IPS WAF SOC)",
       "fileName": "Day19_深度學習精華講義與圖表解析：惡意軟體防範與入侵防護系統(IPS WAF SOC).gdoc",
       "domain": "security",
@@ -23757,7 +23757,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-015407",
+      "id": "sec-160796",
       "title": "Day19_精讀簡報：惡意軟體防範與入侵防護系統(IPS WAF SOC)",
       "fileName": "Day19_精讀簡報：惡意軟體防範與入侵防護系統(IPS WAF SOC).gslides",
       "domain": "security",
@@ -23802,7 +23802,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-035081",
+      "id": "sec-165899",
       "title": "Day20_遠距工作與遠端連線四大剛性管制標準圖",
       "fileName": "Day20_遠距工作與遠端連線四大剛性管制標準圖.png",
       "domain": "security",
@@ -23847,7 +23847,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-894235",
+      "id": "sec-291765",
       "title": "Day20_SSL_VPN加密通道MFA動態密碼認證流程圖",
       "fileName": "Day20_SSL_VPN加密通道MFA動態密碼認證流程圖.png",
       "domain": "security",
@@ -23892,7 +23892,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-930602",
+      "id": "sec-996795",
       "title": "Day20_精讀簡報：遠端存取控制與VPN安全通道管理(MFA 網域)",
       "fileName": "Day20_精讀簡報：遠端存取控制與VPN安全通道管理(MFA 網域).gslides",
       "domain": "security",
@@ -23937,7 +23937,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-333544",
+      "id": "sec-229580",
       "title": "Day20_深度學習精華講義與圖表解析：遠端存取控制與VPN安全通道管理(MFA 網域)",
       "fileName": "Day20_深度學習精華講義與圖表解析：遠端存取控制與VPN安全通道管理(MFA 網域).gdoc",
       "domain": "security",
@@ -23982,7 +23982,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-635940",
+      "id": "sec-668159",
       "title": "Day17_無線網路實體線路嚴禁串接與網段邏輯隔離架構圖",
       "fileName": "Day17_無線網路實體線路嚴禁串接與網段邏輯隔離架構圖.png",
       "domain": "security",
@@ -24027,7 +24027,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-787918",
+      "id": "sec-175515",
       "title": "Day17_802.1X企業級認證與訪客上網安全管理流程圖",
       "fileName": "Day17_802.1X企業級認證與訪客上網安全管理流程圖.png",
       "domain": "security",
@@ -24072,7 +24072,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-614997",
+      "id": "sec-170444",
       "title": "Day17_深度學習精華講義與圖表解析：無線網路存取安全與訪客隔離管制(MS-2-05)",
       "fileName": "Day17_深度學習精華講義與圖表解析：無線網路存取安全與訪客隔離管制(MS-2-05).gdoc",
       "domain": "security",
@@ -24117,7 +24117,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-181445",
+      "id": "sec-792903",
       "title": "Day17_精讀簡報：無線網路存取安全與訪客隔離管制(MS-2-05)",
       "fileName": "Day17_精讀簡報：無線網路存取安全與訪客隔離管制(MS-2-05).gslides",
       "domain": "security",
@@ -24162,7 +24162,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-157482",
+      "id": "sec-192228",
       "title": "Day18_對外網路服務傳輸加密協定標準矩陣圖",
       "fileName": "Day18_對外網路服務傳輸加密協定標準矩陣圖.png",
       "domain": "security",
@@ -24207,7 +24207,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-448027",
+      "id": "sec-041925",
       "title": "Day18_政府公開金鑰GPKI憑證管理與非對稱加密架構圖",
       "fileName": "Day18_政府公開金鑰GPKI憑證管理與非對稱加密架構圖.png",
       "domain": "security",
@@ -24252,7 +24252,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-535729",
+      "id": "sec-584008",
       "title": "Day18_精讀簡報：資料傳輸加密與密碼學控制機制(TLS SFTP)",
       "fileName": "Day18_精讀簡報：資料傳輸加密與密碼學控制機制(TLS SFTP).gslides",
       "domain": "security",
@@ -24297,7 +24297,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-992500",
+      "id": "sec-358444",
       "title": "Day18_深度學習精華講義與圖表解析：資料傳輸加密與密碼學控制機制(TLS SFTP)",
       "fileName": "Day18_深度學習精華講義與圖表解析：資料傳輸加密與密碼學控制機制(TLS SFTP).gdoc",
       "domain": "security",
@@ -24342,7 +24342,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-911248",
+      "id": "sec-052081",
       "title": "Week03_通訊中斷應變與個人雲平臺SOP流程圖_高解析",
       "fileName": "Week03_通訊中斷應變與個人雲平臺SOP流程圖_高解析.png",
       "domain": "security",
@@ -24387,7 +24387,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-683916",
+      "id": "sec-370677",
       "title": "Week03_回溯補救特刊_通訊中斷應變與個人雲平臺SOP流程圖_v2",
       "fileName": "Week03_回溯補救特刊_通訊中斷應變與個人雲平臺SOP流程圖_v2.png",
       "domain": "security",
@@ -24432,7 +24432,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-291786",
+      "id": "sec-554907",
       "title": "【補救特刊03】通訊中斷應變、核心系統復原與個人雲平臺SOP精煉簡報",
       "fileName": "【補救特刊03】通訊中斷應變、核心系統復原與個人雲平臺SOP精煉簡報.gslides",
       "domain": "security",
@@ -24477,7 +24477,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-775553",
+      "id": "sec-676022",
       "title": "【補救特刊03】通訊中斷應變、核心系統復原與個人雲平臺SOP深度導讀講義",
       "fileName": "【補救特刊03】通訊中斷應變、核心系統復原與個人雲平臺SOP深度導讀講義.gdoc",
       "domain": "security",
@@ -24522,7 +24522,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-197459",
+      "id": "sec-015567",
       "title": "Day22_身分認證存取控制架構與RBAC角色型授權矩陣圖",
       "fileName": "Day22_身分認證存取控制架構與RBAC角色型授權矩陣圖.png",
       "domain": "security",
@@ -24567,7 +24567,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-190232",
+      "id": "sec-631469",
       "title": "Day22_自然人憑證雙重身分鑑別與逾時登出安全流程圖",
       "fileName": "Day22_自然人憑證雙重身分鑑別與逾時登出安全流程圖.png",
       "domain": "security",
@@ -24612,7 +24612,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-870924",
+      "id": "sec-679119",
       "title": "Day22_精讀簡報：身分認證與存取控制程序(MS-2-06進階)",
       "fileName": "Day22_精讀簡報：身分認證與存取控制程序(MS-2-06進階).gslides",
       "domain": "security",
@@ -24657,7 +24657,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-631641",
+      "id": "sec-623884",
       "title": "Day22_深度學習精華講義與圖表解析：身分認證與存取控制程序(MS-2-06進階)",
       "fileName": "Day22_深度學習精華講義與圖表解析：身分認證與存取控制程序(MS-2-06進階).gdoc",
       "domain": "security",
@@ -24702,7 +24702,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-813238",
+      "id": "sec-194374",
       "title": "Day27_資料庫三級檢核體系與科長每月隨機抽核SOP",
       "fileName": "Day27_資料庫三級檢核體系與科長每月隨機抽核SOP.png",
       "domain": "security",
@@ -24747,7 +24747,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-826785",
+      "id": "sec-926858",
       "title": "Day27_資料庫稽核日誌至少保存1年與異質備份架構圖",
       "fileName": "Day27_資料庫稽核日誌至少保存1年與異質備份架構圖.png",
       "domain": "security",
@@ -24792,7 +24792,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-217133",
+      "id": "sec-649325",
       "title": "Day27_精讀簡報：資料庫存取監督與日誌稽核作業(MS-3-09第3.5條)",
       "fileName": "Day27_精讀簡報：資料庫存取監督與日誌稽核作業(MS-3-09第3.5條).gslides",
       "domain": "security",
@@ -24837,7 +24837,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-878791",
+      "id": "sec-476823",
       "title": "Day27_深度學習精華講義與圖表解析：資料庫存取監督與日誌稽核作業(MS-3-09第3.5條)",
       "fileName": "Day27_深度學習精華講義與圖表解析：資料庫存取監督與日誌稽核作業(MS-3-09第3.5條).gdoc",
       "domain": "security",
@@ -24882,7 +24882,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-336307",
+      "id": "sec-634833",
       "title": "Day28_第四週實務稽核必查重點與六大盲點對策矩陣圖",
       "fileName": "Day28_第四週實務稽核必查重點與六大盲點對策矩陣圖.png",
       "domain": "security",
@@ -24927,7 +24927,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-934893",
+      "id": "sec-751390",
       "title": "Day28_第四週存取控制與資料庫核心安控全景知識地圖",
       "fileName": "Day28_第四週存取控制與資料庫核心安控全景知識地圖.png",
       "domain": "security",
@@ -24972,7 +24972,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-440811",
+      "id": "sec-192336",
       "title": "Day28_精讀簡報：第四週存取控制與資料庫安控總結複習暨綜合稽核檢核",
       "fileName": "Day28_精讀簡報：第四週存取控制與資料庫安控總結複習暨綜合稽核檢核.gslides",
       "domain": "security",
@@ -25017,7 +25017,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-635963",
+      "id": "sec-436308",
       "title": "Day28_深度學習精華講義與圖表解析：第四週存取控制與資料庫安控總結複習暨綜合稽核檢核",
       "fileName": "Day28_深度學習精華講義與圖表解析：第四週存取控制與資料庫安控總結複習暨綜合稽核檢核.gdoc",
       "domain": "security",
@@ -25062,7 +25062,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-820280",
+      "id": "sec-364149",
       "title": "Day24_賦稅資料庫管理架構與正式區DBO三大禁令圖",
       "fileName": "Day24_賦稅資料庫管理架構與正式區DBO三大禁令圖.png",
       "domain": "security",
@@ -25107,7 +25107,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-098901",
+      "id": "sec-464712",
       "title": "Day24_正式區資料異動MS-4-31自撰SQL申請審核SOP",
       "fileName": "Day24_正式區資料異動MS-4-31自撰SQL申請審核SOP.png",
       "domain": "security",
@@ -25152,7 +25152,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-648890",
+      "id": "sec-189205",
       "title": "Day24_深度學習精華講義與圖表解析：賦稅資料庫管理作業說明書(MS-3-09)",
       "fileName": "Day24_深度學習精華講義與圖表解析：賦稅資料庫管理作業說明書(MS-3-09).gdoc",
       "domain": "security",
@@ -25197,7 +25197,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-844981",
+      "id": "sec-668238",
       "title": "Day24_精讀簡報：賦稅資料庫管理作業說明書(MS-3-09)",
       "fileName": "Day24_精讀簡報：賦稅資料庫管理作業說明書(MS-3-09).gslides",
       "domain": "security",
@@ -25242,7 +25242,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-476922",
+      "id": "sec-204052",
       "title": "Day26_人員職務異動次月10日前清單更新與除權閉環圖",
       "fileName": "Day26_人員職務異動次月10日前清單更新與除權閉環圖.png",
       "domain": "security",
@@ -25287,7 +25287,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-954744",
+      "id": "sec-809908",
       "title": "Day26_每季帳號授權清查MS-4-13五大佐證審核流程圖",
       "fileName": "Day26_每季帳號授權清查MS-4-13五大佐證審核流程圖.png",
       "domain": "security",
@@ -25332,7 +25332,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-947011",
+      "id": "sec-768517",
       "title": "Day26_精讀簡報：帳號授權每季清查與權限異動追蹤(MS-4-13)",
       "fileName": "Day26_精讀簡報：帳號授權每季清查與權限異動追蹤(MS-4-13).gslides",
       "domain": "security",
@@ -25377,7 +25377,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-648211",
+      "id": "sec-575143",
       "title": "Day26_深度學習精華講義與圖表解析：帳號授權每季清查與權限異動追蹤(MS-4-13)",
       "fileName": "Day26_深度學習精華講義與圖表解析：帳號授權每季清查與權限異動追蹤(MS-4-13).gdoc",
       "domain": "security",
@@ -25422,7 +25422,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-381571",
+      "id": "sec-696002",
       "title": "Day23_使用者帳號生命週期與維護廠商帳號管制流程圖",
       "fileName": "Day23_使用者帳號生命週期與維護廠商帳號管制流程圖.png",
       "domain": "security",
@@ -25467,7 +25467,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-718524",
+      "id": "sec-336149",
       "title": "Day23_通行密碼安全指標與特殊權限申請切結圖",
       "fileName": "Day23_通行密碼安全指標與特殊權限申請切結圖.png",
       "domain": "security",
@@ -25512,7 +25512,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-028789",
+      "id": "sec-149885",
       "title": "Day23_深度學習精華講義與圖表解析：帳號與通行密碼管理作業(MS-3-02)",
       "fileName": "Day23_深度學習精華講義與圖表解析：帳號與通行密碼管理作業(MS-3-02).gdoc",
       "domain": "security",
@@ -25557,7 +25557,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-198273",
+      "id": "sec-628321",
       "title": "Day23_精讀簡報：帳號與通行密碼管理作業(MS-3-02)",
       "fileName": "Day23_精讀簡報：帳號與通行密碼管理作業(MS-3-02).gslides",
       "domain": "security",
@@ -25602,7 +25602,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-297340",
+      "id": "sec-239306",
       "title": "Day25_賦稅資料庫資料複製與VST臨場作業申請流程圖",
       "fileName": "Day25_賦稅資料庫資料複製與VST臨場作業申請流程圖.png",
       "domain": "security",
@@ -25647,7 +25647,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-818287",
+      "id": "sec-181107",
       "title": "Day25_跨機關機敏資料查調限制與排程自動挑檔禁令圖",
       "fileName": "Day25_跨機關機敏資料查調限制與排程自動挑檔禁令圖.png",
       "domain": "security",
@@ -25692,7 +25692,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-117425",
+      "id": "sec-290995",
       "title": "Day25_深度學習精華講義與圖表解析：賦稅資料庫資料複製與跨機關查調作業(MS-3-09第4條)",
       "fileName": "Day25_深度學習精華講義與圖表解析：賦稅資料庫資料複製與跨機關查調作業(MS-3-09第4條).gdoc",
       "domain": "security",
@@ -25737,7 +25737,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-430929",
+      "id": "sec-624124",
       "title": "Day25_精讀簡報：賦稅資料庫資料複製與跨機關查調作業(MS-3-09第4條)",
       "fileName": "Day25_精讀簡報：賦稅資料庫資料複製與跨機關查調作業(MS-3-09第4條).gslides",
       "domain": "security",
@@ -25782,7 +25782,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-977644",
+      "id": "sec-717619",
       "title": "Week04_資料庫特權與跨機關查調SOP流程圖_高解析",
       "fileName": "Week04_資料庫特權與跨機關查調SOP流程圖_高解析.png",
       "domain": "security",
@@ -25827,7 +25827,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-335409",
+      "id": "sec-787939",
       "title": "Week04_回溯補救特刊_資料庫特權與跨機關查調SOP流程圖_v2",
       "fileName": "Week04_回溯補救特刊_資料庫特權與跨機關查調SOP流程圖_v2.png",
       "domain": "security",
@@ -25872,7 +25872,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-328205",
+      "id": "sec-807825",
       "title": "【補救特刊04】資料庫特權管制、跨機關查調與賦稅更正審核SOP精煉簡報",
       "fileName": "【補救特刊04】資料庫特權管制、跨機關查調與賦稅更正審核SOP精煉簡報.gslides",
       "domain": "security",
@@ -25917,7 +25917,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-514798",
+      "id": "sec-114765",
       "title": "【補救特刊04】資料庫特權管制、跨機關查調與賦稅更正審核SOP深度導讀講義",
       "fileName": "【補救特刊04】資料庫特權管制、跨機關查調與賦稅更正審核SOP深度導讀講義.gdoc",
       "domain": "security",
@@ -25962,7 +25962,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-680270",
+      "id": "sec-562202",
       "title": "【業務核心專題深研】從系統開發到廠商維運：軟體、資料庫與組態全生命週期安全管理實務指南",
       "fileName": "【業務核心專題深研】從系統開發到廠商維運：軟體、資料庫與組態全生命週期安全管理實務指南.gdoc",
       "domain": "security",
@@ -26007,7 +26007,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-026412",
+      "id": "sec-157725",
       "title": "Day29_精讀簡報：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07)",
       "fileName": "Day29_精讀簡報：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07).gslides",
       "domain": "security",
@@ -26052,7 +26052,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-620747",
+      "id": "sec-024832",
       "title": "Day29_系統輸入字串過濾驗證與例外錯誤處理安全規範圖",
       "fileName": "Day29_系統輸入字串過濾驗證與例外錯誤處理安全規範圖.png",
       "domain": "security",
@@ -26097,7 +26097,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-940606",
+      "id": "sec-981180",
       "title": "Day29_安全軟體開發生命週期(SSDLC)全流程防護架構圖",
       "fileName": "Day29_安全軟體開發生命週期(SSDLC)全流程防護架構圖.png",
       "domain": "security",
@@ -26142,7 +26142,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-136293",
+      "id": "sec-245020",
       "title": "Day29_深度學習精華講義與圖表解析：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07)",
       "fileName": "Day29_深度學習精華講義與圖表解析：安全軟體開發生命週期(SSDLC)與安全需求規劃(MS-2-07).gdoc",
       "domain": "security",
@@ -26187,7 +26187,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-053489",
+      "id": "sec-611668",
       "title": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP精煉簡報",
       "fileName": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP精煉簡報.gslides",
       "domain": "security",
@@ -26232,7 +26232,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-119405",
+      "id": "sec-886543",
       "title": "Week05_回溯補救特刊_SDLC開發GCB與委外審查SOP流程圖_v2",
       "fileName": "Week05_回溯補救特刊_SDLC開發GCB與委外審查SOP流程圖_v2.png",
       "domain": "security",
@@ -26277,7 +26277,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-135311",
+      "id": "sec-634704",
       "title": "Week05_SDLC開發GCB與委外維運SOP流程圖_高解析",
       "fileName": "Week05_SDLC開發GCB與委外維運SOP流程圖_高解析.png",
       "domain": "security",
@@ -26322,7 +26322,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-616341",
+      "id": "sec-403108",
       "title": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP深度導讀講義",
       "fileName": "【補救特刊05】SDLC開發安全、政府組態基準GCB與委外審查SOP深度導讀講義.gdoc",
       "domain": "security",
@@ -26367,7 +26367,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-705652",
+      "id": "sec-370329",
       "title": "Day35_精讀簡報：第五週系統開發維運與委外供應鏈總結複習暨綜合稽核檢核",
       "fileName": "Day35_精讀簡報：第五週系統開發維運與委外供應鏈總結複習暨綜合稽核檢核.gslides",
       "domain": "security",
@@ -26412,7 +26412,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-549527",
+      "id": "sec-338816",
       "title": "Day35_第五週實務稽核必查重點與六大盲點對策矩陣圖",
       "fileName": "Day35_第五週實務稽核必查重點與六大盲點對策矩陣圖.png",
       "domain": "security",
@@ -26457,7 +26457,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-227061",
+      "id": "sec-022470",
       "title": "Day35_深度學習精華講義與圖表解析：第五週系統開發維運與委外供應鏈總結複習暨綜合稽核檢核",
       "fileName": "Day35_深度學習精華講義與圖表解析：第五週系統開發維運與委外供應鏈總結複習暨綜合稽核檢核.gdoc",
       "domain": "security",
@@ -26502,7 +26502,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-438761",
+      "id": "sec-249957",
       "title": "Day35_第五週系統開發維運與委外供應鏈全景知識地圖",
       "fileName": "Day35_第五週系統開發維運與委外供應鏈全景知識地圖.png",
       "domain": "security",
@@ -26547,7 +26547,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-694272",
+      "id": "sec-312828",
       "title": "Day33_精讀簡報：委外廠商駐點與遠端維護存取管制(MS-3-08)",
       "fileName": "Day33_精讀簡報：委外廠商駐點與遠端維護存取管制(MS-3-08).gslides",
       "domain": "security",
@@ -26592,7 +26592,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-902302",
+      "id": "sec-582205",
       "title": "Day33_深度學習精華講義與圖表解析：委外廠商駐點與遠端維護存取管制(MS-3-08)",
       "fileName": "Day33_深度學習精華講義與圖表解析：委外廠商駐點與遠端維護存取管制(MS-3-08).gdoc",
       "domain": "security",
@@ -26637,7 +26637,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-605985",
+      "id": "sec-081954",
       "title": "Day33_外部駐點維護人員雙同意書檢核與進出管制SOP",
       "fileName": "Day33_外部駐點維護人員雙同意書檢核與進出管制SOP.png",
       "domain": "security",
@@ -26682,7 +26682,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-108796",
+      "id": "sec-125232",
       "title": "Day33_委外遠端維護連線專案申請與安全側錄防護圖",
       "fileName": "Day33_委外遠端維護連線專案申請與安全側錄防護圖.png",
       "domain": "security",
@@ -26727,7 +26727,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-757528",
+      "id": "sec-885843",
       "title": "Day32_精讀簡報：委外資訊安全管理與採購合約安全條款(MS-3-08)",
       "fileName": "Day32_精讀簡報：委外資訊安全管理與採購合約安全條款(MS-3-08).gslides",
       "domain": "security",
@@ -26772,7 +26772,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-160062",
+      "id": "sec-214077",
       "title": "Day32_深度學習精華講義與圖表解析：委外資訊安全管理與採購合約安全條款(MS-3-08)",
       "fileName": "Day32_深度學習精華講義與圖表解析：委外資訊安全管理與採購合約安全條款(MS-3-08).gdoc",
       "domain": "security",
@@ -26817,7 +26817,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-959520",
+      "id": "sec-049318",
       "title": "Day32_委外採購資安評估MS-4-111與切結管制流程圖",
       "fileName": "Day32_委外採購資安評估MS-4-111與切結管制流程圖.png",
       "domain": "security",
@@ -26862,7 +26862,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-861971",
+      "id": "sec-594545",
       "title": "Day32_委外契約資安條款與禁止大陸廠牌產品安全基準圖",
       "fileName": "Day32_委外契約資安條款與禁止大陸廠牌產品安全基準圖.png",
       "domain": "security",
@@ -26907,7 +26907,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-328532",
+      "id": "sec-736224",
       "title": "Day34_深度學習精華講義與圖表解析：委外供應商定期稽核與履約終止個資刪除(MS-3-08)",
       "fileName": "Day34_深度學習精華講義與圖表解析：委外供應商定期稽核與履約終止個資刪除(MS-3-08).gdoc",
       "domain": "security",
@@ -26952,7 +26952,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-753849",
+      "id": "sec-312158",
       "title": "Day34_精讀簡報：委外供應商定期稽核與履約終止個資刪除(MS-3-08)",
       "fileName": "Day34_精讀簡報：委外供應商定期稽核與履約終止個資刪除(MS-3-08).gslides",
       "domain": "security",
@@ -26997,7 +26997,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-120387",
+      "id": "sec-841630",
       "title": "Day34_履約終止委外廠商個資刪除MS-4-132閉環檢核圖",
       "fileName": "Day34_履約終止委外廠商個資刪除MS-4-132閉環檢核圖.png",
       "domain": "security",
@@ -27042,7 +27042,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-843485",
+      "id": "sec-574001",
       "title": "Day34_委外供應商每年4月及8月實地稽核機制流程圖",
       "fileName": "Day34_委外供應商每年4月及8月實地稽核機制流程圖.png",
       "domain": "security",
@@ -27087,7 +27087,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-489100",
+      "id": "sec-914998",
       "title": "Day31_精讀簡報：系統安全測試弱點修補與正式上線切換(MS-2-07)",
       "fileName": "Day31_精讀簡報：系統安全測試弱點修補與正式上線切換(MS-2-07).gslides",
       "domain": "security",
@@ -27132,7 +27132,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-704011",
+      "id": "sec-639800",
       "title": "Day31_深度學習精華講義與圖表解析：系統安全測試弱點修補與正式上線切換(MS-2-07)",
       "fileName": "Day31_深度學習精華講義與圖表解析：系統安全測試弱點修補與正式上線切換(MS-2-07).gdoc",
       "domain": "security",
@@ -27177,7 +27177,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-686611",
+      "id": "sec-712275",
       "title": "Day31_系統安全測試與弱點修補驗收標準矩陣圖",
       "fileName": "Day31_系統安全測試與弱點修補驗收標準矩陣圖.png",
       "domain": "security",
@@ -27222,7 +27222,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-869770",
+      "id": "sec-608618",
       "title": "Day31_正式環境上線切換與版本退版(Rollback)作業SOP",
       "fileName": "Day31_正式環境上線切換與版本退版(Rollback)作業SOP.png",
       "domain": "security",
@@ -27267,7 +27267,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-944011",
+      "id": "sec-945132",
       "title": "Day30_精讀簡報：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07)",
       "fileName": "Day30_精讀簡報：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07).gslides",
       "domain": "security",
@@ -27312,7 +27312,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-057676",
+      "id": "sec-123054",
       "title": "Day30_深度學習精華講義與圖表解析：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07)",
       "fileName": "Day30_深度學習精華講義與圖表解析：原始碼安全性檢測(SAST)與程式庫版本控管(MS-2-07).gdoc",
       "domain": "security",
@@ -27357,7 +27357,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-979102",
+      "id": "sec-552582",
       "title": "Day30_原始碼檢測(SAST)與開源套件(OSS)安全掃描流程圖",
       "fileName": "Day30_原始碼檢測(SAST)與開源套件(OSS)安全掃描流程圖.png",
       "domain": "security",
@@ -27402,7 +27402,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-428988",
+      "id": "sec-003682",
       "title": "Day30_程式庫集中控管與伺服器D槽版本備份架構圖",
       "fileName": "Day30_程式庫集中控管與伺服器D槽版本備份架構圖.png",
       "domain": "security",
