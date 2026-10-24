@@ -1496,10 +1496,21 @@ class WorkspaceApp {
             "theme-05-admin",
             "theme-05-survey-vote",
             "theme-05-survey-setup",
-            "theme-05-survey-stats"
+            "theme-05-survey-stats",
+            "theme-04-draw",
+            "theme-04-admin",
+            "theme-04-survey-vote",
+            "theme-04-survey-setup",
+            "theme-04-survey-stats",
+            "theme-04-youtube",
+            "theme-05-youtube"
         ];
         if (specialRoutes.includes(hash)) {
             this.setRoute(hash);
+            return;
+        }
+        if (hash === "theme-05") {
+            this.setRoute("theme-04");
             return;
         }
         const matchedTheme = WORKSPACE_THEMES.find((t) => t.id === hash);
@@ -1536,11 +1547,9 @@ class WorkspaceApp {
         const theme03Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-03");
         const theme04Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-04");
 
-        // 路由正規化：相容舊版 theme-04 (舊資安) 與 theme-05 (舊活動)
+        // 路由正規化：相容舊版 theme-05 hash (對應現代主題四：多元活動)
         let normalizedRoute = routeId;
-        if (routeId === "theme-04") {
-            normalizedRoute = "theme-03";
-        } else if (routeId === "theme-05") {
+        if (routeId === "theme-05") {
             normalizedRoute = "theme-04";
         }
 
@@ -1622,7 +1631,10 @@ class WorkspaceApp {
 
     updateActiveNavTab() {
         if (!this.navTabsContainer) return;
-        const normalizedRoute = this.activeRoute.startsWith("theme-05") ? "theme-05" : this.activeRoute;
+        let normalizedRoute = this.activeRoute;
+        if (normalizedRoute.startsWith("theme-04") || normalizedRoute.startsWith("theme-05")) {
+            normalizedRoute = "theme-04";
+        }
         this.navTabsContainer.querySelectorAll(".nav-tab-btn").forEach((btn) => {
             const route = btn.getAttribute("data-route");
             if (route === normalizedRoute) {
@@ -1952,6 +1964,23 @@ class WorkspaceApp {
         if (goAdminBtn) {
             goAdminBtn.addEventListener("click", () => {
                 window.location.hash = "theme-05-admin";
+            });
+        }
+
+        const goYtHubBtn = document.getElementById("go-youtube-hub-btn");
+        if (goYtHubBtn) {
+            goYtHubBtn.addEventListener("click", () => {
+                window.location.hash = "theme-04-youtube";
+            });
+        }
+
+        const goYtTwBtn = document.getElementById("go-youtube-tw-btn");
+        if (goYtTwBtn) {
+            goYtTwBtn.addEventListener("click", () => {
+                this.initYoutubeState();
+                this.ytActiveRegion = "TW";
+                this.ytActiveTime = "month";
+                window.location.hash = "theme-04-youtube";
             });
         }
 
