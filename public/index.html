@@ -127,6 +127,31 @@
 
             <!-- 四大主題網格容器 (每列2個放大展示) -->
             <section class="themes-grid" id="themes-grid" aria-label="四大核心主題列表"></section>
+
+            <!-- 首頁精選：最新 YouTube AI 科技影音與研討快訊 (支援台灣在地與全球前沿) -->
+            <section class="overview-ai-youtube-section" id="overview-ai-youtube-section" aria-labelledby="overview-youtube-title">
+                <div class="overview-yt-header">
+                    <div class="overview-yt-title-group">
+                        <div class="theme-meta-tags">
+                            <span class="theme-code-badge">AI VIDEO FEED</span>
+                            <span class="theme-status-badge">最新 AI 發展與教學課程</span>
+                        </div>
+                        <h2 class="section-heading" id="overview-youtube-title">最新 YouTube AI 科技發展與線上研習精選</h2>
+                        <p class="section-subheading">彙整近一個月台灣在地繁體中文與全球 AI 前沿教學、科技趨勢與開源應用，點擊卡片可直接於網頁內嵌播放或前往主題四進階自訂檢索</p>
+                    </div>
+                    <div class="overview-yt-actions">
+                        <div class="overview-yt-filter-pills" id="overview-yt-region-tabs">
+                            <button type="button" class="yt-filter-pill is-active" data-yt-region="all">全部區域</button>
+                            <button type="button" class="yt-filter-pill" data-yt-region="TW">台灣 (繁中在地)</button>
+                            <button type="button" class="yt-filter-pill" data-yt-region="GLOBAL">全球 / 美國 (前沿發布)</button>
+                        </div>
+                        <button type="button" class="primary-btn" id="go-theme04-youtube-full-btn">
+                            進入主題四完整 AI 影音研析中樞
+                        </button>
+                    </div>
+                </div>
+                <div class="overview-yt-cards-grid" id="overview-yt-cards-grid"></div>
+            </section>
         </div>
 
         <!-- 單一主題展開檢視容器 (由 JS 動態渲染) -->
@@ -149,6 +174,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js" crossorigin="anonymous"></script>
+    <script src="./js/youtube_ai_data.js?v=20261024"></script>
     <script src="./js/knowledge_data.js?v=20261023"></script>
     <script src="./js/app.js?v=20261023"></script>
 </body>

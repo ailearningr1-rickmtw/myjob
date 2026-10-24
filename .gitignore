@@ -21,3 +21,6 @@ session_state.json
 .env.*
 *.secret
 
+
+# 臨時修訂腳本與暫存檔
+scratch/
