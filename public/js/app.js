@@ -9566,8 +9566,9 @@ ${cfg.sourceText}`;
         if (this.ytInitialized) return;
         this.ytInitialized = true;
         this.ytActiveRegion = "all";
-        this.ytActiveTimeRange = "30d"; // 預設近一個月
+        this.ytActiveTimeRange = "30d"; // 預設聚焦近一個月
         this.ytActiveCategory = "all";
+        this.ytActiveChannel = "all"; // 預設全部頻道
         this.ytSearchQuery = "";
         this.ytOverviewRegion = "all";
 
@@ -9591,6 +9592,9 @@ ${cfg.sourceText}`;
         }));
     }
 
+    /**
+     * 智慧多維度與多關鍵字篩選評分演算法
+     */
     getFilteredYoutubeVideos(forOverview = false) {
         this.initYoutubeState();
         const allVideos = this.getAllYoutubeVideos();
@@ -9603,45 +9607,87 @@ ${cfg.sourceText}`;
             }).slice(0, 6);
         }
 
-        const q = (this.ytSearchQuery || "").trim().toLowerCase();
+        const rawQ = (this.ytSearchQuery || "").trim().toLowerCase();
+        const tokens = rawQ ? rawQ.split(/[\s,，、+]+/).filter(t => t.length > 0) : [];
 
-        return allVideos.filter((v) => {
-            // 區域篩選
+        const filtered = [];
+
+        for (const v of allVideos) {
+            // 1. 區域篩選
             if (this.ytActiveRegion !== "all") {
                 if (this.ytActiveRegion === "GLOBAL") {
-                    if (v.region !== "GLOBAL" && v.region !== "US") return false;
+                    if (v.region !== "GLOBAL" && v.region !== "US") continue;
                 } else if (v.region !== this.ytActiveRegion) {
-                    return false;
+                    continue;
                 }
             }
 
-            // 時間跨度篩選
-            if (this.ytActiveTimeRange === "7d" && (v.daysAgo || 999) > 7) return false;
-            if (this.ytActiveTimeRange === "30d" && (v.daysAgo || 999) > 30) return false;
-            if (this.ytActiveTimeRange === "90d" && (v.daysAgo || 999) > 90) return false;
+            // 2. 頻道篩選
+            if (this.ytActiveChannel && this.ytActiveChannel !== "all") {
+                if (v.channelName !== this.ytActiveChannel) continue;
+            }
 
-            // 分類與收藏篩選
+            // 3. 時間跨度篩選
+            if (this.ytActiveTimeRange === "7d" && (v.daysAgo || 999) > 7) continue;
+            if (this.ytActiveTimeRange === "30d" && (v.daysAgo || 999) > 30) continue;
+            if (this.ytActiveTimeRange === "90d" && (v.daysAgo || 999) > 90) continue;
+
+            // 4. 分類與收藏篩選
             if (this.ytActiveCategory === "bookmarks") {
-                if (!this.ytBookmarks.has(v.id)) return false;
+                if (!this.ytBookmarks.has(v.id)) continue;
             } else if (this.ytActiveCategory !== "all" && v.category !== this.ytActiveCategory) {
-                return false;
+                continue;
             }
 
-            // 關鍵字檢索
-            if (q) {
-                const corpus = [
-                    v.title,
-                    v.channelName,
-                    v.summary,
-                    v.categoryLabel,
-                    v.regionLabel,
-                    ...(v.tags || [])
-                ].join(" ").toLowerCase();
-                if (!corpus.includes(q)) return false;
+            // 5. 關鍵字智慧權重比對（避免單一連續字串造成 0 部結果）
+            if (tokens.length > 0) {
+                let score = 0;
+                const titleLow = (v.title || "").toLowerCase();
+                const channelLow = (v.channelName || "").toLowerCase();
+                const summaryLow = (v.summary || "").toLowerCase();
+                const tagsLow = (v.tags || []).map(t => t.toLowerCase());
+                const catLabelLow = (v.categoryLabel || "").toLowerCase();
+                const regLabelLow = (v.regionLabel || "").toLowerCase();
+
+                for (const token of tokens) {
+                    // 語義輔助加權
+                    if (token === "台灣" || token === "tw" || token === "在地") {
+                        if (v.region === "TW") score += 25;
+                    } else if (token === "全球" || token === "美國" || token === "us") {
+                        if (v.region === "GLOBAL" || v.region === "US") score += 25;
+                    } else if (token === "近一個月" || token === "一個月" || token === "30天") {
+                        if ((v.daysAgo || 999) <= 30) score += 20;
+                    } else if (token === "近一週" || token === "一週" || token === "7天") {
+                        if ((v.daysAgo || 999) <= 7) score += 20;
+                    }
+
+                    // 核心欄位比對
+                    if (channelLow.includes(token)) score += 50;
+                    if (titleLow.includes(token)) score += 35;
+                    if (tagsLow.some(t => t.includes(token))) score += 25;
+                    if (summaryLow.includes(token)) score += 15;
+                    if (catLabelLow.includes(token)) score += 12;
+                    if (regLabelLow.includes(token)) score += 12;
+                }
+
+                if (score <= 0) continue;
+                v._searchScore = score;
+            } else {
+                v._searchScore = 0;
             }
 
-            return true;
+            filtered.push(v);
+        }
+
+        // 排序：有搜尋詞時依相關性分數高者優先，無搜尋詞時依發布日期由新到舊
+        filtered.sort((a, b) => {
+            if (tokens.length > 0 && b._searchScore !== a._searchScore) {
+                return b._searchScore - a._searchScore;
+            }
+            return (a.daysAgo || 999) - (b.daysAgo || 999);
         });
+
+        return filtered;
     }
 
     /**
@@ -9707,47 +9753,49 @@ ${cfg.sourceText}`;
             if (directLink) {
                 directLink.addEventListener("click", (e) => {
                     e.stopPropagation();
-                    window.open(`https://www.youtube.com/watch?v=${video.youtubeId}`, "_blank");
+                    const url = `https://www.youtube.com/watch?v=${video.youtubeId}`;
+                    window.open(url, "_blank", "noopener,noreferrer");
                 });
             }
         });
     }
 
     /**
-     * 產製單一 YouTube 影片卡片 HTML
+     * 產製單一 YouTube 卡片 HTML
      */
     renderSingleYoutubeCardHtml(v, isOverview = false) {
-        const thumbUrl = `https://img.youtube.com/vi/${encodeURIComponent(v.youtubeId)}/hqdefault.jpg`;
-        const regClass = v.region === "TW" ? "is-tw" : (v.region === "JP" ? "is-jp" : "is-global");
         const isBookmarked = this.ytBookmarks && this.ytBookmarks.has(v.id);
+        const tagsHtml = (v.tags || []).slice(0, 3).map(t => `<span class="yt-tag-pill">${this.escapeHtml(t)}</span>`).join("");
+        const thumbUrl = `https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`;
 
         return `
-            <article class="yt-video-card" data-video-id="${this.escapeHtml(v.id)}" role="article">
-                <div class="yt-card-thumb-wrap" title="點擊於網頁內嵌播放">
+            <article class="yt-video-card" data-video-id="${this.escapeHtml(v.id)}">
+                <div class="yt-card-thumb-wrap">
                     <img src="${thumbUrl}" alt="${this.escapeHtml(v.title)}" class="yt-card-thumb-img" loading="lazy" />
-                    <span class="yt-card-duration">${this.escapeHtml(v.duration || "精選")}</span>
+                    <span class="yt-card-duration-badge">${this.escapeHtml(v.duration || "精選")}</span>
+                    <span class="yt-card-region-badge ${v.region === 'TW' ? 'is-tw' : ''}">${this.escapeHtml(v.regionLabel || v.region)}</span>
                     <div class="yt-card-play-overlay">
-                        <div class="yt-play-icon-circle">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <div class="yt-play-icon-box">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                         </div>
                     </div>
                 </div>
                 <div class="yt-card-body">
-                    <div class="yt-card-tags-row">
-                        <span class="yt-region-badge ${regClass}">${this.escapeHtml(v.regionLabel || v.region)}</span>
-                        <span class="yt-cat-badge">${this.escapeHtml(v.categoryLabel || "AI 科技")}</span>
-                        <span class="kb-type-pill" style="font-size: 0.8rem; padding: 0.1rem 0.5rem;">${this.escapeHtml(v.timeTag || v.uploadDate)}</span>
+                    <div class="yt-card-meta-line">
+                        <button type="button" class="yt-card-channel-btn" data-filter-channel="${this.escapeHtml(v.channelName)}" title="點擊僅檢視此頻道的影音">
+                            ${this.escapeHtml(v.channelName)}
+                        </button>
+                        <span class="yt-card-time-badge">${this.escapeHtml(v.timeTag || '最新')}</span>
                     </div>
                     <h4 class="yt-card-title" title="${this.escapeHtml(v.title)}">${this.escapeHtml(v.title)}</h4>
-                    <div class="yt-card-meta-row">
-                        <span class="yt-card-channel-name">${this.escapeHtml(v.channelName)}</span>
-                        <span>•</span>
-                        <span>${this.escapeHtml(v.viewsText || v.uploadDate)}</span>
+                    <p class="yt-card-summary">${this.escapeHtml(v.summary || '')}</p>
+                    <div class="yt-card-tags-row">
+                        ${tagsHtml}
                     </div>
-                    <p class="yt-card-desc">${this.escapeHtml(v.summary || "")}</p>
-                    <div class="yt-card-actions">
+                    <div class="yt-card-actions-bar">
                         <button type="button" class="primary-btn yt-card-action-btn yt-card-play-action">
-                            網頁內嵌播放
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            <span>內嵌播放</span>
                         </button>
                         <button type="button" class="secondary-btn yt-card-icon-btn yt-card-direct-link" title="在 YouTube 官方網站開啟">
                             原站觀看
@@ -9775,6 +9823,8 @@ ${cfg.sourceText}`;
         const globalCount = allVideos.filter(v => v.region === "GLOBAL" || v.region === "US").length;
         const bookmarksCount = this.ytBookmarks.size;
 
+        const channelsList = (window.YOUTUBE_AI_CURATED_DATA && window.YOUTUBE_AI_CURATED_DATA.metadata && window.YOUTUBE_AI_CURATED_DATA.metadata.channels) || [];
+
         this.focusSection.innerHTML = `
             <div class="theme-focus-panel yt-hub-page-container rpa-large-ui">
                 <!-- 頂部標頭與導覽列 -->
@@ -9782,10 +9832,10 @@ ${cfg.sourceText}`;
                     <div class="focus-title-group">
                         <div class="theme-meta-tags">
                             <span class="theme-code-badge">SYS-4C // AI VIDEO LAB</span>
-                            <span class="theme-status-badge">全網頁即時篩選播放已啟用</span>
+                            <span class="theme-status-badge">即時篩選・本頁展示已啟用</span>
                         </div>
                         <h2 class="focus-title">YouTube AI 科技影音研析與最新課程中樞</h2>
-                        <p class="theme-desc">專為追蹤近一個月 AI 科技最新發展、LLM 提示詞實戰、AI Agent 工作流與 Python 應用所打造！支援「台灣在地 (TW) / 全球前沿 (US)」區域篩選、「近一週 / 近一個月 / 近三個月」時間限定，並具備一鍵 YouTube 官方精確搜尋與網頁內嵌播放功能。</p>
+                        <p class="theme-desc">專為追蹤近一個月 AI 科技最新發展、LLM 提示詞實戰、AI Agent 工作流與 Python 應用所打造！支援「台灣在地 (TW) / 全球前沿 (US)」區域篩選、「推薦頻道快速切換」與本頁即時展示更新。</p>
                     </div>
                     <button type="button" class="secondary-btn" id="yt-hub-back-theme04-btn">
                         <span>返回主題四任務中心</span>
@@ -9800,15 +9850,15 @@ ${cfg.sourceText}`;
                 <div class="yt-hub-metrics-row">
                     <div class="yt-hub-metric-card">
                         <span class="yt-hub-metric-val">${allVideos.length} 部</span>
-                        <span class="yt-hub-metric-label">收納 AI 科技最新影片與實戰教學</span>
+                        <span class="yt-hub-metric-label">精選 AI 科技實戰教學與權威課程</span>
                     </div>
                     <div class="yt-hub-metric-card">
                         <span class="yt-hub-metric-val">${twCount} 部</span>
-                        <span class="yt-hub-metric-label">台灣在地優質繁中講師與科技頻道特輯</span>
+                        <span class="yt-hub-metric-label">台灣在地繁體中文講師與頻道特輯</span>
                     </div>
                     <div class="yt-hub-metric-card">
                         <span class="yt-hub-metric-val">${globalCount} 部</span>
-                        <span class="yt-hub-metric-label">全球與美國前沿大模型技術與論文速評</span>
+                        <span class="yt-hub-metric-label">全球與美國前沿大模型技術與論文評析</span>
                     </div>
                     <div class="yt-hub-metric-card">
                         <span class="yt-hub-metric-val">${bookmarksCount} 部</span>
@@ -9816,40 +9866,63 @@ ${cfg.sourceText}`;
                     </div>
                 </div>
 
-                <!-- 多維度篩選與一鍵 YouTube 即時搜尋工具箱 -->
+                <!-- 多維度篩選與即時搜尋工具箱 -->
                 <div class="yt-hub-toolbar-panel">
-                    <!-- 區域限定篩選 -->
+                    <!-- 1. 區域限定篩選 -->
                     <div class="yt-filter-control-group">
                         <div class="yt-control-label-row">
                             <h4 class="yt-control-heading">1. 所在區域限定篩選 (Region Selector)</h4>
-                            <span class="theme-route-hint">可快速切換台灣在地繁中教學或全球前沿發布</span>
+                            <span class="theme-route-hint">快速切換台灣在地繁中教學或全球前沿發布</span>
                         </div>
                         <div class="yt-chips-flow" id="yt-region-chips-bar">
                             <button type="button" class="yt-control-chip ${this.ytActiveRegion === 'all' ? 'is-active' : ''}" data-hub-region="all">全部區域 (${allVideos.length})</button>
-                            <button type="button" class="yt-control-chip ${this.ytActiveRegion === 'TW' ? 'is-active' : ''}" data-hub-region="TW">台灣 (TW 繁體中文在地優質頻道, ${twCount})</button>
-                            <button type="button" class="yt-control-chip ${this.ytActiveRegion === 'GLOBAL' ? 'is-active' : ''}" data-hub-region="GLOBAL">全球 / 美國 (US 前沿技術與論文, ${globalCount})</button>
+                            <button type="button" class="yt-control-chip ${this.ytActiveRegion === 'TW' ? 'is-active' : ''}" data-hub-region="TW">台灣 (TW 繁中在地頻道, ${twCount})</button>
+                            <button type="button" class="yt-control-chip ${this.ytActiveRegion === 'GLOBAL' ? 'is-active' : ''}" data-hub-region="GLOBAL">全球 / 美國 (US 前沿技術, ${globalCount})</button>
                             <button type="button" class="yt-control-chip ${this.ytActiveRegion === 'JP' ? 'is-active' : ''}" data-hub-region="JP">日本 / 亞洲觀點 (JP)</button>
                         </div>
                     </div>
 
-                    <!-- 發布時間跨度篩選 -->
+                    <!-- 2. 推薦科技頻道快速切換 -->
                     <div class="yt-filter-control-group">
                         <div class="yt-control-label-row">
-                            <h4 class="yt-control-heading">2. 發布時間跨度篩選 (Time Range)</h4>
+                            <h4 class="yt-control-heading">2. 推薦科技頻道專屬展示 (Featured Channels)</h4>
+                            <span class="theme-route-hint">點選任一頻道即可在下方即時展示該頻道所有精選影音</span>
+                        </div>
+                        <div class="yt-channel-chips-bar" id="yt-channel-chips-bar">
+                            <button type="button" class="yt-channel-chip ${this.ytActiveChannel === 'all' ? 'is-active' : ''}" data-hub-channel="all">
+                                <span>全部頻道</span>
+                            </button>
+                            ${channelsList.filter(c => c.id !== 'all').map(ch => {
+                                const chCount = allVideos.filter(v => v.channelName === ch.name).length;
+                                return `
+                                    <button type="button" class="yt-channel-chip ${this.ytActiveChannel === ch.name ? 'is-active' : ''}" data-hub-channel="${this.escapeHtml(ch.name)}">
+                                        <span>${this.escapeHtml(ch.name)}</span>
+                                        <span class="yt-channel-chip-tag">${ch.tag || ch.region}</span>
+                                        <span>(${chCount})</span>
+                                    </button>
+                                `;
+                            }).join("")}
+                        </div>
+                    </div>
+
+                    <!-- 3. 發布時間跨度篩選 -->
+                    <div class="yt-filter-control-group">
+                        <div class="yt-control-label-row">
+                            <h4 class="yt-control-heading">3. 發布時間跨度篩選 (Time Range)</h4>
                             <span class="theme-route-hint">預設聚焦近一個月最新發展與教學</span>
                         </div>
                         <div class="yt-chips-flow" id="yt-time-chips-bar">
-                            <button type="button" class="yt-control-chip ${this.ytActiveTimeRange === '30d' ? 'is-active' : ''}" data-hub-time="30d">近一個月 (30天內精選, 預設)</button>
+                            <button type="button" class="yt-control-chip ${this.ytActiveTimeRange === '30d' ? 'is-active' : ''}" data-hub-time="30d">近一個月 (本月精選, 預設)</button>
                             <button type="button" class="yt-control-chip ${this.ytActiveTimeRange === '7d' ? 'is-active' : ''}" data-hub-time="7d">近一週內 (7天突破進展)</button>
                             <button type="button" class="yt-control-chip ${this.ytActiveTimeRange === '90d' ? 'is-active' : ''}" data-hub-time="90d">近三個月 (本季核心課程)</button>
                             <button type="button" class="yt-control-chip ${this.ytActiveTimeRange === 'all' ? 'is-active' : ''}" data-hub-time="all">全部典藏</button>
                         </div>
                     </div>
 
-                    <!-- 主題分類與收藏 -->
+                    <!-- 4. 主題分類與收藏 -->
                     <div class="yt-filter-control-group">
                         <div class="yt-control-label-row">
-                            <h4 class="yt-control-heading">3. 特定主題分類標籤 (Topic Categories)</h4>
+                            <h4 class="yt-control-heading">4. 特定主題分類標籤 (Topic Categories)</h4>
                             <span class="theme-route-hint">支援一鍵切換特定領域</span>
                         </div>
                         <div class="yt-chips-flow" id="yt-category-chips-bar">
@@ -9863,10 +9936,10 @@ ${cfg.sourceText}`;
                         </div>
                     </div>
 
-                    <!-- 即時檢索與一鍵開啟 YouTube 官方搜尋 -->
+                    <!-- 5. 關鍵字搜尋與即時篩選工具箱 -->
                     <div class="yt-filter-control-group">
                         <div class="yt-control-label-row">
-                            <h4 class="yt-control-heading">4. 關鍵字搜尋與一鍵 YouTube 即時精準檢索</h4>
+                            <h4 class="yt-control-heading">5. 關鍵字檢索與即時篩選工具箱</h4>
                             <button type="button" class="secondary-btn" id="yt-open-add-dialog-btn">+ 新增自訂影片到我的研習清單</button>
                         </div>
                         <div class="yt-search-action-row">
@@ -9875,25 +9948,35 @@ ${cfg.sourceText}`;
                                     type="search"
                                     id="yt-hub-search-input"
                                     class="yt-search-input"
-                                    placeholder="搜尋影片名稱、講師頻道、模型代碼 (如 DeepSeek, Claude, Agent)..."
+                                    placeholder="輸入關鍵字、頻道名稱或技術主題 (支援多關鍵字即時比對)..."
                                     value="${this.escapeHtml(this.ytSearchQuery)}"
                                 />
                             </div>
-                            <button type="button" class="yt-direct-search-btn" id="yt-launch-direct-search-btn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                                <span>一鍵以當前條件開啟 YouTube 官方即時搜尋</span>
+                            <button type="button" class="yt-search-now-btn" id="yt-search-now-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <span>立即檢索更新下方影片</span>
+                            </button>
+                            <button type="button" class="yt-reset-btn" id="yt-reset-all-filters-btn">
+                                <span>清空所有條件</span>
+                            </button>
+                            <button type="button" class="yt-external-search-link" id="yt-launch-direct-search-btn" title="在官方網站開啟 YouTube 完整搜尋結果">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                <span>開啟 YouTube 官方外站搜尋</span>
                             </button>
                         </div>
 
                         <!-- 快速預設熱門搜尋晶片 -->
                         <div class="yt-preset-keywords-row">
-                            <span class="yt-preset-label">熱門一鍵檢索：</span>
-                            <button type="button" class="yt-preset-btn" data-preset-query="近一個月 台灣 AI 科技教學">台灣近一個月 AI 教學</button>
-                            <button type="button" class="yt-preset-btn" data-preset-query="Claude 3.7 Sonnet 實測">Claude 3.7 實測</button>
-                            <button type="button" class="yt-preset-btn" data-preset-query="DeepSeek 本地部署 教學">DeepSeek 本地部署教學</button>
-                            <button type="button" class="yt-preset-btn" data-preset-query="AI Agent 自動化工作流 教學">AI Agent 工作流實戰</button>
-                            <button type="button" class="yt-preset-btn" data-preset-query="Python AI 應用 開發教學">Python AI 應用開發</button>
-                            <button type="button" class="yt-preset-btn" data-preset-query="Sora 影片生成 最新發展">Sora 影片生成最新發展</button>
+                            <span class="yt-preset-label">熱門一鍵篩選：</span>
+                            <button type="button" class="yt-preset-btn" data-preset-action="tw-month">台灣近一個月 AI 教學</button>
+                            <button type="button" class="yt-preset-btn" data-preset-channel="Papaya 電腦教室">Papaya 提示詞實戰</button>
+                            <button type="button" class="yt-preset-btn" data-preset-channel="柴哥 AI 科技頻道">柴哥 科技評測</button>
+                            <button type="button" class="yt-preset-btn" data-preset-channel="台大 李宏毅教授">台大 李宏毅課程</button>
+                            <button type="button" class="yt-preset-btn" data-preset-channel="六角學院 技術專題">六角學院 本地部署</button>
+                            <button type="button" class="yt-preset-btn" data-preset-query="Claude 3.7">Claude 3.7 實測</button>
+                            <button type="button" class="yt-preset-btn" data-preset-query="DeepSeek">DeepSeek 本機部署</button>
+                            <button type="button" class="yt-preset-btn" data-preset-cat="ai-agents">AI Agent 工作流</button>
+                            <button type="button" class="yt-preset-btn" data-preset-cat="python-ai">Python AI 開發</button>
                         </div>
                     </div>
                 </div>
@@ -9913,35 +9996,93 @@ ${cfg.sourceText}`;
     }
 
     /**
-     * 更新全功能 YouTube 研習中樞的影片網格
+     * 更新 YouTube 影音中樞網格內容
      */
     updateYoutubeHubGrid() {
         const grid = document.getElementById("yt-hub-cards-grid");
         const countText = document.getElementById("yt-hub-results-count-text");
         if (!grid) return;
 
-        const videos = this.getFilteredYoutubeVideos(false);
+        const filtered = this.getFilteredYoutubeVideos(false);
 
-        if (countText) {
-            countText.innerHTML = `符合當前篩選條件之影片：<strong>${videos.length}</strong> 部（已套用：${this.getYtActiveFilterSummary()}）`;
+        // 整理篩選狀態字串
+        const activeLabels = [];
+        if (this.ytActiveRegion === "TW") activeLabels.push("區域：台灣在地");
+        else if (this.ytActiveRegion === "GLOBAL") activeLabels.push("區域：全球/美國");
+        else if (this.ytActiveRegion === "JP") activeLabels.push("區域：日本/亞洲");
+
+        if (this.ytActiveChannel && this.ytActiveChannel !== "all") {
+            activeLabels.push(`頻道：${this.ytActiveChannel}`);
         }
 
-        if (videos.length === 0) {
+        if (this.ytActiveTimeRange === "7d") activeLabels.push("時間：近一週");
+        else if (this.ytActiveTimeRange === "30d") activeLabels.push("時間：近一個月");
+        else if (this.ytActiveTimeRange === "90d") activeLabels.push("時間：近三個月");
+
+        if (this.ytActiveCategory !== "all") {
+            if (this.ytActiveCategory === "bookmarks") activeLabels.push("我的收藏清單");
+            else activeLabels.push(`分類代碼：${this.ytActiveCategory}`);
+        }
+
+        if (this.ytSearchQuery.trim()) {
+            activeLabels.push(`關鍵字：「${this.ytSearchQuery.trim()}」`);
+        }
+
+        const conditionDesc = activeLabels.length > 0 ? `（已套用：${activeLabels.join("・")}）` : "（顯示全部精選）";
+
+        if (countText) {
+            countText.textContent = `符合當前篩選條件之影片：${filtered.length} 部 ${conditionDesc}`;
+        }
+
+        if (filtered.length === 0) {
+            const allVideos = this.getAllYoutubeVideos();
+            const recommended = allVideos.slice(0, 6);
+
             grid.innerHTML = `
-                <div class="kb-empty-results" style="grid-column: 1 / -1;">
-                    <h4 class="theme-title">查無符合條件的影音內容</h4>
-                    <p class="theme-desc">請嘗試清空搜尋關鍵字、擴大區域或時間範圍，亦可直接點擊上方「一鍵以當前條件開啟 YouTube 官方即時搜尋」直接在 YouTube 探索最新影片。</p>
+                <div class="yt-empty-fallback-box">
+                    <h3 class="yt-empty-title">查無完全符合當前條件的影音內容</h3>
+                    <p class="yt-empty-desc">已為您自動推薦最熱門的「台灣在地優質 AI 教學」精選影片，您亦可點擊下方按鈕清空搜尋條件以檢視全部 ${allVideos.length} 部典藏：</p>
+                    <div class="yt-empty-actions">
+                        <button type="button" class="primary-btn" id="yt-clear-fallback-btn">清空條件並檢視全部影片</button>
+                        <button type="button" class="secondary-btn" id="yt-show-tw-fallback-btn">切換至台灣在地優質頻道</button>
+                    </div>
                 </div>
+                ${recommended.map((v) => this.renderSingleYoutubeCardHtml(v, false)).join("")}
             `;
+
+            const clearFallback = document.getElementById("yt-clear-fallback-btn");
+            if (clearFallback) {
+                clearFallback.addEventListener("click", () => {
+                    this.resetAllYoutubeFilters();
+                });
+            }
+
+            const twFallback = document.getElementById("yt-show-tw-fallback-btn");
+            if (twFallback) {
+                twFallback.addEventListener("click", () => {
+                    this.ytActiveRegion = "TW";
+                    this.ytActiveChannel = "all";
+                    this.ytSearchQuery = "";
+                    this.refreshHubActiveChips();
+                    this.updateYoutubeHubGrid();
+                });
+            }
+
+            this.bindCardInnerEvents(grid, recommended);
             return;
         }
 
-        grid.innerHTML = videos.map((v) => this.renderSingleYoutubeCardHtml(v, false)).join("");
+        grid.innerHTML = filtered.map((v) => this.renderSingleYoutubeCardHtml(v, false)).join("");
+        this.bindCardInnerEvents(grid, filtered);
+    }
 
-        // 綁定卡片互動事件
-        grid.querySelectorAll(".yt-video-card").forEach((card) => {
+    /**
+     * 綁定卡片內部事件（內嵌播放、外站觀看、收藏、點擊頻道篩選）
+     */
+    bindCardInnerEvents(gridEl, videoList) {
+        gridEl.querySelectorAll(".yt-video-card").forEach((card) => {
             const vidId = card.getAttribute("data-video-id");
-            const video = videos.find(x => x.id === vidId);
+            const video = videoList.find(x => x.id === vidId);
             if (!video) return;
 
             const playTrigger = card.querySelector(".yt-card-thumb-wrap");
@@ -9958,33 +10099,91 @@ ${cfg.sourceText}`;
             if (directLink) {
                 directLink.addEventListener("click", (e) => {
                     e.stopPropagation();
-                    window.open(`https://www.youtube.com/watch?v=${video.youtubeId}`, "_blank");
+                    const url = `https://www.youtube.com/watch?v=${video.youtubeId}`;
+                    window.open(url, "_blank", "noopener,noreferrer");
                 });
             }
 
-            const bookmarkBtn = card.querySelector(".yt-card-bookmark-action");
-            if (bookmarkBtn) {
-                bookmarkBtn.addEventListener("click", (e) => {
+            const bmarkBtn = card.querySelector(".yt-card-bookmark-action");
+            if (bmarkBtn) {
+                bmarkBtn.addEventListener("click", (e) => {
                     e.stopPropagation();
                     this.toggleYoutubeBookmark(video.id);
+                });
+            }
+
+            // 點擊頻道名稱即時過濾該頻道
+            const channelBtn = card.querySelector(".yt-card-channel-btn");
+            if (channelBtn) {
+                channelBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const targetCh = channelBtn.getAttribute("data-filter-channel");
+                    if (targetCh) {
+                        this.ytActiveChannel = targetCh;
+                        this.refreshHubActiveChips();
+                        this.updateYoutubeHubGrid();
+                        this.showToast(`已為您篩選展示「${targetCh}」的影音內容`);
+                    }
                 });
             }
         });
     }
 
-    getYtActiveFilterSummary() {
-        const regMap = { all: "全部區域", TW: "台灣", GLOBAL: "全球", JP: "日本" };
-        const timeMap = { "7d": "近一週", "30d": "近一個月", "90d": "近三個月", all: "全部時間" };
-        const regStr = regMap[this.ytActiveRegion] || "全部區域";
-        const timeStr = timeMap[this.ytActiveTimeRange] || "近一個月";
-        return `${regStr} • ${timeStr}`;
+    /**
+     * 重設所有 YouTube 篩選條件
+     */
+    resetAllYoutubeFilters() {
+        this.ytActiveRegion = "all";
+        this.ytActiveTimeRange = "30d";
+        this.ytActiveCategory = "all";
+        this.ytActiveChannel = "all";
+        this.ytSearchQuery = "";
+
+        const input = document.getElementById("yt-hub-search-input");
+        if (input) input.value = "";
+
+        this.refreshHubActiveChips();
+        this.updateYoutubeHubGrid();
+        this.showToast("已重設所有篩選條件，回到全部推薦展示。");
     }
 
     /**
-     * 綁定主題四 YouTube 研習中樞的整體事件
+     * 同步上方所有控制列的 is-active 樣式
+     */
+    refreshHubActiveChips() {
+        const regBar = document.getElementById("yt-region-chips-bar");
+        if (regBar) {
+            regBar.querySelectorAll("[data-hub-region]").forEach(b => {
+                b.classList.toggle("is-active", b.getAttribute("data-hub-region") === this.ytActiveRegion);
+            });
+        }
+
+        const chBar = document.getElementById("yt-channel-chips-bar");
+        if (chBar) {
+            chBar.querySelectorAll("[data-hub-channel]").forEach(b => {
+                b.classList.toggle("is-active", b.getAttribute("data-hub-channel") === this.ytActiveChannel);
+            });
+        }
+
+        const timeBar = document.getElementById("yt-time-chips-bar");
+        if (timeBar) {
+            timeBar.querySelectorAll("[data-hub-time]").forEach(b => {
+                b.classList.toggle("is-active", b.getAttribute("data-hub-time") === this.ytActiveTimeRange);
+            });
+        }
+
+        const catBar = document.getElementById("yt-category-chips-bar");
+        if (catBar) {
+            catBar.querySelectorAll("[data-hub-cat]").forEach(b => {
+                b.classList.toggle("is-active", b.getAttribute("data-hub-cat") === this.ytActiveCategory);
+            });
+        }
+    }
+
+    /**
+     * 綁定影音中樞控制項事件
      */
     bindYoutubeHubEvents(theme) {
-        // 返回按鈕
         const backThemeBtn = document.getElementById("yt-hub-back-theme04-btn");
         if (backThemeBtn) {
             backThemeBtn.addEventListener("click", () => {
@@ -9998,49 +10197,63 @@ ${cfg.sourceText}`;
             });
         }
 
-        // 區域切換
+        // 1. 區域切換
         const regBar = document.getElementById("yt-region-chips-bar");
         if (regBar) {
             regBar.querySelectorAll("[data-hub-region]").forEach((btn) => {
                 btn.addEventListener("click", () => {
                     this.ytActiveRegion = btn.getAttribute("data-hub-region") || "all";
                     regBar.querySelectorAll("[data-hub-region]").forEach(b => {
-                        b.classList.toggle("is-active", b.getAttribute("data-hub-region") === this.ytActiveRegion);
+                        b.classList.toggle("is-active", b === btn);
                     });
                     this.updateYoutubeHubGrid();
                 });
             });
         }
 
-        // 時間切換
+        // 2. 頻道切換
+        const chBar = document.getElementById("yt-channel-chips-bar");
+        if (chBar) {
+            chBar.querySelectorAll("[data-hub-channel]").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    this.ytActiveChannel = btn.getAttribute("data-hub-channel") || "all";
+                    chBar.querySelectorAll("[data-hub-channel]").forEach(b => {
+                        b.classList.toggle("is-active", b === btn);
+                    });
+                    this.updateYoutubeHubGrid();
+                });
+            });
+        }
+
+        // 3. 時間跨度切換
         const timeBar = document.getElementById("yt-time-chips-bar");
         if (timeBar) {
             timeBar.querySelectorAll("[data-hub-time]").forEach((btn) => {
                 btn.addEventListener("click", () => {
                     this.ytActiveTimeRange = btn.getAttribute("data-hub-time") || "30d";
                     timeBar.querySelectorAll("[data-hub-time]").forEach(b => {
-                        b.classList.toggle("is-active", b.getAttribute("data-hub-time") === this.ytActiveTimeRange);
+                        b.classList.toggle("is-active", b === btn);
                     });
                     this.updateYoutubeHubGrid();
                 });
             });
         }
 
-        // 分類切換
+        // 4. 主題分類切換
         const catBar = document.getElementById("yt-category-chips-bar");
         if (catBar) {
             catBar.querySelectorAll("[data-hub-cat]").forEach((btn) => {
                 btn.addEventListener("click", () => {
                     this.ytActiveCategory = btn.getAttribute("data-hub-cat") || "all";
                     catBar.querySelectorAll("[data-hub-cat]").forEach(b => {
-                        b.classList.toggle("is-active", b.getAttribute("data-hub-cat") === this.ytActiveCategory);
+                        b.classList.toggle("is-active", b === btn);
                     });
                     this.updateYoutubeHubGrid();
                 });
             });
         }
 
-        // 搜尋輸入框
+        // 5. 搜尋輸入框（防抖即時更新本頁）
         const searchInput = document.getElementById("yt-hub-search-input");
         if (searchInput) {
             let timer = null;
@@ -10051,9 +10264,35 @@ ${cfg.sourceText}`;
                     this.updateYoutubeHubGrid();
                 }, 180);
             });
+
+            searchInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    this.ytSearchQuery = searchInput.value;
+                    this.updateYoutubeHubGrid();
+                }
+            });
         }
 
-        // 一鍵開啟 YouTube 官方即時搜尋
+        // 主按鈕：立即搜尋並更新本頁
+        const searchNowBtn = document.getElementById("yt-search-now-btn");
+        if (searchNowBtn && searchInput) {
+            searchNowBtn.addEventListener("click", () => {
+                this.ytSearchQuery = searchInput.value;
+                this.updateYoutubeHubGrid();
+                this.showToast("已更新下方影音檢索清單");
+            });
+        }
+
+        // 清空條件按鈕
+        const resetBtn = document.getElementById("yt-reset-all-filters-btn");
+        if (resetBtn) {
+            resetBtn.addEventListener("click", () => {
+                this.resetAllYoutubeFilters();
+            });
+        }
+
+        // 次按鈕：開啟 YouTube 官方外站搜尋
         const directSearchBtn = document.getElementById("yt-launch-direct-search-btn");
         if (directSearchBtn) {
             directSearchBtn.addEventListener("click", () => {
@@ -10062,13 +10301,50 @@ ${cfg.sourceText}`;
             });
         }
 
-        // 熱門預設晶片
+        // 熱門預設晶片（智慧套用相應篩選）
+        document.querySelectorAll("[data-preset-action]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const act = btn.getAttribute("data-preset-action");
+                if (act === "tw-month") {
+                    this.ytActiveRegion = "TW";
+                    this.ytActiveTimeRange = "30d";
+                    this.ytActiveChannel = "all";
+                    this.ytSearchQuery = "教學";
+                    if (searchInput) searchInput.value = "教學";
+                    this.refreshHubActiveChips();
+                    this.updateYoutubeHubGrid();
+                    this.showToast("已套用：台灣在地・近一個月 AI 教學");
+                }
+            });
+        });
+
+        document.querySelectorAll("[data-preset-channel]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const ch = btn.getAttribute("data-preset-channel");
+                this.ytActiveChannel = ch;
+                this.refreshHubActiveChips();
+                this.updateYoutubeHubGrid();
+                this.showToast(`已為您篩選展示「${ch}」專屬影音`);
+            });
+        });
+
         document.querySelectorAll("[data-preset-query]").forEach((btn) => {
             btn.addEventListener("click", () => {
                 const q = btn.getAttribute("data-preset-query") || "";
                 if (searchInput) searchInput.value = q;
                 this.ytSearchQuery = q;
                 this.updateYoutubeHubGrid();
+                this.showToast(`已為您搜尋關鍵字「${q}」`);
+            });
+        });
+
+        document.querySelectorAll("[data-preset-cat]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const cat = btn.getAttribute("data-preset-cat");
+                this.ytActiveCategory = cat;
+                this.refreshHubActiveChips();
+                this.updateYoutubeHubGrid();
+                this.showToast("已切換主題分類");
             });
         });
 
@@ -10114,16 +10390,13 @@ ${cfg.sourceText}`;
         // sp 參數：CAE%253D (this week), CAI%253D (this month), CAQ%253D (this year)
         let sp = "CAI%253D"; // 預設近一個月
         if (timeRange === "7d") sp = "CAE%253D";
-        if (timeRange === "90d") sp = "CAQ%253D";
-        if (timeRange === "all") sp = "";
+        else if (timeRange === "90d") sp = "CAI%253D";
+        else if (timeRange === "all") sp = "";
 
-        let url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&gl=${gl}&hl=${hl}`;
-        if (sp) {
-            url += `&sp=${sp}`;
-        }
-
-        window.open(url, "_blank");
-        this.showToast(`已為您開啟 YouTube 即時搜尋（區域：${gl}，時間範圍：${timeRange}）`);
+        let spParam = sp ? `&sp=${sp}` : "";
+        const encodedQ = encodeURIComponent(query);
+        const targetUrl = `https://www.youtube.com/results?search_query=${encodedQ}&gl=${gl}&hl=${hl}${spParam}`;
+        window.open(targetUrl, "_blank", "noopener,noreferrer");
     }
 
     /**

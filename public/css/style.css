@@ -7995,3 +7995,187 @@ html[data-theme="dark"] .rpa-step-badge {
     border-color: var(--accent-teal);
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
 }
+
+/* ==============================================================================
+   YouTube 影音中樞介面優化（頻道篩選、即時更新本頁、無符合時友善推薦）
+   ============================================================================== */
+
+/* 搜尋工具列主操作按鈕與外站輔助按鈕 */
+.yt-search-action-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.yt-search-input-box {
+    flex: 1 1 320px;
+}
+
+.yt-search-now-btn {
+    background: var(--accent-teal);
+    color: #ffffff;
+    border: none;
+    padding: 0.85rem 1.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-fast);
+}
+
+.yt-search-now-btn:hover {
+    background: #0f766e;
+    box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35);
+    transform: translateY(-2px);
+}
+
+.yt-reset-btn {
+    background: var(--bg-surface-hover);
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-subtle);
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.yt-reset-btn:hover {
+    background: var(--border-subtle);
+    color: var(--text-primary);
+}
+
+.yt-external-search-link {
+    background: transparent;
+    color: #b91c1c;
+    border: 1.5px solid rgba(220, 38, 38, 0.35);
+    padding: 0.85rem 1.2rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all var(--transition-fast);
+}
+
+.yt-external-search-link:hover {
+    background: rgba(220, 38, 38, 0.08);
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+/* 推薦科技頻道篩選晶片列 */
+.yt-channel-chips-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.yt-channel-chip {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all var(--transition-fast);
+}
+
+.yt-channel-chip:hover {
+    background: var(--border-subtle);
+    color: var(--text-primary);
+    border-color: var(--accent-teal);
+}
+
+.yt-channel-chip.is-active {
+    background: var(--accent-teal);
+    color: #ffffff;
+    border-color: var(--accent-teal);
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
+}
+
+.yt-channel-chip-tag {
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.yt-channel-chip.is-active .yt-channel-chip-tag {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+/* 影片卡片上的可點擊頻道名稱標籤 */
+.yt-card-channel-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+    cursor: pointer;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.yt-card-channel-btn:hover {
+    color: #0f766e;
+    text-decoration: underline;
+}
+
+/* 查無完全符合時的友善推薦提示箱 */
+.yt-empty-fallback-box {
+    grid-column: 1 / -1;
+    background: var(--bg-surface);
+    border: 2px dashed var(--accent-teal);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.15rem;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 1.5rem;
+}
+
+.yt-empty-title {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.yt-empty-desc {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.yt-empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+}
