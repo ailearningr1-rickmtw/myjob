@@ -9771,7 +9771,7 @@ ${cfg.sourceText}`;
         return `
             <article class="yt-video-card" data-video-id="${this.escapeHtml(v.id)}">
                 <div class="yt-card-thumb-wrap">
-                    <img src="${thumbUrl}" alt="${this.escapeHtml(v.title)}" class="yt-card-thumb-img" loading="lazy" />
+                    <img src="${thumbUrl}" alt="${this.escapeHtml(v.title)}" class="yt-card-thumb-img" loading="lazy" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${v.youtubeId}/0.jpg';" />
                     <span class="yt-card-duration-badge">${this.escapeHtml(v.duration || "精選")}</span>
                     <span class="yt-card-region-badge ${v.region === 'TW' ? 'is-tw' : ''}">${this.escapeHtml(v.regionLabel || v.region)}</span>
                     <div class="yt-card-play-overlay">
