@@ -8809,12 +8809,12 @@ ${cfg.sourceText}`;
                 return `
                     <button type="button" class="kb-topic-nav-item kb-sec-topic-item ${isActive ? 'is-active' : ''}" data-select-statutory-id="${proj.id}">
                         <div class="kb-topic-nav-header">
-                            <span class="kb-topic-code">${this.escapeHtml(proj.projectCode)}</span>
-                            <span class="kb-cat-status-pill">${this.escapeHtml(proj.badge)}</span>
+                            <span class="kb-topic-code kb-statutory-code-pill">${this.escapeHtml(proj.projectCode)}</span>
+                            <span class="kb-cat-status-pill kb-statutory-badge-pill">${this.escapeHtml(proj.badge)}</span>
                         </div>
                         <h4 class="kb-topic-nav-title">${this.escapeHtml(proj.title)}</h4>
                         <p class="kb-topic-nav-summary">${this.escapeHtml(proj.subtitle)}</p>
-                        <div class="kb-day-diag-badge" style="align-self: flex-start; margin-top: 0.35rem;">
+                        <div class="kb-day-diag-badge kb-statutory-diag-badge">
                             配套 ${diagCount} 組法定架構圖
                         </div>
                     </button>
@@ -8850,13 +8850,13 @@ ${cfg.sourceText}`;
             const listHtml = filtered.length > 0 ? filtered.map((r) => {
                 const isActive = this.kbActiveRegId === r.id;
                 return `
-                    <button type="button" class="kb-reg-nav-item ${isActive ? 'is-active' : ''}" data-select-reg-id="${r.id}">
+                    <button type="button" class="kb-reg-nav-item is-level-${r.docLevelCode.toLowerCase()} ${isActive ? 'is-active' : ''}" data-select-reg-id="${r.id}">
                         <div class="kb-reg-nav-top">
-                            <span class="kb-reg-code-pill">${this.escapeHtml(r.docLevelCode)}</span>
+                            <span class="kb-reg-code-pill is-level-${r.docLevelCode.toLowerCase()}">${this.escapeHtml(r.docLevelCode)}</span>
                             <span class="kb-type-pill">${this.escapeHtml(r.extension)}</span>
                         </div>
                         <h4 class="kb-reg-nav-title">${this.escapeHtml(r.title)}</h4>
-                        <span class="kb-matched-file-name" style="font-size: 0.88rem; color: var(--text-secondary);">${this.escapeHtml(r.subCategory)}</span>
+                        <span class="kb-matched-file-name kb-reg-sub-category">${this.escapeHtml(r.subCategory)}</span>
                     </button>
                 `;
             }).join("") : `<div class="kb-empty-results"><p>未找到符合關鍵字的資安規章。</p></div>`;
@@ -8898,7 +8898,7 @@ ${cfg.sourceText}`;
                 const totalDiags = days.reduce((acc, cur) => acc + (cur.diagramCount || 0), 0);
 
                 return `
-                    <div class="kb-week-group ${isOpen ? 'is-open' : ''}" data-week-group="${w.code.toLowerCase()}">
+                    <div class="kb-week-group is-${w.code.toLowerCase()} ${isOpen ? 'is-open' : ''}" data-week-group="${w.code.toLowerCase()}">
                         <button type="button" class="kb-week-header-btn" data-toggle-week="${w.code.toLowerCase()}">
                             <div class="kb-week-header-left">
                                 <span class="kb-week-code-tag">${this.escapeHtml(w.code)}</span>
@@ -9009,7 +9009,7 @@ ${cfg.sourceText}`;
             `;
         } else {
             diagramShowcaseHtml = `
-                <div class="kb-reader-summary-card" style="border-left-color: #0284c7;">
+                <div class="kb-reader-summary-card kb-lecture-mode-card">
                     <h4 class="kb-summary-card-title">專題講義研讀模式</h4>
                     <p class="kb-summary-card-text">本專題重點在於法規制度、權責分工與標準作業程序研習，下方提供深度講義與本專題實體教材清冊。</p>
                 </div>
@@ -9053,8 +9053,13 @@ ${cfg.sourceText}`;
             </div>
         `).join("") : `<p class="theme-desc">本專題無獨立附加教材。</p>`;
 
+        const weekClass = `is-${(activeDay.weekCode || '').toLowerCase()}`;
         return `
-            <article class="kb-reader-article">
+            <article class="kb-reader-article ${weekClass}">
+                <div class="kb-reader-domain-banner">
+                    <span class="kb-domain-badge">${this.escapeHtml(activeDay.weekCode)} 研討領域</span>
+                    <span class="kb-domain-title">${this.escapeHtml(activeDay.weekTitle)}</span>
+                </div>
                 <header class="kb-reader-header">
                     <div class="kb-reader-title-meta">
                         <span class="kb-reader-code-badge">${this.escapeHtml(activeDay.weekCode)}</span>
@@ -9177,7 +9182,11 @@ ${cfg.sourceText}`;
         `).join("");
 
         return `
-            <article class="kb-reader-article">
+            <article class="kb-reader-article is-statutory">
+                <div class="kb-reader-domain-banner">
+                    <span class="kb-domain-badge">${this.escapeHtml(proj.projectCode)} 法定專案</span>
+                    <span class="kb-domain-title">資通安全責任等級 B 級機關核心控制項目</span>
+                </div>
                 <header class="kb-reader-header">
                     <div class="kb-reader-title-meta">
                         <span class="kb-reader-code-badge">${this.escapeHtml(proj.projectCode)}</span>
@@ -9247,8 +9256,13 @@ ${cfg.sourceText}`;
             </div>
         `).join("");
 
+        const regClass = `is-level-${(reg.docLevelCode || '').toLowerCase()}`;
         return `
-            <article class="kb-reader-article">
+            <article class="kb-reader-article is-regulation ${regClass}">
+                <div class="kb-reader-domain-banner">
+                    <span class="kb-domain-badge">${this.escapeHtml(reg.docLevelCode)} ${this.escapeHtml(reg.docLevel)}</span>
+                    <span class="kb-domain-title">ISMS 資通安全管理體系規章與實體程序</span>
+                </div>
                 <header class="kb-reader-header">
                     <div class="kb-reader-title-meta">
                         <span class="kb-reader-code-badge">${this.escapeHtml(reg.docLevelCode)}</span>
@@ -10532,7 +10546,7 @@ ${cfg.sourceText}`;
                     <h3 class="yt-modal-title">新增自訂 YouTube AI 影片到個人研習清單</h3>
                     <button type="button" class="yt-modal-close-btn" id="yt-add-close-btn">&times;</button>
                 </div>
-                <form id="yt-add-custom-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                <form id="yt-add-custom-form" class="yt-add-custom-form">
                     <div class="yt-form-group">
                         <label class="yt-form-label" for="custom-yt-url">YouTube 影片網址或 ID (必填)：</label>
                         <input type="text" id="custom-yt-url" class="yt-form-input" placeholder="例如：https://www.youtube.com/watch?v=... 或 11 碼 ID" required />

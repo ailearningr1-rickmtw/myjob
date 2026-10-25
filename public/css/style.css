@@ -5064,8 +5064,8 @@ html[data-theme="dark"] .rpa-step-badge {
 /* 主分欄佈局 (左側主題導覽列 + 右側深度圖說閱讀器) */
 .kb-split-layout {
     display: grid;
-    grid-template-columns: 430px 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 460px 1fr;
+    gap: 1.75rem;
     align-items: start;
 }
 
@@ -7019,6 +7019,7 @@ html[data-theme="dark"] .rpa-step-badge {
     border-radius: var(--radius-sm);
     background: var(--bg-surface);
     overflow: hidden;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .kb-week-header-btn {
@@ -7026,55 +7027,71 @@ html[data-theme="dark"] .rpa-step-badge {
     background: var(--bg-surface-hover);
     border: none;
     border-bottom: 1.5px solid var(--border-subtle);
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 1.1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
     text-align: left;
-    transition: background var(--transition-fast);
-}
-
-.kb-week-header-btn:hover {
-    background: rgba(20, 184, 166, 0.08);
+    gap: 0.75rem;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
 .kb-week-header-left {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.75rem;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .kb-week-code-tag {
     font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     font-weight: 900;
     color: #ffffff;
     background: var(--accent-teal);
-    padding: 0.2rem 0.55rem;
+    padding: 0.28rem 0.65rem;
     border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.15;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .kb-week-name-title {
     font-size: 1.12rem;
     font-weight: 800;
     color: var(--text-primary);
+    line-height: 1.38;
+    word-break: break-word;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .kb-week-header-meta {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    flex-shrink: 0;
 }
 
 .kb-week-diag-pill {
-    font-size: 0.82rem;
-    font-weight: 700;
+    font-size: 0.85rem;
+    font-weight: 800;
     color: var(--text-secondary);
     background: var(--bg-surface);
-    padding: 0.15rem 0.5rem;
+    padding: 0.25rem 0.65rem;
     border-radius: var(--radius-pill);
-    border: 1px solid var(--border-subtle);
+    border: 1.5px solid var(--border-subtle);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.15;
+    flex-shrink: 0;
 }
 
 .kb-week-chevron {
@@ -7305,6 +7322,445 @@ html[data-theme="dark"] .rpa-step-badge {
     margin: 0;
 }
 
+
+
+/* ==========================================================================
+   主題 03 核心知識庫：8 大領域色彩區隔與右側版面聯動規範 (無 Emojis)
+   ========================================================================== */
+
+/* Week 01：總綱治理與資產全景 - 深湛藍 (Indigo Blue) */
+.kb-week-group.is-week01 {
+    border-left: 5px solid #2563eb;
+}
+.kb-week-group.is-week01 .kb-week-code-tag {
+    background: #2563eb;
+}
+.kb-week-group.is-week01 .kb-week-header-btn:hover {
+    background: rgba(37, 99, 235, 0.08);
+}
+.kb-week-group.is-week01.is-open {
+    border-color: rgba(37, 99, 235, 0.45);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1);
+}
+.kb-week-group.is-week01 .kb-day-nav-item.is-active {
+    border-left-color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.16);
+}
+.kb-week-group.is-week01 .kb-day-nav-item.is-active .kb-day-code-pill {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* Week 02：實體機房與資產生命週期 - 琥珀金 (Warm Amber) */
+.kb-week-group.is-week02 {
+    border-left: 5px solid #d97706;
+}
+.kb-week-group.is-week02 .kb-week-code-tag {
+    background: #d97706;
+}
+.kb-week-group.is-week02 .kb-week-header-btn:hover {
+    background: rgba(217, 119, 6, 0.08);
+}
+.kb-week-group.is-week02.is-open {
+    border-color: rgba(217, 119, 6, 0.45);
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.1);
+}
+.kb-week-group.is-week02 .kb-day-nav-item.is-active {
+    border-left-color: #d97706;
+    border-color: rgba(217, 119, 6, 0.4);
+    box-shadow: 0 3px 10px rgba(217, 119, 6, 0.16);
+}
+.kb-week-group.is-week02 .kb-day-nav-item.is-active .kb-day-code-pill {
+    background: #d97706;
+    color: #ffffff;
+}
+
+/* Week 03：網路安全與傳輸加密防護 - 青碧綠 (Teal / Emerald) */
+.kb-week-group.is-week03 {
+    border-left: 5px solid #0d9488;
+}
+.kb-week-group.is-week03 .kb-week-code-tag {
+    background: #0d9488;
+}
+.kb-week-group.is-week03 .kb-week-header-btn:hover {
+    background: rgba(13, 148, 136, 0.08);
+}
+.kb-week-group.is-week03.is-open {
+    border-color: rgba(13, 148, 136, 0.45);
+    box-shadow: 0 4px 14px rgba(13, 148, 136, 0.1);
+}
+.kb-week-group.is-week03 .kb-day-nav-item.is-active {
+    border-left-color: #0d9488;
+    border-color: rgba(13, 148, 136, 0.4);
+    box-shadow: 0 3px 10px rgba(13, 148, 136, 0.16);
+}
+.kb-week-group.is-week03 .kb-day-nav-item.is-active .kb-day-code-pill {
+    background: #0d9488;
+    color: #ffffff;
+}
+
+/* Week 04：存取控制與資料庫核心安控 - 皇家曜紫 (Royal Purple) */
+.kb-week-group.is-week04 {
+    border-left: 5px solid #7c3aed;
+}
+.kb-week-group.is-week04 .kb-week-code-tag {
+    background: #7c3aed;
+}
+.kb-week-group.is-week04 .kb-week-header-btn:hover {
+    background: rgba(124, 58, 237, 0.08);
+}
+.kb-week-group.is-week04.is-open {
+    border-color: rgba(124, 58, 237, 0.45);
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.1);
+}
+.kb-week-group.is-week04 .kb-day-nav-item.is-active {
+    border-left-color: #7c3aed;
+    border-color: rgba(124, 58, 237, 0.4);
+    box-shadow: 0 3px 10px rgba(124, 58, 237, 0.16);
+}
+.kb-week-group.is-week04 .kb-day-nav-item.is-active .kb-day-code-pill {
+    background: #7c3aed;
+    color: #ffffff;
+}
+
+/* Week 05：系統開發維運與委外供應鏈 - 深天青 (Tech Azure) */
+.kb-week-group.is-week05 {
+    border-left: 5px solid #0284c7;
+}
+.kb-week-group.is-week05 .kb-week-code-tag {
+    background: #0284c7;
+}
+.kb-week-group.is-week05 .kb-week-header-btn:hover {
+    background: rgba(2, 132, 199, 0.08);
+}
+.kb-week-group.is-week05.is-open {
+    border-color: rgba(2, 132, 199, 0.45);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.1);
+}
+.kb-week-group.is-week05 .kb-day-nav-item.is-active {
+    border-left-color: #0284c7;
+    border-color: rgba(2, 132, 199, 0.4);
+    box-shadow: 0 3px 10px rgba(2, 132, 199, 0.16);
+}
+.kb-week-group.is-week05 .kb-day-nav-item.is-active .kb-day-code-pill {
+    background: #0284c7;
+    color: #ffffff;
+}
+
+/* Week 06：事件應變與業務永續經營 - 警示珊瑚赤 (Crimson Red) */
+.kb-week-group.is-week06 {
+    border-left: 5px solid #dc2626;
+}
+.kb-week-group.is-week06 .kb-week-code-tag {
+    background: #dc2626;
+}
+.kb-week-group.is-week06 .kb-week-header-btn:hover {
+    background: rgba(220, 38, 38, 0.08);
+}
+.kb-week-group.is-week06.is-open {
+    border-color: rgba(220, 38, 38, 0.45);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.1);
+}
+
+/* Week 07：個資保護專題與跨機關查調 - 翡翠林綠 (Forest Green) */
+.kb-week-group.is-week07 {
+    border-left: 5px solid #059669;
+}
+.kb-week-group.is-week07 .kb-week-code-tag {
+    background: #059669;
+}
+.kb-week-group.is-week07 .kb-week-header-btn:hover {
+    background: rgba(5, 150, 105, 0.08);
+}
+.kb-week-group.is-week07.is-open {
+    border-color: rgba(5, 150, 105, 0.45);
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.1);
+}
+
+/* Week 08：風險稽核評鑑與整合演練 - 洋紅紫 (Plum Magenta) */
+.kb-week-group.is-week08 {
+    border-left: 5px solid #c026d3;
+}
+.kb-week-group.is-week08 .kb-week-code-tag {
+    background: #c026d3;
+}
+.kb-week-group.is-week08 .kb-week-header-btn:hover {
+    background: rgba(192, 38, 211, 0.08);
+}
+.kb-week-group.is-week08.is-open {
+    border-color: rgba(192, 38, 211, 0.45);
+    box-shadow: 0 4px 14px rgba(192, 38, 211, 0.1);
+}
+
+/* 法定專案側邊欄徽章樣式 */
+.kb-statutory-code-pill {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.92rem;
+    font-weight: 900;
+    color: #ffffff;
+    background: #0369a1;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+.kb-statutory-badge-pill {
+    background: rgba(3, 105, 161, 0.12);
+    color: #0369a1;
+    border: 1px solid rgba(3, 105, 161, 0.3);
+    font-weight: 800;
+}
+
+.kb-statutory-diag-badge {
+    align-self: flex-start;
+    margin-top: 0.35rem;
+    color: #0369a1;
+    background: rgba(3, 105, 161, 0.12);
+}
+
+/* 規章清冊階層顏色區隔 */
+.kb-reg-nav-item.is-level-ms-1 .kb-reg-code-pill {
+    background: #dc2626;
+    color: #ffffff;
+}
+.kb-reg-nav-item.is-level-ms-2 .kb-reg-code-pill {
+    background: #2563eb;
+    color: #ffffff;
+}
+.kb-reg-nav-item.is-level-ms-3 .kb-reg-code-pill {
+    background: #0d9488;
+    color: #ffffff;
+}
+.kb-reg-nav-item.is-level-ms-4 .kb-reg-code-pill {
+    background: #d97706;
+    color: #ffffff;
+}
+.kb-reg-nav-item.is-level-ms-f .kb-reg-code-pill {
+    background: #7c3aed;
+    color: #ffffff;
+}
+.kb-reg-sub-category {
+    font-size: 0.92rem !important;
+    color: var(--text-secondary);
+}
+
+/* 講義研讀模式摘要卡片 */
+.kb-reader-summary-card.kb-lecture-mode-card {
+    border-left-color: #0284c7;
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, var(--bg-surface-hover) 100%);
+}
+
+/* 自訂 YouTube 表單類別 */
+.yt-add-custom-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ==========================================================================
+   右側深度閱讀器頂部導覽標頭橫條 (Domain Accent Banner)
+   ========================================================================== */
+.kb-reader-domain-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-left: 6px solid var(--accent-teal);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.kb-domain-badge {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #ffffff;
+    background: var(--accent-teal);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+}
+
+.kb-domain-title {
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* 右側閱讀器各領域色彩匹配規範 (Matching Right Column) */
+.kb-reader-article.is-week01 .kb-reader-domain-banner {
+    border-left-color: #2563eb;
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-week01 .kb-domain-badge {
+    background: #2563eb;
+}
+.kb-reader-article.is-week01 .kb-reader-code-badge {
+    background: rgba(37, 99, 235, 0.14);
+    color: #2563eb;
+    border: 1px solid rgba(37, 99, 235, 0.35);
+}
+.kb-reader-article.is-week01 .kb-section-heading {
+    border-left-color: #2563eb !important;
+}
+.kb-reader-article.is-week01 .kb-sop-num {
+    background: #2563eb !important;
+}
+.kb-reader-article.is-week01 .kb-reader-summary-card {
+    border-left-color: #2563eb;
+}
+
+.kb-reader-article.is-week02 .kb-reader-domain-banner {
+    border-left-color: #d97706;
+    background: linear-gradient(90deg, rgba(217, 119, 6, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-week02 .kb-domain-badge {
+    background: #d97706;
+}
+.kb-reader-article.is-week02 .kb-reader-code-badge {
+    background: rgba(217, 119, 6, 0.14);
+    color: #d97706;
+    border: 1px solid rgba(217, 119, 6, 0.35);
+}
+.kb-reader-article.is-week02 .kb-section-heading {
+    border-left-color: #d97706 !important;
+}
+.kb-reader-article.is-week02 .kb-sop-num {
+    background: #d97706 !important;
+}
+.kb-reader-article.is-week02 .kb-reader-summary-card {
+    border-left-color: #d97706;
+}
+
+.kb-reader-article.is-week03 .kb-reader-domain-banner {
+    border-left-color: #0d9488;
+    background: linear-gradient(90deg, rgba(13, 148, 136, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-week03 .kb-domain-badge {
+    background: #0d9488;
+}
+.kb-reader-article.is-week03 .kb-reader-code-badge {
+    background: rgba(13, 148, 136, 0.14);
+    color: #0d9488;
+    border: 1px solid rgba(13, 148, 136, 0.35);
+}
+.kb-reader-article.is-week03 .kb-section-heading {
+    border-left-color: #0d9488 !important;
+}
+.kb-reader-article.is-week03 .kb-sop-num {
+    background: #0d9488 !important;
+}
+.kb-reader-article.is-week03 .kb-reader-summary-card {
+    border-left-color: #0d9488;
+}
+
+.kb-reader-article.is-week04 .kb-reader-domain-banner {
+    border-left-color: #7c3aed;
+    background: linear-gradient(90deg, rgba(124, 58, 237, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-week04 .kb-domain-badge {
+    background: #7c3aed;
+}
+.kb-reader-article.is-week04 .kb-reader-code-badge {
+    background: rgba(124, 58, 237, 0.14);
+    color: #7c3aed;
+    border: 1px solid rgba(124, 58, 237, 0.35);
+}
+.kb-reader-article.is-week04 .kb-section-heading {
+    border-left-color: #7c3aed !important;
+}
+.kb-reader-article.is-week04 .kb-sop-num {
+    background: #7c3aed !important;
+}
+.kb-reader-article.is-week04 .kb-reader-summary-card {
+    border-left-color: #7c3aed;
+}
+
+.kb-reader-article.is-week05 .kb-reader-domain-banner {
+    border-left-color: #0284c7;
+    background: linear-gradient(90deg, rgba(2, 132, 199, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-week05 .kb-domain-badge {
+    background: #0284c7;
+}
+.kb-reader-article.is-week05 .kb-reader-code-badge {
+    background: rgba(2, 132, 199, 0.14);
+    color: #0284c7;
+    border: 1px solid rgba(2, 132, 199, 0.35);
+}
+.kb-reader-article.is-week05 .kb-section-heading {
+    border-left-color: #0284c7 !important;
+}
+.kb-reader-article.is-week05 .kb-sop-num {
+    background: #0284c7 !important;
+}
+.kb-reader-article.is-week05 .kb-reader-summary-card {
+    border-left-color: #0284c7;
+}
+
+/* 法定專案閱讀器色彩聯動 */
+.kb-reader-article.is-statutory .kb-reader-domain-banner {
+    border-left-color: #0369a1;
+    background: linear-gradient(90deg, rgba(3, 105, 161, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-statutory .kb-domain-badge {
+    background: #0369a1;
+}
+.kb-reader-article.is-statutory .kb-reader-code-badge {
+    background: rgba(3, 105, 161, 0.14);
+    color: #0369a1;
+    border: 1px solid rgba(3, 105, 161, 0.35);
+}
+.kb-reader-article.is-statutory .kb-section-heading {
+    border-left-color: #0369a1 !important;
+}
+.kb-reader-article.is-statutory .kb-sop-num {
+    background: #0369a1 !important;
+}
+.kb-reader-article.is-statutory .kb-reader-summary-card {
+    border-left-color: #0369a1;
+}
+
+/* 規章清冊閱讀器色彩聯動 */
+.kb-reader-article.is-regulation .kb-reader-domain-banner {
+    border-left-color: #0d9488;
+    background: linear-gradient(90deg, rgba(13, 148, 136, 0.09) 0%, var(--bg-surface-hover) 100%);
+}
+.kb-reader-article.is-regulation .kb-domain-badge {
+    background: #0d9488;
+}
+.kb-reader-article.is-regulation.is-level-ms-1 .kb-reader-domain-banner {
+    border-left-color: #dc2626;
+}
+.kb-reader-article.is-regulation.is-level-ms-1 .kb-domain-badge {
+    background: #dc2626;
+}
+.kb-reader-article.is-regulation.is-level-ms-2 .kb-reader-domain-banner {
+    border-left-color: #2563eb;
+}
+.kb-reader-article.is-regulation.is-level-ms-2 .kb-domain-badge {
+    background: #2563eb;
+}
+.kb-reader-article.is-regulation.is-level-ms-3 .kb-reader-domain-banner {
+    border-left-color: #0d9488;
+}
+.kb-reader-article.is-regulation.is-level-ms-3 .kb-domain-badge {
+    background: #0d9488;
+}
+.kb-reader-article.is-regulation.is-level-ms-4 .kb-reader-domain-banner {
+    border-left-color: #d97706;
+}
+.kb-reader-article.is-regulation.is-level-ms-4 .kb-domain-badge {
+    background: #d97706;
+}
+.kb-reader-article.is-regulation.is-level-ms-f .kb-reader-domain-banner {
+    border-left-color: #7c3aed;
+}
+.kb-reader-article.is-regulation.is-level-ms-f .kb-domain-badge {
+    background: #7c3aed;
+}
 
 /* ==========================================================================
    YouTube AI 科技影音即時研析與線上課程中樞樣式 (無 Emojis, 無 Inline CSS)
