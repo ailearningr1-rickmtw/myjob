@@ -8635,3 +8635,370 @@ html[data-theme="dark"] .rpa-step-badge {
     gap: 0.85rem;
     justify-content: center;
 }
+
+
+/* ==============================================================================
+   推薦科技頻道：自由新增與取消刪除管理功能樣式 (無 Emojis, 無 Inline CSS)
+   ============================================================================== */
+
+.yt-channel-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+}
+
+.yt-channel-heading-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.yt-channel-manage-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.yt-channel-mgr-btn {
+    padding: 0.5rem 1.05rem;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.yt-restore-channels-btn {
+    color: #d97706;
+    border-color: rgba(217, 119, 6, 0.45);
+    background: rgba(217, 119, 6, 0.08);
+}
+
+.yt-restore-channels-btn:hover {
+    background: rgba(217, 119, 6, 0.16);
+    border-color: #d97706;
+}
+
+/* 複合式頻道晶片（左側切換頻道、右側 × 取消刪除頻道） */
+.yt-channel-chip-wrap {
+    display: inline-flex;
+    align-items: stretch;
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+
+.yt-channel-chip-wrap:hover {
+    border-color: var(--accent-teal);
+    box-shadow: 0 2px 6px rgba(20, 184, 166, 0.14);
+}
+
+.yt-channel-chip-wrap.is-custom {
+    border-color: rgba(37, 99, 235, 0.45);
+}
+
+.yt-channel-chip-wrap.is-active {
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
+}
+
+.yt-channel-chip-wrap .yt-channel-chip {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.5rem 0.75rem 0.5rem 1rem;
+}
+
+.yt-channel-chip-wrap.is-active .yt-channel-chip {
+    color: #ffffff;
+}
+
+.yt-channel-chip-del-btn {
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    padding: 0 0.65rem;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.yt-channel-chip-wrap.is-active .yt-channel-chip-del-btn {
+    border-left-color: rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.yt-channel-chip-del-btn:hover {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+    border-left-color: #dc2626 !important;
+}
+
+/* 晶片列尾端快速新增頻道按鈕 */
+.yt-channel-add-inline-btn {
+    background: rgba(20, 184, 166, 0.08);
+    border: 1.5px dashed var(--accent-teal);
+    color: var(--accent-teal);
+    padding: 0.5rem 1.05rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.yt-channel-add-inline-btn:hover {
+    background: var(--accent-teal);
+    color: #ffffff;
+    border-style: solid;
+}
+
+/* 推薦頻道管理彈窗樣式 */
+.yt-channel-mgr-card {
+    max-width: 760px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.yt-mgr-tabs-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+    background: var(--bg-surface-hover);
+    padding: 0.4rem;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-subtle);
+}
+
+.yt-mgr-tab-btn {
+    background: transparent;
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.yt-mgr-tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.yt-mgr-tab-btn.is-active {
+    background: var(--accent-teal);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.25);
+}
+
+.yt-form-row-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .yt-form-row-two {
+        grid-template-columns: 1fr;
+    }
+}
+
+.yt-mgr-divider-box {
+    background: var(--bg-surface-hover);
+    border: 1.5px dashed var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.yt-mgr-divider-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+}
+
+.yt-mgr-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.yt-mgr-hint-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.yt-mgr-channels-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 0.35rem;
+}
+
+.yt-mgr-channel-item {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.yt-mgr-channel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1 1 280px;
+}
+
+.yt-mgr-channel-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.yt-mgr-channel-name {
+    font-size: 1.12rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.yt-custom-badge {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #2563eb;
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+}
+
+.yt-builtin-badge {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+    background: rgba(20, 184, 166, 0.12);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+}
+
+.yt-mgr-video-count {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.yt-mgr-channel-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.yt-mgr-channel-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.yt-mgr-add-vid-btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+.yt-mgr-del-btn {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border: 1.5px solid rgba(220, 38, 38, 0.35);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.yt-mgr-del-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+    border-color: #dc2626;
+}
+
+.yt-mgr-hidden-section {
+    background: rgba(217, 119, 6, 0.06);
+    border: 1.5px dashed rgba(217, 119, 6, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.yt-mgr-hidden-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.yt-mgr-sub-heading {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #b45309;
+    margin: 0;
+}
+
+.yt-mgr-hidden-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.yt-mgr-restore-chip {
+    background: var(--bg-surface);
+    border: 1.5px solid rgba(217, 119, 6, 0.45);
+    color: #b45309;
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.yt-mgr-restore-chip:hover {
+    background: #d97706;
+    color: #ffffff;
+    border-color: #d97706;
+}

@@ -9573,7 +9573,7 @@ ${cfg.sourceText}`;
     }
 
     // =========================================================================
-    // YouTube AI 科技影音即時研析與線上課程中樞 (支援台灣在地與全球前沿區域篩選)
+    // YouTube AI 科技影音即時研析與線上課程中樞 (支援台灣在地與全球前沿區域篩選、自訂頻道新增與刪除)
     // =========================================================================
 
     initYoutubeState() {
@@ -9585,25 +9585,299 @@ ${cfg.sourceText}`;
         this.ytActiveChannel = "all"; // 預設全部頻道
         this.ytSearchQuery = "";
         this.ytOverviewRegion = "all";
+        this.ytChannelEditMode = false; // 推薦頻道管理模式（是否顯示單一刪除鈕）
 
         try {
             this.ytBookmarks = new Set(JSON.parse(localStorage.getItem("aero_yt_bookmarks") || "[]"));
             this.ytCustomVideos = JSON.parse(localStorage.getItem("aero_custom_yt_videos") || "[]");
+            this.ytCustomChannels = JSON.parse(localStorage.getItem("aero_yt_custom_channels") || "[]");
+            this.ytHiddenChannels = new Set(JSON.parse(localStorage.getItem("aero_yt_hidden_channels") || "[]"));
         } catch (e) {
             this.ytBookmarks = new Set();
             this.ytCustomVideos = [];
+            this.ytCustomChannels = [];
+            this.ytHiddenChannels = new Set();
         }
     }
 
+    /**
+     * 取得目前啟用中的推薦科技頻道清單（合併自訂頻道並排除使用者刪除／隱藏的頻道）
+     */
+    getActiveYoutubeChannels() {
+        this.initYoutubeState();
+        const baseChannels = (window.YOUTUBE_AI_CURATED_DATA && window.YOUTUBE_AI_CURATED_DATA.metadata && window.YOUTUBE_AI_CURATED_DATA.metadata.channels) || [];
+        const activeBase = baseChannels.filter(c => c.id !== "all" && !this.ytHiddenChannels.has(c.name));
+        const activeCustom = (this.ytCustomChannels || []).filter(c => !this.ytHiddenChannels.has(c.name));
+
+        // 避免重複名稱，以自訂頻道優先排列於前方
+        const seen = new Set();
+        const merged = [];
+        for (const ch of [...activeCustom, ...activeBase]) {
+            if (!seen.has(ch.name)) {
+                seen.add(ch.name);
+                merged.push(ch);
+            }
+        }
+        return merged;
+    }
+
+    /**
+     * 取得所有可見的 YouTube 影片（自動排除已被使用者刪除／取消之不想要頻道的影片）
+     */
     getAllYoutubeVideos() {
         this.initYoutubeState();
         const baseVideos = (window.YOUTUBE_AI_CURATED_DATA && window.YOUTUBE_AI_CURATED_DATA.videos) || [];
         const customVideos = this.ytCustomVideos || [];
         const merged = [...customVideos, ...baseVideos];
-        return merged.map((v) => ({
-            ...v,
-            isBookmarked: this.ytBookmarks.has(v.id)
-        }));
+        return merged
+            .filter((v) => !this.ytHiddenChannels.has(v.channelName))
+            .map((v) => ({
+                ...v,
+                isBookmarked: this.ytBookmarks.has(v.id)
+            }));
+    }
+
+    /**
+     * 移除／取消不想要的推薦頻道（支援內建頻道隱藏與自訂頻道移除）
+     */
+    removeYoutubeChannel(channelName) {
+        this.initYoutubeState();
+        if (!channelName || channelName === "all") return;
+
+        // 檢查是否為使用者自訂頻道
+        const customIdx = this.ytCustomChannels.findIndex(c => c.name === channelName);
+        if (customIdx !== -1) {
+            this.ytCustomChannels.splice(customIdx, 1);
+            localStorage.setItem("aero_yt_custom_channels", JSON.stringify(this.ytCustomChannels));
+        }
+
+        // 同時加入隱藏清單，確保內建頻道或該頻道關聯影片一併取消顯示
+        this.ytHiddenChannels.add(channelName);
+        localStorage.setItem("aero_yt_hidden_channels", JSON.stringify([...this.ytHiddenChannels]));
+
+        if (this.ytActiveChannel === channelName) {
+            this.ytActiveChannel = "all";
+        }
+
+        this.refreshYoutubeHubChannelsAndMetrics();
+        this.updateYoutubeHubGrid();
+        this.showToast(`已取消推薦頻道「${channelName}」，並隱藏其相關影音。`);
+    }
+
+    /**
+     * 復原單一已隱藏的內建頻道
+     */
+    restoreSingleBuiltinChannel(channelName) {
+        this.initYoutubeState();
+        if (this.ytHiddenChannels.has(channelName)) {
+            this.ytHiddenChannels.delete(channelName);
+            localStorage.setItem("aero_yt_hidden_channels", JSON.stringify([...this.ytHiddenChannels]));
+            this.refreshYoutubeHubChannelsAndMetrics();
+            this.updateYoutubeHubGrid();
+            this.showToast(`已恢復顯示頻道「${channelName}」`);
+        }
+    }
+
+    /**
+     * 還原所有預設推薦頻道
+     */
+    restoreDefaultYoutubeChannels() {
+        this.initYoutubeState();
+        this.ytHiddenChannels.clear();
+        localStorage.setItem("aero_yt_hidden_channels", JSON.stringify([]));
+        this.refreshYoutubeHubChannelsAndMetrics();
+        this.updateYoutubeHubGrid();
+        this.showToast("已完整還原所有系統預設推薦頻道！");
+    }
+
+    /**
+     * 新增使用者自訂推薦頻道（可選擇一併加入首部代表影片）
+     */
+    addCustomYoutubeChannel({ name, region, tag, desc, channelUrl, sampleVideoUrl, sampleVideoTitle }) {
+        this.initYoutubeState();
+        const cleanName = (name || "").trim();
+        if (!cleanName) return false;
+
+        // 若原本在隱藏名單中，先移除隱藏狀態
+        if (this.ytHiddenChannels.has(cleanName)) {
+            this.ytHiddenChannels.delete(cleanName);
+            localStorage.setItem("aero_yt_hidden_channels", JSON.stringify([...this.ytHiddenChannels]));
+        }
+
+        // 檢查是否已存在同名頻道
+        const existingIdx = this.ytCustomChannels.findIndex(c => c.name.toLowerCase() === cleanName.toLowerCase());
+        const newChannelObj = {
+            id: `custom-ch-${Date.now()}`,
+            name: cleanName,
+            region: region || "TW",
+            tag: (tag || "").trim() || (region === "TW" ? "自訂台灣" : (region === "JP" ? "自訂日本" : "自訂全球")),
+            desc: (desc || "").trim() || "使用者自訂追蹤之 YouTube 科技頻道",
+            channelUrl: (channelUrl || "").trim(),
+            isCustom: true
+        };
+
+        if (existingIdx !== -1) {
+            this.ytCustomChannels[existingIdx] = newChannelObj;
+        } else {
+            this.ytCustomChannels.unshift(newChannelObj);
+        }
+        localStorage.setItem("aero_yt_custom_channels", JSON.stringify(this.ytCustomChannels));
+
+        // 若使用者有填寫代表影片網址或 11 碼 ID，一併新增至影片庫讓該頻道立即有內容展示
+        const rawVid = (sampleVideoUrl || "").trim();
+        if (rawVid) {
+            let ytId = "";
+            const idMatch = rawVid.match(/(?:youtu\.be\/|v=|\/embed\/|\/watch\?v=|\&v=|^)([a-zA-Z0-9_-]{11})/);
+            if (idMatch) {
+                ytId = idMatch[1];
+            } else if (/^[a-zA-Z0-9_-]{11}$/.test(rawVid)) {
+                ytId = rawVid;
+            }
+            if (ytId) {
+                const newVideo = {
+                    id: `custom-yt-${Date.now()}`,
+                    youtubeId: ytId,
+                    title: (sampleVideoTitle || "").trim() || `${cleanName} 精選 AI 科技研習影音`,
+                    channelName: cleanName,
+                    region: region || "TW",
+                    regionLabel: region === "TW" ? "台灣 TW" : (region === "JP" ? "日本 JP" : "全球 US"),
+                    uploadDate: new Date().toISOString().slice(0, 10),
+                    timeTag: "最新加入",
+                    daysAgo: 1,
+                    duration: "精選",
+                    category: "frontier-trends",
+                    categoryLabel: "自訂頻道精選",
+                    summary: (desc || "").trim() || `來自自訂推薦頻道「${cleanName}」的精選科技研習內容。`,
+                    featured: true,
+                    viewsText: "自訂頻道",
+                    tags: [cleanName, "自訂頻道", "AI研習"]
+                };
+                this.ytCustomVideos.unshift(newVideo);
+                localStorage.setItem("aero_custom_yt_videos", JSON.stringify(this.ytCustomVideos));
+            }
+        }
+
+        // 自動切換至剛新增的頻道
+        this.ytActiveChannel = cleanName;
+        this.refreshYoutubeHubChannelsAndMetrics();
+        this.updateYoutubeHubGrid();
+        this.showToast(`已成功新增推薦頻道「${cleanName}」！`);
+        return true;
+    }
+
+    /**
+     * 動態局部刷新影音中樞頂部數據指標、區域計數與推薦頻道晶片列
+     */
+    refreshYoutubeHubChannelsAndMetrics() {
+        const allVideos = this.getAllYoutubeVideos();
+        const twCount = allVideos.filter(v => v.region === "TW").length;
+        const globalCount = allVideos.filter(v => v.region === "GLOBAL" || v.region === "US").length;
+        const bookmarksCount = this.ytBookmarks.size;
+        const activeChannels = this.getActiveYoutubeChannels();
+
+        // 更新頂部指標卡片
+        const metricAll = document.getElementById("yt-metric-all-val");
+        const metricTw = document.getElementById("yt-metric-tw-val");
+        const metricGlobal = document.getElementById("yt-metric-global-val");
+        const metricBm = document.getElementById("yt-metric-bm-val");
+        if (metricAll) metricAll.textContent = `${allVideos.length} 部`;
+        if (metricTw) metricTw.textContent = `${twCount} 部`;
+        if (metricGlobal) metricGlobal.textContent = `${globalCount} 部`;
+        if (metricBm) metricBm.textContent = `${bookmarksCount} 部`;
+
+        // 更新區域按鈕計數
+        const regAllBtn = document.querySelector('[data-hub-region="all"]');
+        const regTwBtn = document.querySelector('[data-hub-region="TW"]');
+        const regGlobalBtn = document.querySelector('[data-hub-region="GLOBAL"]');
+        if (regAllBtn) regAllBtn.textContent = `全部區域 (${allVideos.length})`;
+        if (regTwBtn) regTwBtn.textContent = `台灣 (TW 繁中在地頻道, ${twCount})`;
+        if (regGlobalBtn) regGlobalBtn.textContent = `全球 / 美國 (US 前沿技術, ${globalCount})`;
+
+        // 更新收藏分類按鈕計數
+        const bmCatBtn = document.querySelector('[data-hub-cat="bookmarks"]');
+        if (bmCatBtn) bmCatBtn.textContent = `我的收藏清單 (${bookmarksCount})`;
+
+        // 重新渲染推薦頻道晶片列
+        const chBar = document.getElementById("yt-channel-chips-bar");
+        if (chBar) {
+            chBar.innerHTML = this.renderChannelChipsBarInnerHtml(activeChannels, allVideos);
+            this.bindChannelChipsBarEvents(chBar);
+        }
+
+        // 更新快速預設晶片列（隱藏已被刪除的頻道預設鈕）
+        const presetRow = document.getElementById("yt-preset-keywords-row");
+        if (presetRow) {
+            presetRow.querySelectorAll("[data-preset-channel]").forEach(btn => {
+                const chName = btn.getAttribute("data-preset-channel");
+                btn.classList.toggle("is-hidden", this.ytHiddenChannels.has(chName));
+            });
+        }
+    }
+
+    /**
+     * 產製推薦科技頻道晶片列內部 HTML
+     */
+    renderChannelChipsBarInnerHtml(activeChannels, allVideos) {
+        const allChipsHtml = activeChannels.map(ch => {
+            const chCount = allVideos.filter(v => v.channelName === ch.name).length;
+            const isActive = this.ytActiveChannel === ch.name;
+            return `
+                <div class="yt-channel-chip-wrap ${isActive ? 'is-active' : ''} ${ch.isCustom ? 'is-custom' : ''}">
+                    <button type="button" class="yt-channel-chip ${isActive ? 'is-active' : ''}" data-hub-channel="${this.escapeHtml(ch.name)}" title="${this.escapeHtml(ch.desc || ch.name)}">
+                        <span>${this.escapeHtml(ch.name)}</span>
+                        <span class="yt-channel-chip-tag">${this.escapeHtml(ch.tag || ch.region)}</span>
+                        <span class="yt-channel-chip-count">(${chCount})</span>
+                    </button>
+                    <button type="button" class="yt-channel-chip-del-btn ${this.ytChannelEditMode ? 'is-editing' : ''}" data-del-channel="${this.escapeHtml(ch.name)}" title="取消並移除「${this.escapeHtml(ch.name)}」頻道">
+                        &times;
+                    </button>
+                </div>
+            `;
+        }).join("");
+
+        return `
+            <div class="yt-channel-chip-wrap ${this.ytActiveChannel === 'all' ? 'is-active' : ''}">
+                <button type="button" class="yt-channel-chip ${this.ytActiveChannel === 'all' ? 'is-active' : ''}" data-hub-channel="all">
+                    <span>全部頻道 (${activeChannels.length})</span>
+                </button>
+            </div>
+            ${allChipsHtml}
+            <button type="button" class="yt-channel-add-inline-btn" id="yt-inline-add-channel-btn" title="新增您想要追蹤的 YouTube 頻道">
+                <span>+ 新增想要的頻道</span>
+            </button>
+        `;
+    }
+
+    /**
+     * 綁定推薦頻道晶片列事件（點擊切換頻道、點擊 × 直接取消刪除頻道、點擊 + 新增頻道）
+     */
+    bindChannelChipsBarEvents(chBar) {
+        if (!chBar) return;
+
+        chBar.querySelectorAll("[data-hub-channel]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                this.ytActiveChannel = btn.getAttribute("data-hub-channel") || "all";
+                this.refreshHubActiveChips();
+                this.updateYoutubeHubGrid();
+            });
+        });
+
+        chBar.querySelectorAll("[data-del-channel]").forEach((delBtn) => {
+            delBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const chName = delBtn.getAttribute("data-del-channel");
+                if (chName) {
+                    this.removeYoutubeChannel(chName);
+                }
+            });
+        });
+
+        const addInlineBtn = document.getElementById("yt-inline-add-channel-btn");
+        if (addInlineBtn) {
+            addInlineBtn.addEventListener("click", () => {
+                this.openChannelManagerModal("add");
+            });
+        }
     }
 
     /**
@@ -9836,8 +10110,8 @@ ${cfg.sourceText}`;
         const twCount = allVideos.filter(v => v.region === "TW").length;
         const globalCount = allVideos.filter(v => v.region === "GLOBAL" || v.region === "US").length;
         const bookmarksCount = this.ytBookmarks.size;
-
-        const channelsList = (window.YOUTUBE_AI_CURATED_DATA && window.YOUTUBE_AI_CURATED_DATA.metadata && window.YOUTUBE_AI_CURATED_DATA.metadata.channels) || [];
+        const activeChannels = this.getActiveYoutubeChannels();
+        const hiddenCount = this.ytHiddenChannels.size;
 
         this.focusSection.innerHTML = `
             <div class="theme-focus-panel yt-hub-page-container rpa-large-ui">
@@ -9846,10 +10120,10 @@ ${cfg.sourceText}`;
                     <div class="focus-title-group">
                         <div class="theme-meta-tags">
                             <span class="theme-code-badge">SYS-4C // AI VIDEO LAB</span>
-                            <span class="theme-status-badge">即時篩選・本頁展示已啟用</span>
+                            <span class="theme-status-badge">自訂推薦頻道・即時篩選已啟用</span>
                         </div>
                         <h2 class="focus-title">YouTube AI 科技影音研析與最新課程中樞</h2>
-                        <p class="theme-desc">專為追蹤近一個月 AI 科技最新發展、LLM 提示詞實戰、AI Agent 工作流與 Python 應用所打造！支援「台灣在地 (TW) / 全球前沿 (US)」區域篩選、「推薦頻道快速切換」與本頁即時展示更新。</p>
+                        <p class="theme-desc">專為追蹤近一個月 AI 科技最新發展、LLM 提示詞實戰、AI Agent 工作流與 Python 應用所打造！支援「自訂新增／刪除推薦頻道」、「台灣在地 (TW) / 全球前沿 (US)」區域篩選與本頁即時展示。</p>
                     </div>
                     <button type="button" class="secondary-btn" id="yt-hub-back-theme04-btn">
                         <span>返回主題四任務中心</span>
@@ -9863,19 +10137,19 @@ ${cfg.sourceText}`;
                 <!-- 頂部四大指標概況看板 -->
                 <div class="yt-hub-metrics-row">
                     <div class="yt-hub-metric-card">
-                        <span class="yt-hub-metric-val">${allVideos.length} 部</span>
-                        <span class="yt-hub-metric-label">精選 AI 科技實戰教學與權威課程</span>
+                        <span class="yt-hub-metric-val" id="yt-metric-all-val">${allVideos.length} 部</span>
+                        <span class="yt-hub-metric-label">當前啟用頻道之 AI 科技實戰與課程</span>
                     </div>
                     <div class="yt-hub-metric-card">
-                        <span class="yt-hub-metric-val">${twCount} 部</span>
+                        <span class="yt-hub-metric-val" id="yt-metric-tw-val">${twCount} 部</span>
                         <span class="yt-hub-metric-label">台灣在地繁體中文講師與頻道特輯</span>
                     </div>
                     <div class="yt-hub-metric-card">
-                        <span class="yt-hub-metric-val">${globalCount} 部</span>
+                        <span class="yt-hub-metric-val" id="yt-metric-global-val">${globalCount} 部</span>
                         <span class="yt-hub-metric-label">全球與美國前沿大模型技術與論文評析</span>
                     </div>
                     <div class="yt-hub-metric-card">
-                        <span class="yt-hub-metric-val">${bookmarksCount} 部</span>
+                        <span class="yt-hub-metric-val" id="yt-metric-bm-val">${bookmarksCount} 部</span>
                         <span class="yt-hub-metric-label">個人稍後研習與自訂已收藏影音清單</span>
                     </div>
                 </div>
@@ -9896,26 +10170,29 @@ ${cfg.sourceText}`;
                         </div>
                     </div>
 
-                    <!-- 2. 推薦科技頻道快速切換 -->
+                    <!-- 2. 推薦科技頻道快速切換（支援使用者自由新增與刪除／取消不想要的頻道） -->
                     <div class="yt-filter-control-group">
-                        <div class="yt-control-label-row">
-                            <h4 class="yt-control-heading">2. 推薦科技頻道專屬展示 (Featured Channels)</h4>
-                            <span class="theme-route-hint">點選任一頻道即可在下方即時展示該頻道所有精選影音</span>
-                        </div>
-                        <div class="yt-channel-chips-bar" id="yt-channel-chips-bar">
-                            <button type="button" class="yt-channel-chip ${this.ytActiveChannel === 'all' ? 'is-active' : ''}" data-hub-channel="all">
-                                <span>全部頻道</span>
-                            </button>
-                            ${channelsList.filter(c => c.id !== 'all').map(ch => {
-                                const chCount = allVideos.filter(v => v.channelName === ch.name).length;
-                                return `
-                                    <button type="button" class="yt-channel-chip ${this.ytActiveChannel === ch.name ? 'is-active' : ''}" data-hub-channel="${this.escapeHtml(ch.name)}">
-                                        <span>${this.escapeHtml(ch.name)}</span>
-                                        <span class="yt-channel-chip-tag">${ch.tag || ch.region}</span>
-                                        <span>(${chCount})</span>
+                        <div class="yt-control-label-row yt-channel-header-row">
+                            <div class="yt-channel-heading-wrap">
+                                <h4 class="yt-control-heading">2. 推薦科技頻道專屬展示 (可自由新增或取消不想要的頻道)</h4>
+                                <span class="theme-route-hint">點擊頻道可篩選展示；點擊頻道右側「×」即可取消移除不想要的頻道</span>
+                            </div>
+                            <div class="yt-channel-manage-actions">
+                                <button type="button" class="primary-btn yt-channel-mgr-btn" id="yt-open-add-channel-btn">
+                                    <span>+ 新增推薦頻道</span>
+                                </button>
+                                <button type="button" class="secondary-btn yt-channel-mgr-btn ${this.ytChannelEditMode ? 'is-active' : ''}" id="yt-toggle-del-channel-mode-btn">
+                                    <span>${this.ytChannelEditMode ? '完成頻道增刪' : '批次刪除 / 管理頻道'}</span>
+                                </button>
+                                ${hiddenCount > 0 ? `
+                                    <button type="button" class="secondary-btn yt-channel-mgr-btn yt-restore-channels-btn" id="yt-restore-default-channels-btn" title="恢復顯示先前取消的 ${hiddenCount} 個預設頻道">
+                                        <span>還原預設頻道 (已隱藏 ${hiddenCount})</span>
                                     </button>
-                                `;
-                            }).join("")}
+                                ` : ''}
+                            </div>
+                        </div>
+                        <div class="yt-channel-chips-bar ${this.ytChannelEditMode ? 'is-edit-mode' : ''}" id="yt-channel-chips-bar">
+                            ${this.renderChannelChipsBarInnerHtml(activeChannels, allVideos)}
                         </div>
                     </div>
 
@@ -9980,13 +10257,13 @@ ${cfg.sourceText}`;
                         </div>
 
                         <!-- 快速預設熱門搜尋晶片 -->
-                        <div class="yt-preset-keywords-row">
+                        <div class="yt-preset-keywords-row" id="yt-preset-keywords-row">
                             <span class="yt-preset-label">熱門一鍵篩選：</span>
                             <button type="button" class="yt-preset-btn" data-preset-action="tw-month">台灣近一個月 AI 教學</button>
-                            <button type="button" class="yt-preset-btn" data-preset-channel="Papaya 電腦教室">Papaya 提示詞實戰</button>
-                            <button type="button" class="yt-preset-btn" data-preset-channel="柴哥 AI 科技頻道">柴哥 科技評測</button>
-                            <button type="button" class="yt-preset-btn" data-preset-channel="台大 李宏毅教授">台大 李宏毅課程</button>
-                            <button type="button" class="yt-preset-btn" data-preset-channel="六角學院 技術專題">六角學院 本地部署</button>
+                            <button type="button" class="yt-preset-btn ${this.ytHiddenChannels.has('Papaya 電腦教室') ? 'is-hidden' : ''}" data-preset-channel="Papaya 電腦教室">Papaya 提示詞實戰</button>
+                            <button type="button" class="yt-preset-btn ${this.ytHiddenChannels.has('柴知道 科技科普') ? 'is-hidden' : ''}" data-preset-channel="柴知道 科技科普">柴知道 科技科普</button>
+                            <button type="button" class="yt-preset-btn ${this.ytHiddenChannels.has('台大 李宏毅教授') ? 'is-hidden' : ''}" data-preset-channel="台大 李宏毅教授">台大 李宏毅課程</button>
+                            <button type="button" class="yt-preset-btn ${this.ytHiddenChannels.has('六角學院 技術專題') ? 'is-hidden' : ''}" data-preset-channel="六角學院 技術專題">六角學院 本地部署</button>
                             <button type="button" class="yt-preset-btn" data-preset-query="Claude 3.7">Claude 3.7 實測</button>
                             <button type="button" class="yt-preset-btn" data-preset-query="DeepSeek">DeepSeek 本機部署</button>
                             <button type="button" class="yt-preset-btn" data-preset-cat="ai-agents">AI Agent 工作流</button>
@@ -10002,6 +10279,9 @@ ${cfg.sourceText}`;
                 </div>
 
                 <div class="yt-hub-cards-grid" id="yt-hub-cards-grid"></div>
+
+                <!-- 專屬浮動提示框 (確保在主題四與影音中樞皆可即時顯示操作回饋) -->
+                <div id="kb-toast-box" class="kb-toast-notification is-hidden" aria-live="assertive"></div>
             </div>
         `;
 
@@ -10042,7 +10322,7 @@ ${cfg.sourceText}`;
             activeLabels.push(`關鍵字：「${this.ytSearchQuery.trim()}」`);
         }
 
-        const conditionDesc = activeLabels.length > 0 ? `（已套用：${activeLabels.join("・")}）` : "（顯示全部精選）";
+        const conditionDesc = activeLabels.length > 0 ? `（已套用：${activeLabels.join("・")}）` : "（顯示全部啟用頻道精選）";
 
         if (countText) {
             countText.textContent = `符合當前篩選條件之影片：${filtered.length} 部 ${conditionDesc}`;
@@ -10051,18 +10331,49 @@ ${cfg.sourceText}`;
         if (filtered.length === 0) {
             const allVideos = this.getAllYoutubeVideos();
             const recommended = allVideos.slice(0, 6);
+            const isSpecificChannel = this.ytActiveChannel && this.ytActiveChannel !== "all";
+            const targetChannelObj = this.getActiveYoutubeChannels().find(c => c.name === this.ytActiveChannel);
 
             grid.innerHTML = `
                 <div class="yt-empty-fallback-box">
-                    <h3 class="yt-empty-title">查無完全符合當前條件的影音內容</h3>
-                    <p class="yt-empty-desc">已為您自動推薦最熱門的「台灣在地優質 AI 教學」精選影片，您亦可點擊下方按鈕清空搜尋條件以檢視全部 ${allVideos.length} 部典藏：</p>
+                    <h3 class="yt-empty-title">
+                        ${isSpecificChannel ? `頻道「${this.escapeHtml(this.ytActiveChannel)}」目前尚無符合此篩選條件的本地收錄影片` : '查無完全符合當前條件的影音內容'}
+                    </h3>
+                    <p class="yt-empty-desc">
+                        ${isSpecificChannel
+                            ? `您剛新增或選擇了「${this.escapeHtml(this.ytActiveChannel)}」，您可以直接點擊下方按鈕將該頻道的精選 YouTube 影片加入本頁清單，或一鍵在 YouTube 官方開啟該頻道最新影音：`
+                            : `已為您自動推薦最熱門的「台灣在地優質 AI 教學」精選影片，您亦可點擊下方按鈕清空搜尋條件以檢視全部 ${allVideos.length} 部典藏：`
+                        }
+                    </p>
                     <div class="yt-empty-actions">
-                        <button type="button" class="primary-btn" id="yt-clear-fallback-btn">清空條件並檢視全部影片</button>
+                        ${isSpecificChannel ? `
+                            <button type="button" class="primary-btn" id="yt-add-video-for-channel-btn">+ 為「${this.escapeHtml(this.ytActiveChannel)}」新增代表影片</button>
+                            <button type="button" class="secondary-btn" id="yt-search-channel-ext-btn">在 YouTube 搜尋「${this.escapeHtml(this.ytActiveChannel)}」最新影片</button>
+                        ` : ''}
+                        <button type="button" class="secondary-btn" id="yt-clear-fallback-btn">清空條件並檢視全部影片</button>
                         <button type="button" class="secondary-btn" id="yt-show-tw-fallback-btn">切換至台灣在地優質頻道</button>
                     </div>
                 </div>
                 ${recommended.map((v) => this.renderSingleYoutubeCardHtml(v, false)).join("")}
             `;
+
+            const addForChBtn = document.getElementById("yt-add-video-for-channel-btn");
+            if (addForChBtn) {
+                addForChBtn.addEventListener("click", () => {
+                    this.openAddCustomYoutubeModal(this.ytActiveChannel, targetChannelObj ? targetChannelObj.region : "TW");
+                });
+            }
+
+            const searchChExtBtn = document.getElementById("yt-search-channel-ext-btn");
+            if (searchChExtBtn) {
+                searchChExtBtn.addEventListener("click", () => {
+                    if (targetChannelObj && targetChannelObj.channelUrl && targetChannelObj.channelUrl.startsWith("http")) {
+                        window.open(targetChannelObj.channelUrl, "_blank", "noopener,noreferrer");
+                    } else {
+                        this.launchExternalYoutubeSearch(this.ytActiveChannel, this.ytActiveRegion, "all");
+                    }
+                });
+            }
 
             const clearFallback = document.getElementById("yt-clear-fallback-btn");
             if (clearFallback) {
@@ -10175,7 +10486,10 @@ ${cfg.sourceText}`;
         const chBar = document.getElementById("yt-channel-chips-bar");
         if (chBar) {
             chBar.querySelectorAll("[data-hub-channel]").forEach(b => {
-                b.classList.toggle("is-active", b.getAttribute("data-hub-channel") === this.ytActiveChannel);
+                const isAct = b.getAttribute("data-hub-channel") === this.ytActiveChannel;
+                b.classList.toggle("is-active", isAct);
+                const wrap = b.closest(".yt-channel-chip-wrap");
+                if (wrap) wrap.classList.toggle("is-active", isAct);
             });
         }
 
@@ -10225,17 +10539,31 @@ ${cfg.sourceText}`;
             });
         }
 
-        // 2. 頻道切換
+        // 2. 推薦頻道晶片與管理按鈕
         const chBar = document.getElementById("yt-channel-chips-bar");
         if (chBar) {
-            chBar.querySelectorAll("[data-hub-channel]").forEach((btn) => {
-                btn.addEventListener("click", () => {
-                    this.ytActiveChannel = btn.getAttribute("data-hub-channel") || "all";
-                    chBar.querySelectorAll("[data-hub-channel]").forEach(b => {
-                        b.classList.toggle("is-active", b === btn);
-                    });
-                    this.updateYoutubeHubGrid();
-                });
+            this.bindChannelChipsBarEvents(chBar);
+        }
+
+        const openAddChBtn = document.getElementById("yt-open-add-channel-btn");
+        if (openAddChBtn) {
+            openAddChBtn.addEventListener("click", () => {
+                this.openChannelManagerModal("add");
+            });
+        }
+
+        const toggleDelModeBtn = document.getElementById("yt-toggle-del-channel-mode-btn");
+        if (toggleDelModeBtn) {
+            toggleDelModeBtn.addEventListener("click", () => {
+                this.openChannelManagerModal("manage");
+            });
+        }
+
+        const restoreDefaultChBtn = document.getElementById("yt-restore-default-channels-btn");
+        if (restoreDefaultChBtn) {
+            restoreDefaultChBtn.addEventListener("click", () => {
+                this.restoreDefaultYoutubeChannels();
+                this.renderYoutubeHubPage(theme);
             });
         }
 
@@ -10372,6 +10700,217 @@ ${cfg.sourceText}`;
     }
 
     /**
+     * 開啟「推薦科技頻道：新增與刪除管理中心」對話盒
+     */
+    openChannelManagerModal(initialTab = "add") {
+        this.initYoutubeState();
+        const oldModal = document.getElementById("yt-channel-mgr-backdrop");
+        if (oldModal) oldModal.remove();
+
+        const modalWrapper = document.createElement("div");
+        modalWrapper.id = "yt-channel-mgr-backdrop";
+        modalWrapper.className = "yt-modal-backdrop";
+
+        const renderModalContent = (activeTab) => {
+            const activeChannels = this.getActiveYoutubeChannels();
+            const baseChannels = ((window.YOUTUBE_AI_CURATED_DATA && window.YOUTUBE_AI_CURATED_DATA.metadata && window.YOUTUBE_AI_CURATED_DATA.metadata.channels) || []).filter(c => c.id !== "all");
+            const hiddenBuiltin = baseChannels.filter(c => this.ytHiddenChannels.has(c.name));
+            const allVideos = this.getAllYoutubeVideos();
+
+            const activeListHtml = activeChannels.length > 0 ? activeChannels.map(ch => {
+                const count = allVideos.filter(v => v.channelName === ch.name).length;
+                return `
+                    <div class="yt-mgr-channel-item">
+                        <div class="yt-mgr-channel-info">
+                            <div class="yt-mgr-channel-title-row">
+                                <span class="yt-mgr-channel-name">${this.escapeHtml(ch.name)}</span>
+                                <span class="yt-channel-chip-tag">${this.escapeHtml(ch.tag || ch.region)}</span>
+                                ${ch.isCustom ? '<span class="yt-custom-badge">自訂新增</span>' : '<span class="yt-builtin-badge">系統推薦</span>'}
+                                <span class="yt-mgr-video-count">${count} 部影片</span>
+                            </div>
+                            <p class="yt-mgr-channel-desc">${this.escapeHtml(ch.desc || "AI 科技與實務應用頻道")}</p>
+                        </div>
+                        <div class="yt-mgr-channel-actions">
+                            <button type="button" class="secondary-btn yt-mgr-add-vid-btn" data-mgr-add-vid="${this.escapeHtml(ch.name)}" data-mgr-region="${this.escapeHtml(ch.region || 'TW')}">
+                                + 新增影片
+                            </button>
+                            <button type="button" class="yt-mgr-del-btn" data-mgr-del-ch="${this.escapeHtml(ch.name)}">
+                                取消推薦 / 刪除
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join("") : `<p class="theme-desc">目前沒有啟用中的推薦頻道，請由上方新增或還原預設頻道。</p>`;
+
+            const hiddenListHtml = hiddenBuiltin.length > 0 ? `
+                <div class="yt-mgr-hidden-section">
+                    <div class="yt-mgr-hidden-header">
+                        <h4 class="yt-mgr-sub-heading">已取消／隱藏的預設頻道 (${hiddenBuiltin.length})</h4>
+                        <button type="button" class="secondary-btn" id="yt-mgr-restore-all-btn">全部恢復顯示</button>
+                    </div>
+                    <div class="yt-mgr-hidden-chips">
+                        ${hiddenBuiltin.map(ch => `
+                            <button type="button" class="yt-mgr-restore-chip" data-mgr-restore-ch="${this.escapeHtml(ch.name)}" title="點擊恢復顯示此頻道">
+                                <span>+ 恢復：${this.escapeHtml(ch.name)}</span>
+                            </button>
+                        `).join("")}
+                    </div>
+                </div>
+            ` : "";
+
+            modalWrapper.innerHTML = `
+                <div class="yt-add-dialog-card yt-channel-mgr-card" role="dialog" aria-modal="true">
+                    <div class="yt-modal-header">
+                        <h3 class="yt-modal-title">推薦科技頻道管理中心（自由新增與取消頻道）</h3>
+                        <button type="button" class="yt-modal-close-btn" id="yt-ch-mgr-close-btn">&times;</button>
+                    </div>
+
+                    <div class="yt-mgr-tabs-bar">
+                        <button type="button" class="yt-mgr-tab-btn ${activeTab === 'add' ? 'is-active' : ''}" data-mgr-tab="add">
+                            + 新增我想要的頻道
+                        </button>
+                        <button type="button" class="yt-mgr-tab-btn ${activeTab === 'manage' ? 'is-active' : ''}" data-mgr-tab="manage">
+                            管理與刪除現有頻道 (${activeChannels.length})
+                        </button>
+                    </div>
+
+                    ${activeTab === "add" ? `
+                        <form id="yt-add-channel-form" class="yt-add-custom-form">
+                            <div class="yt-form-group">
+                                <label class="yt-form-label" for="custom-ch-name">想要新增的 YouTube 頻道名稱 (必填)：</label>
+                                <input type="text" id="custom-ch-name" class="yt-form-input" placeholder="例如：曲博科技教室、大數軟體、OpenAI 官方頻道..." required />
+                            </div>
+                            <div class="yt-form-row-two">
+                                <div class="yt-form-group">
+                                    <label class="yt-form-label" for="custom-ch-region">頻道所屬區域：</label>
+                                    <select id="custom-ch-region" class="yt-form-input">
+                                        <option value="TW">台灣 (TW 繁中在地)</option>
+                                        <option value="GLOBAL">全球 / 美國 (US 前沿技術)</option>
+                                        <option value="JP">日本 / 亞洲觀點 (JP)</option>
+                                    </select>
+                                </div>
+                                <div class="yt-form-group">
+                                    <label class="yt-form-label" for="custom-ch-tag">領域短標籤 (選填)：</label>
+                                    <input type="text" id="custom-ch-tag" class="yt-form-input" placeholder="例如：台灣科普、AI 實戰、開源模型" />
+                                </div>
+                            </div>
+                            <div class="yt-form-group">
+                                <label class="yt-form-label" for="custom-ch-desc">頻道特色或備註說明 (選填)：</label>
+                                <input type="text" id="custom-ch-desc" class="yt-form-input" placeholder="例如：深入淺出介紹最新科技趨勢與硬體架構" />
+                            </div>
+                            <div class="yt-mgr-divider-box">
+                                <span class="yt-mgr-divider-title">選填：同時加入一部該頻道的代表 YouTube 影片（讓頻道立即在下方展示卡片）</span>
+                                <div class="yt-form-group">
+                                    <label class="yt-form-label" for="custom-ch-sample-url">代表影片 YouTube 網址或 11 碼 ID (選填)：</label>
+                                    <input type="text" id="custom-ch-sample-url" class="yt-form-input" placeholder="例如：https://www.youtube.com/watch?v=... (可留空，稍後再加)" />
+                                </div>
+                                <div class="yt-form-group">
+                                    <label class="yt-form-label" for="custom-ch-sample-title">代表影片標題 (選填)：</label>
+                                    <input type="text" id="custom-ch-sample-title" class="yt-form-input" placeholder="請輸入影片標題（若留空將自動以頻道精選命名）" />
+                                </div>
+                            </div>
+                            <div class="yt-modal-footer">
+                                <button type="button" class="secondary-btn" id="yt-ch-mgr-cancel-btn">關閉</button>
+                                <button type="submit" class="primary-btn">確認新增此推薦頻道</button>
+                            </div>
+                        </form>
+                    ` : `
+                        <div class="yt-mgr-list-container">
+                            <p class="yt-mgr-hint-text">您可以點擊右側「取消推薦 / 刪除」移除不想要看到的頻道，移除後該頻道及其關聯影片將不再顯示於推薦列表中。</p>
+                            <div class="yt-mgr-channels-scroll">
+                                ${activeListHtml}
+                            </div>
+                            ${hiddenListHtml}
+                            <div class="yt-modal-footer">
+                                <button type="button" class="secondary-btn" id="yt-ch-mgr-cancel-btn">完成並返回</button>
+                            </div>
+                        </div>
+                    `}
+                </div>
+            `;
+
+            const destroyModal = () => modalWrapper.remove();
+            const closeBtn = document.getElementById("yt-ch-mgr-close-btn");
+            const cancelBtn = document.getElementById("yt-ch-mgr-cancel-btn");
+            if (closeBtn) closeBtn.onclick = destroyModal;
+            if (cancelBtn) cancelBtn.onclick = destroyModal;
+
+            // 分頁切換
+            modalWrapper.querySelectorAll("[data-mgr-tab]").forEach(tabBtn => {
+                tabBtn.onclick = () => {
+                    renderModalContent(tabBtn.getAttribute("data-mgr-tab"));
+                };
+            });
+
+            // 新增頻道表單提交
+            const addForm = document.getElementById("yt-add-channel-form");
+            if (addForm) {
+                addForm.onsubmit = (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById("custom-ch-name").value.trim();
+                    const region = document.getElementById("custom-ch-region").value;
+                    const tag = document.getElementById("custom-ch-tag").value.trim();
+                    const desc = document.getElementById("custom-ch-desc").value.trim();
+                    const sampleVideoUrl = document.getElementById("custom-ch-sample-url").value.trim();
+                    const sampleVideoTitle = document.getElementById("custom-ch-sample-title").value.trim();
+
+                    if (this.addCustomYoutubeChannel({ name, region, tag, desc, sampleVideoUrl, sampleVideoTitle })) {
+                        destroyModal();
+                    }
+                };
+            }
+
+            // 刪除／取消頻道按鈕
+            modalWrapper.querySelectorAll("[data-mgr-del-ch]").forEach(delBtn => {
+                delBtn.onclick = () => {
+                    const chName = delBtn.getAttribute("data-mgr-del-ch");
+                    if (chName) {
+                        this.removeYoutubeChannel(chName);
+                        renderModalContent("manage");
+                    }
+                };
+            });
+
+            // 為該頻道新增影片按鈕
+            modalWrapper.querySelectorAll("[data-mgr-add-vid]").forEach(addVidBtn => {
+                addVidBtn.onclick = () => {
+                    const chName = addVidBtn.getAttribute("data-mgr-add-vid");
+                    const chReg = addVidBtn.getAttribute("data-mgr-region") || "TW";
+                    destroyModal();
+                    this.openAddCustomYoutubeModal(chName, chReg);
+                };
+            });
+
+            // 恢復單一已隱藏頻道
+            modalWrapper.querySelectorAll("[data-mgr-restore-ch]").forEach(restBtn => {
+                restBtn.onclick = () => {
+                    const chName = restBtn.getAttribute("data-mgr-restore-ch");
+                    if (chName) {
+                        this.restoreSingleBuiltinChannel(chName);
+                        renderModalContent("manage");
+                    }
+                };
+            });
+
+            // 全部恢復預設頻道
+            const restoreAllBtn = document.getElementById("yt-mgr-restore-all-btn");
+            if (restoreAllBtn) {
+                restoreAllBtn.onclick = () => {
+                    this.restoreDefaultYoutubeChannels();
+                    renderModalContent("manage");
+                };
+            }
+        };
+
+        document.body.appendChild(modalWrapper);
+        renderModalContent(initialTab);
+
+        modalWrapper.onclick = (e) => {
+            if (e.target === modalWrapper) modalWrapper.remove();
+        };
+    }
+
+    /**
      * 收藏 / 取消收藏 YouTube 影片
      */
     toggleYoutubeBookmark(videoId) {
@@ -10384,6 +10923,7 @@ ${cfg.sourceText}`;
             this.showToast("已成功加入稍後研習收藏清單！");
         }
         localStorage.setItem("aero_yt_bookmarks", JSON.stringify([...this.ytBookmarks]));
+        this.refreshYoutubeHubChannelsAndMetrics();
         this.updateYoutubeHubGrid();
     }
 
@@ -10531,11 +11071,17 @@ ${cfg.sourceText}`;
     }
 
     /**
-     * 開啟「新增自訂 YouTube 影片到研習清單」對話盒
+     * 開啟「新增自訂 YouTube 影片到研習清單」對話盒（支援自動將新頻道加入推薦頻道列）
      */
-    openAddCustomYoutubeModal() {
+    openAddCustomYoutubeModal(prefillChannel = "", prefillRegion = "TW") {
+        this.initYoutubeState();
         const oldDialog = document.getElementById("yt-add-dialog-backdrop");
         if (oldDialog) oldDialog.remove();
+
+        const activeChannels = this.getActiveYoutubeChannels();
+        const channelOptionsHtml = activeChannels.map(ch => `
+            <option value="${this.escapeHtml(ch.name)}"></option>
+        `).join("");
 
         const dialogWrapper = document.createElement("div");
         dialogWrapper.id = "yt-add-dialog-backdrop";
@@ -10543,12 +11089,12 @@ ${cfg.sourceText}`;
         dialogWrapper.innerHTML = `
             <div class="yt-add-dialog-card" role="dialog" aria-modal="true">
                 <div class="yt-modal-header">
-                    <h3 class="yt-modal-title">新增自訂 YouTube AI 影片到個人研習清單</h3>
+                    <h3 class="yt-modal-title">新增自訂 YouTube AI 影片與頻道到研習清單</h3>
                     <button type="button" class="yt-modal-close-btn" id="yt-add-close-btn">&times;</button>
                 </div>
                 <form id="yt-add-custom-form" class="yt-add-custom-form">
                     <div class="yt-form-group">
-                        <label class="yt-form-label" for="custom-yt-url">YouTube 影片網址或 ID (必填)：</label>
+                        <label class="yt-form-label" for="custom-yt-url">YouTube 影片網址或 11 碼 ID (必填)：</label>
                         <input type="text" id="custom-yt-url" class="yt-form-input" placeholder="例如：https://www.youtube.com/watch?v=... 或 11 碼 ID" required />
                     </div>
                     <div class="yt-form-group">
@@ -10556,15 +11102,18 @@ ${cfg.sourceText}`;
                         <input type="text" id="custom-yt-title" class="yt-form-input" placeholder="請輸入易於辨識的課程或研討名稱" required />
                     </div>
                     <div class="yt-form-group">
-                        <label class="yt-form-label" for="custom-yt-channel">頻道名稱：</label>
-                        <input type="text" id="custom-yt-channel" class="yt-form-input" placeholder="例如：自選研習頻道" value="自選研習頻道" />
+                        <label class="yt-form-label" for="custom-yt-channel">頻道名稱（可選擇既有頻道，或直接輸入新頻道名稱自動加入推薦列）：</label>
+                        <input type="text" id="custom-yt-channel" list="yt-existing-channels-datalist" class="yt-form-input" placeholder="例如：Papaya 電腦教室 或輸入您自訂的新頻道名稱" value="${this.escapeHtml(prefillChannel || '自選研習頻道')}" required />
+                        <datalist id="yt-existing-channels-datalist">
+                            ${channelOptionsHtml}
+                        </datalist>
                     </div>
                     <div class="yt-form-group">
                         <label class="yt-form-label" for="custom-yt-region">所在區域標籤：</label>
                         <select id="custom-yt-region" class="yt-form-input">
-                            <option value="TW">台灣 (繁中在地)</option>
-                            <option value="GLOBAL">全球 / 美國 (前沿發布)</option>
-                            <option value="JP">日本 / 亞洲觀點</option>
+                            <option value="TW" ${prefillRegion === 'TW' ? 'selected' : ''}>台灣 (繁中在地)</option>
+                            <option value="GLOBAL" ${prefillRegion === 'GLOBAL' || prefillRegion === 'US' ? 'selected' : ''}>全球 / 美國 (前沿發布)</option>
+                            <option value="JP" ${prefillRegion === 'JP' ? 'selected' : ''}>日本 / 亞洲觀點</option>
                         </select>
                     </div>
                     <div class="yt-form-group">
@@ -10583,7 +11132,7 @@ ${cfg.sourceText}`;
                     </div>
                     <div class="yt-modal-footer">
                         <button type="button" class="secondary-btn" id="yt-add-cancel-btn">取消</button>
-                        <button type="submit" class="primary-btn">儲存並加入清單</button>
+                        <button type="submit" class="primary-btn">儲存並同步加入推薦頻道與清單</button>
                     </div>
                 </form>
             </div>
@@ -10603,7 +11152,7 @@ ${cfg.sourceText}`;
                 e.preventDefault();
                 const rawUrl = document.getElementById("custom-yt-url").value.trim();
                 const title = document.getElementById("custom-yt-title").value.trim();
-                const channel = document.getElementById("custom-yt-channel").value.trim() || "自選研習";
+                const channel = document.getElementById("custom-yt-channel").value.trim() || "自選研習頻道";
                 const region = document.getElementById("custom-yt-region").value;
                 const category = document.getElementById("custom-yt-category").value;
                 const summary = document.getElementById("custom-yt-summary").value.trim() || "使用者自選研討影片。";
@@ -10618,6 +11167,24 @@ ${cfg.sourceText}`;
                 } else {
                     window.alert("無法辨識有效的 11 碼 YouTube 影片 ID 或網址，請確認後再試！");
                     return;
+                }
+
+                // 若該頻道名稱不在目前啟用頻道中，自動將其加入推薦頻道列
+                const currentActiveNames = new Set(this.getActiveYoutubeChannels().map(c => c.name));
+                if (this.ytHiddenChannels.has(channel)) {
+                    this.ytHiddenChannels.delete(channel);
+                    localStorage.setItem("aero_yt_hidden_channels", JSON.stringify([...this.ytHiddenChannels]));
+                }
+                if (!currentActiveNames.has(channel)) {
+                    this.ytCustomChannels.unshift({
+                        id: `custom-ch-${Date.now()}`,
+                        name: channel,
+                        region: region,
+                        tag: region === "TW" ? "自訂台灣" : (region === "JP" ? "自訂日本" : "自訂全球"),
+                        desc: `使用者自訂新增之「${channel}」頻道`,
+                        isCustom: true
+                    });
+                    localStorage.setItem("aero_yt_custom_channels", JSON.stringify(this.ytCustomChannels));
                 }
 
                 const newVideo = {
@@ -10636,7 +11203,7 @@ ${cfg.sourceText}`;
                     summary: summary,
                     featured: true,
                     viewsText: "自訂收藏",
-                    tags: ["自訂收藏", "AI研討"]
+                    tags: [channel, "自訂收藏", "AI研討"]
                 };
 
                 this.ytCustomVideos.unshift(newVideo);
@@ -10645,8 +11212,10 @@ ${cfg.sourceText}`;
                 localStorage.setItem("aero_yt_bookmarks", JSON.stringify([...this.ytBookmarks]));
 
                 destroyDialog();
-                this.showToast("已成功將自選影片新增至 AI 研習清單！");
+                this.ytActiveChannel = channel;
+                this.refreshYoutubeHubChannelsAndMetrics();
                 this.updateYoutubeHubGrid();
+                this.showToast(`已成功新增影片並同步加入「${channel}」頻道！`);
             };
         }
     }
