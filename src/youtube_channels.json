@@ -1,0 +1,24 @@
+{
+    "_comment": "主題四 YouTube AI 影音中樞：自動同步之繁體中文 AI 頻道清單。新增頻道時填入 name 與 query（channelId 可留空，同步腳本會自動搜尋）。type: tutorial = 一律歸類 AI 教學；news = 一律歸類 AI 資訊；mixed = 依影片標題自動判斷。",
+    "channels": [
+        {"id": "papaya", "name": "PAPAYA 電腦教室", "channelId": "UCdEpz2A4DzV__4C1x2quKLw", "query": "PAPAYA 電腦教室", "type": "tutorial", "tag": "AI 工具教學", "desc": "生成式 AI 工具、提示詞與辦公應用的實用教學"},
+        {"id": "meiko", "name": "Meiko微課頻道", "channelId": "UCEdLxhMDvG93XoF7zTZaEbQ", "query": "Meiko微課頻道", "type": "tutorial", "tag": "職場 AI 應用", "desc": "Gemini、ChatGPT、Copilot 職場自動化實戰"},
+        {"id": "hungyi", "name": "李宏毅 Hung-yi Lee", "channelId": "UC2ggjtuuWvxrHHHiaDH1dlQ", "query": "Hung-yi Lee", "type": "tutorial", "tag": "AI 學術課程", "desc": "台大生成式 AI 與機器學習課程"},
+        {"id": "largitdata", "name": "大數軟體", "channelId": "UCFdTiwvDjyc62DBWrlYDtlQ", "query": "大數軟體有限公司", "type": "tutorial", "tag": "AI 開發實作", "desc": "Vibe Coding、Claude Code、AI 自動化與資料工程"},
+        {"id": "yanqiu", "name": "燕秋老師教學頻道", "channelId": "UC8LZYIbGBOhTApJ09y9ldnQ", "query": "燕秋老師", "type": "tutorial", "tag": "AI 研習講座", "desc": "Google AI、Gemini 與 Canva AI 研習講座完整錄影"},
+        {"id": "hexschool", "name": "六角學院", "channelId": "UC-b2nGm0xLzic38Byti0VjA", "query": "六角學院", "type": "tutorial", "tag": "AI 開發實作", "desc": "AI Coding 入門與 AI 輔助開發專題"},
+        {"id": "pengpeng", "name": "彭彭的課程", "channelId": "UCguZS-y7codLSt6vpkVdnKg", "query": "彭彭的課程", "type": "tutorial", "tag": "AI 開發實作", "desc": "Codex、Python 與 AI 應用程式開發實測"},
+        {"id": "aj", "name": "欸那個AJ", "channelId": "UCToCyBRLhzJ__vmewBf5rIg", "query": "欸那個AJ", "type": "mixed", "tag": "AI 新功能實測", "desc": "ChatGPT、Gemini 等 AI 新功能第一手實測"},
+        {"id": "garychen", "name": "Gary Chen", "channelId": "UC9C3t-3ocL0LiwGRD0gBJ8A", "query": "Gary Chen RAG", "type": "tutorial", "tag": "AI 技術原理", "desc": "RAG、知識庫與 AI 技術原理白話教學"},
+        {"id": "weiwei", "name": "維維 AI 技術工坊", "channelId": "UCckzCRJZkoCNil5qz49dt6Q", "query": "維維 AI 技術工坊", "type": "tutorial", "tag": "AI 技術原理", "desc": "AI Skill、Agent 與生成式 AI 概念解說"},
+        {"id": "jay", "name": "傑少 JAY", "channelId": "UCz-Sx71_C4d3AYFBj6e3ENw", "query": "傑少 JAY AI", "type": "mixed", "tag": "AI 工具實測", "desc": "AI 助理、Agent 與一人公司 AI 工作流"},
+        {"id": "fanko", "name": "Fanko AI範式", "channelId": "UCCNBjB4bwVtcoRjFH-q8hYg", "query": "Fanko AI範式", "type": "tutorial", "tag": "AI 工具教學", "desc": "NotebookLM、Gemini 等 AI 工具新手教學"},
+        {"id": "kelly", "name": "Kelly Tsai", "channelId": "UCfbMslS3NmcGO4WIikSoYSA", "query": "Kelly Tsai AI Agent", "type": "tutorial", "tag": "AI Agent", "desc": "AI Agent 架構與自動化應用教學"},
+        {"id": "j3m", "name": "J3M 一分鐘AI教學", "channelId": "UCi-eUlDu49riTFRhxgSgmUQ", "query": "J3M 一分鐘AI教學", "type": "tutorial", "tag": "AI 工具教學", "desc": "Gemini、NotebookLM 等 AI 工具快速上手"},
+        {"id": "kong", "name": "孔老師AI研習社", "channelId": "UCpnBpREMjMNFvLTLnc2iLPQ", "query": "孔老師AI研習社", "type": "tutorial", "tag": "AI 工具教學", "desc": "ChatGPT 等 AI 工具完整功能教學"},
+        {"id": "kobo", "name": "可波 AI 白話", "channelId": "UClPRwe212FglaJepsIgURWg", "query": "可波 AI 白話", "type": "mixed", "tag": "AI 白話解說", "desc": "以白話方式說明 AI 新功能與使用方案"},
+        {"id": "qubo", "name": "曲博科技教室", "channelId": "UCq8Xi8muhehxRMIK76I1jog", "query": "曲博科技教室", "type": "news", "tag": "AI 產業趨勢", "desc": "AI 晶片、算力與科技產業深度解析"},
+        {"id": "bnext", "name": "數位時代", "channelId": "UCEM0RnhFSxmk1vNQdNThYKQ", "query": "數位時代 BusinessNext", "type": "news", "tag": "AI 產業新聞", "desc": "台灣科技與 AI 產業新聞報導"},
+        {"id": "techbang", "name": "T客邦", "channelId": "UC9IyDJ6vlG50iYjXGQpwwOQ", "query": "T客邦", "type": "news", "tag": "AI 科技資訊", "desc": "AI 工具與新功能資訊報導"}
+    ]
+}

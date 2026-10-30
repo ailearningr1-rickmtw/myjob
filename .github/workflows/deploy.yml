@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -24,6 +26,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync YouTube AI Channels
+        run: python src/sync_youtube_channels.py
+        continue-on-error: true
 
       - name: Ensure 404.html exists for SPA routing
         run: cp public/index.html public/404.html

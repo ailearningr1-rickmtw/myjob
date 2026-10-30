@@ -9123,3 +9123,470 @@ html[data-theme="dark"] .rpa-step-badge {
     padding: 0.1rem 0.42rem;
     border-radius: 4px;
 }
+
+
+/* ==========================================================================
+   YouTube AI 科技影音中樞（繁體中文 AI 最新資訊與 AI 教學專用樣式）
+   ========================================================================== */
+
+.ytg-hub {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.ytg-loading-text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* 頂部同步狀態列 */
+.ytg-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.15rem;
+}
+
+.ytg-status-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    flex: 1 1 320px;
+}
+
+.ytg-status-text strong {
+    color: var(--text-primary);
+    font-size: 0.98rem;
+}
+
+.ytg-status-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+/* 多功能篩選面板 */
+.ytg-filter-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+}
+
+.ytg-filter-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.ytg-filter-label {
+    min-width: 48px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    padding-top: 0.35rem;
+    letter-spacing: 0.05em;
+}
+
+.ytg-chip-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    flex: 1 1 280px;
+}
+
+.ytg-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    line-height: 1.3;
+}
+
+.ytg-chip:hover {
+    border-color: var(--accent-teal);
+    color: var(--text-primary);
+}
+
+.ytg-chip.is-active {
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.25);
+}
+
+.ytg-chip-count {
+    font-size: 0.8rem;
+    font-weight: 800;
+    opacity: 0.85;
+    background: rgba(0, 0, 0, 0.08);
+    padding: 0.05rem 0.45rem;
+    border-radius: var(--radius-pill);
+}
+
+.ytg-chip.is-active .ytg-chip-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+.ytg-channel-chip.is-empty {
+    opacity: 0.55;
+}
+
+.ytg-search-input {
+    flex: 1 1 300px;
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.5rem 0.85rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.ytg-search-input:focus {
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+.ytg-result-summary {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    padding: 0 0.25rem;
+}
+
+/* 頻道分組清單 */
+.ytg-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.ytg-group {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ytg-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 1.5px solid var(--border-subtle);
+    padding-bottom: 0.75rem;
+}
+
+.ytg-group-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.ytg-group-title {
+    font-size: 1.18rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.ytg-group-tag {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+    background: rgba(20, 184, 166, 0.12);
+    border: 1px solid rgba(20, 184, 166, 0.35);
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+}
+
+.ytg-group-meta {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* 影片卡片網格 */
+.ytg-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.ytg-card {
+    background: var(--bg-surface-hover);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.ytg-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-teal);
+}
+
+.ytg-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    padding: 0;
+    border: none;
+    background: #000000;
+    cursor: pointer;
+    overflow: hidden;
+    display: block;
+}
+
+.ytg-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-fast);
+}
+
+.ytg-thumb:hover img {
+    transform: scale(1.04);
+}
+
+.ytg-duration {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.82);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+}
+
+.ytg-cat-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    color: #ffffff;
+}
+
+.ytg-cat-badge.is-tutorial {
+    background: rgba(13, 148, 136, 0.92);
+}
+
+.ytg-cat-badge.is-news {
+    background: rgba(37, 99, 235, 0.92);
+}
+
+.ytg-cat-badge.is-inline {
+    position: static;
+    display: inline-block;
+}
+
+.ytg-card-body {
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.ytg-card-channel {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+}
+
+.ytg-card-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.45;
+    color: var(--text-primary);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.75em;
+}
+
+.ytg-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+
+.ytg-card-meta .ytg-time {
+    color: var(--text-secondary);
+}
+
+.ytg-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.4rem;
+    border-top: 1px dashed var(--border-subtle);
+}
+
+.ytg-link-btn {
+    flex: 1;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.ytg-link-btn:hover {
+    border-color: var(--accent-teal);
+    color: var(--text-primary);
+}
+
+.ytg-link-btn.is-on {
+    background: rgba(20, 184, 166, 0.12);
+    border-color: var(--accent-teal);
+    color: var(--accent-teal);
+}
+
+.ytg-more-btn {
+    align-self: center;
+    background: var(--bg-surface-hover);
+    border: 1.5px dashed var(--border-light);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 800;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.ytg-more-btn:hover {
+    border-color: var(--accent-teal);
+    color: var(--text-primary);
+    background: rgba(20, 184, 166, 0.08);
+}
+
+.ytg-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: var(--bg-surface);
+    border: 1.5px dashed var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-secondary);
+}
+
+/* 頻道管理視窗 */
+.ytg-manager-card {
+    max-width: 620px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.ytg-manager-hint {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.ytg-manager-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: auto;
+    max-height: 380px;
+}
+
+.ytg-manager-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-hover);
+    border: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+}
+
+.ytg-manager-label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.ytg-manager-label input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--accent-teal);
+}
+
+.ytg-manager-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
