@@ -10,16 +10,16 @@ const WORKSPACE_THEMES = [
     {
         id: "theme-01",
         code: "MOD-01",
-        navShortName: "任務專案",
-        title: "主題一：任務與專案中樞",
-        subtitle: "Task & Project Nexus",
-        status: "專案中樞",
-        description: "整合日常工作待辦、專案進度追蹤、里程碑檢視與優先級排程的核心管理區塊。",
-        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>`,
+        navShortName: "提示詞庫",
+        title: "主題一：架構化 AI 提示詞資料庫與任務中樞",
+        subtitle: "Structured AI Prompt Vault & Knowledge Nexus",
+        status: "架構化詞庫已啟用",
+        description: "專為各類辦公業務設計之架構化提示詞知識庫。支援類別檢索、變數填空測試、一鍵複製、新增與編輯管理，協助團隊標準化與沉澱提示詞資產。",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><path d="M9 7h6"></path><path d="M9 11h6"></path><path d="M9 15h4"></path></svg>`,
         slots: [
-            { name: "每日重點工作清單與看板", tag: "SLOT-1A", detail: "支援拖曳狀態與優先級標記的輕量化工作看板。" },
-            { name: "專案時程與里程碑追蹤", tag: "SLOT-1B", detail: "視覺化檢視各專案階段目標與交付期限。" },
-            { name: "會議紀錄與行動項目追蹤", tag: "SLOT-1C", detail: "快速整理會議結論並轉化為具體可執行任務。" }
+            { name: "架構化公務與專案提示詞庫 (已啟用)", tag: "VAULT-01", detail: "涵蓋公務簽呈、會議摘要、STAR 週報等 10 組經實證之專業結構化範本。" },
+            { name: "動態變數填空與即時測試中樞 (已啟用)", tag: "PLAYGROUND", detail: "自動解析提示詞動態變數，填表即時合成完整提示詞並支援一鍵複製。" },
+            { name: "個人化詞庫管理與離線備份 (已啟用)", tag: "CRUD & BACKUP", detail: "支援新增、修改、刪除、星號收藏，以及 JSON 格式匯出與匯入備份。" }
         ]
     },
     {
@@ -407,8 +407,176 @@ const STORAGE_KEYS = {
     VAULT_UNLOCKED_SESSION: "aero_workspace_vault_unlocked",
     RPA_PASSCODE: "aero_workspace_vault_passcode_8char",
     RPA_UNLOCKED_SESSION: "aero_workspace_vault_unlocked",
-    RPA_LOCAL_GEMINI_KEY: "aero_workspace_rpa_local_gemini_key"
+    RPA_LOCAL_GEMINI_KEY: "aero_workspace_rpa_local_gemini_key",
+    PROMPT_VAULT: "aero_prompt_vault_v1",
+    PROMPT_BOOKMARKS: "aero_prompt_bookmarks_v1"
 };
+
+/**
+ * 主題一：10 組預設架構化 AI 提示詞範本資料庫
+ */
+const DEFAULT_PROMPT_VAULT_TEMPLATES = [
+    {
+        "id": "pv-official-doc-01",
+        "title": "公務簽呈與標準行政陳核架構",
+        "category": "公務行政",
+        "role": "資深公務行政專員與公文法規審查顧問",
+        "objective": "依據公務法規擬定條理分明、用字合規、層次清晰之公務簽呈草案",
+        "desc": "標準「主旨、說明、擬辦」三段式架構，符合公文程式條例與公務審核標準用語。",
+        "tags": [
+            "公務行政",
+            "簽呈陳核",
+            "公文程式",
+            "公務用語"
+        ],
+        "template": "請你扮演「{公務行政專員與法規顧問}」，協助我根據以下背景資料，擬定一份標準的內部陳核「簽呈」草案。\n\n【陳核事項資料】\n1. 簽辦事由主旨：{主旨事項}\n2. 法令或專案依據：{辦理法令或依據}\n3. 現況背景與待決問題：{現況說明與待解決問題}\n4. 擬採行具體措施或方案評估：{擬採行方案與經費或配套}\n5. 簽陳呈閱層級與建議批示方向：{呈閱長官與批示方向}\n\n【撰擬輸出規範】\n請以標準公務簽呈格式輸出，包含：\n一、主旨：簡明扼要，一行內清楚表達簽辦目的與核心訴求。\n二、說明：\n  (一) 敘明辦理依據與起因。\n  (二) 條列分析現況問題、需求急迫性或數據指標。\n  (三) 說明方案規劃、期程安排、所需預算來源與各單位協調結論。\n三、擬辦：條列提出具體、可行、可供首長或主管直接決行批示之事項（例如：奉核後辦理招標、會辦相關單位研議等）。\n文字風格請嚴格使用繁體中文、公務合規語氣（精準、客觀、不帶個人臆測）。",
+        "outputRules": "標準三段式（主旨、說明、擬辦），公務書面語氣，繁體中文。"
+    },
+    {
+        "id": "pv-meeting-summary-02",
+        "title": "會議逐字稿重點彙整與待辦行動追蹤清單",
+        "category": "會議專案",
+        "role": "資深專案管理秘書與敏捷流程專家",
+        "objective": "將冗長雜亂的會議逐字稿或口頭討論筆記，轉化為結構清晰的決議與行動清單",
+        "desc": "自動抽離寒暄廢話，萃取核心決議、跨部門共識、具體待辦事項（負責人/期限）。",
+        "tags": [
+            "會議紀錄",
+            "行動清單",
+            "決議事項",
+            "專案管理"
+        ],
+        "template": "請你扮演「{資深專案管理秘書}」，將以下會議原始紀錄整理為一份高度專業、重點分明的「會議摘要與行動追蹤表」。\n\n【會議基本資訊】\n會議主題：{會議名稱}\n與會人員或單位：{與會人員與部門}\n會議原始紀錄或逐字稿：\n{會議原始筆記或逐字稿內容}\n\n【輸出結構規範】\n1. 會議核心目標與背景簡述（3 句以內總括核心主軸）。\n2. 重要決議事項（Decision Log）：條列本次會議各方達成共識之具體定案事項。\n3. 待辦行動清單（Action Items Table）：請以 Markdown 表格呈現，欄位包含：\n   | 序號 | 具體行動項目 (Action Item) | 主責人員/單位 | 完成期限 (Due Date) | 預期產出/驗收標準 |\n4. 待確認或後續追蹤事項（Open Issues）：尚未取得共識、需會後進一步調查或跨單位確認的議題。\n全程使用繁體中文，語氣精煉專業，去除口語贅字。",
+        "outputRules": "Markdown 結構排版，條理分明，包含行動矩陣表格。"
+    },
+    {
+        "id": "pv-weekly-report-03",
+        "title": "STAR 原則工作週報與專案里程碑回報",
+        "category": "會議專案",
+        "role": "高階專案經理與跨部門溝通專家",
+        "objective": "運用 STAR 原則將零散的工作日誌彙整為具備量化成果的工作週報",
+        "desc": "突顯已完成里程碑、實際數據成效，並精確呈報阻礙事項與下週資源排程。",
+        "tags": [
+            "工作週報",
+            "STAR原則",
+            "里程碑",
+            "進度呈報"
+        ],
+        "template": "請你扮演「{高階專案顧問}」，協助我將以下工作事項整理為一份符合 STAR 原則、向高階主管呈報的「專業工作週報」。\n\n【工作回報基本資料】\n本週填報週期：{回報週別或日期區間}\n填報同仁與專案組別：{姓名與所屬專案}\n本週完成要項與工作內容：\n{本週完成之各項任務與工作內容}\n遇到的困難、瓶頸或需主管協調資源：\n{遭遇阻礙或跨單位協調需求}\n下週預計推進重點：\n{下週主要工作排程與目標}\n\n【排版規範】\n一、本週亮點成果總覽（Executive Summary，3 點條列最核心的進展）。\n二、專案進度推進細節（按專案或任務類別分組，各項套用情境S-任務T-行動A-成果R，強調具體量化成果）。\n三、問題障礙與風險預警（說明當前問題、潛在影響、目前已採取的應變處置，以及需要主管協助之處）。\n四、下週預計里程碑交付計畫（標註預計完成時間節點）。\n請使用繁體中文，行文精確客觀、不誇大，展現專業執行力。",
+        "outputRules": "STAR 原則分段，量化成果導向，專業清晰。"
+    },
+    {
+        "id": "pv-excel-vba-04",
+        "title": "Excel 複雜邏輯公式與 VBA 巨集自動化",
+        "category": "資料分析",
+        "role": "微軟認證 Excel 專家與 VBA 自動化工程師",
+        "objective": "針對繁瑣重複的試算表運算與整理，提供最優公式解法與一鍵巨集代碼",
+        "desc": "涵蓋 XLOOKUP、INDEX/MATCH、動態陣列，以及包含完整錯誤處理的 VBA 程式碼。",
+        "tags": [
+            "Excel",
+            "VBA巨集",
+            "試算表公式",
+            "資料清理"
+        ],
+        "template": "請你扮演「{Excel 自動化與資料處理專家}」，針對我的試算表處理需求，提供最佳解法。\n\n【試算表資訊】\n1. 工作表結構與欄位說明：\n{工作表名稱與各欄位說明}\n2. 想要達成的運算或自動化目標：\n{資料清理計算或比對目標}\n3. 偏好的解決方案類型：{偏好方案（例如：工作表公式／Power Query 步驟／VBA 巨集代碼）}\n4. 特殊限制或例外狀況：{例外規則或相容性版本要求}\n\n【輸出規範】\n1. 若提供工作表公式：\n   - 給出完整公式字串（相容繁體中文版 Excel）。\n   - 逐段拆解公式運作原理（如：判斷條件、陣列處理、錯誤攔截 IFERROR）。\n2. 若提供 VBA 巨集：\n   - 提供完整可直接複製貼上至 VBE 模組的程式碼。\n   - 包含完整的註解說明、防呆機制（避免資料覆蓋或空值錯誤）、關閉螢幕更新加速（Application.ScreenUpdating = False）。\n   - 清楚標示使用者如何開啟開發人員工具並執行此巨集。\n全繁體中文輸出，代碼符合高效處理標準。",
+        "outputRules": "提供公式與代碼區塊，附白話拆解與使用防呆步驟。"
+    },
+    {
+        "id": "pv-python-auto-05",
+        "title": "Python 3.11+ 辦公自動化與批次處理腳本",
+        "category": "程式開發",
+        "role": "資深 Python 後端與辦公自動化架構師",
+        "objective": "撰寫強健、高相容性且易於執行的 Python 批次處理腳本",
+        "desc": "遵循 PEP 8、具備 Type Hints、完整例外處理與詳細中文註解，免去人工逐筆操作。",
+        "tags": [
+            "Python",
+            "自動化腳本",
+            "批次處理",
+            "資料工程"
+        ],
+        "template": "請你扮演「{資深 Python 自動化工程師}」，遵循 PEP 8 與 Python 3.11+ 規範，為我撰寫一份完整的自動化批次處理腳本。\n\n【開發需求說明】\n1. 任務目標：{批次處理任務目標}\n2. 輸入資料格式與來源：{輸入檔案格式（如多個 CSV/Excel/PDF/圖片/資料夾）}\n3. 資料轉換與處理邏輯：{具體運算轉換、過濾或彙整規則}\n4. 預期輸出產物：{輸出格式、路徑或報表結構}\n5. 限制與套件偏好：{是否有指定套件（如 pandas/openpyxl/pathlib 等）或要求純標準庫}\n\n【程式碼撰寫規範】\n1. 嚴格使用 Python 3.11+ 語法，加入完整 Type Hints。\n2. 結構模組化，包含主入口點 `if __name__ == \"__main__\":` 與清楚的各函式劃分。\n3. 加入強健的例外處理機制（try-except 攔截檔案遺失或格式錯誤，印出具體提示）。\n4. 包含處理進度提示（如 print 當前處理第幾筆、完成總結耗時）。\n5. 撰寫完整繁體中文 Docstring 與關鍵程式碼行註解。\n6. 在腳本開頭備註 `pip install` 相依套件指令及執行範例。",
+        "outputRules": "PEP 8 規範，Type Hints，完整中文註解與錯誤處理。"
+    },
+    {
+        "id": "pv-business-email-06",
+        "title": "專業商務書信撰擬與三種語氣潤飾",
+        "category": "企劃文案",
+        "role": "國際商務溝通顧問與跨國企業特助",
+        "objective": "將草稿或口頭要點轉化為用詞得體、分寸拿捏精準的專業商務信件",
+        "desc": "同時產出「正式嚴謹」、「溫和得體」、「簡潔有力」三種版本，兼具繁中與英文雙語對照。",
+        "tags": [
+            "商務書信",
+            "Email撰寫",
+            "雙語對照",
+            "溝通語氣"
+        ],
+        "template": "請你扮演「{國際商務溝通顧問}」，協助我撰寫一封兼顧商務禮儀與溝通目標的電子郵件。\n\n【信件背景資訊】\n收件對象與職級關係：{收件人職稱與雙方合作關係}\n信件主旨與核心目的：{信件核心目的與想要推動的事項}\n主要傳達訊息要點：\n{必須提及的具體事實、時程、交付物或要求}\n期望收件人採取之行動：{期望對方回覆、確認或採取的具體動作}\n原中文草稿（若有）：{原有草稿或要點描述}\n\n【輸出內容要求】\n請提供中英雙語對照，並針對相同內容提供三種不同語氣版本：\n1. 版本 A【正式嚴謹（Formal & Executive）】：適合向上呈報、合約洽談或首次合作夥伴。\n2. 版本 B【溫和得體（Warm & Collaborative）】：適合長期跨部門夥伴、日常協作。\n3. 版本 C【簡潔有力（Concise & Action-Oriented）】：適合主管快讀、行程催促或時效緊急事項。\n各版本皆須包含「主旨列（Subject）」與完整信件內文，並簡短說明該版本的用詞亮點。",
+        "outputRules": "中英雙語對照，提供三種語氣版本與主旨列。"
+    },
+    {
+        "id": "pv-doc-digest-07",
+        "title": "長篇深度報告與政策法規重点速讀評析",
+        "category": "研究分析",
+        "role": "公務智庫資深產業研究員與政策分析專家",
+        "objective": "迅速提煉數萬字長篇報告或政策法規的核心價值、亮點與具體執行建議",
+        "desc": "萃取執行摘要 (Executive Summary)、四大核心支柱、潛在衝擊與落實行動建議。",
+        "tags": [
+            "長文速讀",
+            "文獻研析",
+            "政策評析",
+            "智庫報告"
+        ],
+        "template": "請你扮演「{資深智庫研究員}」，為我深度研讀並摘要以下長篇文件或技術政策報告。\n\n【文獻基本資訊】\n文件名稱/來源：{文件標題與來源機關}\n我最關注的分析面向：{特定關注焦點（如法規合規性、技術可行性、預算衝擊等）}\n文件內文或摘要長篇內容：\n{長文內容或目錄架構}\n\n【分析產出架構】\n一、執行摘要（Executive Summary）：以 200 字內提煉全篇精華與核心立論。\n二、四大核心重點解析（Core Pillars）：條列說明最關鍵之 4 項制度變革、技術突破或政策規範。\n三、效益與潛在衝擊評估（SWOT/衝擊分析）：分析實施後的優勢機會，以及可能面臨之行政阻力、資安風險或法規瓶頸。\n四、實務因應與落地行動建議：列出相關機關或專案團隊可直接執行的第一步、第二步具體因應措施。\n全文嚴格使用繁體中文，論證嚴謹、架構井然有序。",
+        "outputRules": "智庫研究報告格式，深入淺出，繁體中文。"
+    },
+    {
+        "id": "pv-presentation-outline-08",
+        "title": "AI 簡報架構大綱與逐頁演講口稿設計",
+        "category": "企劃文案",
+        "role": "TED 級商務簡報架構師與演講教練",
+        "objective": "將複雜專案內容轉化為高說服力、節奏流暢的投影片架構與逐頁逐字稿",
+        "desc": "規劃每頁標題、版面視覺建議、核心 3 要點與講者口說逐字稿，告別文字堆砌。",
+        "tags": [
+            "簡報大綱",
+            "投影片設計",
+            "演講口稿",
+            "商業提案"
+        ],
+        "template": "請你扮演「{高階商務簡報架構師}」，為我設計一份具備高度說服力、視覺排版清楚的簡報架構與講稿。\n\n【簡報基本設定】\n簡報主題：{簡報題目與核心理念}\n目標聽眾：{聽眾身份、背景與知識水平}\n簡報場景與時間限制：{發表場合與預估時長（如 15 分鐘 / 10 頁）}\n預期達成目標：{希望聽眾在簡報結束後產生的共鳴或採取的行動}\n主要參考材料或專案背景：\n{簡報核心素材或內容要點}\n\n【逐頁輸出架構】\n請按頁數循序輸出（包含封面、問題痛點、核心解方、實例數據、執行期程、結語行動）：\n針對每一頁投影片，嚴格列出以下 4 項要素：\n1. 【頁碼與核心標題】：一行具衝擊力的主標題。\n2. 【視覺排版與配圖建議】：畫面呈現方式（如左右對比、三欄卡片、時間軸、流程圖），指引避免純文字。\n3. 【投影片版面精簡要點】：投影畫面上實際出現的 3 點極短要點（每點不超過 15 字）。\n4. 【講者演講口稿（逐字稿）】：講者此頁實際口頭講述的自然對話內容（約 150～200 字，包含起承轉合與轉場台詞）。\n全篇繁體中文，語言生動自然且具專業感染力。",
+        "outputRules": "逐頁標題 + 視覺建議 + 版面極簡要點 + 口說逐字稿。"
+    },
+    {
+        "id": "pv-cybersecurity-incident-09",
+        "title": "資通安全事件初步通報與根因分析報告",
+        "category": "資安治理",
+        "role": "國家資通安全防護應變專員與 ISMS 稽核顧問",
+        "objective": "迅速產出符合資通安全管理法規範之事件初報、調查評估與改善對策",
+        "desc": "涵蓋事件等級判定、受影響系統範疇、初步遏止作為、根本原因剖析與防範再發措施。",
+        "tags": [
+            "資安治理",
+            "事件通報",
+            "ISMS合規",
+            "防護基準"
+        ],
+        "template": "請你扮演「{國家資通安全應變專員}」，協助我根據當前發生的資安異常事件，撰擬一份符合資通安全管理法標準的「資通安全事件調查與初步通報報告」。\n\n【事件基礎紀錄】\n發現時間與通報者：{發生/發現時間點與通報人員}\n異常現象與通報起因：{觀察到的告警現象、受駭特徵或使用者反映異常}\n受影響之資通系統與設備：{受影響伺服器、網路段、資料庫或服務名稱}\n涉及個資或機敏資料狀況：{是否有個資外洩或資料遭竄改加密跡象}\n已採行之即時圍堵措施：{目前已完成之斷網、關機、隔離或變更密碼措施}\n\n【通報報告輸出架構】\n一、事件基本概要（通報單位、事件發生/知悉時間、初步通報等級評估：1級/2級/3級/4級與判斷理由）。\n二、受害範疇與損害評估（受影響系統名稱、資料受損程度、對業務營運之即時衝擊分析）。\n三、已採取之應變與防堵程序（包含證據保全措施、網路阻斷紀錄、受影響帳號停用作為）。\n四、技術根因剖析（Root Cause Analysis，推測之可能入侵路徑，如釣魚郵件、已知漏洞、弱密碼、未更新修補程式等）。\n五、後續復原進度與短中長期預防對策（條列短中長期技術改善與管理稽核加強計畫）。\n請嚴格使用繁體中文公務資安專業用語，語氣嚴謹確切。",
+        "outputRules": "合規資通安全通報標準格式，包含事件分級與 RCA 根因分析。"
+    },
+    {
+        "id": "pv-marketing-copy-10",
+        "title": "多元行銷社群文案與受眾痛點解方發想",
+        "category": "企劃文案",
+        "role": "頂尖行銷策略總監與社群文案大師",
+        "objective": "針對目標客群痛點，發想高轉化率、高互動性之全通路行銷文案",
+        "desc": "包含吸睛標題、痛點引導、獨特賣點 (USP) 介紹、社群問答與行動呼籲 (CTA)。",
+        "tags": [
+            "行銷文案",
+            "社群行銷",
+            "文案企劃",
+            "痛點共鳴"
+        ],
+        "template": "請你扮演「{資深內容行銷策略總監}」，協助我為以下推廣主題撰寫一系列高點擊、高互動的行銷宣傳文案。\n\n【推廣主體資訊】\n產品/服務/專案名稱：{宣傳主題或產品名稱}\n核心價值與主要特色：{最核心特色、賣點與解決的難題}\n目標受眾輪廓（TA）：{目標客群年齡、職業背景與日常痛點}\n主要發布管道：{發布平台（如 LINE 官方帳號、Facebook、EDM 電子報、宣傳海報）}\n促銷或活動誘因：{限時優惠、免費體驗、贈品或截止期限}\n\n【輸出文案組合】\n請一次產出以下 3 套不同風格之完整文案：\n1. 風格一【痛點擊中型】：先直擊讀者日常生活最困擾的痛點，再引出本服務如何一秒解決。\n2. 風格二【故事共鳴型】：以一位使用者的真實情境切入，描繪使用前後的鮮明對比。\n3. 風格三【極速吸睛型】：強調數據成就、時效緊迫性，適合快速滑過的社群受眾。\n每套文案皆需包含：\n- 3 組精選爆款標題供選擇\n- 內文段落（附適度條列重點）\n- 強而有力的行動呼籲（Call to Action）\n- 5 個相關主題 Hashtags。\n全文使用台灣常用繁體中文，流暢自然且具備說服力。",
+        "outputRules": "包含 3 種風格文案，含吸睛標題、痛點共鳴、CTA 與標籤。"
+    }
+];
 
 /**
  * 移植自 PPT_PROMPT_PRODUCE_V5.py：13 組「5+1 色彩計畫」色票定義
@@ -1180,6 +1348,7 @@ class WorkspaceApp {
         this.initClock();
         this.initScratchpad();
         this.initYoutubeState();
+        this.initPromptVaultState();
         this.bindEvents();
         this.handleInitialRoute();
     }
@@ -1555,9 +1724,9 @@ class WorkspaceApp {
 
         if (normalizedRoute === "theme-01") {
             if (!this.isThemeUnlocked("theme-01")) {
-                this.renderThemePasscodeGate(theme01Obj, () => this.renderFocusSection(theme01Obj));
+                this.renderThemePasscodeGate(theme01Obj, () => this.renderTheme01PromptHub(theme01Obj));
             } else {
-                this.renderFocusSection(theme01Obj);
+                this.renderTheme01PromptHub(theme01Obj);
             }
         } else if (normalizedRoute === "theme-02") {
             if (!this.isThemeUnlocked("theme-02")) {
@@ -8497,6 +8666,1069 @@ ${cfg.sourceText}`;
         }
     }
 
+
+    // =========================================================================
+    // 主題一：架構化 AI 提示詞資料庫與知識中樞 (Structured Prompt Vault)
+    // =========================================================================
+
+    initPromptVaultState() {
+        this.promptVault = this.loadPromptVault();
+        this.promptBookmarks = this.loadPromptBookmarks();
+        this.promptVaultActiveCategory = "全部";
+        this.promptVaultSearchQuery = "";
+        this.promptVaultSort = "default";
+    }
+
+    loadPromptVault() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEYS.PROMPT_VAULT);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    return parsed;
+                }
+            }
+        } catch (err) {
+            console.error("讀取提示詞資料庫失敗:", err);
+        }
+        const initial = JSON.parse(JSON.stringify(DEFAULT_PROMPT_VAULT_TEMPLATES));
+        try {
+            localStorage.setItem(STORAGE_KEYS.PROMPT_VAULT, JSON.stringify(initial));
+        } catch (e) {
+            console.warn("無法寫入初始提示詞資料庫至 localStorage:", e);
+        }
+        return initial;
+    }
+
+    savePromptVault() {
+        try {
+            localStorage.setItem(STORAGE_KEYS.PROMPT_VAULT, JSON.stringify(this.promptVault));
+        } catch (err) {
+            console.error("儲存提示詞資料庫失敗:", err);
+            this.showToast("儲存提示詞失敗，可能已超出瀏覽器儲存空間容量。");
+        }
+    }
+
+    loadPromptBookmarks() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEYS.PROMPT_BOOKMARKS);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) {
+                    return new Set(parsed);
+                }
+            }
+        } catch (err) {
+            console.error("讀取提示詞收藏失敗:", err);
+        }
+        return new Set();
+    }
+
+    savePromptBookmarks() {
+        try {
+            const arr = Array.from(this.promptBookmarks);
+            localStorage.setItem(STORAGE_KEYS.PROMPT_BOOKMARKS, JSON.stringify(arr));
+        } catch (err) {
+            console.error("儲存提示詞收藏失敗:", err);
+        }
+    }
+
+    togglePromptBookmark(promptId) {
+        if (!promptId) return;
+        if (this.promptBookmarks.has(promptId)) {
+            this.promptBookmarks.delete(promptId);
+            this.showToast("已從我的收藏中移除");
+        } else {
+            this.promptBookmarks.add(promptId);
+            this.showToast("已加入我的收藏");
+        }
+        this.savePromptBookmarks();
+        const theme01Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-01");
+        this.renderTheme01PromptHub(theme01Obj);
+    }
+
+    extractPromptVariables(templateStr) {
+        if (!templateStr) return [];
+        const pattern = /\{([^{}\n]+)\}/g;
+        const matches = [];
+        let match;
+        while ((match = pattern.exec(templateStr)) !== null) {
+            const varName = match[1].trim();
+            if (varName && !matches.includes(varName)) {
+                matches.push(varName);
+            }
+        }
+        return matches;
+    }
+
+    renderTheme01PromptHub(theme) {
+        if (!this.focusSection) return;
+
+        // 登入前通行碼驗證閘門 (長度 8 碼)
+        if (!this.isThemeUnlocked(theme.id) && !this.isVaultUnlocked()) {
+            this.renderThemePasscodeGate(theme, () => {
+                this.renderTheme01PromptHub(theme);
+            });
+            return;
+        }
+
+        const prompts = this.promptVault || [];
+        const totalPrompts = prompts.length;
+
+        // 統計領域分類
+        const categoriesSet = new Set(prompts.map((p) => p.category || "未分類"));
+        const totalCategories = categoriesSet.size;
+
+        // 統計總動態變數數
+        let totalVarsCount = 0;
+        prompts.forEach((p) => {
+            totalVarsCount += this.extractPromptVariables(p.template).length;
+        });
+
+        // 收藏數
+        const totalBookmarks = this.promptBookmarks ? this.promptBookmarks.size : 0;
+
+        // 領域清單與計數
+        const categoryCounts = {
+            "全部": totalPrompts,
+            "我的收藏": 0,
+            "自訂新增": 0
+        };
+
+        prompts.forEach((p) => {
+            const cat = p.category || "未分類";
+            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+            if (this.promptBookmarks && this.promptBookmarks.has(p.id)) {
+                categoryCounts["我的收藏"] += 1;
+            }
+            if (p.isCustom || !p.id.startsWith("pv-")) {
+                categoryCounts["自訂新增"] += 1;
+            }
+        });
+
+        // 篩選清單
+        let filtered = prompts.filter((p) => {
+            // 分類篩選
+            if (this.promptVaultActiveCategory === "我的收藏") {
+                if (!this.promptBookmarks.has(p.id)) return false;
+            } else if (this.promptVaultActiveCategory === "自訂新增") {
+                if (!p.isCustom && p.id.startsWith("pv-")) return false;
+            } else if (this.promptVaultActiveCategory !== "全部") {
+                if (p.category !== this.promptVaultActiveCategory) return false;
+            }
+
+            // 關鍵字檢索 (標題、角色、目標、標籤、內文、輸出規範)
+            if (this.promptVaultSearchQuery) {
+                const q = this.promptVaultSearchQuery.toLowerCase();
+                const titleMatch = (p.title || "").toLowerCase().includes(q);
+                const roleMatch = (p.role || "").toLowerCase().includes(q);
+                const objMatch = (p.objective || "").toLowerCase().includes(q);
+                const descMatch = (p.desc || "").toLowerCase().includes(q);
+                const tmplMatch = (p.template || "").toLowerCase().includes(q);
+                const tagMatch = Array.isArray(p.tags) && p.tags.some((t) => t.toLowerCase().includes(q));
+                const catMatch = (p.category || "").toLowerCase().includes(q);
+                if (!titleMatch && !roleMatch && !objMatch && !descMatch && !tmplMatch && !tagMatch && !catMatch) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        // 預設分類按鈕項目清單
+        const standardCategories = ["全部", "我的收藏", "公務行政", "會議專案", "資料分析", "程式開發", "企劃文案", "資安治理", "自訂新增"];
+        // 將其他使用者可能自行新增的分類納入
+        Object.keys(categoryCounts).forEach((c) => {
+            if (!standardCategories.includes(c)) {
+                standardCategories.push(c);
+            }
+        });
+
+        const categoryTabsHtml = standardCategories.map((cat) => {
+            const count = categoryCounts[cat] || 0;
+            const isActive = this.promptVaultActiveCategory === cat;
+            return `
+                <button type="button" class="pv-category-chip ${isActive ? "is-active" : ""}" data-pv-cat="${this.escapeHtml(cat)}">
+                    <span>${this.escapeHtml(cat)}</span>
+                    <span class="pv-cat-count">${count}</span>
+                </button>
+            `;
+        }).join("");
+
+        const cardsGridHtml = this.renderPromptCardsGridHtml(filtered);
+
+        this.focusSection.innerHTML = `
+            <div class="theme-focus-panel pv-vault-container">
+                <div class="focus-header pv-header">
+                    <div class="focus-title-group">
+                        <div class="theme-meta-tags">
+                            <span class="theme-code-badge">${this.escapeHtml(theme.code)}</span>
+                            <span class="theme-status-badge">架構化 AI 提示詞庫與任務中樞</span>
+                        </div>
+                        <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
+                        <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
+                    </div>
+                    <div class="pv-header-actions">
+                        <button type="button" class="back-overview-btn" id="pv-back-overview-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>返回五大主題總覽</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 頂部數據摘要儀表列 -->
+                <div class="pv-stats-bar">
+                    <div class="pv-stat-card">
+                        <div class="pv-stat-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        </div>
+                        <div class="pv-stat-content">
+                            <span class="pv-stat-num">${totalPrompts}</span>
+                            <span class="pv-stat-label">收錄提示詞總數</span>
+                        </div>
+                    </div>
+                    <div class="pv-stat-card">
+                        <div class="pv-stat-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </div>
+                        <div class="pv-stat-content">
+                            <span class="pv-stat-num">${totalCategories}</span>
+                            <span class="pv-stat-label">涵蓋專業領域</span>
+                        </div>
+                    </div>
+                    <div class="pv-stat-card">
+                        <div class="pv-stat-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
+                        <div class="pv-stat-content">
+                            <span class="pv-stat-num">${totalVarsCount}</span>
+                            <span class="pv-stat-label">動態填空變數節點</span>
+                        </div>
+                    </div>
+                    <div class="pv-stat-card">
+                        <div class="pv-stat-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                        <div class="pv-stat-content">
+                            <span class="pv-stat-num">${totalBookmarks}</span>
+                            <span class="pv-stat-label">我的常用收藏</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具列：關鍵字搜尋與功能按鈕 -->
+                <div class="pv-toolbar">
+                    <div class="pv-search-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="search" id="pv-search-input" class="pv-search-input" placeholder="搜尋提示詞標題、角色、任務目標、標籤或內文關鍵字..." value="${this.escapeHtml(this.promptVaultSearchQuery)}" />
+                    </div>
+                    <div class="pv-toolbar-btns">
+                        <button type="button" class="primary-btn pv-btn" id="pv-create-btn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>新增自訂提示詞</span>
+                        </button>
+                        <button type="button" class="secondary-btn pv-btn" id="pv-export-btn" title="將所有提示詞匯出為 JSON 備份檔">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>匯出 JSON 備份</span>
+                        </button>
+                        <button type="button" class="secondary-btn pv-btn" id="pv-import-btn" title="從本機 JSON 備份檔案匯入提示詞">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span>匯入 JSON 備份</span>
+                        </button>
+                        <button type="button" class="secondary-btn pv-btn pv-btn-ghost" id="pv-reset-btn" title="重設並還原系統預設的 10 組標準提示詞範本">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                            <span>重設預設範本</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 分類標籤切換列 -->
+                <div class="pv-category-tabs" id="pv-category-tabs">
+                    ${categoryTabsHtml}
+                </div>
+
+                <!-- 篩選統計資訊列 -->
+                <div class="pv-results-bar">
+                    <span class="pv-results-count">篩選結果：顯示 <strong>${filtered.length}</strong> 組提示詞（知識庫共收錄 ${totalPrompts} 組）</span>
+                    ${this.promptVaultSearchQuery ? `<span class="pv-active-filter-tag">關鍵字檢索：「${this.escapeHtml(this.promptVaultSearchQuery)}」<button type="button" id="pv-clear-search-btn" title="清除關鍵字">&times;</button></span>` : ""}
+                </div>
+
+                <!-- 提示詞卡片網格 -->
+                <div class="pv-cards-grid" id="pv-cards-grid">
+                    ${cardsGridHtml}
+                </div>
+            </div>
+        `;
+
+        this.bindTheme01PromptHubEvents(theme);
+    }
+
+    renderPromptCardsGridHtml(prompts) {
+        if (!prompts || prompts.length === 0) {
+            return `
+                <div class="pv-empty-state">
+                    <div class="pv-empty-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <h3 class="pv-empty-title">查無符合條件的提示詞範本</h3>
+                    <p class="pv-empty-desc">請嘗試更換篩選分類、清除搜尋關鍵字，或點擊上方「新增自訂提示詞」建立專屬架構。</p>
+                    <button type="button" class="primary-btn pv-empty-action-btn" id="pv-empty-create-btn">立即新增自訂提示詞</button>
+                </div>
+            `;
+        }
+
+        return prompts.map((p) => {
+            const isBookmarked = this.promptBookmarks && this.promptBookmarks.has(p.id);
+            const isCustom = p.isCustom || !p.id.startsWith("pv-");
+            const vars = this.extractPromptVariables(p.template);
+
+            const tagsHtml = (p.tags || []).map((t) => `
+                <span class="pv-tag-badge">${this.escapeHtml(t)}</span>
+            `).join("");
+
+            const varsPreviewHtml = vars.slice(0, 3).map((v) => `
+                <span class="pv-var-pill">{${this.escapeHtml(v)}}</span>
+            `).join("");
+            const remainingVarsCount = vars.length > 3 ? vars.length - 3 : 0;
+
+            return `
+                <article class="pv-card" data-prompt-id="${this.escapeHtml(p.id)}">
+                    <div class="pv-card-header">
+                        <div class="pv-card-badges">
+                            <span class="pv-category-badge">${this.escapeHtml(p.category || "公務通用")}</span>
+                            ${isCustom ? `<span class="pv-custom-badge">自訂範本</span>` : `<span class="pv-builtin-badge">內建標準</span>`}
+                        </div>
+                        <button type="button" class="pv-star-btn ${isBookmarked ? "is-bookmarked" : ""}" data-pv-bookmark-id="${this.escapeHtml(p.id)}" title="${isBookmarked ? "取消收藏" : "加入收藏"}" aria-label="收藏">
+                            <svg viewBox="0 0 24 24" fill="${isBookmarked ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <h3 class="pv-card-title">${this.escapeHtml(p.title)}</h3>
+
+                    <div class="pv-role-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>角色：${this.escapeHtml(p.role || "資深 AI 顧問")}</span>
+                    </div>
+
+                    <p class="pv-card-objective"><strong>任務目標：</strong>${this.escapeHtml(p.objective || p.desc || "")}</p>
+
+                    <div class="pv-card-vars-section">
+                        <span class="pv-vars-label">動態填空變數 (${vars.length})：</span>
+                        <div class="pv-vars-pills-row">
+                            ${varsPreviewHtml}
+                            ${remainingVarsCount > 0 ? `<span class="pv-var-more-pill">+${remainingVarsCount} 項</span>` : ""}
+                        </div>
+                    </div>
+
+                    <div class="pv-card-tags">
+                        ${tagsHtml}
+                    </div>
+
+                    <div class="pv-card-actions">
+                        <button type="button" class="primary-btn pv-card-btn pv-btn-play" data-pv-action="playground" data-pv-id="${this.escapeHtml(p.id)}" title="開啟變數填空介面，即時合成提示詞">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            <span>變數套用與測試</span>
+                        </button>
+                        <button type="button" class="secondary-btn pv-card-btn pv-btn-copy" data-pv-action="copy" data-pv-id="${this.escapeHtml(p.id)}" title="一鍵快速複製完整範本（保留 {變數} 佔位符）">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>一鍵複製範本</span>
+                        </button>
+                        <button type="button" class="secondary-btn pv-card-btn pv-btn-edit" data-pv-action="edit" data-pv-id="${this.escapeHtml(p.id)}" title="編輯此提示詞內容">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <span>編輯</span>
+                        </button>
+                        <button type="button" class="secondary-btn pv-card-btn pv-btn-delete" data-pv-action="delete" data-pv-id="${this.escapeHtml(p.id)}" title="刪除此提示詞">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            <span>刪除</span>
+                        </button>
+                    </div>
+                </article>
+            `;
+        }).join("");
+    }
+
+    bindTheme01PromptHubEvents(theme) {
+        // 返回主題總覽
+        const backBtn = document.getElementById("pv-back-overview-btn");
+        if (backBtn) {
+            backBtn.addEventListener("click", () => {
+                window.location.hash = "overview";
+            });
+        }
+
+        // 搜尋輸入框
+        const searchInput = document.getElementById("pv-search-input");
+        if (searchInput) {
+            searchInput.addEventListener("input", (e) => {
+                this.promptVaultSearchQuery = e.target.value.trim();
+                const filteredPrompts = this.getFilteredPrompts();
+                const gridEl = document.getElementById("pv-cards-grid");
+                if (gridEl) {
+                    gridEl.innerHTML = this.renderPromptCardsGridHtml(filteredPrompts);
+                }
+                const countEl = document.querySelector(".pv-results-count");
+                if (countEl) {
+                    countEl.innerHTML = `篩選結果：顯示 <strong>${filteredPrompts.length}</strong> 組提示詞（知識庫共收錄 ${this.promptVault.length} 組）`;
+                }
+            });
+        }
+
+        // 清除搜尋按鈕
+        const clearSearchBtn = document.getElementById("pv-clear-search-btn");
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener("click", () => {
+                this.promptVaultSearchQuery = "";
+                this.renderTheme01PromptHub(theme);
+            });
+        }
+
+        // 分類標籤點選
+        const categoryTabs = document.getElementById("pv-category-tabs");
+        if (categoryTabs) {
+            categoryTabs.addEventListener("click", (e) => {
+                const btn = e.target.closest(".pv-category-chip");
+                if (!btn) return;
+                const cat = btn.getAttribute("data-pv-cat");
+                if (!cat) return;
+                this.promptVaultActiveCategory = cat;
+                this.renderTheme01PromptHub(theme);
+            });
+        }
+
+        // 工具列按鈕：新增、匯出、匯入、重設
+        const createBtn = document.getElementById("pv-create-btn");
+        if (createBtn) {
+            createBtn.addEventListener("click", () => this.openPromptEditModal(null));
+        }
+
+        const emptyCreateBtn = document.getElementById("pv-empty-create-btn");
+        if (emptyCreateBtn) {
+            emptyCreateBtn.addEventListener("click", () => this.openPromptEditModal(null));
+        }
+
+        const exportBtn = document.getElementById("pv-export-btn");
+        if (exportBtn) {
+            exportBtn.addEventListener("click", () => this.exportPromptVaultJson());
+        }
+
+        const importBtn = document.getElementById("pv-import-btn");
+        if (importBtn) {
+            importBtn.addEventListener("click", () => this.openPromptImportModal());
+        }
+
+        const resetBtn = document.getElementById("pv-reset-btn");
+        if (resetBtn) {
+            resetBtn.addEventListener("click", () => this.resetPromptVaultToDefault());
+        }
+
+        // 卡片內部按鈕全域委派 (收藏、Playground、複製、編輯、刪除)
+        const gridEl = document.getElementById("pv-cards-grid");
+        if (gridEl) {
+            gridEl.addEventListener("click", (e) => {
+                // 點擊收藏按鈕
+                const bookmarkBtn = e.target.closest("[data-pv-bookmark-id]");
+                if (bookmarkBtn) {
+                    const id = bookmarkBtn.getAttribute("data-pv-bookmark-id");
+                    this.togglePromptBookmark(id);
+                    return;
+                }
+
+                // 點擊功能按鈕
+                const actionBtn = e.target.closest("[data-pv-action]");
+                if (actionBtn) {
+                    const action = actionBtn.getAttribute("data-pv-action");
+                    const id = actionBtn.getAttribute("data-pv-id");
+                    const targetPrompt = this.promptVault.find((p) => p.id === id);
+                    if (!targetPrompt) return;
+
+                    if (action === "playground") {
+                        this.openPromptPlaygroundModal(id);
+                    } else if (action === "copy") {
+                        navigator.clipboard.writeText(targetPrompt.template).then(() => {
+                            this.showToast(`已成功複製「${targetPrompt.title}」提示詞範本！`);
+                        }).catch(() => {
+                            this.showToast("剪貼簿複製失敗，請手動複製。");
+                        });
+                    } else if (action === "edit") {
+                        this.openPromptEditModal(id);
+                    } else if (action === "delete") {
+                        this.deletePrompt(id);
+                    }
+                }
+            });
+        }
+    }
+
+    getFilteredPrompts() {
+        const prompts = this.promptVault || [];
+        return prompts.filter((p) => {
+            if (this.promptVaultActiveCategory === "我的收藏") {
+                if (!this.promptBookmarks.has(p.id)) return false;
+            } else if (this.promptVaultActiveCategory === "自訂新增") {
+                if (!p.isCustom && p.id.startsWith("pv-")) return false;
+            } else if (this.promptVaultActiveCategory !== "全部") {
+                if (p.category !== this.promptVaultActiveCategory) return false;
+            }
+
+            if (this.promptVaultSearchQuery) {
+                const q = this.promptVaultSearchQuery.toLowerCase();
+                const titleMatch = (p.title || "").toLowerCase().includes(q);
+                const roleMatch = (p.role || "").toLowerCase().includes(q);
+                const objMatch = (p.objective || "").toLowerCase().includes(q);
+                const descMatch = (p.desc || "").toLowerCase().includes(q);
+                const tmplMatch = (p.template || "").toLowerCase().includes(q);
+                const tagMatch = Array.isArray(p.tags) && p.tags.some((t) => t.toLowerCase().includes(q));
+                const catMatch = (p.category || "").toLowerCase().includes(q);
+                if (!titleMatch && !roleMatch && !objMatch && !descMatch && !tmplMatch && !tagMatch && !catMatch) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+
+    /**
+     * 變數套用與測試中樞 (Prompt Playground Modal)
+     */
+    openPromptPlaygroundModal(promptId) {
+        const prompt = this.promptVault.find((p) => p.id === promptId);
+        if (!prompt) return;
+
+        const variables = this.extractPromptVariables(prompt.template);
+
+        // 移除已存在的彈窗
+        const oldModal = document.getElementById("pv-playground-modal");
+        if (oldModal) oldModal.remove();
+
+        const modalOverlay = document.createElement("div");
+        modalOverlay.id = "pv-playground-modal";
+        modalOverlay.className = "pv-modal-backdrop";
+
+        // 動態生成各變數輸入欄位
+        const formFieldsHtml = variables.map((varName, idx) => {
+            const isLongText = varName.includes("內容") || varName.includes("筆記") || varName.includes("逐字稿") || varName.includes("草稿") || varName.includes("大綱") || varName.includes("規則") || varName.includes("背景");
+            return `
+                <div class="pv-field-group">
+                    <label class="pv-field-label" for="pv-var-input-${idx}">
+                        <span class="pv-field-var-name">{${this.escapeHtml(varName)}}</span>
+                        <span class="pv-field-badge">變數 ${idx + 1}</span>
+                    </label>
+                    ${isLongText
+                        ? `<textarea id="pv-var-input-${idx}" class="pv-field-textarea" data-var-name="${this.escapeHtml(varName)}" rows="3" placeholder="請輸入「${this.escapeHtml(varName)}」之具體內容..."></textarea>`
+                        : `<input type="text" id="pv-var-input-${idx}" class="pv-field-input" data-var-name="${this.escapeHtml(varName)}" placeholder="請填寫「${this.escapeHtml(varName)}」..." />`
+                    }
+                </div>
+            `;
+        }).join("");
+
+        modalOverlay.innerHTML = `
+            <div class="pv-modal-card pv-modal-playground" role="dialog" aria-modal="true" aria-labelledby="pv-play-title">
+                <div class="pv-modal-header">
+                    <div class="pv-modal-title-group">
+                        <div class="pv-card-badges">
+                            <span class="pv-category-badge">${this.escapeHtml(prompt.category || "公務通用")}</span>
+                            <span class="pv-builtin-badge">變數填空中樞</span>
+                        </div>
+                        <h3 class="pv-modal-title" id="pv-play-title">${this.escapeHtml(prompt.title)}</h3>
+                        <p class="pv-modal-subtitle">${this.escapeHtml(prompt.role)} ｜ ${this.escapeHtml(prompt.objective)}</p>
+                    </div>
+                    <button type="button" class="pv-modal-close-btn" id="pv-play-close-x" aria-label="關閉">&times;</button>
+                </div>
+
+                <div class="pv-play-body">
+                    <div class="pv-play-col pv-play-inputs-col">
+                        <div class="pv-col-header">
+                            <h4 class="pv-col-title">1. 動態變數填空設定 (${variables.length} 個參數)</h4>
+                            <p class="pv-col-desc">依序填寫以下欄位，右側將即時組裝並預覽完整提示詞內容：</p>
+                        </div>
+                        <form class="pv-play-form" id="pv-play-form">
+                            ${formFieldsHtml.length > 0 ? formFieldsHtml : `<p class="pv-no-vars-hint">此範本中無需填寫的動態變數，可直接複製右側完整範本使用。</p>`}
+                        </form>
+                    </div>
+
+                    <div class="pv-play-col pv-play-preview-col">
+                        <div class="pv-col-header">
+                            <div class="pv-col-header-row">
+                                <h4 class="pv-col-title">2. 即時組裝提示詞預覽 (Live Preview)</h4>
+                                <span class="pv-char-count-pill" id="pv-preview-char-count">0 字</span>
+                            </div>
+                            <p class="pv-col-desc">組裝完成後可一鍵複製並直接貼至各 AI 對話框：</p>
+                        </div>
+                        <div class="pv-preview-box-wrap">
+                            <pre class="pv-preview-box" id="pv-preview-content"></pre>
+                        </div>
+                        <div class="pv-play-external-links">
+                            <span class="pv-external-label">一鍵直達 AI 平台：</span>
+                            <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="pv-ai-link-btn">ChatGPT</a>
+                            <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="pv-ai-link-btn">Claude</a>
+                            <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="pv-ai-link-btn">Gemini</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pv-modal-footer">
+                    <button type="button" class="secondary-btn" id="pv-play-reset-vars-btn">清空所有填空欄位</button>
+                    <div class="pv-footer-right">
+                        <button type="button" class="secondary-btn" id="pv-play-close-btn">關閉視窗</button>
+                        <button type="button" class="primary-btn pv-btn-copy-assembled" id="pv-play-copy-assembled-btn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>一鍵複製組裝完成的提示詞</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        // 即時組裝邏輯
+        const previewEl = document.getElementById("pv-preview-content");
+        const charCountEl = document.getElementById("pv-preview-char-count");
+
+        const updateSynthesizedPrompt = () => {
+            let synthesized = prompt.template;
+            const inputs = modalOverlay.querySelectorAll("[data-var-name]");
+            inputs.forEach((input) => {
+                const varName = input.getAttribute("data-var-name");
+                const val = input.value.trim();
+                const replacement = val.length > 0 ? val : `{${varName}}`;
+                // 全部替換該變數
+                synthesized = synthesized.split(`{${varName}}`).join(replacement);
+            });
+            if (previewEl) {
+                previewEl.textContent = synthesized;
+            }
+            if (charCountEl) {
+                charCountEl.textContent = `${synthesized.length} 字`;
+            }
+            return synthesized;
+        };
+
+        // 綁定輸入即時更新
+        modalOverlay.querySelectorAll("[data-var-name]").forEach((input) => {
+            input.addEventListener("input", updateSynthesizedPrompt);
+        });
+
+        // 初始更新預覽
+        updateSynthesizedPrompt();
+
+        // 關閉邏輯
+        const closeModal = () => {
+            modalOverlay.remove();
+        };
+        const closeX = document.getElementById("pv-play-close-x");
+        const closeBtn = document.getElementById("pv-play-close-btn");
+        if (closeX) closeX.addEventListener("click", closeModal);
+        if (closeBtn) closeBtn.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        // 清空欄位
+        const resetVarsBtn = document.getElementById("pv-play-reset-vars-btn");
+        if (resetVarsBtn) {
+            resetVarsBtn.addEventListener("click", () => {
+                modalOverlay.querySelectorAll("[data-var-name]").forEach((input) => {
+                    input.value = "";
+                });
+                updateSynthesizedPrompt();
+                this.showToast("已清空填空變數。");
+            });
+        }
+
+        // 複製組裝後成果
+        const copyAssembledBtn = document.getElementById("pv-play-copy-assembled-btn");
+        if (copyAssembledBtn) {
+            copyAssembledBtn.addEventListener("click", () => {
+                const finalPrompt = updateSynthesizedPrompt();
+                navigator.clipboard.writeText(finalPrompt).then(() => {
+                    this.showToast("已成功複製完整組裝提示詞！可直接至 AI 對話視窗貼上。");
+                }).catch(() => {
+                    this.showToast("剪貼簿複製失敗，請手動複製預覽區文字。");
+                });
+            });
+        }
+    }
+
+    /**
+     * 新增與編輯提示詞彈窗 (Prompt Edit Modal)
+     */
+    openPromptEditModal(promptIdOrNull) {
+        const isEditing = Boolean(promptIdOrNull);
+        const existing = isEditing ? this.promptVault.find((p) => p.id === promptIdOrNull) : null;
+
+        const defaultObj = {
+            id: isEditing ? existing.id : `pv-custom-${Date.now()}`,
+            title: isEditing ? existing.title : "",
+            category: isEditing ? existing.category : "公務行政",
+            role: isEditing ? existing.role : "",
+            objective: isEditing ? existing.objective : "",
+            tags: isEditing && Array.isArray(existing.tags) ? existing.tags.join(", ") : "",
+            template: isEditing ? existing.template : "",
+            outputRules: isEditing ? (existing.outputRules || "") : "",
+            isCustom: true
+        };
+
+        const oldModal = document.getElementById("pv-edit-modal");
+        if (oldModal) oldModal.remove();
+
+        const modalOverlay = document.createElement("div");
+        modalOverlay.id = "pv-edit-modal";
+        modalOverlay.className = "pv-modal-backdrop";
+
+        modalOverlay.innerHTML = `
+            <div class="pv-modal-card pv-modal-edit" role="dialog" aria-modal="true" aria-labelledby="pv-edit-title">
+                <div class="pv-modal-header">
+                    <div class="pv-modal-title-group">
+                        <span class="pv-custom-badge">${isEditing ? "編輯自訂提示詞" : "新增自訂提示詞"}</span>
+                        <h3 class="pv-modal-title" id="pv-edit-title">${isEditing ? `編輯提示詞：${this.escapeHtml(defaultObj.title)}` : "建立全新架構化提示詞"}</h3>
+                    </div>
+                    <button type="button" class="pv-modal-close-btn" id="pv-edit-close-x" aria-label="關閉">&times;</button>
+                </div>
+
+                <form class="pv-edit-form" id="pv-prompt-edit-form">
+                    <div class="pv-form-grid">
+                        <div class="pv-form-col">
+                            <div class="pv-field-group">
+                                <label class="pv-field-label" for="pv-edit-title-input">提示詞標題 (必填)</label>
+                                <input type="text" id="pv-edit-title-input" class="pv-field-input" required placeholder="例如：公務簽呈草案擬定標準架構" value="${this.escapeHtml(defaultObj.title)}" />
+                            </div>
+
+                            <div class="pv-field-group">
+                                <label class="pv-field-label" for="pv-edit-cat-input">領域分類 (必填)</label>
+                                <input type="text" id="pv-edit-cat-input" class="pv-field-input" list="pv-cat-datalist" required placeholder="例如：公務行政、會議專案、資料分析、程式開發" value="${this.escapeHtml(defaultObj.category)}" />
+                                <datalist id="pv-cat-datalist">
+                                    <option value="公務行政">
+                                    <option value="會議專案">
+                                    <option value="資料分析">
+                                    <option value="程式開發">
+                                    <option value="企劃文案">
+                                    <option value="資安治理">
+                                    <option value="研究分析">
+                                </datalist>
+                            </div>
+
+                            <div class="pv-field-group">
+                                <label class="pv-field-label" for="pv-edit-role-input">AI 扮演角色設定</label>
+                                <input type="text" id="pv-edit-role-input" class="pv-field-input" placeholder="例如：資深公務行政專員與法規審查顧問" value="${this.escapeHtml(defaultObj.role)}" />
+                            </div>
+
+                            <div class="pv-field-group">
+                                <label class="pv-field-label" for="pv-edit-obj-input">核心任務目標</label>
+                                <input type="text" id="pv-edit-obj-input" class="pv-field-input" placeholder="例如：依據公務規範擬定層次清晰之簽呈" value="${this.escapeHtml(defaultObj.objective)}" />
+                            </div>
+
+                            <div class="pv-field-group">
+                                <label class="pv-field-label" for="pv-edit-tags-input">檢索標籤 (請用逗號隔開)</label>
+                                <input type="text" id="pv-edit-tags-input" class="pv-field-input" placeholder="例如：公務行政, 簽呈陳核, 決策公文" value="${this.escapeHtml(defaultObj.tags)}" />
+                            </div>
+
+                            <div class="pv-field-group">
+                                <label class="pv-field-label" for="pv-edit-rules-input">輸出規範與格式要求</label>
+                                <input type="text" id="pv-edit-rules-input" class="pv-field-input" placeholder="例如：標準三段式（主旨、說明、擬辦），繁體中文" value="${this.escapeHtml(defaultObj.outputRules)}" />
+                            </div>
+                        </div>
+
+                        <div class="pv-form-col">
+                            <div class="pv-field-group pv-template-group">
+                                <div class="pv-field-header-row">
+                                    <label class="pv-field-label" for="pv-edit-tmpl-input">結構化提示詞範本 (必填)</label>
+                                    <span class="pv-vars-detected-badge" id="pv-detected-vars-badge">已偵測 0 個變數</span>
+                                </div>
+                                <p class="pv-field-help-text">提示：請在範本中使用 <code>{變數名稱}</code> 標記動態填空位置，例如 <code>{主旨事項}</code>、<code>{辦理法令依據}</code>，系統將自動解析為變數填空欄位。</p>
+                                <textarea id="pv-edit-tmpl-input" class="pv-field-textarea pv-template-textarea" rows="12" required placeholder="請貼上或撰寫結構化提示詞範本內容...">${this.escapeHtml(defaultObj.template)}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pv-modal-footer">
+                        <button type="button" class="secondary-btn" id="pv-edit-cancel-btn">取消</button>
+                        <button type="submit" class="primary-btn pv-btn" id="pv-edit-save-btn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                            <span>${isEditing ? "儲存修改" : "建立提示詞"}</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        const tmplInput = document.getElementById("pv-edit-tmpl-input");
+        const detectedBadge = document.getElementById("pv-detected-vars-badge");
+
+        const updateDetectedVars = () => {
+            if (!tmplInput || !detectedBadge) return;
+            const vars = this.extractPromptVariables(tmplInput.value);
+            detectedBadge.textContent = `已偵測 ${vars.length} 個變數：${vars.map((v) => `{${v}}`).join(", ") || "無"}`;
+        };
+
+        if (tmplInput) {
+            tmplInput.addEventListener("input", updateDetectedVars);
+            updateDetectedVars();
+        }
+
+        const closeModal = () => modalOverlay.remove();
+        const closeX = document.getElementById("pv-edit-close-x");
+        const cancelBtn = document.getElementById("pv-edit-cancel-btn");
+        if (closeX) closeX.addEventListener("click", closeModal);
+        if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        const form = document.getElementById("pv-prompt-edit-form");
+        if (form) {
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const title = document.getElementById("pv-edit-title-input").value.trim();
+                const category = document.getElementById("pv-edit-cat-input").value.trim() || "公務通用";
+                const role = document.getElementById("pv-edit-role-input").value.trim() || "AI 專業顧問";
+                const objective = document.getElementById("pv-edit-obj-input").value.trim();
+                const rawTags = document.getElementById("pv-edit-tags-input").value.trim();
+                const tags = rawTags ? rawTags.split(/[,，]/).map((t) => t.trim()).filter(Boolean) : [category];
+                const template = tmplInput.value.trim();
+                const outputRules = document.getElementById("pv-edit-rules-input").value.trim();
+
+                if (!title || !template) {
+                    this.showToast("請務必填寫提示詞標題與範本內容。");
+                    return;
+                }
+
+                if (isEditing) {
+                    const idx = this.promptVault.findIndex((p) => p.id === existing.id);
+                    if (idx !== -1) {
+                        this.promptVault[idx] = {
+                            ...existing,
+                            title,
+                            category,
+                            role,
+                            objective,
+                            desc: objective,
+                            tags,
+                            template,
+                            outputRules,
+                            isCustom: true,
+                            updatedAt: new Date().toISOString()
+                        };
+                        this.showToast(`已成功儲存「${title}」！`);
+                    }
+                } else {
+                    const newPrompt = {
+                        id: defaultObj.id,
+                        title,
+                        category,
+                        role,
+                        objective,
+                        desc: objective,
+                        tags,
+                        template,
+                        outputRules,
+                        isCustom: true,
+                        createdAt: new Date().toISOString()
+                    };
+                    this.promptVault.unshift(newPrompt);
+                    this.showToast(`已成功建立「${title}」提示詞！`);
+                }
+
+                this.savePromptVault();
+                closeModal();
+                const theme01Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-01");
+                this.renderTheme01PromptHub(theme01Obj);
+            });
+        }
+    }
+
+    /**
+     * 刪除提示詞
+     */
+    deletePrompt(promptId) {
+        const prompt = this.promptVault.find((p) => p.id === promptId);
+        if (!prompt) return;
+
+        const confirmed = window.confirm(`確定要刪除「${prompt.title}」提示詞嗎？此動作無法復原。`);
+        if (!confirmed) return;
+
+        this.promptVault = this.promptVault.filter((p) => p.id !== promptId);
+        if (this.promptBookmarks) {
+            this.promptBookmarks.delete(promptId);
+            this.savePromptBookmarks();
+        }
+        this.savePromptVault();
+        this.showToast(`已成功刪除「${prompt.title}」。`);
+        const theme01Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-01");
+        this.renderTheme01PromptHub(theme01Obj);
+    }
+
+    /**
+     * 匯出提示詞資料庫為 JSON 檔案
+     */
+    exportPromptVaultJson() {
+        try {
+            const payload = {
+                metadata: {
+                    appName: "Aero Workspace AI Prompt Vault",
+                    exportedAt: new Date().toISOString(),
+                    version: "1.0",
+                    totalCount: this.promptVault.length
+                },
+                prompts: this.promptVault
+            };
+            const jsonStr = JSON.stringify(payload, null, 2);
+            const blob = new Blob([jsonStr], { type: "application/json;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+            a.href = url;
+            a.download = `aero_prompt_vault_backup_${dateStr}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            this.showToast("已成功匯出提示詞備份檔案 (JSON)。");
+        } catch (err) {
+            console.error("匯出提示詞備份失敗:", err);
+            this.showToast("匯出失敗，請檢查瀏覽器安全性限制。");
+        }
+    }
+
+    /**
+     * 匯入提示詞資料庫彈窗
+     */
+    openPromptImportModal() {
+        const oldModal = document.getElementById("pv-import-modal");
+        if (oldModal) oldModal.remove();
+
+        const modalOverlay = document.createElement("div");
+        modalOverlay.id = "pv-import-modal";
+        modalOverlay.className = "pv-modal-backdrop";
+
+        modalOverlay.innerHTML = `
+            <div class="pv-modal-card pv-modal-import" role="dialog" aria-modal="true" aria-labelledby="pv-import-title">
+                <div class="pv-modal-header">
+                    <div class="pv-modal-title-group">
+                        <span class="pv-builtin-badge">資料備份與還原</span>
+                        <h3 class="pv-modal-title" id="pv-import-title">匯入提示詞資料庫備份檔案</h3>
+                    </div>
+                    <button type="button" class="pv-modal-close-btn" id="pv-import-close-x" aria-label="關閉">&times;</button>
+                </div>
+
+                <div class="pv-import-body">
+                    <p class="pv-import-desc">請選取先前由本系統匯出之 JSON 格式提示詞備份檔案 (<code>aero_prompt_vault_backup_*.json</code>)：</p>
+                    
+                    <div class="pv-file-dropzone" id="pv-dropzone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <p class="pv-dropzone-text">點擊選取檔案或將 JSON 檔案拖曳至此處</p>
+                        <input type="file" id="pv-import-file-input" accept=".json,application/json" class="pv-hidden-file-input" />
+                    </div>
+
+                    <div class="pv-import-options">
+                        <span class="pv-field-label">匯入模式：</span>
+                        <div class="pv-radio-group">
+                            <label class="pv-radio-label">
+                                <input type="radio" name="pv-import-mode" value="merge" checked />
+                                <span>合併匯入（保留現有提示詞，依 ID 更新或新增）</span>
+                            </label>
+                            <label class="pv-radio-label">
+                                <input type="radio" name="pv-import-mode" value="overwrite" />
+                                <span>完全覆蓋（以匯入之檔案完整取代現有資料庫）</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pv-modal-footer">
+                    <button type="button" class="secondary-btn" id="pv-import-cancel-btn">取消</button>
+                    <button type="button" class="primary-btn pv-btn" id="pv-import-confirm-btn" disabled>
+                        <span>確認匯入</span>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        const dropzone = document.getElementById("pv-dropzone");
+        const fileInput = document.getElementById("pv-import-file-input");
+        const confirmBtn = document.getElementById("pv-import-confirm-btn");
+        let selectedFile = null;
+
+        dropzone.addEventListener("click", () => fileInput.click());
+
+        fileInput.addEventListener("change", (e) => {
+            if (e.target.files && e.target.files[0]) {
+                selectedFile = e.target.files[0];
+                dropzone.querySelector(".pv-dropzone-text").textContent = `已選取：${selectedFile.name} (${(selectedFile.size / 1024).toFixed(1)} KB)`;
+                confirmBtn.removeAttribute("disabled");
+            }
+        });
+
+        const closeModal = () => modalOverlay.remove();
+        const closeX = document.getElementById("pv-import-close-x");
+        const cancelBtn = document.getElementById("pv-import-cancel-btn");
+        if (closeX) closeX.addEventListener("click", closeModal);
+        if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        confirmBtn.addEventListener("click", () => {
+            if (!selectedFile) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const content = JSON.parse(event.target.result);
+                    let incomingPrompts = [];
+                    if (Array.isArray(content)) {
+                        incomingPrompts = content;
+                    } else if (content && Array.isArray(content.prompts)) {
+                        incomingPrompts = content.prompts;
+                    } else {
+                        throw new Error("無效的提示詞 JSON 格式。");
+                    }
+
+                    const modeEl = modalOverlay.querySelector('input[name="pv-import-mode"]:checked');
+                    const mode = modeEl ? modeEl.value : "merge";
+
+                    if (mode === "overwrite") {
+                        this.promptVault = incomingPrompts;
+                    } else {
+                        // 合併邏輯
+                        const existingMap = new Map();
+                        this.promptVault.forEach((p) => existingMap.set(p.id, p));
+                        incomingPrompts.forEach((p) => existingMap.set(p.id, p));
+                        this.promptVault = Array.from(existingMap.values());
+                    }
+
+                    this.savePromptVault();
+                    this.showToast(`已成功匯入 ${incomingPrompts.length} 組提示詞！`);
+                    closeModal();
+                    const theme01Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-01");
+                    this.renderTheme01PromptHub(theme01Obj);
+                } catch (err) {
+                    console.error("解析匯入 JSON 失敗:", err);
+                    alert("匯入失敗：檔案格式不符合 JSON 規範或內容結構損毀。");
+                }
+            };
+            reader.readAsText(selectedFile, "UTF-8");
+        });
+    }
+
+    /**
+     * 重設提示詞資料庫為系統預設 10 組標準範本
+     */
+    resetPromptVaultToDefault() {
+        const confirmed = window.confirm("確定要將提示詞資料庫重設為系統預設的 10 組標準範本嗎？\n\n注意：這將會清除您自行新增或修改過的提示詞項目。建議您可先執行「匯出 JSON 備份」！");
+        if (!confirmed) return;
+
+        this.promptVault = JSON.parse(JSON.stringify(DEFAULT_PROMPT_VAULT_TEMPLATES));
+        this.savePromptVault();
+        this.showToast("已重設為系統預設的 10 組標準提示詞範本！");
+        const theme01Obj = WORKSPACE_THEMES.find((t) => t.id === "theme-01");
+        this.renderTheme01PromptHub(theme01Obj);
+    }
+
     renderFocusSection(theme) {
         if (!this.focusSection) return;
         const ideas = this.ideaBacklog[theme.id] || [];
@@ -9559,8 +10791,13 @@ ${cfg.sourceText}`;
      * 浮動 Toast 提示通知
      */
     showToast(message) {
-        const toast = document.getElementById("kb-toast-box");
-        if (!toast) return;
+        let toast = document.getElementById("kb-toast-box") || document.getElementById("pv-toast-box");
+        if (!toast) {
+            toast = document.createElement("div");
+            toast.id = "pv-toast-box";
+            toast.className = "kb-toast-notification is-hidden";
+            document.body.appendChild(toast);
+        }
 
         toast.textContent = message;
         toast.classList.remove("is-hidden");
