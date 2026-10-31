@@ -10783,3 +10783,18 @@ html[data-theme="dark"] .rpa-step-badge {
 [data-theme="dark"] .pv-badge-cat-productivity { color: #a5b4fc; background: rgba(79, 70, 229, 0.18); }
 [data-theme="dark"] .pv-badge-cat-bookmarks { color: #fde047; background: rgba(245, 158, 11, 0.18); }
 [data-theme="dark"] .pv-badge-cat-custom { color: #cbd5e1; background: rgba(100, 116, 139, 0.18); }
+
+/* 頂部導覽列通行碼修改按鈕與彈窗樣式 */
+.nav-passcode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.42rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+}
+
+.pv-modal-passcode {
+    max-width: 480px;
+}

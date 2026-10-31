@@ -1749,7 +1749,114 @@ class WorkspaceApp {
             sessionStorage.setItem(STORAGE_KEYS.VAULT_UNLOCKED_SESSION, "true");
         } else {
             sessionStorage.removeItem(STORAGE_KEYS.VAULT_UNLOCKED_SESSION);
+            ["theme-01", "theme-02", "theme-03", "theme-04", "theme-05"].forEach((id) => {
+                sessionStorage.removeItem(`aero_theme_unlocked_${id}`);
+            });
         }
+    }
+
+    /**
+     * 開啟全站統一之「修改 8 碼安全通行碼」彈窗
+     */
+    openChangeVaultPasscodeModal(requireOldPasscode = false) {
+        const mustVerifyOld = requireOldPasscode || !this.isVaultUnlocked();
+        const oldModal = document.getElementById("pv-passcode-change-modal");
+        if (oldModal) oldModal.remove();
+
+        const modalOverlay = document.createElement("div");
+        modalOverlay.id = "pv-passcode-change-modal";
+        modalOverlay.className = "pv-modal-backdrop";
+
+        modalOverlay.innerHTML = `
+            <div class="pv-modal-card pv-modal-passcode" role="dialog" aria-modal="true" aria-labelledby="pv-passcode-modal-title">
+                <div class="pv-modal-header">
+                    <div class="pv-modal-title-group">
+                        <span class="pv-category-badge pv-badge-cat-gov">存取權限與安全設定</span>
+                        <h3 class="pv-modal-title" id="pv-passcode-modal-title">修改全站 8 碼安全通行碼</h3>
+                        <p class="pv-modal-subtitle">設定後立即套用至四大主題工作區（儲存在您的本機瀏覽器內）</p>
+                    </div>
+                    <button type="button" class="pv-modal-close-btn" id="pv-passcode-close-x" aria-label="關閉">&times;</button>
+                </div>
+
+                <form class="pv-edit-form" id="pv-passcode-change-form">
+                    <div class="pv-form-col">
+                        ${mustVerifyOld ? `
+                        <div class="pv-field-group">
+                            <label class="pv-field-label" for="pv-old-passcode-input">目前 8 碼通行碼 (驗證身分)</label>
+                            <input type="password" id="pv-old-passcode-input" class="pv-field-input" maxlength="8" minlength="8" required placeholder="請輸入目前的 8 碼通行碼（預設為 88888888）" autocomplete="current-password" />
+                        </div>
+                        ` : ""}
+
+                        <div class="pv-field-group">
+                            <label class="pv-field-label" for="pv-new-passcode-input">新 8 碼通行碼 (必填，長度須剛好 8 碼)</label>
+                            <input type="password" id="pv-new-passcode-input" class="pv-field-input" maxlength="8" minlength="8" required placeholder="請輸入新的 8 碼英數字通行碼" autocomplete="new-password" />
+                        </div>
+
+                        <div class="pv-field-group">
+                            <label class="pv-field-label" for="pv-confirm-passcode-input">再次確認新 8 碼通行碼 (必填)</label>
+                            <input type="password" id="pv-confirm-passcode-input" class="pv-field-input" maxlength="8" minlength="8" required placeholder="請再次輸入相同的新 8 碼通行碼" autocomplete="new-password" />
+                        </div>
+
+                        <p class="theme-login-error is-hidden" id="pv-passcode-error-msg"></p>
+                    </div>
+
+                    <div class="pv-modal-footer">
+                        <button type="button" class="secondary-btn" id="pv-passcode-cancel-btn">取消</button>
+                        <button type="submit" class="primary-btn pv-btn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span>確認儲存新通行碼</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        const closeModal = () => modalOverlay.remove();
+        document.getElementById("pv-passcode-close-x")?.addEventListener("click", closeModal);
+        document.getElementById("pv-passcode-cancel-btn")?.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        const firstInput = modalOverlay.querySelector("input");
+        if (firstInput) setTimeout(() => firstInput.focus(), 60);
+
+        const form = document.getElementById("pv-passcode-change-form");
+        const errEl = document.getElementById("pv-passcode-error-msg");
+        const showError = (msg) => {
+            if (errEl) {
+                errEl.textContent = msg;
+                errEl.classList.remove("is-hidden");
+            }
+        };
+
+        form?.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (mustVerifyOld) {
+                const oldVal = (document.getElementById("pv-old-passcode-input")?.value || "").trim();
+                if (oldVal !== this.getVaultPasscode()) {
+                    showError("目前通行碼輸入不正確，無法變更。");
+                    return;
+                }
+            }
+            const newVal = (document.getElementById("pv-new-passcode-input")?.value || "").trim();
+            const confirmVal = (document.getElementById("pv-confirm-passcode-input")?.value || "").trim();
+
+            if (newVal.length !== 8) {
+                showError("設定失敗：新通行碼長度必須剛好為 8 碼！");
+                return;
+            }
+            if (newVal !== confirmVal) {
+                showError("兩次輸入的新通行碼不一致，請重新確認。");
+                return;
+            }
+
+            this.setVaultPasscode(newVal);
+            this.showToast("已成功更新全站 8 碼存取通行碼！");
+            closeModal();
+        });
     }
 
     // 相容性別名
@@ -1784,6 +1891,13 @@ class WorkspaceApp {
     bindEvents() {
         if (this.themeToggleBtn) {
             this.themeToggleBtn.addEventListener("click", () => this.toggleThemeMode());
+        }
+
+        const globalPassBtn = document.getElementById("global-change-passcode-btn");
+        if (globalPassBtn) {
+            globalPassBtn.addEventListener("click", () => {
+                this.openChangeVaultPasscodeModal(!this.isVaultUnlocked());
+            });
         }
 
         if (this.searchInput) {
@@ -2147,6 +2261,7 @@ class WorkspaceApp {
                         <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
                     </div>
+                    <button type="button" class="secondary-btn" id="theme-04-change-passcode-btn">修改 8 碼密碼</button>
                     <button type="button" class="theme-lock-btn" id="theme-04-lock-btn">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <span>鎖定專區</span>
@@ -2263,11 +2378,18 @@ class WorkspaceApp {
                 window.location.hash = "overview";
             });
         }
+        const theme04ChangePassBtn = document.getElementById("theme-04-change-passcode-btn");
+        if (theme04ChangePassBtn) {
+            theme04ChangePassBtn.addEventListener("click", () => {
+                this.openChangeVaultPasscodeModal(false);
+            });
+        }
         const theme04LockBtn = document.getElementById("theme-04-lock-btn");
         if (theme04LockBtn) {
             theme04LockBtn.addEventListener("click", () => {
                 this.setThemeUnlocked("theme-04", false);
                 this.setThemeUnlocked("theme-05", false);
+                this.setVaultUnlocked(false);
                 window.location.hash = "overview";
             });
         }
@@ -6431,6 +6553,7 @@ class WorkspaceApp {
                         <p class="theme-login-error is-hidden" id="theme-gate-error-msg">通行碼不正確，請重新輸入。</p>
                         <div class="theme-login-btn-row">
                             <button type="submit" class="theme-login-submit-btn">確認驗證登入</button>
+                            <button type="button" class="theme-login-back-btn" id="theme-gate-change-passcode-btn">修改 8 碼通行碼</button>
                             <button type="button" class="theme-login-back-btn" id="theme-gate-cancel-btn">返回總覽</button>
                         </div>
                     </form>
@@ -6453,6 +6576,12 @@ class WorkspaceApp {
         };
         if (backBtn) backBtn.addEventListener("click", handleBack);
         if (cancelBtn) cancelBtn.addEventListener("click", handleBack);
+        const gateChangePassBtn = document.getElementById("theme-gate-change-passcode-btn");
+        if (gateChangePassBtn) {
+            gateChangePassBtn.addEventListener("click", () => {
+                this.openChangeVaultPasscodeModal(true);
+            });
+        }
 
         if (gateForm) {
             gateForm.addEventListener("submit", (e) => {
@@ -7850,15 +7979,7 @@ ${cfg.sourceText}`;
         const changePassBtn = document.getElementById("rpa-change-passcode-btn");
         if (changePassBtn) {
             changePassBtn.addEventListener("click", () => {
-                const newPass = window.prompt("請輸入新的主題二登入通行碼（至少 4 碼）：", "");
-                if (newPass === null) return;
-                const trimmed = newPass.trim();
-                if (trimmed.length < 4) {
-                    window.alert("通行碼請至少輸入 4 個字元！");
-                    return;
-                }
-                this.setRpaPasscode(trimmed);
-                window.alert("已更新登入通行碼！");
+                this.openChangeVaultPasscodeModal(false);
             });
         }
 
@@ -9071,6 +9192,8 @@ ${cfg.sourceText}`;
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
                     </div>
                     <div class="pv-header-actions">
+                        <span class="kb-vault-unlocked-badge">已通過 8 碼安全驗證</span>
+                        <button type="button" class="secondary-btn" id="pv-change-passcode-btn">修改 8 碼密碼</button>
                         <button type="button" class="theme-lock-btn" id="pv-lock-btn">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             <span>鎖定工作區</span>
@@ -9258,6 +9381,14 @@ ${cfg.sourceText}`;
     }
 
     bindTheme01PromptHubEvents(theme) {
+        // 修改 8 碼密碼按鈕
+        const changePassBtn = document.getElementById("pv-change-passcode-btn");
+        if (changePassBtn) {
+            changePassBtn.addEventListener("click", () => {
+                this.openChangeVaultPasscodeModal(false);
+            });
+        }
+
         // 鎖定工作區按鈕
         const lockBtn = document.getElementById("pv-lock-btn");
         if (lockBtn) {
@@ -10804,15 +10935,7 @@ ${cfg.sourceText}`;
         const changePassBtn = document.getElementById("vault-change-passcode-btn");
         if (changePassBtn) {
             changePassBtn.addEventListener("click", () => {
-                const newPass = window.prompt("請輸入新的 8 碼存取通行碼（長度必須剛好 8 碼）：", "");
-                if (newPass !== null) {
-                    if (newPass.trim().length === 8) {
-                        this.setVaultPasscode(newPass.trim());
-                        window.alert("已成功更新 8 碼存取通行碼！");
-                    } else {
-                        window.alert("設定失敗：通行碼長度必須剛好為 8 碼！");
-                    }
-                }
+                this.openChangeVaultPasscodeModal(false);
             });
         }
 
