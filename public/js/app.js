@@ -1713,7 +1713,7 @@ class WorkspaceApp {
     }
 
     /**
-     * 內部非公開資料・8 碼安全通行碼驗證管理（主題二與主題四共用）
+     * 內部非公開資料・安全通行碼驗證管理
      */
     getVaultPasscode() {
         return localStorage.getItem(STORAGE_KEYS.VAULT_PASSCODE) || "88888888";
@@ -1756,7 +1756,7 @@ class WorkspaceApp {
     }
 
     /**
-     * 開啟全站統一之「修改 8 碼安全通行碼」彈窗
+     * 開啟全站統一之「修改安全通行碼」彈窗
      */
     openChangeVaultPasscodeModal(requireOldPasscode = false) {
         const mustVerifyOld = requireOldPasscode || !this.isVaultUnlocked();
@@ -1772,7 +1772,7 @@ class WorkspaceApp {
                 <div class="pv-modal-header">
                     <div class="pv-modal-title-group">
                         <span class="pv-category-badge pv-badge-cat-gov">存取權限與安全設定</span>
-                        <h3 class="pv-modal-title" id="pv-passcode-modal-title">修改全站 8 碼安全通行碼</h3>
+                        <h3 class="pv-modal-title" id="pv-passcode-modal-title">修改全站安全通行碼</h3>
                         <p class="pv-modal-subtitle">設定後立即套用至四大主題工作區（儲存在您的本機瀏覽器內）</p>
                     </div>
                     <button type="button" class="pv-modal-close-btn" id="pv-passcode-close-x" aria-label="關閉">&times;</button>
@@ -1782,19 +1782,19 @@ class WorkspaceApp {
                     <div class="pv-form-col">
                         ${mustVerifyOld ? `
                         <div class="pv-field-group">
-                            <label class="pv-field-label" for="pv-old-passcode-input">目前 8 碼通行碼 (驗證身分)</label>
-                            <input type="password" id="pv-old-passcode-input" class="pv-field-input" maxlength="8" minlength="8" required placeholder="請輸入目前的 8 碼通行碼（預設為 88888888）" autocomplete="current-password" />
+                            <label class="pv-field-label" for="pv-old-passcode-input">目前通行碼 (驗證身分)</label>
+                            <input type="password" id="pv-old-passcode-input" class="pv-field-input" required placeholder="請輸入目前的通行碼" autocomplete="current-password" />
                         </div>
                         ` : ""}
 
                         <div class="pv-field-group">
-                            <label class="pv-field-label" for="pv-new-passcode-input">新 8 碼通行碼 (必填，長度須剛好 8 碼)</label>
-                            <input type="password" id="pv-new-passcode-input" class="pv-field-input" maxlength="8" minlength="8" required placeholder="請輸入新的 8 碼英數字通行碼" autocomplete="new-password" />
+                            <label class="pv-field-label" for="pv-new-passcode-input">新通行碼 (必填)</label>
+                            <input type="password" id="pv-new-passcode-input" class="pv-field-input" required placeholder="請輸入新的通行碼" autocomplete="new-password" />
                         </div>
 
                         <div class="pv-field-group">
-                            <label class="pv-field-label" for="pv-confirm-passcode-input">再次確認新 8 碼通行碼 (必填)</label>
-                            <input type="password" id="pv-confirm-passcode-input" class="pv-field-input" maxlength="8" minlength="8" required placeholder="請再次輸入相同的新 8 碼通行碼" autocomplete="new-password" />
+                            <label class="pv-field-label" for="pv-confirm-passcode-input">再次確認新通行碼 (必填)</label>
+                            <input type="password" id="pv-confirm-passcode-input" class="pv-field-input" required placeholder="請再次輸入相同的新通行碼" autocomplete="new-password" />
                         </div>
 
                         <p class="theme-login-error is-hidden" id="pv-passcode-error-msg"></p>
@@ -1844,8 +1844,8 @@ class WorkspaceApp {
             const newVal = (document.getElementById("pv-new-passcode-input")?.value || "").trim();
             const confirmVal = (document.getElementById("pv-confirm-passcode-input")?.value || "").trim();
 
-            if (newVal.length !== 8) {
-                showError("設定失敗：新通行碼長度必須剛好為 8 碼！");
+            if (!newVal || newVal.length === 0) {
+                showError("設定失敗：新通行碼不可為空！");
                 return;
             }
             if (newVal !== confirmVal) {
@@ -1854,7 +1854,7 @@ class WorkspaceApp {
             }
 
             this.setVaultPasscode(newVal);
-            this.showToast("已成功更新全站 8 碼存取通行碼！");
+            this.showToast("已成功更新全站存取通行碼！");
             closeModal();
         });
     }
@@ -2261,7 +2261,7 @@ class WorkspaceApp {
                         <h2 class="focus-title">${this.escapeHtml(theme.title)}</h2>
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
                     </div>
-                    <button type="button" class="secondary-btn" id="theme-04-change-passcode-btn">修改 8 碼密碼</button>
+                    <button type="button" class="secondary-btn" id="theme-04-change-passcode-btn">修改通行碼</button>
                     <button type="button" class="theme-lock-btn" id="theme-04-lock-btn">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <span>鎖定專區</span>
@@ -5444,7 +5444,7 @@ class WorkspaceApp {
                         <button type="submit" class="primary-btn">驗證解鎖</button>
                     </form>
                     <p class="gate-error-msg is-hidden" id="passcode-error-msg">通行碼不正確，請重新輸入。</p>
-                    <span class="gate-hint">預設管理員通行碼：8888（解鎖後可於設定頁修改）</span>
+                    <span class="gate-hint">解鎖後可於設定頁修改通行碼</span>
                 </div>
             </div>
         `;
@@ -6367,7 +6367,7 @@ class WorkspaceApp {
      * 登入前大字體極簡密碼驗證畫面
      */
     /**
-     * 內部非公開資料・8 碼安全驗證登入閘門畫面（絕無密碼提示，長度限定 8 碼）
+     * 內部非公開資料・安全驗證登入閘門畫面（絕無密碼提示）
      */
     
     /**
@@ -6507,7 +6507,7 @@ class WorkspaceApp {
 
     
     /**
-     * 四大主題通用安全驗證登入介面（長度 8 碼，不提醒密碼）
+     * 四大主題通用安全驗證登入介面（不提醒密碼）
      */
     renderThemePasscodeGate(theme, onUnlockedCallback) {
         if (!this.focusSection) return;
@@ -6536,24 +6536,22 @@ class WorkspaceApp {
                         </svg>
                     </div>
                     <div>
-                        <h3 class="theme-login-title">請輸入 8 碼通行碼進行身分驗證</h3>
-                        <p class="theme-login-desc">本專區內容受內部安全規範控管，請輸入 8 碼通行碼。驗證通過後即可於本次工作階段瀏覽完整專案架構、規章清冊與實體工具。</p>
+                        <h3 class="theme-login-title">請輸入通行碼進行身分驗證</h3>
+                        <p class="theme-login-desc">本專區內容受內部安全規範控管，請輸入通行碼。驗證通過後即可於本次工作階段瀏覽完整專案架構、規章清冊與實體工具。</p>
                     </div>
                     <form class="theme-login-form" id="theme-login-gate-form">
                         <input
                             type="password"
                             class="theme-login-input"
                             id="theme-gate-passcode-input"
-                            maxlength="8"
-                            minlength="8"
-                            placeholder="請輸入 8 碼通行碼"
+                            placeholder="請輸入通行碼"
                             required
                             autocomplete="current-password"
                         />
                         <p class="theme-login-error is-hidden" id="theme-gate-error-msg">通行碼不正確，請重新輸入。</p>
                         <div class="theme-login-btn-row">
                             <button type="submit" class="theme-login-submit-btn">確認驗證登入</button>
-                            <button type="button" class="theme-login-back-btn" id="theme-gate-change-passcode-btn">修改 8 碼通行碼</button>
+                            <button type="button" class="theme-login-back-btn" id="theme-gate-change-passcode-btn">修改通行碼</button>
                             <button type="button" class="theme-login-back-btn" id="theme-gate-cancel-btn">返回總覽</button>
                         </div>
                     </form>
@@ -6615,7 +6613,7 @@ class WorkspaceApp {
                 <div class="focus-header">
                     <div class="focus-title-group">
                         <h2 class="focus-title">${this.escapeHtml(domainTitle)}：登入前安全驗證</h2>
-                        <p class="theme-desc">本專區內容屬於內部非公開資料與專案工具，已受存取權限控管。請輸入 8 碼通行碼：</p>
+                        <p class="theme-desc">本專區內容屬於內部非公開資料與專案工具，已受存取權限控管。請輸入通行碼：</p>
                     </div>
                     <button type="button" class="back-overview-btn" id="vault-gate-back-btn">
                         <span>返回總覽</span>
@@ -6631,7 +6629,7 @@ class WorkspaceApp {
                             </svg>
                         </div>
                         <div>
-                            <h3 class="section-heading">請輸入 8 碼通行碼解鎖</h3>
+                            <h3 class="section-heading">請輸入通行碼解鎖</h3>
                             <p class="section-subheading">身分驗證通過後即可於本次工作階段瀏覽完整文件摘要、架構圖說與專案工具。</p>
                         </div>
                     </div>
@@ -6641,9 +6639,7 @@ class WorkspaceApp {
                             type="password"
                             class="idea-input"
                             id="vault-passcode-input"
-                            maxlength="8"
-                            minlength="8"
-                            placeholder="請輸入 8 碼通行碼"
+                            placeholder="請輸入通行碼"
                             required
                             autocomplete="current-password"
                         />
@@ -6671,9 +6667,9 @@ class WorkspaceApp {
             unlockForm.addEventListener("submit", (e) => {
                 e.preventDefault();
                 const entered = passInput.value.trim();
-                if (entered.length !== 8) {
+                if (!entered) {
                     if (feedbackEl) {
-                        feedbackEl.textContent = "通行碼長度必須剛好為 8 碼。";
+                        feedbackEl.textContent = "請輸入通行碼。";
                         feedbackEl.className = "admin-feedback-msg is-error";
                     }
                     return;
@@ -9086,7 +9082,7 @@ ${cfg.sourceText}`;
     renderTheme01PromptHub(theme) {
         if (!this.focusSection) return;
 
-        // 登入前通行碼驗證閘門 (長度 8 碼)
+        // 登入前通行碼驗證閘門
         if (!this.isThemeUnlocked(theme.id) && !this.isVaultUnlocked()) {
             this.renderThemePasscodeGate(theme, () => {
                 this.renderTheme01PromptHub(theme);
@@ -9192,8 +9188,8 @@ ${cfg.sourceText}`;
                         <p class="theme-desc">${this.escapeHtml(theme.description)}</p>
                     </div>
                     <div class="pv-header-actions">
-                        <span class="kb-vault-unlocked-badge">已通過 8 碼安全驗證</span>
-                        <button type="button" class="secondary-btn" id="pv-change-passcode-btn">修改 8 碼密碼</button>
+                        <span class="kb-vault-unlocked-badge">已通過身分安全驗證</span>
+                        <button type="button" class="secondary-btn" id="pv-change-passcode-btn">修改通行碼</button>
                         <button type="button" class="theme-lock-btn" id="pv-lock-btn">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             <span>鎖定工作區</span>
@@ -9381,7 +9377,7 @@ ${cfg.sourceText}`;
     }
 
     bindTheme01PromptHubEvents(theme) {
-        // 修改 8 碼密碼按鈕
+        // 修改通行碼按鈕
         const changePassBtn = document.getElementById("pv-change-passcode-btn");
         if (changePassBtn) {
             changePassBtn.addEventListener("click", () => {
@@ -10223,7 +10219,7 @@ ${cfg.sourceText}`;
     renderTheme04KnowledgeHub(theme) {
         if (!this.focusSection) return;
 
-        // 登入前通行碼驗證閘門 (長度 8 碼，絕不提示密碼)
+        // 登入前通行碼驗證閘門（絕不提示密碼）
         if (!this.isThemeUnlocked(theme.id) && !this.isVaultUnlocked()) {
             this.renderThemePasscodeGate(theme, () => {
                 this.renderTheme04KnowledgeHub(theme);
@@ -10274,8 +10270,8 @@ ${cfg.sourceText}`;
                         <p class="theme-desc">資安責任等級 B 級機關防護基準・ISMS/PIMS 四階規章體系・82 組實體高解析架構流程圖解（所有資料直接於本介面研讀，左側目錄穩定留存絕不跳走）</p>
                     </div>
                     <div class="kb-vault-status-bar">
-                        <span class="kb-vault-unlocked-badge">已通過 8 碼安全驗證</span>
-                        <button type="button" class="secondary-btn" id="vault-change-passcode-btn">修改 8 碼密碼</button>
+                        <span class="kb-vault-unlocked-badge">已通過身分安全驗證</span>
+                        <button type="button" class="secondary-btn" id="vault-change-passcode-btn">修改通行碼</button>
                         <button type="button" class="secondary-btn" id="vault-lock-session-btn">安全登出</button>
                         <button type="button" class="back-overview-btn" id="kb-back-overview-btn">
                             <span>返回總覽</span>
@@ -10931,7 +10927,7 @@ ${cfg.sourceText}`;
             });
         }
 
-        // 修改 8 碼通行密碼
+        // 修改通行碼
         const changePassBtn = document.getElementById("vault-change-passcode-btn");
         if (changePassBtn) {
             changePassBtn.addEventListener("click", () => {
