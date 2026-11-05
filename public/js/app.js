@@ -1467,7 +1467,7 @@ class FestiveLotteryWheel {
         if (!this.canvas || !this.ctx) return;
 
         const dpr = window.devicePixelRatio || 1;
-        const size = 840; // 840x840 超高解析畫布
+        const size = 840;
         if (this.canvas.width !== size * dpr || this.canvas.height !== size * dpr) {
             this.canvas.width = size * dpr;
             this.canvas.height = size * dpr;
@@ -1516,7 +1516,7 @@ class FestiveLotteryWheel {
             ctx.shadowBlur = 0;
         }
 
-        // 2. 扇區繪製 (40人全名正向翻轉高清排版)
+        // 2. 扇區繪製 (純姓名、垂直正向直排、超大22px字體、位置絕對穩定)
         if (poolLen === 0) {
             ctx.beginPath();
             ctx.arc(cx, cy, wheelR, 0, Math.PI * 2);
@@ -1542,7 +1542,7 @@ class FestiveLotteryWheel {
                 const endAngle = startAngle + sectorAngle;
                 const nameStr = this.currentPool[i];
 
-                // 四個股高對比配色 (每股兩色交錯)
+                // 四個股高對比配色
                 let fillColor = "#831843";
                 if (nameStr.includes("第一股")) {
                     fillColor = (i % 2 === 0) ? "#991b1b" : "#7f1d1d";
@@ -1574,50 +1574,46 @@ class FestiveLotteryWheel {
                 ctx.lineWidth = (highlightIdx === i) ? 3 : 1.4;
                 ctx.stroke();
 
-                // 扇區文字繪製：自動自適應角度翻轉 (左半圓旋轉 180 度，讓文字永遠正向可讀)
-                const midAngle = startAngle + sectorAngle / 2;
-                const normMid = ((midAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-
+                // 扇區文字繪製：純姓名、漢字正立自外向內垂直直書 (絕無翻轉、位置恆定)
                 ctx.save();
                 ctx.translate(cx, cy);
-                ctx.rotate(midAngle);
+                ctx.rotate(startAngle + sectorAngle / 2);
 
-                // 動態字體大小
-                let fontSize = 14;
-                if (poolLen <= 10) fontSize = 22;
-                else if (poolLen <= 20) fontSize = 18;
-                else if (poolLen <= 30) fontSize = 16;
+                const pureName = nameStr.includes(" - ") ? nameStr.split(" - ")[1].trim() : nameStr;
+                const chars = pureName.split("");
 
-                ctx.font = `bold ${fontSize}px "Noto Sans TC", "PingFang TC", sans-serif`;
+                // 動態字體大小 (純姓名只有3個字，字體可極度放大)
+                let fontSize = 22;
+                if (poolLen <= 10) fontSize = 28;
+                else if (poolLen <= 20) fontSize = 25;
 
-                // 判斷是否位於左半圓 (90度至270度)，做 180 度正向可讀翻轉
-                const isLeftHalf = normMid > Math.PI / 2 && normMid < (Math.PI * 3) / 2;
-                if (isLeftHalf) {
-                    ctx.rotate(Math.PI);
-                    ctx.textAlign = "left";
-                    ctx.textBaseline = "middle";
+                ctx.font = `900 ${fontSize}px "Noto Sans TC", sans-serif`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
 
-                    // 3.5px 黑色立體描邊 + 白字填充
-                    ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
-                    ctx.lineWidth = 3.5;
-                    ctx.lineJoin = "round";
-                    ctx.strokeText(nameStr, -wheelR + 18, 0);
+                const startR = wheelR - 35;
+                const charGap = fontSize + 6;
 
-                    ctx.fillStyle = (highlightIdx === i) ? "#1e1b4b" : "#ffffff";
-                    ctx.fillText(nameStr, -wheelR + 18, 0);
-                } else {
-                    ctx.textAlign = "right";
-                    ctx.textBaseline = "middle";
+                chars.forEach((char, cIdx) => {
+                    const charR = startR - cIdx * charGap;
+                    if (charR > centerCapR + 15) {
+                        ctx.save();
+                        ctx.translate(charR, 0);
+                        ctx.rotate(Math.PI / 2); // 旋轉90度使漢字正立站立
 
-                    // 3.5px 黑色立體描邊 + 白字填充
-                    ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
-                    ctx.lineWidth = 3.5;
-                    ctx.lineJoin = "round";
-                    ctx.strokeText(nameStr, wheelR - 18, 0);
+                        // 4px 黑色高對比立體描邊
+                        ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
+                        ctx.lineWidth = 4;
+                        ctx.lineJoin = "round";
+                        ctx.strokeText(char, 0, 0);
 
-                    ctx.fillStyle = (highlightIdx === i) ? "#1e1b4b" : "#ffffff";
-                    ctx.fillText(nameStr, wheelR - 18, 0);
-                }
+                        // 純白填充 (中獎為金字)
+                        ctx.fillStyle = (highlightIdx === i) ? "#fef08a" : "#ffffff";
+                        ctx.fillText(char, 0, 0);
+
+                        ctx.restore();
+                    }
+                });
 
                 ctx.restore();
             }
@@ -1648,7 +1644,7 @@ class FestiveLotteryWheel {
         ctx.font = "900 11px 'Noto Sans TC', sans-serif";
         ctx.fillText("LUCKY DRAW", cx, cy + 9);
 
-        // 4. 即時更新頂部 HUD 完整姓名
+        // 4. 即時更新頂部 HUD 完整姓名 (顯示包含股別之全稱)
         this.updateRadarHud();
 
         ctx.restore();
@@ -1705,7 +1701,6 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            // 模式一：快速果決模式 (4 秒，五次平滑減速 Quintic ease-out)
             const duration = 4000;
             const extraTurns = 8;
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
@@ -1731,37 +1726,34 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 模式二：綜藝級 12 秒心跳懸念 (C1 連續單調減速：前6.5秒高速衝刺，後5.5秒漫步游移最後8個同仁，末速平滑歸0)
+            // 模式二：極致心跳懸念模式 (12秒，前7秒高速順暢減速，後5秒漫步游移最後4位同仁，每位停留超過1秒，心跳緊張感拉滿！)
             const duration = 12000.0;
-            const tSplit = 6500.0;
-            const dtSlow = 5500.0;
+            const tSplit = 7000.0;
+            const dtSlow = 5000.0;
 
-            const slowSectors = Math.min(8.0, poolLen * 0.35);
+            const slowSectors = Math.min(4.0, poolLen * 0.25);
             const slowDist = slowSectors * sectorAngle;
             const extraTurns = 16;
             const totalTurnsAngle = extraTurns * Math.PI * 2 + forwardDist;
             const fastDist = totalTurnsAngle - slowDist;
 
             const gamma = 2.0;
-            const vMatch = (slowDist * gamma) / (dtSlow / 1000.0); // rad/s
+            const vMatch = (slowDist * gamma) / (dtSlow / 1000.0);
             const A = (3.0 * (fastDist - vMatch * (tSplit / 1000.0))) / Math.pow(tSplit / 1000.0, 3);
 
             const animateSuspense = (now) => {
                 const elapsed = now - startTime;
 
                 if (elapsed <= tSplit) {
-                    // 前段：0 ~ 6.5s，二階加速度平滑單調減速至 vMatch
                     const tSec = elapsed / 1000.0;
                     const tSplitSec = tSplit / 1000.0;
                     const progressAngle = (A / 3.0) * (Math.pow(tSplitSec, 3) - Math.pow(tSplitSec - tSec, 3)) + vMatch * tSec;
                     this.currentAngle = startAngle + progressAngle;
                 } else if (elapsed < duration) {
-                    // 後段：6.5s ~ 12.0s，由 vMatch 平滑漫步減速至 0，游移最後 8 位同仁
                     const tau = (elapsed - tSplit) / dtSlow;
                     const slowProgress = 1 - Math.pow(1 - tau, gamma);
                     this.currentAngle = startAngle + fastDist + slowDist * slowProgress;
                 } else {
-                    // 抵達最終天命目標
                     this.currentAngle = startAngle + fastDist + slowDist;
                     this.isSpinning = false;
                     this.render(pool, targetWinnerIndex);
@@ -6548,6 +6540,9 @@ class WorkspaceApp {
 
         this.fireworks.stop();
 
+        // 若前一輪剛結束，此時以最新 remainingPool 渲染輪盤，準備旋轉
+        this.lotteryWheel.render(this.lotteryState.remainingPool, -1);
+
         const totalDraw = Math.min(this.lotteryState.batchSize || 1, pool.length);
         const drawnWinnersThisRound = [];
 
@@ -6572,6 +6567,7 @@ class WorkspaceApp {
 
             this.lotteryWheel.spin(currentPool, targetWinnerIdx, mode, (winnerIdx) => {
                 drawnWinnersThisRound.push(targetWinnerName);
+                // 數據層移出中獎者
                 this.lotteryState.remainingPool.splice(winnerIdx, 1);
                 this.saveLotteryState();
 
@@ -6586,7 +6582,7 @@ class WorkspaceApp {
                     setTimeout(() => {
                         this.lotteryWheel.render(this.lotteryState.remainingPool, -1);
                         runNextSpin(currentStep + 1);
-                    }, 1600);
+                    }, 1800);
                 } else {
                     runNextSpin(currentStep + 1);
                 }
@@ -6619,9 +6615,7 @@ class WorkspaceApp {
 
         this.saveLotteryState();
 
-        if (this.lotteryWheel) {
-            this.lotteryWheel.render(this.lotteryState.remainingPool, -1);
-        }
+        // 注意：此處保持開獎定格高亮畫面，絕對不在此時重繪輪盤，確保上方HUD、指針、下方卡片三者100%完全一致！
 
         this.fireworks.launchCelebration(5000);
 
