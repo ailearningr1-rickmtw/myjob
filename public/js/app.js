@@ -80,12 +80,14 @@ const DEFAULT_PRIZE_CONFIGS = [
 ];
 
 const REHEARSAL_SAMPLE_NAMES = [
-    "研發一部 - 陳建宏", "研發一部 - 林雅婷", "研發一部 - 張家豪", "研發一部 - 許詩涵", "研發一部 - 王冠宇",
-    "研發二部 - 李宗翰", "研發二部 - 吳佳穎", "研發二部 - 劉承恩", "研發二部 - 蔡宜蓁", "研發二部 - 楊俊傑",
-    "產品設計部 - 鄭宇軒", "產品設計部 - 謝欣妤", "產品設計部 - 郭柏翰", "產品設計部 - 洪千惠", "產品設計部 - 邱品睿",
-    "營運企劃部 - 曾郁婷", "營運企劃部 - 廖家瑋", "營運企劃部 - 賴佩珊", "營運企劃部 - 徐瑋倫", "營運企劃部 - 周心怡",
-    "業務拓展部 - 葉哲瑋", "業務拓展部 - 蘇庭萱", "業務拓展部 - 莊博鈞", "業務拓展部 - 呂思穎", "業務拓展部 - 江政勳",
-    "行政管理部 - 何佳琪", "行政管理部 - 蕭宇廷", "行政管理部 - 羅雅雯", "行政管理部 - 高志豪", "行政管理部 - 潘怡君"
+    "第一股 - 陳建宏", "第一股 - 林雅婷", "第一股 - 張家豪", "第一股 - 許詩涵", "第一股 - 王冠宇",
+    "第一股 - 吳宗憲", "第一股 - 鄭雅文", "第一股 - 謝承翰", "第一股 - 洪佳玲", "第一股 - 曾國華",
+    "第二股 - 李宗翰", "第二股 - 吳佳穎", "第二股 - 劉承恩", "第二股 - 蔡宜蓁", "第二股 - 楊俊傑",
+    "第二股 - 邱志偉", "第二股 - 賴佩珊", "第二股 - 徐瑋倫", "第二股 - 廖家瑋", "第二股 - 周心怡",
+    "第三股 - 鄭宇軒", "第三股 - 謝欣妤", "第三股 - 郭柏翰", "第三股 - 洪千惠", "第三股 - 邱品睿",
+    "第三股 - 蘇庭萱", "第三股 - 葉哲瑋", "第三股 - 莊博鈞", "第三股 - 呂思穎", "第三股 - 江政勳",
+    "第四股 - 何佳琪", "第四股 - 蕭宇廷", "第四股 - 羅雅雯", "第四股 - 高志豪", "第四股 - 潘怡君",
+    "第四股 - 柯明宏", "第四股 - 鄧雅婷", "第四股 - 彭偉傑", "第四股 - 施佩君", "第四股 - 范姜敏"
 ];
 
 /**
@@ -1441,6 +1443,320 @@ class FireworksController {
 /**
  * 應用程式狀態管理類別
  */
+/**
+ * 歲末年終尾牙 40 人隨機抽籤幸運大輪盤引擎 (Canvas + Retina + 物理動力學)
+ * 具備最佳化多股色彩辨識、頂部即時指針鎖定雷達、雙動力學模式（快速果決模式 vs 心跳懸念末段極慢爬行模式）
+ */
+class FestiveLotteryWheel {
+    constructor(canvas, pointerEl, hudEl) {
+        this.canvas = canvas;
+        this.ctx = canvas ? canvas.getContext("2d") : null;
+        this.pointerEl = pointerEl;
+        this.hudEl = hudEl;
+        this.currentAngle = 0;
+        this.isSpinning = false;
+        this.animId = null;
+        this.lastTickedIndex = -1;
+        this.highlightIndex = -1;
+        this.currentPool = [];
+    }
+
+    render(pool = [], highlightIdx = -1) {
+        this.currentPool = Array.isArray(pool) ? pool : [];
+        this.highlightIndex = highlightIdx;
+        if (!this.canvas || !this.ctx) return;
+
+        const dpr = window.devicePixelRatio || 1;
+        const size = 560;
+        if (this.canvas.width !== size * dpr || this.canvas.height !== size * dpr) {
+            this.canvas.width = size * dpr;
+            this.canvas.height = size * dpr;
+        }
+
+        const ctx = this.ctx;
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, size, size);
+
+        const cx = size / 2;
+        const cy = size / 2;
+        const outerRimR = 270;
+        const wheelR = 246;
+        const centerCapR = 48;
+        const poolLen = this.currentPool.length;
+
+        // 1. 繪製外圈金色金屬雙環與喜慶跑馬燈
+        ctx.beginPath();
+        ctx.arc(cx, cy, outerRimR, 0, Math.PI * 2);
+        const rimGrad = ctx.createLinearGradient(0, 0, size, size);
+        rimGrad.addColorStop(0, "#78350f");
+        rimGrad.addColorStop(0.3, "#f59e0b");
+        rimGrad.addColorStop(0.5, "#fef08a");
+        rimGrad.addColorStop(0.7, "#f59e0b");
+        rimGrad.addColorStop(1, "#78350f");
+        ctx.fillStyle = rimGrad;
+        ctx.fill();
+
+        // 24 顆跑馬燈燈泡
+        const bulbCount = 24;
+        const bulbR = 258;
+        const nowTick = Math.floor(Date.now() / 90);
+        for (let b = 0; b < bulbCount; b += 1) {
+            const bAngle = (b * (Math.PI * 2)) / bulbCount;
+            const bx = cx + bulbR * Math.cos(bAngle);
+            const by = cy + bulbR * Math.sin(bAngle);
+            const isLit = this.isSpinning ? ((nowTick + b) % 2 === 0) : (b % 2 === 0);
+
+            ctx.beginPath();
+            ctx.arc(bx, by, 4.5, 0, Math.PI * 2);
+            ctx.fillStyle = isLit ? "#fef08a" : "#dc2626";
+            ctx.shadowColor = isLit ? "#fef08a" : "#b91c1c";
+            ctx.shadowBlur = isLit ? 10 : 3;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        // 2. 扇區繪製
+        if (poolLen === 0) {
+            ctx.beginPath();
+            ctx.arc(cx, cy, wheelR, 0, Math.PI * 2);
+            ctx.fillStyle = "#1e1b4b";
+            ctx.fill();
+            ctx.strokeStyle = "#f59e0b";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.fillStyle = "#fbbf24";
+            ctx.font = "bold 16px 'Noto Sans TC', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("待抽池已無名單", cx, cy - 10);
+            ctx.font = "13px 'Noto Sans TC', sans-serif";
+            ctx.fillStyle = "#fef3c7";
+            ctx.fillText("請至管理頁重新載入名單", cx, cy + 14);
+        } else {
+            const sectorAngle = (Math.PI * 2) / poolLen;
+
+            for (let i = 0; i < poolLen; i += 1) {
+                const startAngle = this.currentAngle + i * sectorAngle;
+                const endAngle = startAngle + sectorAngle;
+                const nameStr = this.currentPool[i];
+
+                // 扇區配色（四個股辨識或四色交替）
+                let fillColor = "#831843";
+                if (nameStr.includes("第一股")) {
+                    fillColor = (i % 2 === 0) ? "#831843" : "#9f1239";
+                } else if (nameStr.includes("第二股")) {
+                    fillColor = (i % 2 === 0) ? "#1e3a8a" : "#1d4ed8";
+                } else if (nameStr.includes("第三股")) {
+                    fillColor = (i % 2 === 0) ? "#065f46" : "#047857";
+                } else if (nameStr.includes("第四股")) {
+                    fillColor = (i % 2 === 0) ? "#581c87" : "#6b21a8";
+                } else {
+                    const fallbackColors = ["#831843", "#92400e", "#065f46", "#1e3a8a"];
+                    fillColor = fallbackColors[i % fallbackColors.length];
+                }
+
+                if (highlightIdx === i) {
+                    fillColor = "#f59e0b";
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, wheelR, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = fillColor;
+                ctx.fill();
+
+                ctx.strokeStyle = (highlightIdx === i) ? "#ffffff" : "#fbbf24";
+                ctx.lineWidth = (highlightIdx === i) ? 2.5 : 1;
+                ctx.stroke();
+
+                // 扇區文字繪製 (徑向輻射排列)
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(startAngle + sectorAngle / 2);
+
+                let fontSize = 10.5;
+                if (poolLen <= 10) fontSize = 15;
+                else if (poolLen <= 20) fontSize = 13.5;
+                else if (poolLen <= 30) fontSize = 12;
+
+                ctx.font = `bold ${fontSize}px "Noto Sans TC", "PingFang TC", sans-serif`;
+                ctx.textAlign = "right";
+                ctx.textBaseline = "middle";
+
+                if (highlightIdx === i) {
+                    ctx.fillStyle = "#1e1b4b";
+                    ctx.shadowColor = "transparent";
+                } else {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+                    ctx.shadowBlur = 4;
+                }
+
+                let cleanLabel = nameStr;
+                cleanLabel = cleanLabel.replace("第一股 - ", "1股 ").replace("第二股 - ", "2股 ").replace("第三股 - ", "3股 ").replace("第四股 - ", "4股 ");
+                ctx.fillText(cleanLabel, wheelR - 14, 0);
+
+                ctx.restore();
+            }
+        }
+
+        // 3. 中心金色金屬立體徽章 (Center Cap)
+        ctx.beginPath();
+        ctx.arc(cx, cy, centerCapR, 0, Math.PI * 2);
+        const capGrad = ctx.createRadialGradient(cx - 10, cy - 10, 5, cx, cy, centerCapR);
+        capGrad.addColorStop(0, "#fef08a");
+        capGrad.addColorStop(0.5, "#f59e0b");
+        capGrad.addColorStop(1, "#b45309");
+        ctx.fillStyle = capGrad;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.65)";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.strokeStyle = "#fef08a";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.fillStyle = "#78350f";
+        ctx.font = "900 13px 'Noto Sans TC', sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("尾牙幸運", cx, cy - 7);
+        ctx.font = "900 11px 'Noto Sans TC', sans-serif";
+        ctx.fillText("LUCKY WHEEL", cx, cy + 9);
+
+        // 4. 即時計算頂部指針正指著的同仁並更新 HUD
+        this.updateRadarHud();
+
+        ctx.restore();
+    }
+
+    updateRadarHud() {
+        if (!this.hudEl || !this.currentPool || this.currentPool.length === 0) return;
+        const poolLen = this.currentPool.length;
+        const sectorAngle = (Math.PI * 2) / poolLen;
+        const normAngle = ((1.5 * Math.PI - this.currentAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+        const activeIdx = Math.floor(normAngle / sectorAngle) % poolLen;
+        const activeName = this.currentPool[activeIdx] || "";
+
+        if (this.isSpinning) {
+            this.hudEl.textContent = `鎖定同仁：${activeName}`;
+            this.hudEl.classList.remove("is-revealed");
+        } else if (this.highlightIndex >= 0 && this.currentPool[this.highlightIndex]) {
+            this.hudEl.textContent = `恭賀獲獎：${this.currentPool[this.highlightIndex]}`;
+            this.hudEl.classList.add("is-revealed");
+        } else {
+            this.hudEl.textContent = activeName ? `指針對準：${activeName}` : "吉時待開獎";
+            this.hudEl.classList.remove("is-revealed");
+        }
+
+        if (activeIdx !== this.lastTickedIndex) {
+            this.lastTickedIndex = activeIdx;
+            if (this.pointerEl && this.isSpinning) {
+                this.pointerEl.classList.add("is-ticking");
+                setTimeout(() => {
+                    if (this.pointerEl) this.pointerEl.classList.remove("is-ticking");
+                }, 50);
+            }
+        }
+    }
+
+    spin(pool, targetWinnerIndex, mode = "suspense", onFinish) {
+        if (this.isSpinning || !Array.isArray(pool) || pool.length === 0) return;
+        if (targetWinnerIndex < 0 || targetWinnerIndex >= pool.length) return;
+
+        this.isSpinning = true;
+        this.currentPool = pool;
+        this.highlightIndex = -1;
+        const poolLen = pool.length;
+        const sectorAngle = (Math.PI * 2) / poolLen;
+
+        const targetCenterAngle = (targetWinnerIndex + 0.5) * sectorAngle;
+        const targetBaseAngle = ((1.5 * Math.PI - targetCenterAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+
+        const currentNorm = (this.currentAngle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+        let forwardDist = (targetBaseAngle - currentNorm) % (Math.PI * 2);
+        if (forwardDist < 0) forwardDist += Math.PI * 2;
+
+        const startAngle = this.currentAngle;
+        const startTime = performance.now();
+
+        if (mode === "fast") {
+            const duration = 3500;
+            const extraTurns = 7;
+            const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
+
+            const animateFast = (now) => {
+                const elapsed = now - startTime;
+                const t = Math.min(1, elapsed / duration);
+                const progress = 1 - Math.pow(1 - t, 4);
+
+                this.currentAngle = startAngle + totalDelta * progress;
+                this.render(pool, -1);
+
+                if (t < 1) {
+                    this.animId = requestAnimationFrame(animateFast);
+                } else {
+                    this.currentAngle = startAngle + totalDelta;
+                    this.isSpinning = false;
+                    this.render(pool, targetWinnerIndex);
+                    if (typeof onFinish === "function") {
+                        onFinish(targetWinnerIndex);
+                    }
+                }
+            };
+            this.animId = requestAnimationFrame(animateFast);
+        } else {
+            const duration = 8500;
+            const fastDuration = 5200;
+            const creepDuration = 3300;
+
+            const creepDist = 3.6 * sectorAngle;
+            const extraTurns = 15;
+            let fastDist = extraTurns * Math.PI * 2 + forwardDist - creepDist;
+            while (fastDist < 8 * Math.PI * 2) {
+                fastDist += Math.PI * 2;
+            }
+
+            const animateSuspense = (now) => {
+                const elapsed = now - startTime;
+                if (elapsed <= fastDuration) {
+                    const u = Math.min(1, elapsed / fastDuration);
+                    const progressFast = 1 - Math.pow(1 - u, 3);
+                    this.currentAngle = startAngle + fastDist * progressFast;
+                } else if (elapsed < duration) {
+                    const v = Math.min(1, (elapsed - fastDuration) / creepDuration);
+                    const progressCreep = 1 - Math.pow(1 - v, 2);
+                    this.currentAngle = startAngle + fastDist + creepDist * progressCreep;
+                } else {
+                    this.currentAngle = startAngle + fastDist + creepDist;
+                    this.isSpinning = false;
+                    this.render(pool, targetWinnerIndex);
+                    if (typeof onFinish === "function") {
+                        onFinish(targetWinnerIndex);
+                    }
+                    return;
+                }
+
+                this.render(pool, -1);
+                this.animId = requestAnimationFrame(animateSuspense);
+            };
+            this.animId = requestAnimationFrame(animateSuspense);
+        }
+    }
+
+    stop() {
+        if (this.animId) {
+            cancelAnimationFrame(this.animId);
+            this.animId = null;
+        }
+        this.isSpinning = false;
+    }
+}
+
 class WorkspaceApp {
     constructor() {
         this.activeRoute = "overview";
@@ -1632,7 +1948,8 @@ class WorkspaceApp {
             latestDrawnWinners: [],
             latestDrawnPrize: "",
             latestDrawnAmount: "",
-            isRehearsalMode: true
+            isRehearsalMode: true,
+            wheelMode: "suspense"
         };
         try {
             const raw = localStorage.getItem(STORAGE_KEYS.LOTTERY_STATE);
@@ -3578,7 +3895,7 @@ class WorkspaceApp {
 
                     <div class="file-upload-row">
                         <button type="button" class="primary-btn" id="survey-import-roster-btn">匯入共用員工名單</button>
-                        <button type="button" class="secondary-btn" id="survey-load-sample-roster-btn">載入 30 人預設名單</button>
+                        <button type="button" class="secondary-btn" id="survey-load-sample-roster-btn">載入四個股 40 人預設名單</button>
                     </div>
                 </div>
             </div>
@@ -5547,7 +5864,7 @@ class WorkspaceApp {
                         <span>【${modeBadgeText}】此名單與「問卷調查與餐點票選系統」即時同步共用，僅保存在本機瀏覽器。</span>
                     </div>
                     <div class="lottery-top-actions">
-                        <button type="button" class="secondary-btn" id="load-rehearsal-btn">載入 30 人彩排測試名單</button>
+                        <button type="button" class="secondary-btn" id="load-rehearsal-btn">載入四個股 40 人預設名單</button>
                         <button type="button" class="secondary-btn" id="change-passcode-btn">修改通行碼</button>
                         <button type="button" class="danger-outline-btn" id="clear-all-lottery-btn">清空所有名單與紀錄 (正式尾牙歸零)</button>
                     </div>
@@ -5797,34 +6114,92 @@ class WorkspaceApp {
                     <div class="stage-corner-ornament bottom-right" aria-hidden="true"></div>
 
                     <div class="grand-stage-header">
-                        <span class="festive-stage-kicker">YEAR-END GALA LUCKY DRAW // 金玉滿堂・鴻運當頭</span>
+                        <span class="festive-stage-kicker">YEAR-END GALA LUCKY WHEEL // 歲末尾牙・40人幸運大輪盤</span>
                         <div class="grand-prize-banner">
                             <span class="grand-prize-title" id="stage-banner-prize">${this.escapeHtml(this.lotteryState.currentPrize)}</span>
                             <span class="grand-prize-amount" id="stage-banner-amount">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
                         </div>
-                        <span class="grand-pool-counter">
-                            待抽池剩餘人數：${remainingCount} 人 ｜ 本輪每次抽出：${this.lotteryState.batchSize} 人
+                        <span class="grand-pool-counter" id="stage-pool-counter-text">
+                            待抽池剩餘人數：${remainingCount} / ${totalCount} 人 ｜ 本輪抽出：${this.lotteryState.batchSize} 人
                         </span>
                     </div>
 
-                    <div class="grand-winners-showcase" id="grand-winners-showcase">
-                        ${showcaseCardsHtml}
-                    </div>
+                    <!-- 幸運大輪盤核心舞台區 -->
+                    <div class="wheel-arena-wrapper">
+                        <!-- 轉盤動態模式切換器 -->
+                        <div class="wheel-mode-selector-bar">
+                            <span class="wheel-mode-label">轉盤模式：</span>
+                            <button
+                                type="button"
+                                class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'fast' ? 'active' : ''}"
+                                data-wheel-mode="fast"
+                            >
+                                快速果決模式 (約3.5秒)
+                            </button>
+                            <button
+                                type="button"
+                                class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'suspense' ? 'active' : ''}"
+                                data-wheel-mode="suspense"
+                            >
+                                心跳懸念模式 (末段緩慢游移)
+                            </button>
+                        </div>
 
-                    <div class="grand-stage-controls">
+                        <!-- 頂部即時指針掃描 HUD 看板 -->
+                        <div class="wheel-radar-hud" id="wheel-radar-hud">
+                            <span class="wheel-hud-kicker">即時指針鎖定</span>
+                            <span class="wheel-hud-target-name" id="wheel-live-target-name">【 吉時待開獎 】</span>
+                        </div>
+
+                        <!-- 幸運大輪盤畫布與金質指針 -->
+                        <div class="wheel-stage-box">
+                            <div class="wheel-top-pointer-pin" id="wheel-pointer-pin" aria-hidden="true">
+                                <svg viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="pointerGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#fef08a" />
+                                            <stop offset="45%" stop-color="#f59e0b" />
+                                            <stop offset="100%" stop-color="#b45309" />
+                                        </linearGradient>
+                                        <radialGradient id="rubyGemGrad" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0%" stop-color="#f87171" />
+                                            <stop offset="60%" stop-color="#dc2626" />
+                                            <stop offset="100%" stop-color="#7f1d1d" />
+                                        </radialGradient>
+                                    </defs>
+                                    <polygon points="22,48 5,8 39,8" fill="url(#pointerGoldGrad)" stroke="#78350f" stroke-width="2" />
+                                    <circle cx="22" cy="14" r="10" fill="url(#pointerGoldGrad)" stroke="#78350f" stroke-width="1.8" />
+                                    <circle cx="22" cy="14" r="5.5" fill="url(#rubyGemGrad)" />
+                                </svg>
+                            </div>
+                            <canvas id="lottery-wheel-canvas" class="wheel-canvas" width="600" height="600"></canvas>
+                        </div>
+
+                        <!-- 啟動輪盤抽獎操作大按鈕 -->
                         <button
                             type="button"
-                            class="grand-action-btn"
-                            id="grand-roll-toggle-btn"
+                            class="wheel-spin-main-btn"
+                            id="grand-spin-wheel-btn"
                             ${remainingCount === 0 ? "disabled" : ""}
                         >
-                            ${remainingCount === 0
-                                ? "目前待抽池無名單（請點選右上方「名單匯入與獎金設定」匯入或載入彩排名單）"
-                                : `啟動姓名高速輪動（抽出 ${Math.min(this.lotteryState.batchSize, remainingCount)} 位幸運得主）`}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polygon points="10 8 16 12 10 16 10 8" />
+                            </svg>
+                            <span id="spin-btn-text">
+                                ${remainingCount === 0
+                                    ? "待抽池已無名單（請至設定頁載入四個股名單）"
+                                    : `啟動幸運輪盤抽獎（${this.lotteryState.batchSize === 1 ? '單抽 1 位' : `連抽 ${Math.min(this.lotteryState.batchSize, remainingCount)} 位`}）`}
+                            </span>
                         </button>
-                        <span class="grand-pool-counter">
-                            操作提示：按一下啟動姓名持續高速輪動，主持人喊停時再按一下立即定格揭曉並施放煙花
+                        <span class="wheel-action-hint">
+                            抽獎最佳化規則：隨機輪盤抽出後，中獎者立即自轉盤移除；支援快速果決或末段心跳懸念慢速游移模式。
                         </span>
+                    </div>
+
+                    <!-- 最新開出獲獎者鴻運金榜展示區 (獲獎卡片維持現有規格) -->
+                    <div class="grand-winners-showcase" id="grand-winners-showcase">
+                        ${showcaseCardsHtml}
                     </div>
                 </div>
 
@@ -6011,7 +6386,7 @@ class WorkspaceApp {
         const switchToAdminBtn = document.getElementById("switch-to-admin-btn");
         if (switchToAdminBtn) {
             switchToAdminBtn.addEventListener("click", () => {
-                this.stopRollingIfNeeded();
+                if (this.lotteryWheel) this.lotteryWheel.stop();
                 window.location.hash = "theme-05-admin";
             });
         }
@@ -6019,7 +6394,7 @@ class WorkspaceApp {
         const backToHubBtn = document.getElementById("back-to-hub-btn");
         if (backToHubBtn) {
             backToHubBtn.addEventListener("click", () => {
-                this.stopRollingIfNeeded();
+                if (this.lotteryWheel) this.lotteryWheel.stop();
                 window.location.hash = "theme-05";
             });
         }
@@ -6049,31 +6424,23 @@ class WorkspaceApp {
         const stageBannerAmount = document.getElementById("stage-banner-amount");
 
         const syncLiveInputs = () => {
-            if (livePrizeInput) {
-                this.lotteryState.currentPrize = livePrizeInput.value.trim() || "尾牙獎項";
-            }
-            if (liveAmountInput) {
-                this.lotteryState.currentAmount = liveAmountInput.value.trim() || "驚喜獎金";
-            }
-            if (stageBannerPrize) {
-                stageBannerPrize.textContent = this.lotteryState.currentPrize;
-            }
-            if (stageBannerAmount) {
-                stageBannerAmount.textContent = this.lotteryState.currentAmount;
-            }
+            const pVal = (livePrizeInput?.value || "").trim() || "現場加碼獎";
+            const aVal = (liveAmountInput?.value || "").trim() || "驚喜大紅包";
+            this.lotteryState.currentPrize = pVal;
+            this.lotteryState.currentAmount = aVal;
+            if (stageBannerPrize) stageBannerPrize.textContent = pVal;
+            if (stageBannerAmount) stageBannerAmount.textContent = aVal;
             this.saveLotteryState();
         };
 
-        if (livePrizeInput) {
+        if (livePrizeInput && liveAmountInput) {
             livePrizeInput.addEventListener("input", syncLiveInputs);
-        }
-        if (liveAmountInput) {
             liveAmountInput.addEventListener("input", syncLiveInputs);
         }
 
         this.focusSection.querySelectorAll("[data-select-prize]").forEach((btn) => {
             btn.addEventListener("click", () => {
-                if (this.isRolling) return;
+                if (this.lotteryWheel && this.lotteryWheel.isSpinning) return;
                 this.lotteryState.currentPrize = btn.getAttribute("data-select-prize") || "頭獎";
                 this.lotteryState.currentAmount = btn.getAttribute("data-select-amount") || "NT$ 50,000";
                 this.saveLotteryState();
@@ -6083,7 +6450,7 @@ class WorkspaceApp {
 
         this.focusSection.querySelectorAll("[data-batch-size]").forEach((btn) => {
             btn.addEventListener("click", () => {
-                if (this.isRolling) return;
+                if (this.lotteryWheel && this.lotteryWheel.isSpinning) return;
                 const size = Number(btn.getAttribute("data-batch-size"));
                 if ([1, 3, 5].includes(size)) {
                     this.lotteryState.batchSize = size;
@@ -6094,14 +6461,34 @@ class WorkspaceApp {
             });
         });
 
-        const rollToggleBtn = document.getElementById("grand-roll-toggle-btn");
-        if (rollToggleBtn) {
-            rollToggleBtn.addEventListener("click", () => {
-                if (!this.isRolling) {
-                    this.startContinuousRolling();
-                } else {
-                    this.stopRollingAndConfirmWinners(theme);
-                }
+        // 初始化幸運輪盤
+        const canvas = document.getElementById("lottery-wheel-canvas");
+        const pointerPin = document.getElementById("wheel-pointer-pin");
+        const liveHudName = document.getElementById("wheel-live-target-name");
+
+        if (canvas) {
+            this.lotteryWheel = new FestiveLotteryWheel(canvas, pointerPin, liveHudName);
+            this.lotteryWheel.render(this.lotteryState.remainingPool);
+        }
+
+        // 輪盤模式切換事件
+        this.focusSection.querySelectorAll("[data-wheel-mode]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (this.lotteryWheel && this.lotteryWheel.isSpinning) return;
+                const mode = btn.getAttribute("data-wheel-mode") || "suspense";
+                this.lotteryState.wheelMode = mode;
+                this.saveLotteryState();
+                this.focusSection.querySelectorAll("[data-wheel-mode]").forEach((b) => {
+                    b.classList.toggle("active", b.getAttribute("data-wheel-mode") === mode);
+                });
+            });
+        });
+
+        // 啟動輪盤抽獎
+        const spinWheelBtn = document.getElementById("grand-spin-wheel-btn");
+        if (spinWheelBtn) {
+            spinWheelBtn.addEventListener("click", () => {
+                this.executeWheelLottery(theme);
             });
         }
 
@@ -6113,57 +6500,73 @@ class WorkspaceApp {
         }
     }
 
-    startContinuousRolling() {
+    executeWheelLottery(theme) {
+        if (!this.lotteryWheel || this.lotteryWheel.isSpinning) return;
         const pool = this.lotteryState.remainingPool;
         if (!Array.isArray(pool) || pool.length === 0) return;
 
-        this.fireworks.stop();
-        this.isRolling = true;
-        const drawCount = Math.min(this.lotteryState.batchSize, pool.length);
-        const showcaseContainer = document.getElementById("grand-winners-showcase");
-        const rollToggleBtn = document.getElementById("grand-roll-toggle-btn");
+        const spinBtn = document.getElementById("grand-spin-wheel-btn");
+        const spinBtnText = document.getElementById("spin-btn-text");
+        const mode = this.lotteryState.wheelMode || "suspense";
 
-        if (rollToggleBtn) {
-            rollToggleBtn.classList.add("is-stop-mode");
-            rollToggleBtn.textContent = `按下停止！立即鎖定並揭曉 ${drawCount} 位幸運得獎人`;
+        if (spinBtn) {
+            spinBtn.disabled = true;
+            spinBtn.classList.add("is-spinning");
+            if (spinBtnText) spinBtnText.textContent = "幸運輪盤旋轉中，靜候天命揭曉...";
         }
 
-        const renderRollingTick = () => {
-            if (!showcaseContainer) return;
-            const tempPicked = [];
-            const poolLen = pool.length;
-            for (let i = 0; i < drawCount; i += 1) {
-                const randIdx = this.getCryptoRandomInt(poolLen);
-                tempPicked.push(pool[randIdx]);
+        this.fireworks.stop();
+
+        const totalDraw = Math.min(this.lotteryState.batchSize || 1, pool.length);
+        const drawnWinnersThisRound = [];
+
+        const runNextSpin = (currentStep) => {
+            if (currentStep >= totalDraw || this.lotteryState.remainingPool.length === 0) {
+                this.finalizeLotteryRound(theme, drawnWinnersThisRound);
+                if (spinBtn) {
+                    spinBtn.disabled = this.lotteryState.remainingPool.length === 0;
+                    spinBtn.classList.remove("is-spinning");
+                    if (spinBtnText) {
+                        spinBtnText.textContent = this.lotteryState.remainingPool.length === 0
+                            ? "待抽池已無名單（請至設定頁載入四個股名單）"
+                            : `進行下一輪輪盤抽獎（剩餘 ${this.lotteryState.remainingPool.length} 人）`;
+                    }
+                }
+                return;
             }
 
-            showcaseContainer.innerHTML = tempPicked.map((name, idx) => `
-                <div class="grand-winner-card is-rolling">
-                    <span class="grand-winner-slot-badge">高速輪動抽選中 // SLOT #0${idx + 1}</span>
-                    <div class="grand-winner-name">${this.escapeHtml(name)}</div>
-                    <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentPrize)} — ${this.escapeHtml(this.lotteryState.currentAmount)}</span>
-                </div>
-            `).join("");
+            const currentPool = this.lotteryState.remainingPool;
+            const targetWinnerIdx = this.getCryptoRandomInt(currentPool.length);
+            const targetWinnerName = currentPool[targetWinnerIdx];
+
+            this.lotteryWheel.spin(currentPool, targetWinnerIdx, mode, (winnerIdx) => {
+                drawnWinnersThisRound.push(targetWinnerName);
+                this.lotteryState.remainingPool.splice(winnerIdx, 1);
+                this.saveLotteryState();
+
+                this.updateShowcaseWinners(drawnWinnersThisRound);
+
+                const counterEl = document.getElementById("stage-pool-counter-text");
+                if (counterEl) {
+                    counterEl.textContent = `待抽池剩餘人數：${this.lotteryState.remainingPool.length} / ${this.lotteryState.allParticipants.length} 人 ｜ 本輪抽出：${this.lotteryState.batchSize} 人`;
+                }
+
+                if (currentStep + 1 < totalDraw && this.lotteryState.remainingPool.length > 0) {
+                    setTimeout(() => {
+                        this.lotteryWheel.render(this.lotteryState.remainingPool, -1);
+                        runNextSpin(currentStep + 1);
+                    }, 1600);
+                } else {
+                    runNextSpin(currentStep + 1);
+                }
+            });
         };
 
-        renderRollingTick();
-        this.rollingIntervalId = setInterval(renderRollingTick, 65);
+        runNextSpin(0);
     }
 
-    stopRollingAndConfirmWinners(theme) {
-        this.stopRollingIfNeeded();
-
-        const poolCopy = [...this.lotteryState.remainingPool];
-        if (poolCopy.length === 0) return;
-
-        const drawCount = Math.min(this.lotteryState.batchSize, poolCopy.length);
-        const selectedWinners = [];
-
-        for (let i = 0; i < drawCount; i += 1) {
-            const randIndex = this.getCryptoRandomInt(poolCopy.length);
-            const [picked] = poolCopy.splice(randIndex, 1);
-            selectedWinners.push(picked);
-        }
+    finalizeLotteryRound(theme, winners) {
+        if (!winners || winners.length === 0) return;
 
         const now = new Date();
         const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
@@ -6171,8 +6574,7 @@ class WorkspaceApp {
         const prizeTitle = this.lotteryState.currentPrize || "尾牙獎項";
         const prizeAmount = this.lotteryState.currentAmount || "驚喜獎金";
 
-        this.lotteryState.remainingPool = poolCopy;
-        this.lotteryState.latestDrawnWinners = selectedWinners;
+        this.lotteryState.latestDrawnWinners = winners;
         this.lotteryState.latestDrawnPrize = prizeTitle;
         this.lotteryState.latestDrawnAmount = prizeAmount;
 
@@ -6180,13 +6582,50 @@ class WorkspaceApp {
             round: nextRound,
             prize: prizeTitle,
             amount: prizeAmount,
-            winners: selectedWinners,
+            winners: winners,
             time: timeStr
         });
 
         this.saveLotteryState();
-        this.renderLotteryGrandStagePage(theme);
+
+        if (this.lotteryWheel) {
+            this.lotteryWheel.render(this.lotteryState.remainingPool, -1);
+        }
+
         this.fireworks.launchCelebration(5000);
+
+        const historyContainer = document.querySelector(".winners-history-list");
+        if (historyContainer) {
+            historyContainer.innerHTML = this.lotteryState.winnersHistory.map((record) => `
+                <li class="winner-history-item">
+                    <div class="winner-history-left">
+                        <span class="theme-code-badge">第 ${record.round} 輪</span>
+                        <span class="winner-prize-badge">${this.escapeHtml(record.prize)}</span>
+                        <span class="prize-amount-badge">${this.escapeHtml(record.amount || "")}</span>
+                        <span class="winner-history-names">${record.winners.map((w) => this.escapeHtml(w)).join("、")}</span>
+                    </div>
+                    <span class="winner-history-time">${this.escapeHtml(record.time)}</span>
+                </li>
+            `).join("");
+        }
+
+        const exportCsvBtn = document.getElementById("stage-export-csv-btn");
+        if (exportCsvBtn) exportCsvBtn.disabled = false;
+    }
+
+    updateShowcaseWinners(winners) {
+        const showcase = document.getElementById("grand-winners-showcase");
+        if (!showcase) return;
+        const displayPrize = this.lotteryState.currentPrize;
+        const displayAmount = this.lotteryState.currentAmount;
+
+        showcase.innerHTML = winners.map((name, idx) => `
+            <div class="grand-winner-card is-celebrating">
+                <span class="grand-winner-slot-badge">鴻運當頭 // WINNER #0${idx + 1}</span>
+                <div class="grand-winner-name">${this.escapeHtml(name)}</div>
+                <span class="grand-winner-Bonus-note">恭賀榮獲：${this.escapeHtml(displayPrize)}（${this.escapeHtml(displayAmount)}）</span>
+            </div>
+        `).join("");
     }
 
     parseParticipantNames(rawText) {

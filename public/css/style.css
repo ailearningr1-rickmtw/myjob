@@ -10798,3 +10798,242 @@ html[data-theme="dark"] .rpa-step-badge {
 .pv-modal-passcode {
     max-width: 480px;
 }
+
+/* ==========================================================================
+   主題四：歲末年終尾牙 40 人隨機抽籤幸運大輪盤專屬樣式
+   ========================================================================== */
+
+.wheel-arena-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 2;
+    margin: 0.5rem 0;
+}
+
+/* 轉盤模式切換列 */
+.wheel-mode-selector-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: rgba(0, 0, 0, 0.28);
+    padding: 0.4rem 0.65rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.wheel-mode-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fbbf24;
+    letter-spacing: 0.05em;
+    padding-left: 0.5rem;
+}
+
+.wheel-mode-pill {
+    background: transparent;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fef3c7;
+    padding: 0.35rem 1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.wheel-mode-pill:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: #f59e0b;
+    color: #ffffff;
+}
+
+.wheel-mode-pill.active {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+    border-color: #fef08a;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
+}
+
+/* 頂部即時指針雷達鎖定看板 (HUD) */
+.wheel-radar-hud {
+    width: 100%;
+    max-width: 540px;
+    background: linear-gradient(180deg, rgba(20, 20, 20, 0.88) 0%, rgba(35, 10, 10, 0.92) 100%);
+    border: 2px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        inset 0 0 16px rgba(245, 158, 11, 0.15);
+}
+
+.wheel-hud-kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: #fca5a5;
+    background: rgba(220, 38, 38, 0.25);
+    border: 1px solid rgba(220, 38, 38, 0.45);
+    padding: 0.22rem 0.65rem;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+}
+
+.wheel-hud-target-name {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #fef08a;
+    letter-spacing: 0.08em;
+    text-shadow:
+        0 0 12px rgba(245, 158, 11, 0.8),
+        0 2px 4px rgba(0, 0, 0, 0.9);
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wheel-hud-target-name.is-revealed {
+    color: #ffffff;
+    text-shadow:
+        0 0 20px #f59e0b,
+        0 0 35px #dc2626;
+    animation: winnerRevealPop 0.5s ease-out;
+}
+
+/* 幸運大輪盤舞台容器 */
+.wheel-stage-box {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 12 點鐘方向頂部實體金質指針 */
+.wheel-top-pointer-pin {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 52px;
+    z-index: 12;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
+    transition: transform 0.06s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transform-origin: top center;
+}
+
+.wheel-top-pointer-pin.is-ticking {
+    transform: translateX(-50%) rotate(7deg) scale(1.08);
+}
+
+.wheel-top-pointer-pin svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* 輪盤 Canvas 畫布 */
+.wheel-canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow:
+        0 16px 45px rgba(0, 0, 0, 0.55),
+        0 0 45px rgba(245, 158, 11, 0.38),
+        inset 0 0 25px rgba(0, 0, 0, 0.4);
+    background: radial-gradient(circle, #3b0764 0%, #1e1b4b 50%, #0f172a 100%);
+    display: block;
+}
+
+/* 輪盤操作大按鈕 */
+.wheel-spin-main-btn {
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #b45309 100%);
+    border: 2.5px solid #fbbf24;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    padding: 1.05rem 2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    box-shadow:
+        0 12px 30px -6px rgba(220, 38, 38, 0.65),
+        0 0 24px rgba(245, 158, 11, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.wheel-spin-main-btn:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 18px 40px -6px rgba(220, 38, 38, 0.8),
+        0 0 36px rgba(245, 158, 11, 0.7);
+    border-color: #fef08a;
+}
+
+.wheel-spin-main-btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.99);
+}
+
+.wheel-spin-main-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+    border-color: #9ca3af;
+    box-shadow: none;
+}
+
+.wheel-spin-main-btn.is-spinning {
+    background: linear-gradient(135deg, #78350f 0%, #b45309 50%, #92400e 100%);
+    border-color: #fde68a;
+    box-shadow:
+        0 0 35px rgba(245, 158, 11, 0.65),
+        inset 0 0 20px rgba(254, 240, 138, 0.35);
+    animation: rollingCardPulse 0.4s infinite alternate ease-in-out;
+}
+
+/* 輪盤操作提示 */
+.wheel-action-hint {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    .wheel-stage-box {
+        max-width: 360px;
+    }
+    .wheel-radar-hud {
+        padding: 0.6rem 0.9rem;
+    }
+    .wheel-hud-target-name {
+        font-size: 1.05rem;
+    }
+    .wheel-spin-main-btn {
+        font-size: 1.05rem;
+        padding: 0.85rem 1.4rem;
+    }
+}
