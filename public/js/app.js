@@ -1867,7 +1867,7 @@ class FestiveLotteryWheel {
                 this.pointerEl.classList.add("is-ticking");
                 // 播放撥片清脆嗒聲
                 if (this.audio) {
-                    this.audio.playTick(this.isCreepPhase ? "creep" : (this.isSlowPhase ? "slow" : "fast"));
+                    this.audio.playTick(this.isSlowPhase ? "slow" : "fast");
                 }
                 setTimeout(() => {
                     if (this.pointerEl) this.pointerEl.classList.remove("is-ticking");
@@ -1882,13 +1882,12 @@ class FestiveLotteryWheel {
 
         this.isSpinning = true;
         this.isSlowPhase = false;
-        this.isCreepPhase = false;
         this.currentPool = pool;
         this.highlightIndex = -1;
         const poolLen = pool.length;
         const sectorAngle = (Math.PI * 2) / poolLen;
 
-        // 【極致擬真 1：非死板居中落點】在扇區 [0.20, 0.80] 之間隨機偏移，時而險過、時而近線，杜絕預測性
+        // 【非絕對居中落點】在扇區 [0.20, 0.80] 之間隨機偏移，時而險過、時而近線，杜絕預測性
         const randomOffsetRatio = 0.20 + Math.random() * 0.60;
         const targetLandAngle = (targetWinnerIndex + randomOffsetRatio) * sectorAngle;
         const targetBaseAngle = ((1.5 * Math.PI - targetLandAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
@@ -1901,15 +1900,15 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            // 模式一：快速果決模式 (轉速適度調順，約 3.4 秒，圈數 4~5 圈)
-            const duration = 3400 + Math.random() * 300;
+            // 模式一：快速果決模式 (平穩順暢，約 3.2~3.6 秒，圈數 4~5 圈)
+            const duration = 3200 + Math.random() * 400;
             const extraTurns = 4 + Math.floor(Math.random() * 2);
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
                 const elapsed = now - startTime;
                 const t = Math.min(1, elapsed / duration);
-                const progress = 1 - Math.pow(1 - t, 4.5);
+                const progress = 1 - Math.pow(1 - t, 4.0);
 
                 this.currentAngle = startAngle + totalDelta * progress;
                 this.render(pool, -1);
@@ -1920,7 +1919,6 @@ class FestiveLotteryWheel {
                     this.currentAngle = startAngle + totalDelta;
                     this.isSpinning = false;
                     this.isSlowPhase = false;
-                    this.isCreepPhase = false;
                     this.render(pool, targetWinnerIndex);
                     if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
@@ -1930,75 +1928,58 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 【極致戲劇張力三階段物理學：整體轉速調緩 + 終段極慢速微步大幅拉長至 6.2s~7.4s】
+            // 【物理無縫 C^2 平滑運動學模型：大幅拉寬衝刺與游移範圍，徹底杜絕卡頓與刻意生硬感】
+            // 衝刺時間隨機範圍顯著拉大：2.2s ~ 5.0s (快衝或長衝)
+            const T1_sec = 2.2 + Math.random() * 2.8; 
+            // 游移減速時間隨機範圍顯著拉大：6.2s ~ 11.7s (俐落減速或持久懸疑)
+            const T2_sec = 6.2 + Math.random() * 5.5; 
             
-            // 階段 3：極慢速絕殺窒息微步 (Ultra-slow Agonizing Creep)
-            // 大幅拉長時間至 6.2 ~ 7.4 秒！指針如慢鏡頭微步爬行最後 0.80 ~ 1.10 個扇區，全場懸念拉滿！
-            const T3_sec = 6.2 + Math.random() * 1.2; // 6.2s ~ 7.4s (顯著延長)
-            const creepSectors = 0.80 + Math.random() * 0.30;
-            const D3 = creepSectors * sectorAngle;
-            const p = 1.6;
-            const v2 = (p * D3) / T3_sec; // 進入極慢速微步時的初始微速
-
-            // 階段 2：懸疑巡迴游移階段 (Suspense Sweep)
-            // 適度調整巡迴速度，人數少時慢速繞行 1.8 圈以上，人人有機會
-            const T2_sec = 5.2 + Math.random() * 0.8; // 5.2s ~ 6.0s
-            let sweepSectors;
-            if (poolLen <= 6) {
-                sweepSectors = Math.max(5.0, poolLen * 1.8) + Math.random() * 1.0;
-            } else {
-                sweepSectors = Math.max(8.0, Math.min(15.0, poolLen * 0.35)) + Math.random() * 1.5;
-            }
-            const D2 = sweepSectors * sectorAngle;
-            const v1 = (2 * D2 / T2_sec) - v2; // 進入懸疑中速游移時的接軌角速度
-
-            // 階段 1：高速轉動階段 (整體轉速稍稍調慢，更加平穩流暢，圈數調為 8~10 圈)
-            const T1_sec = 4.2 + Math.random() * 0.6; // 4.2s ~ 4.8s
-            const extraTurns = 8 + Math.floor(Math.random() * 3); // 隨機 8~10 圈 (原本 13~17 圈過於眼花繚亂)
+            // 目標最高轉速保持在舒適優雅的 1.20 ~ 1.55 圈/秒 (7.6 ~ 9.8 rad/s)
+            const desiredV0 = 7.6 + Math.random() * 2.2;
+            const T_up = 0.4; // 啟動柔和起步時間 (0.4秒平滑爬升)
+            
+            const idealTotalDelta = desiredV0 * (T1_sec - 0.5 * T_up + 0.5 * T2_sec);
+            const minTurns = Math.round((idealTotalDelta - forwardDist) / (Math.PI * 2));
+            const extraTurns = Math.max(5, minTurns);
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
-            const D1 = totalDelta - D2 - D3;
-            const A = (3.0 * (D1 - v1 * T1_sec)) / Math.pow(T1_sec, 3);
 
-            const T1_ms = T1_sec * 1000.0;
-            const T2_ms = T2_sec * 1000.0;
-            const T3_ms = T3_sec * 1000.0;
-            const totalDuration_ms = T1_ms + T2_ms + T3_ms;
+            // 嚴謹解析牛頓力學：速度與加速度全時連續，無縫接軌 (C^2 Continuous)
+            const v0 = totalDelta / (T1_sec - 0.5 * T_up + 0.5 * T2_sec);
+            const D_up = 0.5 * v0 * T_up;
+            const D_cruise = v0 * (T1_sec - T_up);
+            const D1 = D_up + D_cruise;
+            const D2 = 0.5 * v0 * T2_sec;
+
+            const totalDuration_sec = T1_sec + T2_sec;
 
             const animateSuspense = (now) => {
                 const elapsed = now - startTime;
+                const t = elapsed / 1000.0;
 
-                if (elapsed <= T1_ms) {
-                    // 階段 1：流暢優雅的高速旋轉，降速至 v1
+                if (t <= T_up) {
+                    // 階段 1A：柔和啟動平滑升速 (0 ~ 0.4s)
                     this.isSlowPhase = false;
-                    this.isCreepPhase = false;
-                    const t = elapsed / 1000.0;
-                    const progressAngle = (A / 3.0) * (Math.pow(T1_sec, 3) - Math.pow(T1_sec - t, 3)) + v1 * t;
-                    this.currentAngle = startAngle + progressAngle;
-                } else if (elapsed <= T1_ms + T2_ms) {
-                    // 階段 2：懸疑巡迴游移階段，多位同仁名單逐一緩慢掠過
+                    const u = t / T_up;
+                    const pos = v0 * T_up * (Math.pow(u, 3) - 0.5 * Math.pow(u, 4));
+                    this.currentAngle = startAngle + pos;
+                } else if (t <= T1_sec) {
+                    // 階段 1B：流暢優雅的高速等速巡航 (至 T1_sec)
+                    this.isSlowPhase = false;
+                    this.currentAngle = startAngle + D_up + v0 * (t - T_up);
+                } else if (t < totalDuration_sec) {
+                    // 階段 2：完全自然連續的阻尼平滑減速 (Hermite SmoothStep: 速度與加速度無跳躍接軌)
                     this.isSlowPhase = true;
-                    this.isCreepPhase = false;
-                    const t = (elapsed - T1_ms) / 1000.0;
-                    const tau = t / T2_sec;
-                    const phase2Angle = v1 * T2_sec * tau - ((v1 - v2) / 2.0) * T2_sec * Math.pow(tau, 2);
+                    const tau = (t - T1_sec) / T2_sec;
+                    // 位置公式精準滿足：起點速度=v0, 起點加速度=0, 終點速度=0, 終點加速度=0
+                    const phase2Angle = D2 * (2 * tau - 2 * Math.pow(tau, 3) + Math.pow(tau, 4));
                     this.currentAngle = startAngle + D1 + phase2Angle;
-                } else if (elapsed < totalDuration_ms) {
-                    // 階段 3：長達 6.2~7.4 秒的【極慢速絕殺窒息微步】！
-                    // 指針以極微小速度跨越相鄰邊界線，懸念延展至最高峰！
-                    this.isSlowPhase = true;
-                    this.isCreepPhase = true;
-                    const t = (elapsed - T1_ms - T2_ms) / 1000.0;
-                    const tau = Math.min(1.0, t / T3_sec);
-                    const creepProgress = 1.0 - Math.pow(1.0 - tau, p);
-                    this.currentAngle = startAngle + D1 + D2 + D3 * creepProgress;
                 } else {
                     // 抵達最終天命得獎目標
                     this.currentAngle = startAngle + totalDelta;
                     this.isSpinning = false;
                     this.isSlowPhase = false;
-                    this.isCreepPhase = false;
                     this.render(pool, targetWinnerIndex);
-                    // 觸發溫潤典雅和弦 ＋ 純粹熱烈群眾拍掌聲浪！
+                    // 觸發溫潤典雅磬音 ＋ 純粹熱烈群眾拍掌聲浪！
                     if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
