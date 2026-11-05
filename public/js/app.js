@@ -1529,7 +1529,7 @@ class LotteryAudioSynthesizer {
     }
 
     /**
-     * 播放震撼熱烈的大獎慶祝音效 (爆發重低音 + 勝利銅管 + 萬人現場歡呼Formant + 狂熱掌聲顆粒 + 口哨)
+     * 播放溫潤熱烈的純掌聲聲浪與大獎鳴響 (純粹掌聲聲浪，移除刺耳尖叫與高頻口哨)
      * 純 Web Audio API 即時合成，零外部音檔依賴，保證離線百分之百可用
      */
     playApplauseAndCheer() {
@@ -1540,130 +1540,35 @@ class LotteryAudioSynthesizer {
         const ctx = this.ctx;
         const now = ctx.currentTime;
 
-        // 1. 開幕爆發重低音衝擊 (Sub Bass Impact - 瞬間點燃大獎震撼感)
-        const subOsc = ctx.createOscillator();
-        const subGain = ctx.createGain();
-        subOsc.type = "sine";
-        subOsc.frequency.setValueAtTime(140, now);
-        subOsc.frequency.exponentialRampToValueAtTime(32, now + 0.48);
-        subGain.gain.setValueAtTime(0.65, now);
-        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.50);
-        subOsc.connect(subGain);
-        subGain.connect(ctx.destination);
-        subOsc.start(now);
-        subOsc.stop(now + 0.52);
-
-        // 2. 金牌大獎勝利銅管合奏琶音 (C4, G4, C5, E5, G5, C6, E6)
-        const fanfareNotes = [261.63, 392.00, 523.25, 659.25, 783.99, 1046.50, 1318.51];
-        fanfareNotes.forEach((freq, idx) => {
-            const t = now + 0.04 + idx * 0.085;
+        // 1. 溫潤典雅的大獎慶賀和弦磬音 (Warm Chime - 柔和溫暖的 C 大調和弦，無刺耳鋸齒波)
+        const chimeNotes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
+        chimeNotes.forEach((freq, idx) => {
+            const t = now + 0.05 + idx * 0.08;
             const osc = ctx.createOscillator();
-            const oscDetune = ctx.createOscillator();
-            const fGain = ctx.createGain();
-            const fFilter = ctx.createBiquadFilter();
+            const gain = ctx.createGain();
+            const filter = ctx.createBiquadFilter();
 
-            osc.type = "sawtooth";
+            osc.type = "sine";
             osc.frequency.setValueAtTime(freq, t);
 
-            oscDetune.type = "triangle";
-            oscDetune.frequency.setValueAtTime(freq * 1.004, t);
+            // 溫和低通濾波，去除任何尖銳高頻
+            filter.type = "lowpass";
+            filter.frequency.setValueAtTime(1100, t);
 
-            fFilter.type = "lowpass";
-            fFilter.frequency.setValueAtTime(900, t);
-            fFilter.frequency.exponentialRampToValueAtTime(3600, t + 0.14);
-            fFilter.frequency.exponentialRampToValueAtTime(1200, t + 0.85);
+            gain.gain.setValueAtTime(0.001, t);
+            gain.gain.linearRampToValueAtTime(0.18, t + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
 
-            fGain.gain.setValueAtTime(0.001, t);
-            fGain.gain.linearRampToValueAtTime(0.24, t + 0.04);
-            fGain.gain.exponentialRampToValueAtTime(0.001, t + 0.88);
-
-            osc.connect(fFilter);
-            oscDetune.connect(fFilter);
-            fFilter.connect(fGain);
-            fGain.connect(ctx.destination);
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
 
             osc.start(t);
-            oscDetune.start(t);
-            osc.stop(t + 0.90);
-            oscDetune.stop(t + 0.90);
+            osc.stop(t + 1.25);
         });
 
-        // 3. 現場萬人沸騰群眾歡呼咆哮聲 (Crowd Roar Formants)
-        // 透過多重母音共振峰與滑音，精確模擬全場齊聲 "WOOOO-AAAH!" 狂熱歡呼
-        const cheerVoices = [
-            { startF: 160, peakF: 260, f1: 460, f2: 1080, delay: 0.06, dur: 3.2, gain: 0.35 },
-            { startF: 240, peakF: 440, f1: 720, f2: 1780, delay: 0.12, dur: 3.6, gain: 0.38 },
-            { startF: 190, peakF: 340, f1: 580, f2: 1350, delay: 0.20, dur: 3.4, gain: 0.32 },
-            { startF: 290, peakF: 540, f1: 850, f2: 2150, delay: 0.28, dur: 3.0, gain: 0.30 }
-        ];
-
-        cheerVoices.forEach((v) => {
-            const vt = now + v.delay;
-            const vOsc = ctx.createOscillator();
-            const vGain = ctx.createGain();
-            const formantFilter = ctx.createBiquadFilter();
-
-            vOsc.type = "sawtooth";
-            vOsc.frequency.setValueAtTime(v.startF, vt);
-            vOsc.frequency.exponentialRampToValueAtTime(v.peakF, vt + 0.55);
-            vOsc.frequency.exponentialRampToValueAtTime(v.startF * 1.08, vt + v.dur);
-
-            formantFilter.type = "bandpass";
-            formantFilter.frequency.setValueAtTime(v.f1, vt);
-            formantFilter.frequency.exponentialRampToValueAtTime(v.f2, vt + 0.65);
-            formantFilter.Q.setValueAtTime(3.2, vt);
-
-            vGain.gain.setValueAtTime(0.001, vt);
-            vGain.gain.linearRampToValueAtTime(v.gain, vt + 0.38);
-            vGain.gain.setValueAtTime(v.gain * 0.92, vt + v.dur * 0.65);
-            vGain.gain.exponentialRampToValueAtTime(0.001, vt + v.dur);
-
-            vOsc.connect(formantFilter);
-            formantFilter.connect(vGain);
-            vGain.connect(ctx.destination);
-
-            vOsc.start(vt);
-            vOsc.stop(vt + v.dur + 0.05);
-        });
-
-        // 4. 連續激昂口哨狂呼 (Celebration Whistles with Flutter Vibrato)
-        const whistles = [
-            { delay: 0.12, startF: 880, peakF: 2250, endF: 1350, dur: 0.90, amp: 0.26 },
-            { delay: 0.38, startF: 1050, peakF: 2800, endF: 1600, dur: 0.95, amp: 0.29 },
-            { delay: 0.72, startF: 920, peakF: 2500, endF: 1400, dur: 0.90, amp: 0.25 },
-            { delay: 1.15, startF: 1150, peakF: 2950, endF: 1750, dur: 0.98, amp: 0.27 }
-        ];
-
-        whistles.forEach((w) => {
-            const wt = now + w.delay;
-            const wOsc = ctx.createOscillator();
-            const wGain = ctx.createGain();
-
-            wOsc.type = "sine";
-            wOsc.frequency.setValueAtTime(w.startF, wt);
-            wOsc.frequency.exponentialRampToValueAtTime(w.peakF, wt + 0.32);
-            wOsc.frequency.exponentialRampToValueAtTime(w.endF, wt + w.dur);
-
-            const flutterOsc = ctx.createOscillator();
-            const flutterGain = ctx.createGain();
-            flutterOsc.frequency.setValueAtTime(16, wt);
-            flutterGain.gain.setValueAtTime(w.amp * 0.35, wt);
-            flutterOsc.connect(wGain.gain);
-
-            wGain.gain.setValueAtTime(0.001, wt);
-            wGain.gain.linearRampToValueAtTime(w.amp, wt + 0.08);
-            wGain.gain.exponentialRampToValueAtTime(0.001, wt + w.dur);
-
-            wOsc.connect(wGain);
-            wGain.connect(ctx.destination);
-
-            flutterOsc.start(wt);
-            wOsc.start(wt);
-            flutterOsc.stop(wt + w.dur + 0.05);
-            wOsc.stop(wt + w.dur + 0.05);
-        });
-
-        // 5. 熱烈掌聲聲浪 (雙聲道隨機拍掌脈衝顆粒群 + 空腔共鳴濾波 + 空間澎湃聲浪)
+        // 2. 純粹、熱烈、溫潤的立體聲群體拍掌聲浪 (Pure Clapping Waves)
+        // 模擬宴會廳/大禮堂數十位同仁真誠熱烈的雙手鼓掌，無尖銳刺耳雜音
         const duration = 4.8;
         const sampleRate = ctx.sampleRate;
         const totalSamples = Math.floor(sampleRate * duration);
@@ -1671,28 +1576,33 @@ class LotteryAudioSynthesizer {
 
         for (let channel = 0; channel < 2; channel += 1) {
             const output = noiseBuffer.getChannelData(channel);
-            // 底層漫射環境群體聲
+            // 溫和粉紅/低通底噪聲浪，模擬群體環境共鳴
+            let b0 = 0, b1 = 0;
             for (let i = 0; i < totalSamples; i += 1) {
-                output[i] = (Math.random() * 2 - 1) * 0.12;
+                const white = Math.random() * 2 - 1;
+                b0 = 0.96 * b0 + white * 0.04;
+                b1 = 0.92 * b1 + white * 0.08;
+                output[i] = (b0 + b1) * 0.22;
             }
 
-            // 注入 400 組獨立真實「啪！啪！啪！」拍掌脈衝顆粒
-            const numClaps = 400;
+            // 注入 450 組獨立真實手掌拍擊顆粒 (Cupped Palm Clap Impulses)
+            // 聚焦在人手中低頻拍擊聲響 (800Hz ~ 1500Hz)，柔和自然
+            const numClaps = 450;
             for (let c = 0; c < numClaps; c += 1) {
-                const clapTime = 0.12 + Math.random() * 4.2;
+                const clapTime = 0.15 + Math.random() * 4.0;
                 const startIdx = Math.floor(clapTime * sampleRate);
                 if (startIdx >= totalSamples) continue;
 
-                const clapLength = Math.floor(sampleRate * (0.018 + Math.random() * 0.015));
-                const clapAmp = 0.50 + Math.random() * 0.55;
-                const resonanceFreq = 1100 + Math.random() * 1500;
+                const clapLength = Math.floor(sampleRate * (0.022 + Math.random() * 0.016));
+                const clapAmp = 0.40 + Math.random() * 0.45;
+                const resonanceFreq = 850 + Math.random() * 650; // 手掌空腔拍擊共鳴頻率
 
                 for (let j = 0; j < clapLength && (startIdx + j) < totalSamples; j += 1) {
                     const tNorm = j / clapLength;
-                    const decay = Math.exp(-tNorm * 4.6);
+                    const decay = Math.exp(-tNorm * 4.2);
                     const oscPart = Math.sin(2 * Math.PI * resonanceFreq * (j / sampleRate));
                     const noisePart = Math.random() * 2 - 1;
-                    output[startIdx + j] += clapAmp * decay * (0.42 * oscPart + 0.58 * noisePart);
+                    output[startIdx + j] += clapAmp * decay * (0.55 * oscPart + 0.45 * noisePart);
                 }
             }
         }
@@ -1700,18 +1610,19 @@ class LotteryAudioSynthesizer {
         const applauseSource = ctx.createBufferSource();
         applauseSource.buffer = noiseBuffer;
 
+        // 溫潤帶通濾波器：中心頻率 1150Hz，Q=0.9，徹底濾除 3000Hz 以上刺耳嘶嘶聲
         const clapFilter = ctx.createBiquadFilter();
         clapFilter.type = "bandpass";
-        clapFilter.frequency.setValueAtTime(1400, now);
-        clapFilter.Q.setValueAtTime(1.2, now);
+        clapFilter.frequency.setValueAtTime(1150, now);
+        clapFilter.Q.setValueAtTime(0.9, now);
 
         const applauseGain = ctx.createGain();
         applauseGain.gain.setValueAtTime(0.001, now);
-        // 0.25 秒迅猛湧現雷動掌聲 (音量大幅提升至 0.72)
-        applauseGain.gain.linearRampToValueAtTime(0.72, now + 0.25);
+        // 0.35 秒溫和湧現雷動掌聲 (舒適音量 0.58)
+        applauseGain.gain.linearRampToValueAtTime(0.58, now + 0.35);
         // 熱烈拍掌持續澎湃至 3.0 秒
-        applauseGain.gain.setValueAtTime(0.72, now + 3.0);
-        // 3.0 ~ 4.8 秒自然餘音衰減
+        applauseGain.gain.setValueAtTime(0.58, now + 3.0);
+        // 3.0 ~ 4.8 秒如潮水般自然漸息
         applauseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
         applauseSource.connect(clapFilter);
@@ -1990,15 +1901,15 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            // 模式一：快速果決模式 (約 3.2 秒，圈數微隨機 6~8 圈)
-            const duration = 3200 + Math.random() * 400;
-            const extraTurns = 6 + Math.floor(Math.random() * 3);
+            // 模式一：快速果決模式 (轉速適度調順，約 3.4 秒，圈數 4~5 圈)
+            const duration = 3400 + Math.random() * 300;
+            const extraTurns = 4 + Math.floor(Math.random() * 2);
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
                 const elapsed = now - startTime;
                 const t = Math.min(1, elapsed / duration);
-                const progress = 1 - Math.pow(1 - t, 5);
+                const progress = 1 - Math.pow(1 - t, 4.5);
 
                 this.currentAngle = startAngle + totalDelta * progress;
                 this.render(pool, -1);
@@ -2019,34 +1930,31 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 【極致戲劇張力三階段物理學：高速衝刺 -> 懸疑中速游移 -> 極慢速絕殺窒息微步】
-            // 專門解決人數變少時太快確定得獎者的問題，大幅延長終段極慢速微步時間 (4.2s~5.0s)！
+            // 【極致戲劇張力三階段物理學：整體轉速調緩 + 終段極慢速微步大幅拉長至 6.2s~7.4s】
             
             // 階段 3：極慢速絕殺窒息微步 (Ultra-slow Agonizing Creep)
-            // 耗時長達 4.2 ~ 5.0 秒，專門爬行最後約 0.85 ~ 1.15 個扇區 (跨過相鄰分界線與目標落點)
-            const T3_sec = 4.2 + Math.random() * 0.8; // 4.2s ~ 5.0s
-            const creepSectors = 0.85 + Math.random() * 0.30;
+            // 大幅拉長時間至 6.2 ~ 7.4 秒！指針如慢鏡頭微步爬行最後 0.80 ~ 1.10 個扇區，全場懸念拉滿！
+            const T3_sec = 6.2 + Math.random() * 1.2; // 6.2s ~ 7.4s (顯著延長)
+            const creepSectors = 0.80 + Math.random() * 0.30;
             const D3 = creepSectors * sectorAngle;
-            const p = 1.8;
-            const v2 = (p * D3) / T3_sec; // 進入極慢速微步時的初始角速度
+            const p = 1.6;
+            const v2 = (p * D3) / T3_sec; // 進入極慢速微步時的初始微速
 
-            // 階段 2：懸疑中速游移階段 (Suspense Sweep)
-            // 即使人數極少 (如剩下 2~6 人)，也保證慢速繞行全部同仁 2.2 圈以上，讓所有在場同仁的名字皆被多次緩慢巡迴路過！
-            const T2_sec = 5.5 + Math.random() * 1.0; // 5.5s ~ 6.5s
+            // 階段 2：懸疑巡迴游移階段 (Suspense Sweep)
+            // 適度調整巡迴速度，人數少時慢速繞行 1.8 圈以上，人人有機會
+            const T2_sec = 5.2 + Math.random() * 0.8; // 5.2s ~ 6.0s
             let sweepSectors;
             if (poolLen <= 6) {
-                // 人數極少時：強制慢速游移 2.2 圈以上 (例如 4 人則游移約 10 個扇區)
-                sweepSectors = Math.max(6.0, poolLen * 2.2) + Math.random() * 1.5;
+                sweepSectors = Math.max(5.0, poolLen * 1.8) + Math.random() * 1.0;
             } else {
-                // 人數較多時：游移 12 ~ 20 個扇區
-                sweepSectors = Math.max(12.0, Math.min(22.0, poolLen * 0.45)) + Math.random() * 2.0;
+                sweepSectors = Math.max(8.0, Math.min(15.0, poolLen * 0.35)) + Math.random() * 1.5;
             }
             const D2 = sweepSectors * sectorAngle;
             const v1 = (2 * D2 / T2_sec) - v2; // 進入懸疑中速游移時的接軌角速度
 
-            // 階段 1：高速激情衝刺階段 (High-Speed Thrill Sprint)
-            const T1_sec = 3.6 + Math.random() * 0.6; // 3.6s ~ 4.2s
-            const extraTurns = 13 + Math.floor(Math.random() * 5); // 隨機 13~17 圈
+            // 階段 1：高速轉動階段 (整體轉速稍稍調慢，更加平穩流暢，圈數調為 8~10 圈)
+            const T1_sec = 4.2 + Math.random() * 0.6; // 4.2s ~ 4.8s
+            const extraTurns = 8 + Math.floor(Math.random() * 3); // 隨機 8~10 圈 (原本 13~17 圈過於眼花繚亂)
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
             const D1 = totalDelta - D2 - D3;
             const A = (3.0 * (D1 - v1 * T1_sec)) / Math.pow(T1_sec, 3);
@@ -2060,14 +1968,14 @@ class FestiveLotteryWheel {
                 const elapsed = now - startTime;
 
                 if (elapsed <= T1_ms) {
-                    // 階段 1：高速狂旋與滑順降速至 v1
+                    // 階段 1：流暢優雅的高速旋轉，降速至 v1
                     this.isSlowPhase = false;
                     this.isCreepPhase = false;
                     const t = elapsed / 1000.0;
                     const progressAngle = (A / 3.0) * (Math.pow(T1_sec, 3) - Math.pow(T1_sec - t, 3)) + v1 * t;
                     this.currentAngle = startAngle + progressAngle;
                 } else if (elapsed <= T1_ms + T2_ms) {
-                    // 階段 2：長達 5.5~6.5 秒的懸疑游移，均勻跨越多位同仁
+                    // 階段 2：懸疑巡迴游移階段，多位同仁名單逐一緩慢掠過
                     this.isSlowPhase = true;
                     this.isCreepPhase = false;
                     const t = (elapsed - T1_ms) / 1000.0;
@@ -2075,8 +1983,8 @@ class FestiveLotteryWheel {
                     const phase2Angle = v1 * T2_sec * tau - ((v1 - v2) / 2.0) * T2_sec * Math.pow(tau, 2);
                     this.currentAngle = startAngle + D1 + phase2Angle;
                 } else if (elapsed < totalDuration_ms) {
-                    // 階段 3：長達 4.2~5.0 秒的【極慢速絕殺窒息微步】！
-                    // 指針以極慢速度逼近分界線與落點，全場屏息以待！
+                    // 階段 3：長達 6.2~7.4 秒的【極慢速絕殺窒息微步】！
+                    // 指針以極微小速度跨越相鄰邊界線，懸念延展至最高峰！
                     this.isSlowPhase = true;
                     this.isCreepPhase = true;
                     const t = (elapsed - T1_ms - T2_ms) / 1000.0;
@@ -2090,7 +1998,7 @@ class FestiveLotteryWheel {
                     this.isSlowPhase = false;
                     this.isCreepPhase = false;
                     this.render(pool, targetWinnerIndex);
-                    // 觸發大獎爆發重低音 ＋ 金牌銅管 ＋ 萬人咆哮歡呼 ＋ 熱烈鼓掌音效！
+                    // 觸發溫潤典雅和弦 ＋ 純粹熱烈群眾拍掌聲浪！
                     if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
