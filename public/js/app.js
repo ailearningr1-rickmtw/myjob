@@ -1467,7 +1467,7 @@ class FestiveLotteryWheel {
         if (!this.canvas || !this.ctx) return;
 
         const dpr = window.devicePixelRatio || 1;
-        const size = 560;
+        const size = 800; // 升級為 800x800 超高解析度畫布
         if (this.canvas.width !== size * dpr || this.canvas.height !== size * dpr) {
             this.canvas.width = size * dpr;
             this.canvas.height = size * dpr;
@@ -1480,27 +1480,27 @@ class FestiveLotteryWheel {
 
         const cx = size / 2;
         const cy = size / 2;
-        const outerRimR = 270;
-        const wheelR = 246;
-        const centerCapR = 48;
+        const outerRimR = 385; // 外金環半徑
+        const wheelR = 352;    // 扇區外緣半徑 (大幅擴大)
+        const centerCapR = 46; // 中心金屬徽章
         const poolLen = this.currentPool.length;
 
-        // 1. 繪製外圈金色金屬雙環與喜慶跑馬燈
+        // 1. 繪製外圈金色金屬雙環與 32 顆喜慶跑馬燈
         ctx.beginPath();
         ctx.arc(cx, cy, outerRimR, 0, Math.PI * 2);
         const rimGrad = ctx.createLinearGradient(0, 0, size, size);
         rimGrad.addColorStop(0, "#78350f");
-        rimGrad.addColorStop(0.3, "#f59e0b");
+        rimGrad.addColorStop(0.25, "#f59e0b");
         rimGrad.addColorStop(0.5, "#fef08a");
-        rimGrad.addColorStop(0.7, "#f59e0b");
+        rimGrad.addColorStop(0.75, "#f59e0b");
         rimGrad.addColorStop(1, "#78350f");
         ctx.fillStyle = rimGrad;
         ctx.fill();
 
-        // 24 顆跑馬燈燈泡
-        const bulbCount = 24;
-        const bulbR = 258;
-        const nowTick = Math.floor(Date.now() / 90);
+        // 32 顆高密度 LED 跑馬燈泡
+        const bulbCount = 32;
+        const bulbR = 368;
+        const nowTick = Math.floor(Date.now() / 85);
         for (let b = 0; b < bulbCount; b += 1) {
             const bAngle = (b * (Math.PI * 2)) / bulbCount;
             const bx = cx + bulbR * Math.cos(bAngle);
@@ -1508,32 +1508,32 @@ class FestiveLotteryWheel {
             const isLit = this.isSpinning ? ((nowTick + b) % 2 === 0) : (b % 2 === 0);
 
             ctx.beginPath();
-            ctx.arc(bx, by, 4.5, 0, Math.PI * 2);
+            ctx.arc(bx, by, 5.5, 0, Math.PI * 2);
             ctx.fillStyle = isLit ? "#fef08a" : "#dc2626";
             ctx.shadowColor = isLit ? "#fef08a" : "#b91c1c";
-            ctx.shadowBlur = isLit ? 10 : 3;
+            ctx.shadowBlur = isLit ? 12 : 3;
             ctx.fill();
             ctx.shadowBlur = 0;
         }
 
-        // 2. 扇區繪製
+        // 2. 扇區繪製 (40人高清全名排版)
         if (poolLen === 0) {
             ctx.beginPath();
             ctx.arc(cx, cy, wheelR, 0, Math.PI * 2);
             ctx.fillStyle = "#1e1b4b";
             ctx.fill();
             ctx.strokeStyle = "#f59e0b";
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 3.5;
             ctx.stroke();
 
             ctx.fillStyle = "#fbbf24";
-            ctx.font = "bold 16px 'Noto Sans TC', sans-serif";
+            ctx.font = "bold 22px 'Noto Sans TC', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText("待抽池已無名單", cx, cy - 10);
-            ctx.font = "13px 'Noto Sans TC', sans-serif";
+            ctx.fillText("待抽池已無名單", cx, cy - 14);
+            ctx.font = "16px 'Noto Sans TC', sans-serif";
             ctx.fillStyle = "#fef3c7";
-            ctx.fillText("請至管理頁重新載入名單", cx, cy + 14);
+            ctx.fillText("請至管理頁重新載入名單", cx, cy + 18);
         } else {
             const sectorAngle = (Math.PI * 2) / poolLen;
 
@@ -1542,21 +1542,22 @@ class FestiveLotteryWheel {
                 const endAngle = startAngle + sectorAngle;
                 const nameStr = this.currentPool[i];
 
-                // 扇區配色（四個股辨識或四色交替）
+                // 四個股高對比配色
                 let fillColor = "#831843";
                 if (nameStr.includes("第一股")) {
-                    fillColor = (i % 2 === 0) ? "#831843" : "#9f1239";
+                    fillColor = (i % 2 === 0) ? "#991b1b" : "#7f1d1d";
                 } else if (nameStr.includes("第二股")) {
-                    fillColor = (i % 2 === 0) ? "#1e3a8a" : "#1d4ed8";
+                    fillColor = (i % 2 === 0) ? "#1e40af" : "#172554";
                 } else if (nameStr.includes("第三股")) {
-                    fillColor = (i % 2 === 0) ? "#065f46" : "#047857";
+                    fillColor = (i % 2 === 0) ? "#047857" : "#064e3b";
                 } else if (nameStr.includes("第四股")) {
-                    fillColor = (i % 2 === 0) ? "#581c87" : "#6b21a8";
+                    fillColor = (i % 2 === 0) ? "#6b21a8" : "#3b0764";
                 } else {
-                    const fallbackColors = ["#831843", "#92400e", "#065f46", "#1e3a8a"];
+                    const fallbackColors = ["#991b1b", "#92400e", "#047857", "#1e40af"];
                     fillColor = fallbackColors[i % fallbackColors.length];
                 }
 
+                // 得獎扇區流光金色
                 if (highlightIdx === i) {
                     fillColor = "#f59e0b";
                 }
@@ -1568,36 +1569,39 @@ class FestiveLotteryWheel {
                 ctx.fillStyle = fillColor;
                 ctx.fill();
 
+                // 扇區分隔金線
                 ctx.strokeStyle = (highlightIdx === i) ? "#ffffff" : "#fbbf24";
-                ctx.lineWidth = (highlightIdx === i) ? 2.5 : 1;
+                ctx.lineWidth = (highlightIdx === i) ? 3 : 1.4;
                 ctx.stroke();
 
-                // 扇區文字繪製 (徑向輻射排列)
+                // 扇區徑向完整姓名繪製 (高對比黑色雙層描邊)
                 ctx.save();
                 ctx.translate(cx, cy);
                 ctx.rotate(startAngle + sectorAngle / 2);
 
-                let fontSize = 10.5;
-                if (poolLen <= 10) fontSize = 15;
-                else if (poolLen <= 20) fontSize = 13.5;
-                else if (poolLen <= 30) fontSize = 12;
+                // 動態字體大小 (在 800px 畫布上字體大幅增加)
+                let fontSize = 13.5;
+                if (poolLen <= 10) fontSize = 21;
+                else if (poolLen <= 20) fontSize = 17;
+                else if (poolLen <= 30) fontSize = 15;
 
                 ctx.font = `bold ${fontSize}px "Noto Sans TC", "PingFang TC", sans-serif`;
                 ctx.textAlign = "right";
                 ctx.textBaseline = "middle";
 
+                // 完整姓名外圈黑色立體描邊，確保任何底色下文字皆清晰可見
+                ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
+                ctx.lineWidth = 3.5;
+                ctx.lineJoin = "round";
+                ctx.strokeText(nameStr, wheelR - 16, 0);
+
+                // 文字本體填充
                 if (highlightIdx === i) {
                     ctx.fillStyle = "#1e1b4b";
-                    ctx.shadowColor = "transparent";
                 } else {
                     ctx.fillStyle = "#ffffff";
-                    ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
-                    ctx.shadowBlur = 4;
                 }
-
-                let cleanLabel = nameStr;
-                cleanLabel = cleanLabel.replace("第一股 - ", "1股 ").replace("第二股 - ", "2股 ").replace("第三股 - ", "3股 ").replace("第四股 - ", "4股 ");
-                ctx.fillText(cleanLabel, wheelR - 14, 0);
+                ctx.fillText(nameStr, wheelR - 16, 0);
 
                 ctx.restore();
             }
@@ -1611,24 +1615,24 @@ class FestiveLotteryWheel {
         capGrad.addColorStop(0.5, "#f59e0b");
         capGrad.addColorStop(1, "#b45309");
         ctx.fillStyle = capGrad;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.65)";
-        ctx.shadowBlur = 12;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.75)";
+        ctx.shadowBlur = 14;
         ctx.fill();
         ctx.shadowBlur = 0;
 
         ctx.strokeStyle = "#fef08a";
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 3.5;
         ctx.stroke();
 
         ctx.fillStyle = "#78350f";
         ctx.font = "900 13px 'Noto Sans TC', sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText("尾牙幸運", cx, cy - 7);
+        ctx.fillText("尾牙・大吉", cx, cy - 8);
         ctx.font = "900 11px 'Noto Sans TC', sans-serif";
-        ctx.fillText("LUCKY WHEEL", cx, cy + 9);
+        ctx.fillText("LUCKY DRAW", cx, cy + 9);
 
-        // 4. 即時計算頂部指針正指著的同仁並更新 HUD
+        // 4. 即時更新頂部 HUD 完整姓名看板
         this.updateRadarHud();
 
         ctx.restore();
@@ -1643,23 +1647,24 @@ class FestiveLotteryWheel {
         const activeName = this.currentPool[activeIdx] || "";
 
         if (this.isSpinning) {
-            this.hudEl.textContent = `鎖定同仁：${activeName}`;
+            this.hudEl.textContent = `鎖定同仁：【 ${activeName} 】`;
             this.hudEl.classList.remove("is-revealed");
         } else if (this.highlightIndex >= 0 && this.currentPool[this.highlightIndex]) {
-            this.hudEl.textContent = `恭賀獲獎：${this.currentPool[this.highlightIndex]}`;
+            this.hudEl.textContent = `恭賀獲獎：【 ${this.currentPool[this.highlightIndex]} 】`;
             this.hudEl.classList.add("is-revealed");
         } else {
-            this.hudEl.textContent = activeName ? `指針對準：${activeName}` : "吉時待開獎";
+            this.hudEl.textContent = activeName ? `指針對準：【 ${activeName} 】` : "【 吉時待開獎 】";
             this.hudEl.classList.remove("is-revealed");
         }
 
+        // 實體指針微幅彈動動畫
         if (activeIdx !== this.lastTickedIndex) {
             this.lastTickedIndex = activeIdx;
             if (this.pointerEl && this.isSpinning) {
                 this.pointerEl.classList.add("is-ticking");
                 setTimeout(() => {
                     if (this.pointerEl) this.pointerEl.classList.remove("is-ticking");
-                }, 50);
+                }, 45);
             }
         }
     }
@@ -1685,8 +1690,9 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            const duration = 3500;
-            const extraTurns = 7;
+            // 模式一：快速果決模式 (4 秒，Quartic ease-out)
+            const duration = 4000;
+            const extraTurns = 8;
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
@@ -1710,29 +1716,36 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            const duration = 8500;
-            const fastDuration = 5200;
-            const creepDuration = 3300;
+            // 模式二：極致心跳懸念模式 (12 秒大戲劇感：前7.5秒狂衝平順減速，後4.5秒長時慢速游移，最後在數人之間極慢微步定格)
+            const duration = 12000;
+            const fastDuration = 7500;
+            const slowDuration = 4500;
 
-            const creepDist = 3.6 * sectorAngle;
-            const extraTurns = 15;
-            let fastDist = extraTurns * Math.PI * 2 + forwardDist - creepDist;
-            while (fastDist < 8 * Math.PI * 2) {
+            // 慢速懸念游移角度設定為 8.5 個扇區 (約 76.5 度)
+            const slowSectors = Math.min(8.5, poolLen * 0.4);
+            const slowDist = slowSectors * sectorAngle;
+            const extraTurns = 16;
+            let fastDist = extraTurns * Math.PI * 2 + forwardDist - slowDist;
+            while (fastDist < 10 * Math.PI * 2) {
                 fastDist += Math.PI * 2;
             }
 
             const animateSuspense = (now) => {
                 const elapsed = now - startTime;
+
                 if (elapsed <= fastDuration) {
+                    // 階段 1：高速衝刺與初階順暢減速 (0 ~ 7.5s)
                     const u = Math.min(1, elapsed / fastDuration);
-                    const progressFast = 1 - Math.pow(1 - u, 3);
+                    const progressFast = 1 - Math.pow(1 - u, 2.5);
                     this.currentAngle = startAngle + fastDist * progressFast;
                 } else if (elapsed < duration) {
-                    const v = Math.min(1, (elapsed - fastDuration) / creepDuration);
-                    const progressCreep = 1 - Math.pow(1 - v, 2);
-                    this.currentAngle = startAngle + fastDist + creepDist * progressCreep;
+                    // 階段 2：長達 4.5 秒的慢速游移與末段生死微步 (7.5s ~ 12.0s)
+                    const v = Math.min(1, (elapsed - fastDuration) / slowDuration);
+                    const progressSlow = 1 - Math.pow(1 - v, 2.2);
+                    this.currentAngle = startAngle + fastDist + slowDist * progressSlow;
                 } else {
-                    this.currentAngle = startAngle + fastDist + creepDist;
+                    // 抵達最終天命目標
+                    this.currentAngle = startAngle + fastDist + slowDist;
                     this.isSpinning = false;
                     this.render(pool, targetWinnerIndex);
                     if (typeof onFinish === "function") {
@@ -6145,10 +6158,13 @@ class WorkspaceApp {
                             </button>
                         </div>
 
-                        <!-- 頂部即時指針掃描 HUD 看板 -->
+                        <!-- 頂部劇院級即時指針雷達鎖定看板 (HUD) - 寬敞全名無截斷 -->
                         <div class="wheel-radar-hud" id="wheel-radar-hud">
-                            <span class="wheel-hud-kicker">即時指針鎖定</span>
-                            <span class="wheel-hud-target-name" id="wheel-live-target-name">【 吉時待開獎 】</span>
+                            <div class="wheel-hud-header-row">
+                                <span class="wheel-hud-kicker">指針鎖定同仁 // LIVE POINTER LOCK</span>
+                                <span class="wheel-hud-status-badge">全場大螢幕即時投影</span>
+                            </div>
+                            <div class="wheel-hud-target-name" id="wheel-live-target-name">【 幸運輪盤待轉動 】</div>
                         </div>
 
                         <!-- 幸運大輪盤畫布與金質指針 -->
