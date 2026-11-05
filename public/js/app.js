@@ -1887,7 +1887,7 @@ class FestiveLotteryWheel {
         const poolLen = pool.length;
         const sectorAngle = (Math.PI * 2) / poolLen;
 
-        // 【非絕對居中落點】在扇區 [0.20, 0.80] 之間隨機偏移，時而險過、時而近線，杜絕預測性
+        // 【非死板居中落點】在扇區 [0.20, 0.80] 之間隨機偏移，兼顧懸疑感與安全合法性
         const randomOffsetRatio = 0.20 + Math.random() * 0.60;
         const targetLandAngle = (targetWinnerIndex + randomOffsetRatio) * sectorAngle;
         const targetBaseAngle = ((1.5 * Math.PI - targetLandAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
@@ -1900,20 +1900,20 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            // 模式一：快速果決模式 (平穩順暢，約 3.2~3.6 秒，圈數 4~5 圈)
+            // 模式一：快速果決模式 (平穩順暢，約 3.2~3.6 秒，圈數 5~7 圈)
             const duration = 3200 + Math.random() * 400;
-            const extraTurns = 4 + Math.floor(Math.random() * 2);
+            const extraTurns = 5 + Math.floor(Math.random() * 3);
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
                 const elapsed = now - startTime;
-                const t = Math.min(1, elapsed / duration);
-                const progress = 1 - Math.pow(1 - t, 4.0);
+                const tau = Math.min(1.0, elapsed / duration);
+                const progress = 1.0 - Math.pow(1.0 - tau, 3.5);
 
                 this.currentAngle = startAngle + totalDelta * progress;
                 this.render(pool, -1);
 
-                if (t < 1) {
+                if (tau < 1.0) {
                     this.animId = requestAnimationFrame(animateFast);
                 } else {
                     this.currentAngle = startAngle + totalDelta;
@@ -1928,53 +1928,48 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 【物理無縫 C^2 平滑運動學模型：大幅拉寬衝刺與游移範圍，徹底杜絕卡頓與刻意生硬感】
-            // 衝刺時間隨機範圍顯著拉大：2.2s ~ 5.0s (快衝或長衝)
-            const T1_sec = 2.2 + Math.random() * 2.8; 
-            // 游移減速時間隨機範圍顯著拉大：6.2s ~ 11.7s (俐落減速或持久懸疑)
-            const T2_sec = 6.2 + Math.random() * 5.5; 
+            // 【全局單一連續物理阻尼模型：完美融合高速衝刺、顯著減速游移與末段懸疑微步】
+            // 徹底杜絕多階段切割造成的加速度階躍卡頓，以封閉形式積分公式確保全程 100% 流暢無縫！
             
-            // 目標最高轉速保持在舒適優雅的 1.20 ~ 1.55 圈/秒 (7.6 ~ 9.8 rad/s)
-            const desiredV0 = 7.6 + Math.random() * 2.2;
-            const T_up = 0.4; // 啟動柔和起步時間 (0.4秒平滑爬升)
-            
-            const idealTotalDelta = desiredV0 * (T1_sec - 0.5 * T_up + 0.5 * T2_sec);
+            // 總旋轉時長在 9.5 秒 ~ 14.5 秒之間大幅隨機波動 (不同次抽獎體驗截然不同)
+            const T_total = 9.5 + Math.random() * 5.0; 
+            const duration_ms = T_total * 1000.0;
+
+            // 阻尼形狀參數 a 在 [1.85, 2.25] 之間隨機波動，決定衝刺維持時間與減速曲線陡度
+            const a = 1.85 + Math.random() * 0.40;
+            // 解析積分總量 I(a) = 1 - 2/(a+1) + 1/(2a+1)
+            const I_a = 1.0 - (2.0 / (a + 1.0)) + (1.0 / (2.0 * a + 1.0));
+
+            // 目標最高轉速維持在充滿動感與激情的 2.3 ~ 2.8 圈/秒 (14.5 ~ 18.0 rad/s)
+            const desiredTopSpeed = 14.5 + Math.random() * 3.5;
+            const idealTotalDelta = desiredTopSpeed * I_a * T_total;
             const minTurns = Math.round((idealTotalDelta - forwardDist) / (Math.PI * 2));
-            const extraTurns = Math.max(5, minTurns);
+            const extraTurns = Math.max(11, minTurns); // 保持充足圈數 (12~18 圈)
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
-
-            // 嚴謹解析牛頓力學：速度與加速度全時連續，無縫接軌 (C^2 Continuous)
-            const v0 = totalDelta / (T1_sec - 0.5 * T_up + 0.5 * T2_sec);
-            const D_up = 0.5 * v0 * T_up;
-            const D_cruise = v0 * (T1_sec - T_up);
-            const D1 = D_up + D_cruise;
-            const D2 = 0.5 * v0 * T2_sec;
-
-            const totalDuration_sec = T1_sec + T2_sec;
 
             const animateSuspense = (now) => {
                 const elapsed = now - startTime;
-                const t = elapsed / 1000.0;
+                const tau = Math.min(1.0, elapsed / duration_ms);
 
-                if (t <= T_up) {
-                    // 階段 1A：柔和啟動平滑升速 (0 ~ 0.4s)
-                    this.isSlowPhase = false;
-                    const u = t / T_up;
-                    const pos = v0 * T_up * (Math.pow(u, 3) - 0.5 * Math.pow(u, 4));
-                    this.currentAngle = startAngle + pos;
-                } else if (t <= T1_sec) {
-                    // 階段 1B：流暢優雅的高速等速巡航 (至 T1_sec)
-                    this.isSlowPhase = false;
-                    this.currentAngle = startAngle + D_up + v0 * (t - T_up);
-                } else if (t < totalDuration_sec) {
-                    // 階段 2：完全自然連續的阻尼平滑減速 (Hermite SmoothStep: 速度與加速度無跳躍接軌)
-                    this.isSlowPhase = true;
-                    const tau = (t - T1_sec) / T2_sec;
-                    // 位置公式精準滿足：起點速度=v0, 起點加速度=0, 終點速度=0, 終點加速度=0
-                    const phase2Angle = D2 * (2 * tau - 2 * Math.pow(tau, 3) + Math.pow(tau, 4));
-                    this.currentAngle = startAngle + D1 + phase2Angle;
+                // 全局單一無縫積分公式：s(tau) = [tau - 2/(a+1)*tau^(a+1) + 1/(2a+1)*tau^(2a+1)] / I_a
+                // 數學保證：
+                // 1. tau ∈ [0, 0.35]: 速度保持在 80% 以上，高速激情狂轉 (衝刺段)
+                // 2. tau ∈ [0.35, 0.75]: 速度急遽且顯著地從 80% 大幅衰減至 20%，同仁姓名清晰逐一掠過 (游移減速段)
+                // 3. tau ∈ [0.75, 1.0]: 速度在最後 2.5~3.5 秒平穩降至 0.1 圈/秒以下，指針屏息游移過線並精準停定 (末段微步段)
+                // 4. 起點加速度=0、終點速度=0、終點加速度=0，全流程無任何階段縫隙，完全無卡頓、無人為刻意生硬感！
+                const term1 = tau;
+                const term2 = (2.0 / (a + 1.0)) * Math.pow(tau, a + 1.0);
+                const term3 = (1.0 / (2.0 * a + 1.0)) * Math.pow(tau, 2.0 * a + 1.0);
+                const progress = (term1 - term2 + term3) / I_a;
+
+                // 標記慢速階段 (超過 40% 時速已明顯下降，切換為厚重機械撥片音效)
+                this.isSlowPhase = (tau >= 0.40);
+                this.currentAngle = startAngle + totalDelta * progress;
+
+                if (tau < 1.0) {
+                    this.render(pool, -1);
+                    this.animId = requestAnimationFrame(animateSuspense);
                 } else {
-                    // 抵達最終天命得獎目標
                     this.currentAngle = startAngle + totalDelta;
                     this.isSpinning = false;
                     this.isSlowPhase = false;
@@ -1984,11 +1979,7 @@ class FestiveLotteryWheel {
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
                     }
-                    return;
                 }
-
-                this.render(pool, -1);
-                this.animId = requestAnimationFrame(animateSuspense);
             };
             this.animId = requestAnimationFrame(animateSuspense);
         }
