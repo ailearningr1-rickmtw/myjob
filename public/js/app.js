@@ -6038,6 +6038,7 @@ class WorkspaceApp {
     }
 
     renderLotteryAdminPage(theme) {
+        document.body.classList.remove("is-festive-gala-mode");
         const totalCount = this.lotteryState.allParticipants.length;
         const remainingCount = this.lotteryState.remainingPool.length;
         const winnersCount = totalCount - remainingCount;
@@ -6212,6 +6213,7 @@ class WorkspaceApp {
     }
 
     renderLotteryGrandStagePage(theme) {
+        document.body.classList.add("is-festive-gala-mode");
         const remainingCount = this.lotteryState.remainingPool.length;
         const totalCount = this.lotteryState.allParticipants.length;
 
@@ -6281,41 +6283,169 @@ class WorkspaceApp {
             `).join("")
             : `<li class="winner-history-item"><span class="theme-desc">尚無開獎紀錄，完成抽選後將顯示於此。</span></li>`;
 
-        const drawerToggleLabel = this.isStageDrawerCollapsed ? "展開獎項與加碼金額設定" : "收合設定列（放大舞台）";
+        const drawerToggleLabel = this.isStageDrawerCollapsed ? "快速切換獎項" : "收合獎項設定";
 
         this.focusSection.innerHTML = `
             ${this.getFestiveSideHangingsHtml()}
 
-            <div class="festive-gala-panel">
-                <div class="festive-header-ribbon">
-                    <div class="festive-brand-emblem">
-                        <span class="festive-emblem-badge">鴻運尾牙</span>
-                        <span class="festive-emblem-title">歲末年終尾牙歡慶盛典 — 幸運大抽獎</span>
-                    </div>
-                    <div class="lottery-subpage-tabs">
-                        <button type="button" class="secondary-btn" id="toggle-stage-drawer-btn">
-                            ${drawerToggleLabel}
-                        </button>
-                        <button type="button" class="secondary-btn" id="replay-fireworks-btn">
-                            施放慶祝煙花
-                        </button>
-                        <button type="button" class="subpage-tab-btn is-festive-tab" id="switch-to-admin-btn">
-                            <span>名單匯入與獎金設定 (${remainingCount}/${totalCount}人)</span>
-                        </button>
-                        <button type="button" class="back-overview-btn" id="back-to-hub-btn">
-                            <span>離開活動</span>
+            <div class="festive-fullscreen-stage">
+                <!-- 1. 轉盤極大化置中：置於畫面正中央，尺寸 min(88vh, 88vw)，絕對視覺重心 -->
+                <div class="wheel-center-stage">
+                    <div class="wheel-stage-box">
+                        <!-- 12 點鐘方向金質頂部指針 -->
+                        <div class="wheel-top-pointer-pin" id="wheel-pointer-pin" aria-hidden="true">
+                            <svg viewBox="0 0 54 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="pointerGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#fef08a" />
+                                        <stop offset="45%" stop-color="#f59e0b" />
+                                        <stop offset="100%" stop-color="#b45309" />
+                                    </linearGradient>
+                                    <radialGradient id="rubyGemGrad" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#f87171" />
+                                        <stop offset="60%" stop-color="#dc2626" />
+                                        <stop offset="100%" stop-color="#7f1d1d" />
+                                    </radialGradient>
+                                </defs>
+                                <polygon points="27,58 6,10 48,10" fill="url(#pointerGoldGrad)" stroke="#78350f" stroke-width="2.2" />
+                                <circle cx="27" cy="18" r="12" fill="url(#pointerGoldGrad)" stroke="#78350f" stroke-width="2" />
+                                <circle cx="27" cy="18" r="6.5" fill="url(#rubyGemGrad)" />
+                            </svg>
+                        </div>
+
+                        <!-- 幸運大輪盤畫布 (840x840 Retina) -->
+                        <canvas id="lottery-wheel-canvas" class="wheel-canvas" width="840" height="840"></canvas>
+
+                        <!-- 轉盤中心可直接點擊開抽金質圓鈕 -->
+                        <button
+                            type="button"
+                            class="wheel-center-cap-btn"
+                            id="wheel-center-cap-btn"
+                            title="點擊轉盤中心直接開抽 (或按鍵盤空白鍵 [Space])"
+                            ${remainingCount === 0 ? "disabled" : ""}
+                        >
+                            <span class="center-cap-seal">開抽</span>
+                            <span class="center-cap-sub">SPIN</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="stage-config-drawer ${this.isStageDrawerCollapsed ? "is-hidden" : ""}" id="stage-config-drawer">
+                <!-- 2. 左上角懸浮區 (top: 24px; left: 24px) -->
+                <div class="stage-hud-top-left">
+                    <div class="hud-kicker-tag">YEAR-END GALA // 歲末尾牙</div>
+                    <h1 class="hud-stage-title">歲末年終尾牙歡慶盛典</h1>
+                    <div class="hud-prize-banner">
+                        <span class="hud-prize-label">當前獎項</span>
+                        <span class="hud-prize-name" id="stage-banner-prize">${this.escapeHtml(this.lotteryState.currentPrize)}</span>
+                        <span class="hud-prize-amount" id="stage-banner-amount">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
+                    </div>
+                    <div class="hud-pool-counter" id="stage-pool-counter-text">
+                        待抽池剩餘人數：${remainingCount} / ${totalCount} 人 ｜ 本輪抽：${this.lotteryState.batchSize} 人
+                    </div>
+                    <div class="hud-quick-nav-bar">
+                        <button type="button" class="hud-micro-pill" id="toggle-stage-drawer-btn">${drawerToggleLabel}</button>
+                        <button type="button" class="hud-micro-pill" id="switch-to-admin-btn">名單與設定</button>
+                        <button type="button" class="hud-micro-pill" id="toggle-history-drawer-btn">中獎紅榜 (${this.lotteryState.winnersHistory.length}輪)</button>
+                        <button type="button" class="hud-micro-pill" id="replay-fireworks-btn">施放煙花</button>
+                        <button type="button" class="hud-micro-pill is-exit" id="back-to-hub-btn">離開活動</button>
+                    </div>
+                </div>
+
+                <!-- 3. 右上角懸浮區 (top: 24px; right: 24px) -->
+                <div class="stage-hud-top-right">
+                    <div class="wheel-radar-hud" id="wheel-radar-hud">
+                        <div class="wheel-hud-header-row">
+                            <span class="wheel-hud-kicker">指針鎖定同仁 // LIVE POINTER LOCK</span>
+                            <span class="wheel-hud-status-badge">全場大螢幕即時投影</span>
+                        </div>
+                        <div class="wheel-hud-target-name" id="wheel-live-target-name">【 幸運輪盤備便中 】</div>
+                    </div>
+                </div>
+
+                <!-- 4. 左下角控制區 (bottom: 24px; left: 24px; 毛玻璃半透明，hover不透明) -->
+                <div class="stage-hud-bottom-left">
+                    <div class="hud-control-header">
+                        <span class="hud-control-title">輪盤控制設定</span>
+                        <span class="hud-control-hint">模式與工具</span>
+                    </div>
+                    <div class="wheel-mode-selector-bar">
+                        <button
+                            type="button"
+                            class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'fast' ? 'active' : ''}"
+                            data-wheel-mode="fast"
+                        >
+                            快速果決 (3.2秒)
+                        </button>
+                        <button
+                            type="button"
+                            class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'suspense' ? 'active' : ''}"
+                            data-wheel-mode="suspense"
+                        >
+                            心跳懸念 (自適應減速)
+                        </button>
+                    </div>
+                    <div class="hud-tools-actions-row">
+                        <button
+                            type="button"
+                            class="wheel-shuffle-btn"
+                            id="wheel-shuffle-roster-btn"
+                            title="一鍵隨機打散打亂待抽池同仁在轉盤上的排序"
+                        >
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 3 21 3 21 8"></polyline>
+                                <line x1="4" y1="20" x2="21" y2="3"></line>
+                                <polyline points="21 16 21 21 16 21"></polyline>
+                                <line x1="15" y1="15" x2="21" y2="21"></line>
+                                <line x1="4" y1="4" x2="9" y2="9"></line>
+                            </svg>
+                            <span>一鍵打散名單</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="wheel-sound-toggle-btn ${(this.lotteryState.isSoundEnabled !== false) ? "" : "is-muted"}"
+                            id="wheel-sound-toggle-btn"
+                            title="切換轉盤音效 (開啟/靜音)"
+                        >
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            </svg>
+                            <span id="sound-btn-text">${(this.lotteryState.isSoundEnabled !== false) ? "音效：開啟" : "音效：靜音"}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. 右下角啟動區 (bottom: 24px; right: 24px) -->
+                <div class="stage-hud-bottom-right">
+                    <button
+                        type="button"
+                        class="wheel-spin-main-btn is-grand-cta"
+                        id="grand-spin-wheel-btn"
+                        ${remainingCount === 0 ? "disabled" : ""}
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polygon points="10 8 16 12 10 16 10 8" />
+                        </svg>
+                        <span id="spin-btn-text">
+                            ${remainingCount === 0
+                                ? "待抽池已無名單"
+                                : `進行下一輪輪盤抽獎（剩餘 ${remainingCount} 人）`}
+                        </span>
+                    </button>
+                    <div class="hud-spin-shortcut-hint">
+                        <span>支援直接點擊「轉盤中心圓鈕」或按鍵盤「空白鍵 [Space]」開抽</span>
+                    </div>
+                </div>
+
+                <!-- 快速獎項加碼抽屜 (點擊展開，平時隱藏不干擾全螢幕) -->
+                <div class="stage-config-drawer is-fullscreen-drawer ${this.isStageDrawerCollapsed ? "is-hidden" : ""}" id="stage-config-drawer">
                     <div class="stage-preset-bar">
                         <span class="live-input-label">快速點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
                         <div class="prize-preset-chips">
                             ${prizeChipsHtml}
                         </div>
                     </div>
-
                     <div class="stage-live-inputs-row">
                         <div class="live-input-group">
                             <label class="live-input-label" for="live-prize-name-input">本輪獎項名稱（支援臨時輸入）</label>
@@ -6346,145 +6476,30 @@ class WorkspaceApp {
                     </div>
                 </div>
 
-                <div class="grand-stage-arena">
-                    <div class="stage-corner-ornament top-left" aria-hidden="true"></div>
-                    <div class="stage-corner-ornament top-right" aria-hidden="true"></div>
-                    <div class="stage-corner-ornament bottom-left" aria-hidden="true"></div>
-                    <div class="stage-corner-ornament bottom-right" aria-hidden="true"></div>
-
-                    <div class="grand-stage-header">
-                        <span class="festive-stage-kicker">YEAR-END GALA LUCKY WHEEL // 歲末尾牙・40人幸運大輪盤</span>
-                        <div class="grand-prize-banner">
-                            <span class="grand-prize-title" id="stage-banner-prize">${this.escapeHtml(this.lotteryState.currentPrize)}</span>
-                            <span class="grand-prize-amount" id="stage-banner-amount">${this.escapeHtml(this.lotteryState.currentAmount)}</span>
-                        </div>
-                        <span class="grand-pool-counter" id="stage-pool-counter-text">
-                            待抽池剩餘人數：${remainingCount} / ${totalCount} 人 ｜ 本輪抽出：${this.lotteryState.batchSize} 人
-                        </span>
-                    </div>
-
-                    <!-- 幸運大輪盤核心舞台區 (極致巨幅放大版) -->
-                    <div class="wheel-arena-wrapper">
-                        <!-- 頂部劇院級即時指針雷達鎖定看板 (HUD) - 巨幅大字・全名完整無遮擋 -->
-                        <div class="wheel-radar-hud" id="wheel-radar-hud">
-                            <div class="wheel-hud-header-row">
-                                <span class="wheel-hud-kicker">指針鎖定同仁 // LIVE POINTER LOCK</span>
-                                <span class="wheel-hud-status-badge">全場大螢幕即時投影</span>
-                            </div>
-                            <div class="wheel-hud-target-name" id="wheel-live-target-name">【 幸運輪盤備便中 】</div>
-                        </div>
-
-                        <!-- 幸運大輪盤畫布與金質指針 (直徑極限放大至 720px) -->
-                        <div class="wheel-stage-box">
-                            <div class="wheel-top-pointer-pin" id="wheel-pointer-pin" aria-hidden="true">
-                                <svg viewBox="0 0 54 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <linearGradient id="pointerGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#fef08a" />
-                                            <stop offset="45%" stop-color="#f59e0b" />
-                                            <stop offset="100%" stop-color="#b45309" />
-                                        </linearGradient>
-                                        <radialGradient id="rubyGemGrad" cx="50%" cy="50%" r="50%">
-                                            <stop offset="0%" stop-color="#f87171" />
-                                            <stop offset="60%" stop-color="#dc2626" />
-                                            <stop offset="100%" stop-color="#7f1d1d" />
-                                        </radialGradient>
-                                    </defs>
-                                    <polygon points="27,58 6,10 48,10" fill="url(#pointerGoldGrad)" stroke="#78350f" stroke-width="2.2" />
-                                    <circle cx="27" cy="18" r="12" fill="url(#pointerGoldGrad)" stroke="#78350f" stroke-width="2" />
-                                    <circle cx="27" cy="18" r="6.5" fill="url(#rubyGemGrad)" />
-                                </svg>
-                            </div>
-                            <canvas id="lottery-wheel-canvas" class="wheel-canvas" width="840" height="840"></canvas>
-                        </div>
-
-                        <!-- 緊湊控制行：模式選擇與精緻抽獎按鈕整合，高度精簡不吃版面 -->
-                        <div class="wheel-controls-compact-bar">
-                            <div class="wheel-mode-selector-bar">
-                                <span class="wheel-mode-label">模式：</span>
-                                <button
-                                    type="button"
-                                    class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'fast' ? 'active' : ''}"
-                                    data-wheel-mode="fast"
-                                >
-                                    快速果決 (3.2秒)
-                                </button>
-                                <button
-                                    type="button"
-                                    class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'suspense' ? 'active' : ''}"
-                                    data-wheel-mode="suspense"
-                                >
-                                    心跳懸念 (12.5秒・慢速游移8秒)
-                                </button>
-                                <button
-                                    type="button"
-                                    class="wheel-shuffle-btn"
-                                    id="wheel-shuffle-roster-btn"
-                                    title="一鍵隨機打散打亂待抽池同仁在轉盤上的排序"
-                                >
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="16 3 21 3 21 8"></polyline>
-                                        <line x1="4" y1="20" x2="21" y2="3"></line>
-                                        <polyline points="21 16 21 21 16 21"></polyline>
-                                        <line x1="15" y1="15" x2="21" y2="21"></line>
-                                        <line x1="4" y1="4" x2="9" y2="9"></line>
-                                    </svg>
-                                    <span>一鍵打散名單</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    class="wheel-sound-toggle-btn ${(this.lotteryState.isSoundEnabled !== false) ? "" : "is-muted"}"
-                                    id="wheel-sound-toggle-btn"
-                                    title="切換轉盤音效 (開啟/靜音)"
-                                >
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                                    </svg>
-                                    <span id="sound-btn-text">${(this.lotteryState.isSoundEnabled !== false) ? "音效：開啟" : "音效：靜音"}</span>
-                                </button>
-                            </div>
-
-                            <button
-                                type="button"
-                                class="wheel-spin-main-btn"
-                                id="grand-spin-wheel-btn"
-                                ${remainingCount === 0 ? "disabled" : ""}
-                            >
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polygon points="10 8 16 12 10 16 10 8" />
-                                </svg>
-                                <span id="spin-btn-text">
-                                    ${remainingCount === 0
-                                        ? "待抽池已無名單"
-                                        : `啟動幸運輪盤（${this.lotteryState.batchSize === 1 ? '單抽 1 位' : `連抽 ${Math.min(this.lotteryState.batchSize, remainingCount)} 位`}）`}
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 最新開出獲獎者鴻運金榜展示區 (獲獎卡片維持現有規格) -->
-                    <div class="grand-winners-showcase" id="grand-winners-showcase">
-                        ${showcaseCardsHtml}
-                    </div>
-                </div>
-
-                <div class="lottery-panel-card">
+                <!-- 榮譽紅榜歷史滑出抽屜 (點擊展開，平時隱藏不干擾全螢幕) -->
+                <div class="stage-history-drawer is-hidden" id="stage-history-drawer">
                     <div class="section-toolbar">
                         <span class="lottery-panel-title">尾牙榮譽紅榜紀錄 (${this.lotteryState.winnersHistory.length} 輪)</span>
-                        <button
-                            type="button"
-                            class="secondary-btn"
-                            id="stage-export-csv-btn"
-                            ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
-                        >
-                            匯出含金額中獎結果 CSV 報表
-                        </button>
+                        <div class="history-actions-row">
+                            <button
+                                type="button"
+                                class="secondary-btn"
+                                id="stage-export-csv-btn"
+                                ${this.lotteryState.winnersHistory.length === 0 ? "disabled" : ""}
+                            >
+                                匯出含金額 CSV 報表
+                            </button>
+                            <button type="button" class="hud-close-drawer-btn" id="close-history-drawer-btn">關閉紅榜</button>
+                        </div>
                     </div>
                     <ul class="winners-history-list">
                         ${historyHtml}
                     </ul>
+                </div>
+
+                <!-- 最新開出獲獎者鴻運金榜展示區 (中獎時浮現於輪盤下方，卡片規格維持原樣) -->
+                <div class="grand-winners-showcase is-fullscreen-showcase" id="grand-winners-showcase">
+                    ${showcaseCardsHtml}
                 </div>
             </div>
         `;
@@ -6658,10 +6673,19 @@ class WorkspaceApp {
     }
 
     bindLotteryGrandStageEvents(theme) {
+        const clearStageSideEffects = () => {
+            if (this.lotteryWheel) this.lotteryWheel.stop();
+            if (this.lotterySpaceKeyHandler) {
+                window.removeEventListener("keydown", this.lotterySpaceKeyHandler);
+                this.lotterySpaceKeyHandler = null;
+            }
+            document.body.classList.remove("is-festive-gala-mode");
+        };
+
         const switchToAdminBtn = document.getElementById("switch-to-admin-btn");
         if (switchToAdminBtn) {
             switchToAdminBtn.addEventListener("click", () => {
-                if (this.lotteryWheel) this.lotteryWheel.stop();
+                clearStageSideEffects();
                 window.location.hash = "theme-05-admin";
             });
         }
@@ -6669,7 +6693,7 @@ class WorkspaceApp {
         const backToHubBtn = document.getElementById("back-to-hub-btn");
         if (backToHubBtn) {
             backToHubBtn.addEventListener("click", () => {
-                if (this.lotteryWheel) this.lotteryWheel.stop();
+                clearStageSideEffects();
                 window.location.hash = "theme-05";
             });
         }
@@ -6681,8 +6705,23 @@ class WorkspaceApp {
                 this.isStageDrawerCollapsed = !this.isStageDrawerCollapsed;
                 stageDrawer.classList.toggle("is-hidden", this.isStageDrawerCollapsed);
                 toggleDrawerBtn.textContent = this.isStageDrawerCollapsed
-                    ? "展開獎項與加碼金額設定"
-                    : "收合設定列（放大舞台）";
+                    ? "快速切換獎項"
+                    : "收合獎項設定";
+            });
+        }
+
+        // 中獎紅榜抽屜開關事件綁定
+        const toggleHistoryBtn = document.getElementById("toggle-history-drawer-btn");
+        const closeHistoryBtn = document.getElementById("close-history-drawer-btn");
+        const historyDrawer = document.getElementById("stage-history-drawer");
+        if (toggleHistoryBtn && historyDrawer) {
+            toggleHistoryBtn.addEventListener("click", () => {
+                historyDrawer.classList.toggle("is-hidden");
+            });
+        }
+        if (closeHistoryBtn && historyDrawer) {
+            closeHistoryBtn.addEventListener("click", () => {
+                historyDrawer.classList.add("is-hidden");
             });
         }
 
@@ -6750,6 +6789,17 @@ class WorkspaceApp {
                 this.lotteryWheel.audio.setMuted(this.lotteryState.isSoundEnabled === false);
             }
             this.lotteryWheel.render(this.lotteryState.remainingPool);
+
+            // 支援直接點擊畫布中心開抽
+            canvas.addEventListener("click", (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const dist = Math.sqrt(x * x + y * y);
+                if (dist <= rect.width * 0.16) {
+                    this.executeWheelLottery(theme);
+                }
+            });
         }
 
         // 輪盤模式切換事件
@@ -6794,13 +6844,35 @@ class WorkspaceApp {
             });
         }
 
-        // 啟動輪盤抽獎按鈕事件綁定
+        // 轉盤中心圓鈕直接點擊啟動抽獎
+        const centerCapBtn = document.getElementById("wheel-center-cap-btn");
+        if (centerCapBtn) {
+            centerCapBtn.addEventListener("click", () => {
+                this.executeWheelLottery(theme);
+            });
+        }
+
+        // 右下角大型啟動輪盤抽獎按鈕事件綁定
         const spinWheelBtn = document.getElementById("grand-spin-wheel-btn");
         if (spinWheelBtn) {
             spinWheelBtn.addEventListener("click", () => {
                 this.executeWheelLottery(theme);
             });
         }
+
+        // 全域鍵盤空白鍵 [Space] 快速啟動抽獎
+        if (this.lotterySpaceKeyHandler) {
+            window.removeEventListener("keydown", this.lotterySpaceKeyHandler);
+        }
+        this.lotterySpaceKeyHandler = (e) => {
+            // 若正在輸入文字框，不觸發空白鍵抽獎
+            if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+            if (e.code === "Space" || e.key === " ") {
+                e.preventDefault();
+                this.executeWheelLottery(theme);
+            }
+        };
+        window.addEventListener("keydown", this.lotterySpaceKeyHandler);
 
         const exportCsvBtn = document.getElementById("stage-export-csv-btn");
         if (exportCsvBtn) {
@@ -6851,6 +6923,11 @@ class WorkspaceApp {
             if (spinBtnText) spinBtnText.textContent = "幸運輪盤旋轉中，靜候天命揭曉...";
         }
 
+        const centerCapBtn = document.getElementById("wheel-center-cap-btn");
+        if (centerCapBtn) {
+            centerCapBtn.disabled = true;
+        }
+
         this.fireworks.stop();
 
         // 若前一輪剛結束，此時以最新 remainingPool 渲染輪盤，準備旋轉
@@ -6870,6 +6947,10 @@ class WorkspaceApp {
                             ? "待抽池已無名單（請至設定頁載入四個股名單）"
                             : `進行下一輪輪盤抽獎（剩餘 ${this.lotteryState.remainingPool.length} 人）`;
                     }
+                }
+                const centerCapBtn = document.getElementById("wheel-center-cap-btn");
+                if (centerCapBtn) {
+                    centerCapBtn.disabled = this.lotteryState.remainingPool.length === 0;
                 }
                 return;
             }
