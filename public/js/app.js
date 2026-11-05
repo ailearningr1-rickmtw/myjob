@@ -2534,7 +2534,7 @@ class WorkspaceApp {
         this.activeRoute = routeId;
         this.updateActiveNavTab();
 
-        const isFestiveActivity = routeId === "theme-05-draw" || routeId === "theme-05-admin";
+        const isFestiveActivity = routeId === "theme-05-draw" || routeId === "theme-05-admin" || routeId === "theme-04-draw" || routeId === "theme-04-admin";
         const isSurveyActivity = routeId.startsWith("theme-05-survey");
 
         document.body.classList.toggle("is-festive-gala-mode", isFestiveActivity);
