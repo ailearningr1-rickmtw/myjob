@@ -11025,6 +11025,35 @@ html[data-theme="dark"] .rpa-step-badge {
     cursor: not-allowed;
 }
 
+/* 轉盤音效開關膠囊按鈕 */
+.wheel-sound-toggle-btn {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: #fef08a;
+    padding: 0.22rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.wheel-sound-toggle-btn:hover {
+    background: rgba(245, 158, 11, 0.28);
+    border-color: #fef08a;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.wheel-sound-toggle-btn.is-muted {
+    background: rgba(100, 116, 139, 0.2);
+    border-color: rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+}
+
 /* 輪盤操作大按鈕 (高度適中精煉，寬度 320px，不吃多餘空間) */
 .wheel-spin-main-btn {
     width: 100%;

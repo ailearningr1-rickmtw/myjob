@@ -1447,6 +1447,89 @@ class FireworksController {
  * 歲末年終尾牙 40 人隨機抽籤幸運大輪盤引擎 (Canvas + Retina + 物理動力學)
  * 具備最佳化多股色彩辨識、頂部即時指針鎖定雷達、雙動力學模式（快速果決模式 vs 心跳懸念末段極慢爬行模式）
  */
+/**
+ * 歲末年終尾牙 40 人幸運輪盤專屬 Web Audio 純代碼音效合成引擎
+ * 零外部音檔依賴、零延遲、支援旋轉撥片清脆卡嗒聲、慢速心跳懸念聲與大獎勝利琵音
+ */
+class LotteryAudioSynthesizer {
+    constructor() {
+        this.ctx = null;
+        this.isEnabled = true;
+        this.lastTickTime = 0;
+    }
+
+    init() {
+        if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+                this.ctx = new AudioCtx();
+            }
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+            this.ctx.resume();
+        }
+    }
+
+    playTick(isSlowSuspense = false) {
+        if (!this.isEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = performance.now();
+        if (now - this.lastTickTime < 24) return;
+        this.lastTickTime = now;
+
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = "triangle";
+        const baseFreq = isSlowSuspense ? 680 : 960;
+        osc.frequency.setValueAtTime(baseFreq, t);
+        osc.frequency.exponentialRampToValueAtTime(200, t + 0.032);
+
+        gain.gain.setValueAtTime(isSlowSuspense ? 0.32 : 0.22, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.032);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(t);
+        osc.stop(t + 0.035);
+    }
+
+    playWinFanfare() {
+        if (!this.isEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        const startTime = this.ctx.currentTime + 0.04;
+
+        notes.forEach((freq, idx) => {
+            const t = startTime + idx * 0.11;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, t);
+
+            gain.gain.setValueAtTime(0.28, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+
+            osc.start(t);
+            osc.stop(t + 0.45);
+        });
+    }
+
+    setMuted(muted) {
+        this.isEnabled = !muted;
+    }
+}
+
 class FestiveLotteryWheel {
     constructor(canvas, pointerEl, hudEl) {
         this.canvas = canvas;
@@ -1459,6 +1542,7 @@ class FestiveLotteryWheel {
         this.lastTickedIndex = -1;
         this.highlightIndex = -1;
         this.currentPool = [];
+        this.audio = new LotteryAudioSynthesizer();
     }
 
     render(pool = [], highlightIdx = -1) {
@@ -1673,6 +1757,10 @@ class FestiveLotteryWheel {
             this.lastTickedIndex = activeIdx;
             if (this.pointerEl && this.isSpinning) {
                 this.pointerEl.classList.add("is-ticking");
+                // 播放撥片清脆嗒聲
+                if (this.audio) {
+                    this.audio.playTick(this.isSlowPhase || false);
+                }
                 setTimeout(() => {
                     if (this.pointerEl) this.pointerEl.classList.remove("is-ticking");
                 }, 40);
@@ -1685,6 +1773,7 @@ class FestiveLotteryWheel {
         if (targetWinnerIndex < 0 || targetWinnerIndex >= pool.length) return;
 
         this.isSpinning = true;
+        this.isSlowPhase = false;
         this.currentPool = pool;
         this.highlightIndex = -1;
         const poolLen = pool.length;
@@ -1719,7 +1808,9 @@ class FestiveLotteryWheel {
                 } else {
                     this.currentAngle = startAngle + totalDelta;
                     this.isSpinning = false;
+                    this.isSlowPhase = false;
                     this.render(pool, targetWinnerIndex);
+                    if (this.audio) this.audio.playWinFanfare();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
                     }
@@ -1761,7 +1852,9 @@ class FestiveLotteryWheel {
                     // 抵達最終天命得獎目標
                     this.currentAngle = startAngle + fastDist + slowDist;
                     this.isSpinning = false;
+                    this.isSlowPhase = false;
                     this.render(pool, targetWinnerIndex);
+                    if (this.audio) this.audio.playWinFanfare();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
                     }
@@ -1976,7 +2069,8 @@ class WorkspaceApp {
             latestDrawnPrize: "",
             latestDrawnAmount: "",
             isRehearsalMode: true,
-            wheelMode: "suspense"
+            wheelMode: "suspense",
+            isSoundEnabled: true
         };
         try {
             const raw = localStorage.getItem(STORAGE_KEYS.LOTTERY_STATE);
@@ -6220,6 +6314,18 @@ class WorkspaceApp {
                                     </svg>
                                     <span>一鍵打散名單</span>
                                 </button>
+                                <button
+                                    type="button"
+                                    class="wheel-sound-toggle-btn ${(this.lotteryState.isSoundEnabled !== false) ? "" : "is-muted"}"
+                                    id="wheel-sound-toggle-btn"
+                                    title="切換轉盤音效 (開啟/靜音)"
+                                >
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                    </svg>
+                                    <span id="sound-btn-text">${(this.lotteryState.isSoundEnabled !== false) ? "音效：開啟" : "音效：靜音"}</span>
+                                </button>
                             </div>
 
                             <button
@@ -6520,6 +6626,9 @@ class WorkspaceApp {
 
         if (canvas) {
             this.lotteryWheel = new FestiveLotteryWheel(canvas, pointerPin, liveHudName);
+            if (this.lotteryWheel.audio) {
+                this.lotteryWheel.audio.setMuted(this.lotteryState.isSoundEnabled === false);
+            }
             this.lotteryWheel.render(this.lotteryState.remainingPool);
         }
 
