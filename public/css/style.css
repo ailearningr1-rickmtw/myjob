@@ -10997,6 +10997,34 @@ html[data-theme="dark"] .rpa-step-badge {
     box-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
 }
 
+/* 一鍵打散名單按鈕 */
+.wheel-shuffle-btn {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: #fef08a;
+    padding: 0.22rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.wheel-shuffle-btn:hover:not(:disabled) {
+    background: rgba(245, 158, 11, 0.28);
+    border-color: #fef08a;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.wheel-shuffle-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* 輪盤操作大按鈕 (高度適中精煉，寬度 320px，不吃多餘空間) */
 .wheel-spin-main-btn {
     width: 100%;

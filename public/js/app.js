@@ -1701,8 +1701,9 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            const duration = 4000;
-            const extraTurns = 8;
+            // 模式一：快速果決模式 (縮短為 3.2 秒，迅速鎖定)
+            const duration = 3200;
+            const extraTurns = 7;
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
@@ -1726,14 +1727,15 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 模式二：極致心跳懸念模式 (12秒，前7秒高速順暢減速，後5秒漫步游移最後4位同仁，每位停留超過1秒，心跳緊張感拉滿！)
-            const duration = 12000.0;
-            const tSplit = 7000.0;
-            const dtSlow = 5000.0;
+            // 模式二：綜藝級長慢速心跳懸念 (總時長 12.5 秒：快轉縮短為 4.5 秒，慢速游移大幅拉長至 8.0 秒！)
+            // 慢速期間游移最後 5.5 個同仁，每位同仁在指針下停留超過 1.4 秒，極致窒息懸念！
+            const duration = 12500.0;
+            const tSplit = 4500.0;   // 快速階段大幅縮減為 4.5 秒
+            const dtSlow = 8000.0;   // 慢速游移延長為 8.0 秒
 
-            const slowSectors = Math.min(4.0, poolLen * 0.25);
+            const slowSectors = Math.min(5.5, poolLen * 0.35);
             const slowDist = slowSectors * sectorAngle;
-            const extraTurns = 16;
+            const extraTurns = 13;
             const totalTurnsAngle = extraTurns * Math.PI * 2 + forwardDist;
             const fastDist = totalTurnsAngle - slowDist;
 
@@ -1745,15 +1747,18 @@ class FestiveLotteryWheel {
                 const elapsed = now - startTime;
 
                 if (elapsed <= tSplit) {
+                    // 階段 1：0 ~ 4.5s，高速衝刺與流暢減速至 vMatch
                     const tSec = elapsed / 1000.0;
                     const tSplitSec = tSplit / 1000.0;
                     const progressAngle = (A / 3.0) * (Math.pow(tSplitSec, 3) - Math.pow(tSplitSec - tSec, 3)) + vMatch * tSec;
                     this.currentAngle = startAngle + progressAngle;
                 } else if (elapsed < duration) {
+                    // 階段 2：4.5s ~ 12.5s (整整 8 秒鐘！)，由 vMatch 極平滑慢速游移，最後 2 秒微步滑向終點
                     const tau = (elapsed - tSplit) / dtSlow;
                     const slowProgress = 1 - Math.pow(1 - tau, gamma);
                     this.currentAngle = startAngle + fastDist + slowDist * slowProgress;
                 } else {
+                    // 抵達最終天命得獎目標
                     this.currentAngle = startAngle + fastDist + slowDist;
                     this.isSpinning = false;
                     this.render(pool, targetWinnerIndex);
@@ -5887,6 +5892,7 @@ class WorkspaceApp {
                     </div>
                     <div class="lottery-top-actions">
                         <button type="button" class="secondary-btn" id="load-rehearsal-btn">載入四個股 40 人預設名單</button>
+                        <button type="button" class="secondary-btn" id="admin-shuffle-roster-btn">一鍵打散名單</button>
                         <button type="button" class="secondary-btn" id="change-passcode-btn">修改通行碼</button>
                         <button type="button" class="danger-outline-btn" id="clear-all-lottery-btn">清空所有名單與紀錄 (正式尾牙歸零)</button>
                     </div>
@@ -6190,14 +6196,29 @@ class WorkspaceApp {
                                     class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'fast' ? 'active' : ''}"
                                     data-wheel-mode="fast"
                                 >
-                                    快速果決 (4秒)
+                                    快速果決 (3.2秒)
                                 </button>
                                 <button
                                     type="button"
                                     class="wheel-mode-pill ${(this.lotteryState.wheelMode || 'suspense') === 'suspense' ? 'active' : ''}"
                                     data-wheel-mode="suspense"
                                 >
-                                    心跳懸念 (12秒・末段慢速游移)
+                                    心跳懸念 (12.5秒・慢速游移8秒)
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wheel-shuffle-btn"
+                                    id="wheel-shuffle-roster-btn"
+                                    title="一鍵隨機打散打亂待抽池同仁在轉盤上的排序"
+                                >
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 3 21 3 21 8"></polyline>
+                                        <line x1="4" y1="20" x2="21" y2="3"></line>
+                                        <polyline points="21 16 21 21 16 21"></polyline>
+                                        <line x1="15" y1="15" x2="21" y2="21"></line>
+                                        <line x1="4" y1="4" x2="9" y2="9"></line>
+                                    </svg>
+                                    <span>一鍵打散名單</span>
                                 </button>
                             </div>
 
@@ -6286,6 +6307,14 @@ class WorkspaceApp {
                     this.setPasscode(newCode.trim());
                     window.alert("通行碼已更新完成。");
                 }
+            });
+        }
+
+        const adminShuffleBtn = document.getElementById("admin-shuffle-roster-btn");
+        if (adminShuffleBtn) {
+            adminShuffleBtn.addEventListener("click", () => {
+                this.shuffleRemainingPool();
+                this.renderLotteryAdminPage(theme);
             });
         }
 
@@ -6521,6 +6550,32 @@ class WorkspaceApp {
                 this.exportWinnersToCsv();
             });
         }
+    }
+
+        /**
+     * 一鍵打散待抽池同仁名單順序 (Fisher-Yates 加密級安全隨機洗牌)
+     */
+    shuffleRemainingPool() {
+        if (this.lotteryWheel && this.lotteryWheel.isSpinning) return;
+        const pool = this.lotteryState.remainingPool;
+        if (!Array.isArray(pool) || pool.length <= 1) {
+            this.showToast("待抽池名單不足 2 人，無需打散。");
+            return;
+        }
+
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i -= 1) {
+            const j = this.getCryptoRandomInt(i + 1);
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+
+        this.lotteryState.remainingPool = shuffled;
+        this.saveLotteryState();
+
+        if (this.lotteryWheel) {
+            this.lotteryWheel.render(this.lotteryState.remainingPool, -1);
+        }
+        this.showToast(`已隨機打散打亂 ${shuffled.length} 位同仁的轉盤順序！`);
     }
 
     executeWheelLottery(theme) {
