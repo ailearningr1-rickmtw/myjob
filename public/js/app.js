@@ -1484,45 +1484,113 @@ class LotteryAudioSynthesizer {
         const gain = this.ctx.createGain();
 
         osc.type = "triangle";
-        const baseFreq = isSlowSuspense ? 680 : 960;
+        const baseFreq = isSlowSuspense ? 660 : 980;
         osc.frequency.setValueAtTime(baseFreq, t);
-        osc.frequency.exponentialRampToValueAtTime(200, t + 0.032);
+        osc.frequency.exponentialRampToValueAtTime(180, t + 0.034);
 
-        gain.gain.setValueAtTime(isSlowSuspense ? 0.32 : 0.22, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.032);
+        gain.gain.setValueAtTime(isSlowSuspense ? 0.35 : 0.22, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.034);
 
         osc.connect(gain);
         gain.connect(this.ctx.destination);
 
         osc.start(t);
-        osc.stop(t + 0.035);
+        osc.stop(t + 0.036);
     }
 
-    playWinFanfare() {
+    /**
+     * 播放得獎歡呼、口哨與熱烈掌聲合成音效 (純 Web Audio API 實現，零外部音檔依賴)
+     */
+    playApplauseAndCheer() {
         if (!this.isEnabled) return;
         this.init();
         if (!this.ctx) return;
 
-        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-        const startTime = this.ctx.currentTime + 0.04;
+        const ctx = this.ctx;
+        const now = ctx.currentTime;
 
+        // 1. 金色大獎勝利和弦琶音 (C5, E5, G5, C6)
+        const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
         notes.forEach((freq, idx) => {
-            const t = startTime + idx * 0.11;
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
+            const t = now + 0.04 + idx * 0.11;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
 
-            osc.type = "sine";
+            osc.type = "triangle";
             osc.frequency.setValueAtTime(freq, t);
 
             gain.gain.setValueAtTime(0.28, t);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
 
             osc.connect(gain);
-            gain.connect(this.ctx.destination);
+            gain.connect(ctx.destination);
 
             osc.start(t);
-            osc.stop(t + 0.45);
+            osc.stop(t + 0.58);
         });
+
+        // 2. 歡呼吹口哨聲 (Cheering Whistle Glissando)
+        [0.18, 0.42].forEach((delay, wIdx) => {
+            const wt = now + delay;
+            const whistleOsc = ctx.createOscillator();
+            const whistleGain = ctx.createGain();
+
+            whistleOsc.type = "sine";
+            const startF = wIdx === 0 ? 880 : 1050;
+            const peakF = wIdx === 0 ? 1850 : 2100;
+            whistleOsc.frequency.setValueAtTime(startF, wt);
+            whistleOsc.frequency.exponentialRampToValueAtTime(peakF, wt + 0.28);
+            whistleOsc.frequency.exponentialRampToValueAtTime(startF * 1.1, wt + 0.65);
+
+            whistleGain.gain.setValueAtTime(0.001, wt);
+            whistleGain.gain.linearRampToValueAtTime(0.2, wt + 0.08);
+            whistleGain.gain.exponentialRampToValueAtTime(0.001, wt + 0.72);
+
+            whistleOsc.connect(whistleGain);
+            whistleGain.connect(ctx.destination);
+
+            whistleOsc.start(wt);
+            whistleOsc.stop(wt + 0.75);
+        });
+
+        // 3. 熱烈掌聲 (Applause Noise Buffer + Bandpass Filter)
+        const duration = 3.6;
+        const sampleRate = ctx.sampleRate;
+        const bufferSize = Math.floor(sampleRate * duration);
+        const noiseBuffer = ctx.createBuffer(2, bufferSize, sampleRate);
+
+        for (let channel = 0; channel < 2; channel += 1) {
+            const output = noiseBuffer.getChannelData(channel);
+            for (let i = 0; i < bufferSize; i += 1) {
+                // 產生帶隨機群體拍擊顆粒的白雜訊
+                const r = Math.random() * 2 - 1;
+                output[i] = r * (0.65 + 0.35 * Math.sin(i / 150));
+            }
+        }
+
+        const applauseSource = ctx.createBufferSource();
+        applauseSource.buffer = noiseBuffer;
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(1250, now);
+        filter.Q.setValueAtTime(1.6, now);
+
+        const applauseGain = ctx.createGain();
+        applauseGain.gain.setValueAtTime(0.001, now);
+        // 0.28秒迅速湧現掌聲高潮
+        applauseGain.gain.linearRampToValueAtTime(0.38, now + 0.28);
+        // 熱烈持續鼓掌至 2.4 秒
+        applauseGain.gain.setValueAtTime(0.38, now + 2.4);
+        // 隨後自然漸弱衰減至 3.6 秒結束
+        applauseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+        applauseSource.connect(filter);
+        filter.connect(applauseGain);
+        applauseGain.connect(ctx.destination);
+
+        applauseSource.start(now);
+        applauseSource.stop(now + duration + 0.05);
     }
 
     setMuted(muted) {
@@ -1779,8 +1847,10 @@ class FestiveLotteryWheel {
         const poolLen = pool.length;
         const sectorAngle = (Math.PI * 2) / poolLen;
 
-        const targetCenterAngle = (targetWinnerIndex + 0.5) * sectorAngle;
-        const targetBaseAngle = ((1.5 * Math.PI - targetCenterAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+        // 【極致擬真 1：非死板居中落點】在扇區 [0.22, 0.78] 之間隨機偏移，時而險過、時而近線，可預期性降為零！
+        const randomOffsetRatio = 0.22 + Math.random() * 0.56;
+        const targetLandAngle = (targetWinnerIndex + randomOffsetRatio) * sectorAngle;
+        const targetBaseAngle = ((1.5 * Math.PI - targetLandAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
 
         const currentNorm = (this.currentAngle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
         let forwardDist = (targetBaseAngle - currentNorm) % (Math.PI * 2);
@@ -1790,9 +1860,9 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            // 模式一：快速果決模式 (縮短為 3.2 秒，迅速鎖定)
-            const duration = 3200;
-            const extraTurns = 7;
+            // 模式一：快速果決模式 (約 3.2 秒，圈數微隨機 6~8 圈)
+            const duration = 3200 + Math.random() * 400;
+            const extraTurns = 6 + Math.floor(Math.random() * 3);
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
@@ -1810,7 +1880,7 @@ class FestiveLotteryWheel {
                     this.isSpinning = false;
                     this.isSlowPhase = false;
                     this.render(pool, targetWinnerIndex);
-                    if (this.audio) this.audio.playWinFanfare();
+                    if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
                     }
@@ -1818,15 +1888,17 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 模式二：綜藝級長慢速心跳懸念 (總時長 12.5 秒：快轉縮短為 4.5 秒，慢速游移大幅拉長至 8.0 秒！)
-            // 慢速期間游移最後 5.5 個同仁，每位同仁在指針下停留超過 1.4 秒，極致窒息懸念！
-            const duration = 12500.0;
-            const tSplit = 4500.0;   // 快速階段大幅縮減為 4.5 秒
-            const dtSlow = 8000.0;   // 慢速游移延長為 8.0 秒
+            // 【極致擬真 2：可變摩擦力與動態旋轉物理學】
+            // 每次力道、快轉時長、慢速游移人數、摩擦衰減隨機動態波動，任何人都無法提早算定結果！
+            const extraTurns = 13 + Math.floor(Math.random() * 5); // 隨機 13~17 圈
+            const tSplit = 4200.0 + Math.random() * 800.0;          // 快轉 4.2~5.0 秒隨機
+            const dtSlow = 7500.0 + Math.random() * 1800.0;         // 慢速 7.5~9.3 秒隨機
+            const duration = tSplit + dtSlow;
 
-            const slowSectors = Math.min(5.5, poolLen * 0.35);
+            // 慢速游移人數在 3.8 ~ 6.0 人隨機波動 (隨人數減少自適應)
+            const slowSectors = Math.min(3.8 + Math.random() * 2.2, poolLen * 0.35);
             const slowDist = slowSectors * sectorAngle;
-            const extraTurns = 13;
+
             const totalTurnsAngle = extraTurns * Math.PI * 2 + forwardDist;
             const fastDist = totalTurnsAngle - slowDist;
 
@@ -1838,13 +1910,14 @@ class FestiveLotteryWheel {
                 const elapsed = now - startTime;
 
                 if (elapsed <= tSplit) {
-                    // 階段 1：0 ~ 4.5s，高速衝刺與流暢減速至 vMatch
+                    // 階段 1：高速旋轉與平滑流暢減速
                     const tSec = elapsed / 1000.0;
                     const tSplitSec = tSplit / 1000.0;
                     const progressAngle = (A / 3.0) * (Math.pow(tSplitSec, 3) - Math.pow(tSplitSec - tSec, 3)) + vMatch * tSec;
                     this.currentAngle = startAngle + progressAngle;
                 } else if (elapsed < duration) {
-                    // 階段 2：4.5s ~ 12.5s (整整 8 秒鐘！)，由 vMatch 極平滑慢速游移，最後 2 秒微步滑向終點
+                    // 階段 2：長達 7.5~9.3 秒的慢速游移與末段微步
+                    this.isSlowPhase = true;
                     const tau = (elapsed - tSplit) / dtSlow;
                     const slowProgress = 1 - Math.pow(1 - tau, gamma);
                     this.currentAngle = startAngle + fastDist + slowDist * slowProgress;
@@ -1854,7 +1927,8 @@ class FestiveLotteryWheel {
                     this.isSpinning = false;
                     this.isSlowPhase = false;
                     this.render(pool, targetWinnerIndex);
-                    if (this.audio) this.audio.playWinFanfare();
+                    // 觸發大獎勝利和弦 ＋ 口哨歡呼 ＋ 熱烈鼓掌音效！
+                    if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
                     }
@@ -6573,6 +6647,9 @@ class WorkspaceApp {
         if (replayFireworksBtn) {
             replayFireworksBtn.addEventListener("click", () => {
                 this.fireworks.launchCelebration(4500);
+                if (this.lotteryWheel && this.lotteryWheel.audio) {
+                    this.lotteryWheel.audio.playApplauseAndCheer();
+                }
             });
         }
 
@@ -6645,7 +6722,36 @@ class WorkspaceApp {
             });
         });
 
-        // 啟動輪盤抽獎
+        // 一鍵打散名單按鈕事件綁定
+        const shuffleBtn = document.getElementById("wheel-shuffle-roster-btn");
+        if (shuffleBtn) {
+            shuffleBtn.addEventListener("click", () => {
+                this.shuffleRemainingPool();
+            });
+        }
+
+        // 音效切換按鈕事件綁定
+        const soundBtn = document.getElementById("wheel-sound-toggle-btn");
+        const soundBtnText = document.getElementById("sound-btn-text");
+        if (soundBtn) {
+            soundBtn.addEventListener("click", () => {
+                const currentEnabled = this.lotteryState.isSoundEnabled !== false;
+                const nextEnabled = !currentEnabled;
+                this.lotteryState.isSoundEnabled = nextEnabled;
+                this.saveLotteryState();
+
+                if (this.lotteryWheel && this.lotteryWheel.audio) {
+                    this.lotteryWheel.audio.setMuted(!nextEnabled);
+                    if (nextEnabled) this.lotteryWheel.audio.init();
+                }
+
+                soundBtn.classList.toggle("is-muted", !nextEnabled);
+                if (soundBtnText) soundBtnText.textContent = nextEnabled ? "音效：開啟" : "音效：靜音";
+                this.showToast(nextEnabled ? "已開啟轉盤音效！" : "已切換為靜音模式。");
+            });
+        }
+
+        // 啟動輪盤抽獎按鈕事件綁定
         const spinWheelBtn = document.getElementById("grand-spin-wheel-btn");
         if (spinWheelBtn) {
             spinWheelBtn.addEventListener("click", () => {
@@ -6661,7 +6767,7 @@ class WorkspaceApp {
         }
     }
 
-        /**
+    /**
      * 一鍵打散待抽池同仁名單順序 (Fisher-Yates 加密級安全隨機洗牌)
      */
     shuffleRemainingPool() {
