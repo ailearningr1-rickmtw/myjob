@@ -1,8 +1,8 @@
-// 資安核心知識庫靜態快取 (最後同步：2026-11-06 20:17:01)
+// 資安核心知識庫靜態快取 (最後同步：2026-11-06 20:46:34)
 window.WORKSPACE_KNOWLEDGE_DATA = {
   "metadata": {
     "version": "5.0.0",
-    "lastSyncedAt": "2026-11-06 20:17:01",
+    "lastSyncedAt": "2026-11-06 20:46:34",
     "totalCount": 330,
     "curriculumWeeksCount": 8,
     "curriculumDaysCount": 40,

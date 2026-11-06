@@ -1457,7 +1457,7 @@ class LotteryAudioSynthesizer {
         this.isEnabled = true;
         this.lastTickTime = 0;
         try {
-            this.cheerAudio = new Audio("./audio/grand_win_cheer.mp3");
+            this.cheerAudio = new Audio("./audio/grand_win_cheer.mp3?v=20261106v3");
             this.cheerAudio.preload = "auto";
         } catch (e) {
             this.cheerAudio = null;
@@ -1933,31 +1933,34 @@ class FestiveLotteryWheel {
             // 【極致戲劇張力三階段經典物理學：高速狂旋衝刺 -> 懸疑中速游移 -> 極慢速絕殺窒息微步】
             // 完美重現整體降速前的經典刺激感，第二段明顯減速跨越同仁，第三段極慢速微步扣人心弦！
 
-            // 階段 3：極慢速絕殺窒息微步 (Ultra-slow Agonizing Creep)
-            // 耗時長達 4.2 ~ 5.0 秒，專門爬行最後約 0.85 ~ 1.15 個扇區 (跨過相鄰分界線與目標落點)
-            const T3_sec = 4.2 + Math.random() * 0.8; // 4.2s ~ 5.0s
-            const creepSectors = 0.85 + Math.random() * 0.30;
-            const D3 = creepSectors * sectorAngle;
-            const p = 1.8;
-            const v2 = (p * D3) / T3_sec; // 進入極慢速微步時的初始角速度
+            // 總抽獎時長整體延長至約 15 秒 (平均 15.3 秒，隨機波動於 12.8s ~ 17.5s 之間)
+            // 稍稍減少第二段時間，大幅增加第三段窒息微步時間，並拉大兩段在每次抽獎時的隨機範圍
 
-            // 階段 2：懸疑中速游移階段 (Suspense Sweep)
-            // 即使人數極少 (如剩下 2~6 人)，也保證慢速繞行全部同仁 2.2 圈以上，讓所有在場同仁的名字皆被多次緩慢巡迴路過！
-            const T2_sec = 5.5 + Math.random() * 1.0; // 5.5s ~ 6.5s
+            // 階段 3：極慢速絕殺窒息微步 (時間大幅增加至 5.4s ~ 7.6s，隨機跨度 2.2 秒)
+            // 爬行約 0.95 ~ 1.60 個扇區，慢到全場屏息，長達 5~7 秒在相鄰名單間懸疑微步過線！
+            const T3_sec = 5.4 + Math.random() * 2.2; // 5.4s ~ 7.6s
+            const creepSectors = 0.95 + Math.random() * 0.65;
+            const D3 = creepSectors * sectorAngle;
+            const p = 1.85;
+            const v2 = (p * D3) / T3_sec; // 進入極慢速微步時的初始接軌角速度
+
+            // 階段 2：懸疑中速游移階段 (時間適度縮減至 3.8s ~ 5.8s，隨機跨度 2.0 秒)
+            // 明顯減速游移，跨越同仁扇區，營造心跳感
+            const T2_sec = 3.8 + Math.random() * 2.0; // 3.8s ~ 5.8s
             let sweepSectors;
             if (poolLen <= 6) {
-                // 人數極少時：強制慢速游移 2.2 圈以上 (例如 4 人則游移約 10 個扇區)
-                sweepSectors = Math.max(6.0, poolLen * 2.2) + Math.random() * 1.5;
+                // 人數極少時：保證慢速繞行全部同仁 2.0 圈以上
+                sweepSectors = Math.max(5.0, poolLen * 2.0) + Math.random() * 2.0;
             } else {
-                // 人數較多時：游移 12 ~ 20 個扇區
-                sweepSectors = Math.max(12.0, Math.min(22.0, poolLen * 0.45)) + Math.random() * 2.0;
+                // 人數較多時：游移 9 ~ 18 個扇區
+                sweepSectors = Math.max(9.0, Math.min(18.0, poolLen * 0.40)) + Math.random() * 3.0;
             }
             const D2 = sweepSectors * sectorAngle;
-            const v1 = (2 * D2 / T2_sec) - v2; // 進入懸疑中速游移時的接軌角速度
+            const v1 = (2.0 * D2 / T2_sec) - v2; // 進入懸疑中速游移時的接軌角速度
 
-            // 階段 1：高速激情衝刺階段 (High-Speed Thrill Sprint)
-            const T1_sec = 3.6 + Math.random() * 0.6; // 3.6s ~ 4.2s
-            const extraTurns = 13 + Math.floor(Math.random() * 5); // 隨機 13~17 圈
+            // 階段 1：高速激情狂旋衝刺階段 (3.6s ~ 4.4s，隨機轉動 13~18 圈)
+            const T1_sec = 3.6 + Math.random() * 0.8; // 3.6s ~ 4.4s
+            const extraTurns = 13 + Math.floor(Math.random() * 6); // 隨機 13~18 圈
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
             const D1 = totalDelta - D2 - D3;
             const A = (3.0 * (D1 - v1 * T1_sec)) / Math.pow(T1_sec, 3);
