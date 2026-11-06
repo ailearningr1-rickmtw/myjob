@@ -1456,6 +1456,12 @@ class LotteryAudioSynthesizer {
         this.ctx = null;
         this.isEnabled = true;
         this.lastTickTime = 0;
+        try {
+            this.cheerAudio = new Audio("./audio/grand_win_cheer.mp3");
+            this.cheerAudio.preload = "auto";
+        } catch (e) {
+            this.cheerAudio = null;
+        }
     }
 
     init() {
@@ -1529,73 +1535,64 @@ class LotteryAudioSynthesizer {
     }
 
     /**
-     * 播放溫潤熱烈的純掌聲聲浪與大獎鳴響 (純粹掌聲聲浪，移除刺耳尖叫與高頻口哨)
-     * 純 Web Audio API 即時合成，零外部音檔依賴，保證離線百分之百可用
+     * 播放尾牙大獎開出時之真實人群歡呼與熱烈掌聲錄音 (真實現場錄音，極致自然、熱烈震撼)
      */
     playApplauseAndCheer() {
         if (!this.isEnabled) return;
+
+        // 優先播放真實錄音之萬人歡呼與熱烈掌聲 (grand_win_cheer.mp3)
+        if (this.cheerAudio) {
+            try {
+                this.cheerAudio.currentTime = 0;
+                this.cheerAudio.volume = 0.90;
+                const p = this.cheerAudio.play();
+                if (p && typeof p.catch === "function") {
+                    p.catch((err) => {
+                        this.playSynthApplauseAndCheer();
+                    });
+                }
+                return;
+            } catch (e) {
+                // 若檔案存取受限，自動平滑降級為 Web Audio 合成音效
+            }
+        }
+
+        this.playSynthApplauseAndCheer();
+    }
+
+    /**
+     * 降級備用：純 Web Audio API 合成音效 (保證零外部依賴與極致相容)
+     */
+    playSynthApplauseAndCheer() {
         this.init();
         if (!this.ctx) return;
 
         const ctx = this.ctx;
         const now = ctx.currentTime;
-
-        // 1. 溫潤典雅的大獎慶賀和弦磬音 (Warm Chime - 柔和溫暖的 C 大調和弦，無刺耳鋸齒波)
-        const chimeNotes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
-        chimeNotes.forEach((freq, idx) => {
-            const t = now + 0.05 + idx * 0.08;
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const filter = ctx.createBiquadFilter();
-
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(freq, t);
-
-            // 溫和低通濾波，去除任何尖銳高頻
-            filter.type = "lowpass";
-            filter.frequency.setValueAtTime(1100, t);
-
-            gain.gain.setValueAtTime(0.001, t);
-            gain.gain.linearRampToValueAtTime(0.18, t + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
-
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(ctx.destination);
-
-            osc.start(t);
-            osc.stop(t + 1.25);
-        });
-
-        // 2. 純粹、熱烈、溫潤的立體聲群體拍掌聲浪 (Pure Clapping Waves)
-        // 模擬宴會廳/大禮堂數十位同仁真誠熱烈的雙手鼓掌，無尖銳刺耳雜音
-        const duration = 4.8;
+        const duration = 4.5;
         const sampleRate = ctx.sampleRate;
         const totalSamples = Math.floor(sampleRate * duration);
         const noiseBuffer = ctx.createBuffer(2, totalSamples, sampleRate);
 
         for (let channel = 0; channel < 2; channel += 1) {
             const output = noiseBuffer.getChannelData(channel);
-            // 溫和粉紅/低通底噪聲浪，模擬群體環境共鳴
             let b0 = 0, b1 = 0;
             for (let i = 0; i < totalSamples; i += 1) {
                 const white = Math.random() * 2 - 1;
                 b0 = 0.96 * b0 + white * 0.04;
                 b1 = 0.92 * b1 + white * 0.08;
-                output[i] = (b0 + b1) * 0.22;
+                output[i] = (b0 + b1) * 0.20;
             }
 
-            // 注入 450 組獨立真實手掌拍擊顆粒 (Cupped Palm Clap Impulses)
-            // 聚焦在人手中低頻拍擊聲響 (800Hz ~ 1500Hz)，柔和自然
-            const numClaps = 450;
+            const numClaps = 350;
             for (let c = 0; c < numClaps; c += 1) {
-                const clapTime = 0.15 + Math.random() * 4.0;
+                const clapTime = 0.15 + Math.random() * 3.8;
                 const startIdx = Math.floor(clapTime * sampleRate);
                 if (startIdx >= totalSamples) continue;
 
-                const clapLength = Math.floor(sampleRate * (0.022 + Math.random() * 0.016));
-                const clapAmp = 0.40 + Math.random() * 0.45;
-                const resonanceFreq = 850 + Math.random() * 650; // 手掌空腔拍擊共鳴頻率
+                const clapLength = Math.floor(sampleRate * (0.020 + Math.random() * 0.015));
+                const clapAmp = 0.35 + Math.random() * 0.40;
+                const resonanceFreq = 850 + Math.random() * 650;
 
                 for (let j = 0; j < clapLength && (startIdx + j) < totalSamples; j += 1) {
                     const tNorm = j / clapLength;
@@ -1610,7 +1607,6 @@ class LotteryAudioSynthesizer {
         const applauseSource = ctx.createBufferSource();
         applauseSource.buffer = noiseBuffer;
 
-        // 溫潤帶通濾波器：中心頻率 1150Hz，Q=0.9，徹底濾除 3000Hz 以上刺耳嘶嘶聲
         const clapFilter = ctx.createBiquadFilter();
         clapFilter.type = "bandpass";
         clapFilter.frequency.setValueAtTime(1150, now);
@@ -1618,11 +1614,8 @@ class LotteryAudioSynthesizer {
 
         const applauseGain = ctx.createGain();
         applauseGain.gain.setValueAtTime(0.001, now);
-        // 0.35 秒溫和湧現雷動掌聲 (舒適音量 0.58)
-        applauseGain.gain.linearRampToValueAtTime(0.58, now + 0.35);
-        // 熱烈拍掌持續澎湃至 3.0 秒
-        applauseGain.gain.setValueAtTime(0.58, now + 3.0);
-        // 3.0 ~ 4.8 秒如潮水般自然漸息
+        applauseGain.gain.linearRampToValueAtTime(0.55, now + 0.35);
+        applauseGain.gain.setValueAtTime(0.55, now + 2.8);
         applauseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
         applauseSource.connect(clapFilter);
@@ -1635,6 +1628,13 @@ class LotteryAudioSynthesizer {
 
     setMuted(muted) {
         this.isEnabled = !muted;
+        if (this.cheerAudio) {
+            this.cheerAudio.muted = muted;
+            if (muted) {
+                this.cheerAudio.pause();
+                this.cheerAudio.currentTime = 0;
+            }
+        }
     }
 }
 
