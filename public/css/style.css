@@ -160,7 +160,8 @@ body {
 }
 
 body.is-festive-gala-mode .top-navbar,
-body.is-festive-gala-mode .site-footer {
+body.is-festive-gala-mode .site-footer,
+body.is-festive-gala-mode .festive-side-hangings {
     display: none !important;
 }
 
@@ -11398,7 +11399,7 @@ body.is-festive-gala-mode #focus-section {
     top: 24px;
     right: 24px;
     z-index: 30;
-    width: clamp(300px, 26vw, 420px);
+    width: clamp(340px, 30vw, 500px);
 }
 
 .stage-hud-top-right .wheel-radar-hud {
@@ -11417,16 +11418,16 @@ body.is-festive-gala-mode #focus-section {
 }
 
 .stage-hud-top-right .wheel-hud-target-name {
-    font-size: clamp(2.0rem, 2.7vw, 2.7rem);
+    font-size: clamp(1.5rem, 2.2vw, 2.3rem);
     font-weight: 900;
     color: #fef08a;
     text-shadow: 0 0 20px rgba(245, 158, 11, 0.9), 0 2px 8px rgba(0, 0, 0, 0.95);
     text-align: center;
     width: 100%;
-    line-height: 1.2;
+    line-height: 1.25;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 /* 4. 左下角控制區 (bottom: 24px; left: 24px; 毛玻璃半透明，hover不透明) */
@@ -11528,21 +11529,61 @@ body.is-festive-gala-mode #focus-section {
 /* 全螢幕獲獎者浮動展示卡 */
 .grand-winners-showcase.is-fullscreen-showcase {
     position: fixed;
-    bottom: 105px;
+    bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 28;
+    z-index: 45;
     display: flex;
     gap: 16px;
     justify-content: center;
-    max-width: 80vw;
-    pointer-events: none;
+    max-width: 46vw;
+    pointer-events: auto;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.grand-winners-showcase.is-fullscreen-showcase:empty,
+.grand-winners-showcase.is-fullscreen-showcase.is-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateX(-50%) translateY(20px) !important;
+    visibility: hidden !important;
 }
 
 .grand-winners-showcase.is-fullscreen-showcase .grand-winner-card {
     pointer-events: auto;
-    min-width: 260px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85);
+    min-width: 240px;
+    padding: 10px 18px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.88), 0 0 25px rgba(245, 158, 11, 0.4);
+    position: relative;
+}
+
+.grand-winners-showcase.is-fullscreen-showcase .grand-winner-name {
+    font-size: clamp(1.3rem, 1.8vw, 1.7rem);
+    margin: 2px 0 4px;
+}
+
+.grand-winners-showcase.is-fullscreen-showcase .card-dismiss-btn {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: #fef08a;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+
+.grand-winners-showcase.is-fullscreen-showcase .card-dismiss-btn:hover {
+    background: rgba(220, 38, 38, 0.8);
+    color: #ffffff;
 }
 
 /* 全螢幕抽屜 (獎項加碼設定) */
@@ -11560,9 +11601,34 @@ body.is-festive-gala-mode #focus-section {
     transition: transform 0.3s ease;
 }
 
+.stage-config-drawer.is-fullscreen-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 60;
+    background: rgba(15, 15, 22, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 2px solid #f59e0b;
+    padding: 20px 32px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform: translateY(0);
+}
+
 .stage-config-drawer.is-fullscreen-drawer.is-hidden {
-    transform: translateY(-100%);
-    pointer-events: none;
+    transform: translateY(-100%) !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+.stage-preset-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
 }
 
 /* 全螢幕紅榜歷史滑出抽屜 */

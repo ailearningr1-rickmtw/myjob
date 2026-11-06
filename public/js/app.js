@@ -1882,12 +1882,13 @@ class FestiveLotteryWheel {
 
         this.isSpinning = true;
         this.isSlowPhase = false;
+        this.isCreepPhase = false;
         this.currentPool = pool;
         this.highlightIndex = -1;
         const poolLen = pool.length;
         const sectorAngle = (Math.PI * 2) / poolLen;
 
-        // 【非死板居中落點】在扇區 [0.20, 0.80] 之間隨機偏移，兼顧懸疑感與安全合法性
+        // 【極致擬真 1：非死板居中落點】在扇區 [0.20, 0.80] 之間隨機偏移，時而險過、時而近線，杜絕預測性
         const randomOffsetRatio = 0.20 + Math.random() * 0.60;
         const targetLandAngle = (targetWinnerIndex + randomOffsetRatio) * sectorAngle;
         const targetBaseAngle = ((1.5 * Math.PI - targetLandAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
@@ -1900,25 +1901,26 @@ class FestiveLotteryWheel {
         const startTime = performance.now();
 
         if (mode === "fast") {
-            // 模式一：快速果決模式 (平穩順暢，約 3.2~3.6 秒，圈數 5~7 圈)
+            // 模式一：快速果決模式 (約 3.2 秒，圈數微隨機 6~8 圈)
             const duration = 3200 + Math.random() * 400;
-            const extraTurns = 5 + Math.floor(Math.random() * 3);
+            const extraTurns = 6 + Math.floor(Math.random() * 3);
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
 
             const animateFast = (now) => {
                 const elapsed = now - startTime;
-                const tau = Math.min(1.0, elapsed / duration);
-                const progress = 1.0 - Math.pow(1.0 - tau, 3.5);
+                const t = Math.min(1, elapsed / duration);
+                const progress = 1 - Math.pow(1 - t, 5);
 
                 this.currentAngle = startAngle + totalDelta * progress;
                 this.render(pool, -1);
 
-                if (tau < 1.0) {
+                if (t < 1) {
                     this.animId = requestAnimationFrame(animateFast);
                 } else {
                     this.currentAngle = startAngle + totalDelta;
                     this.isSpinning = false;
                     this.isSlowPhase = false;
+                    this.isCreepPhase = false;
                     this.render(pool, targetWinnerIndex);
                     if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
@@ -1928,63 +1930,91 @@ class FestiveLotteryWheel {
             };
             this.animId = requestAnimationFrame(animateFast);
         } else {
-            // 【全局單一連續物理阻尼模型：完美融合高速衝刺、顯著減速游移與末段懸疑微步】
-            // 徹底杜絕多階段切割造成的加速度階躍卡頓，以封閉形式積分公式確保全程 100% 流暢無縫！
-            
-            // 總旋轉時長在 9.5 秒 ~ 14.5 秒之間大幅隨機波動 (不同次抽獎體驗截然不同)
-            const T_total = 9.5 + Math.random() * 5.0; 
-            const duration_ms = T_total * 1000.0;
+            // 【極致戲劇張力三階段經典物理學：高速狂旋衝刺 -> 懸疑中速游移 -> 極慢速絕殺窒息微步】
+            // 完美重現整體降速前的經典刺激感，第二段明顯減速跨越同仁，第三段極慢速微步扣人心弦！
 
-            // 阻尼形狀參數 a 在 [1.85, 2.25] 之間隨機波動，決定衝刺維持時間與減速曲線陡度
-            const a = 1.85 + Math.random() * 0.40;
-            // 解析積分總量 I(a) = 1 - 2/(a+1) + 1/(2a+1)
-            const I_a = 1.0 - (2.0 / (a + 1.0)) + (1.0 / (2.0 * a + 1.0));
+            // 階段 3：極慢速絕殺窒息微步 (Ultra-slow Agonizing Creep)
+            // 耗時長達 4.2 ~ 5.0 秒，專門爬行最後約 0.85 ~ 1.15 個扇區 (跨過相鄰分界線與目標落點)
+            const T3_sec = 4.2 + Math.random() * 0.8; // 4.2s ~ 5.0s
+            const creepSectors = 0.85 + Math.random() * 0.30;
+            const D3 = creepSectors * sectorAngle;
+            const p = 1.8;
+            const v2 = (p * D3) / T3_sec; // 進入極慢速微步時的初始角速度
 
-            // 目標最高轉速維持在充滿動感與激情的 2.3 ~ 2.8 圈/秒 (14.5 ~ 18.0 rad/s)
-            const desiredTopSpeed = 14.5 + Math.random() * 3.5;
-            const idealTotalDelta = desiredTopSpeed * I_a * T_total;
-            const minTurns = Math.round((idealTotalDelta - forwardDist) / (Math.PI * 2));
-            const extraTurns = Math.max(11, minTurns); // 保持充足圈數 (12~18 圈)
+            // 階段 2：懸疑中速游移階段 (Suspense Sweep)
+            // 即使人數極少 (如剩下 2~6 人)，也保證慢速繞行全部同仁 2.2 圈以上，讓所有在場同仁的名字皆被多次緩慢巡迴路過！
+            const T2_sec = 5.5 + Math.random() * 1.0; // 5.5s ~ 6.5s
+            let sweepSectors;
+            if (poolLen <= 6) {
+                // 人數極少時：強制慢速游移 2.2 圈以上 (例如 4 人則游移約 10 個扇區)
+                sweepSectors = Math.max(6.0, poolLen * 2.2) + Math.random() * 1.5;
+            } else {
+                // 人數較多時：游移 12 ~ 20 個扇區
+                sweepSectors = Math.max(12.0, Math.min(22.0, poolLen * 0.45)) + Math.random() * 2.0;
+            }
+            const D2 = sweepSectors * sectorAngle;
+            const v1 = (2 * D2 / T2_sec) - v2; // 進入懸疑中速游移時的接軌角速度
+
+            // 階段 1：高速激情衝刺階段 (High-Speed Thrill Sprint)
+            const T1_sec = 3.6 + Math.random() * 0.6; // 3.6s ~ 4.2s
+            const extraTurns = 13 + Math.floor(Math.random() * 5); // 隨機 13~17 圈
             const totalDelta = extraTurns * Math.PI * 2 + forwardDist;
+            const D1 = totalDelta - D2 - D3;
+            const A = (3.0 * (D1 - v1 * T1_sec)) / Math.pow(T1_sec, 3);
+
+            const T1_ms = T1_sec * 1000.0;
+            const T2_ms = T2_sec * 1000.0;
+            const T3_ms = T3_sec * 1000.0;
+            const totalDuration_ms = T1_ms + T2_ms + T3_ms;
 
             const animateSuspense = (now) => {
                 const elapsed = now - startTime;
-                const tau = Math.min(1.0, elapsed / duration_ms);
 
-                // 全局單一無縫積分公式：s(tau) = [tau - 2/(a+1)*tau^(a+1) + 1/(2a+1)*tau^(2a+1)] / I_a
-                // 數學保證：
-                // 1. tau ∈ [0, 0.35]: 速度保持在 80% 以上，高速激情狂轉 (衝刺段)
-                // 2. tau ∈ [0.35, 0.75]: 速度急遽且顯著地從 80% 大幅衰減至 20%，同仁姓名清晰逐一掠過 (游移減速段)
-                // 3. tau ∈ [0.75, 1.0]: 速度在最後 2.5~3.5 秒平穩降至 0.1 圈/秒以下，指針屏息游移過線並精準停定 (末段微步段)
-                // 4. 起點加速度=0、終點速度=0、終點加速度=0，全流程無任何階段縫隙，完全無卡頓、無人為刻意生硬感！
-                const term1 = tau;
-                const term2 = (2.0 / (a + 1.0)) * Math.pow(tau, a + 1.0);
-                const term3 = (1.0 / (2.0 * a + 1.0)) * Math.pow(tau, 2.0 * a + 1.0);
-                const progress = (term1 - term2 + term3) / I_a;
-
-                // 標記慢速階段 (超過 40% 時速已明顯下降，切換為厚重機械撥片音效)
-                this.isSlowPhase = (tau >= 0.40);
-                this.currentAngle = startAngle + totalDelta * progress;
-
-                if (tau < 1.0) {
-                    this.render(pool, -1);
-                    this.animId = requestAnimationFrame(animateSuspense);
+                if (elapsed <= T1_ms) {
+                    // 階段 1：高速狂旋與滑順降速至 v1
+                    this.isSlowPhase = false;
+                    this.isCreepPhase = false;
+                    const t = elapsed / 1000.0;
+                    const progressAngle = (A / 3.0) * (Math.pow(T1_sec, 3) - Math.pow(T1_sec - t, 3)) + v1 * t;
+                    this.currentAngle = startAngle + progressAngle;
+                } else if (elapsed <= T1_ms + T2_ms) {
+                    // 階段 2：長達 5.5~6.5 秒的懸疑游移，均勻跨越多位同仁
+                    this.isSlowPhase = true;
+                    this.isCreepPhase = false;
+                    const t = (elapsed - T1_ms) / 1000.0;
+                    const tau = t / T2_sec;
+                    const phase2Angle = v1 * T2_sec * tau - ((v1 - v2) / 2.0) * T2_sec * Math.pow(tau, 2);
+                    this.currentAngle = startAngle + D1 + phase2Angle;
+                } else if (elapsed < totalDuration_ms) {
+                    // 階段 3：長達 4.2~5.0 秒的【極慢速絕殺窒息微步】！
+                    // 指針以極慢速度逼近分界線與落點，全場屏息以待！
+                    this.isSlowPhase = true;
+                    this.isCreepPhase = true;
+                    const t = (elapsed - T1_ms - T2_ms) / 1000.0;
+                    const tau = Math.min(1.0, t / T3_sec);
+                    const creepProgress = 1.0 - Math.pow(1.0 - tau, p);
+                    this.currentAngle = startAngle + D1 + D2 + D3 * creepProgress;
                 } else {
+                    // 抵達最終天命得獎目標
                     this.currentAngle = startAngle + totalDelta;
                     this.isSpinning = false;
                     this.isSlowPhase = false;
+                    this.isCreepPhase = false;
                     this.render(pool, targetWinnerIndex);
-                    // 觸發溫潤典雅磬音 ＋ 純粹熱烈群眾拍掌聲浪！
+                    // 觸發溫潤典雅磬音 ＋ 熱烈鼓掌聲浪！
                     if (this.audio) this.audio.playApplauseAndCheer();
                     if (typeof onFinish === "function") {
                         onFinish(targetWinnerIndex);
                     }
+                    return;
                 }
+
+                this.render(pool, -1);
+                this.animId = requestAnimationFrame(animateSuspense);
             };
             this.animId = requestAnimationFrame(animateSuspense);
         }
     }
-
     stop() {
         if (this.animId) {
             cancelAnimationFrame(this.animId);
@@ -2003,7 +2033,7 @@ class WorkspaceApp {
         this.surveyState = this.loadSurveyState();
         this.isRolling = false;
         this.rollingIntervalId = null;
-        this.isStageDrawerCollapsed = false;
+        this.isStageDrawerCollapsed = true;
 
         // 問卷與餐點票選互動暫存狀態（支援甜度冰塊點選、依價目表微調品項金額與差額試算）
         this.selectedVoterName = "";
@@ -6249,24 +6279,15 @@ class WorkspaceApp {
             const displayAmount = this.lotteryState.latestDrawnAmount || this.lotteryState.currentAmount;
             showcaseCardsHtml = this.lotteryState.latestDrawnWinners.map((name, idx) => `
                 <div class="grand-winner-card is-celebrating">
+                    <button type="button" class="card-dismiss-btn" id="dismiss-winner-card-btn" title="收起中獎卡片">&times;</button>
                     <span class="grand-winner-slot-badge">鴻運當頭 // WINNER #0${idx + 1}</span>
                     <div class="grand-winner-name">${this.escapeHtml(name)}</div>
                     <span class="grand-winner-Bonus-note">恭賀榮獲：${this.escapeHtml(displayPrize)}（${this.escapeHtml(displayAmount)}）</span>
                 </div>
             `).join("");
         } else {
-            const slotsCount = this.lotteryState.batchSize;
-            const placeholders = [];
-            for (let i = 0; i < slotsCount; i += 1) {
-                placeholders.push(`
-                    <div class="grand-winner-card">
-                        <span class="grand-winner-slot-badge">吉星高照 // SLOT #0${i + 1}</span>
-                        <div class="grand-winner-name">吉時待開獎</div>
-                        <span class="grand-winner-Bonus-note">${this.escapeHtml(this.lotteryState.currentPrize)} — ${this.escapeHtml(this.lotteryState.currentAmount)}</span>
-                    </div>
-                `);
-            }
-            showcaseCardsHtml = placeholders.join("");
+            // 全螢幕劇院模式下：抽獎前不顯示空佔位卡，把轉盤全景 100% 完整留給現場！
+            showcaseCardsHtml = "";
         }
 
         const historyHtml = this.lotteryState.winnersHistory.length > 0
@@ -6441,7 +6462,10 @@ class WorkspaceApp {
                 <!-- 快速獎項加碼抽屜 (點擊展開，平時隱藏不干擾全螢幕) -->
                 <div class="stage-config-drawer is-fullscreen-drawer ${this.isStageDrawerCollapsed ? "is-hidden" : ""}" id="stage-config-drawer">
                     <div class="stage-preset-bar">
-                        <span class="live-input-label">快速點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
+                        <div class="stage-preset-header">
+                            <span class="live-input-label">快速點選預設獎項與金額（或於下方直接輸入臨時加碼獎項與金額）：</span>
+                            <button type="button" class="hud-close-drawer-btn" id="close-stage-drawer-btn">收合設定</button>
+                        </div>
                         <div class="prize-preset-chips">
                             ${prizeChipsHtml}
                         </div>
@@ -6698,8 +6722,16 @@ class WorkspaceApp {
             });
         }
 
-        const toggleDrawerBtn = document.getElementById("toggle-stage-drawer-btn");
+                const toggleDrawerBtn = document.getElementById("toggle-stage-drawer-btn");
+        const closeStageDrawerBtn = document.getElementById("close-stage-drawer-btn");
         const stageDrawer = document.getElementById("stage-config-drawer");
+        if (closeStageDrawerBtn && stageDrawer) {
+            closeStageDrawerBtn.addEventListener("click", () => {
+                this.isStageDrawerCollapsed = true;
+                stageDrawer.classList.add("is-hidden");
+                if (toggleDrawerBtn) toggleDrawerBtn.textContent = "快速切換獎項";
+            });
+        }
         if (toggleDrawerBtn && stageDrawer) {
             toggleDrawerBtn.addEventListener("click", () => {
                 this.isStageDrawerCollapsed = !this.isStageDrawerCollapsed;
@@ -6874,6 +6906,14 @@ class WorkspaceApp {
         };
         window.addEventListener("keydown", this.lotterySpaceKeyHandler);
 
+                const dismissWinnerBtn = document.getElementById("dismiss-winner-card-btn");
+        const showcaseEl = document.getElementById("grand-winners-showcase");
+        if (dismissWinnerBtn && showcaseEl) {
+            dismissWinnerBtn.addEventListener("click", () => {
+                showcaseEl.classList.add("is-hidden");
+            });
+        }
+
         const exportCsvBtn = document.getElementById("stage-export-csv-btn");
         if (exportCsvBtn) {
             exportCsvBtn.addEventListener("click", () => {
@@ -6921,6 +6961,12 @@ class WorkspaceApp {
             spinBtn.disabled = true;
             spinBtn.classList.add("is-spinning");
             if (spinBtnText) spinBtnText.textContent = "幸運輪盤旋轉中，靜候天命揭曉...";
+        }
+
+        // 開始旋轉時，暫時隱藏前一輪的得獎卡片，轉盤視野 100% 全開！
+        const showcaseEl = document.getElementById("grand-winners-showcase");
+        if (showcaseEl) {
+            showcaseEl.classList.add("is-hidden");
         }
 
         const centerCapBtn = document.getElementById("wheel-center-cap-btn");
