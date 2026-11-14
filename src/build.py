@@ -124,6 +124,45 @@ def validate_no_inline_css(directory: Path = PUBLIC_DIR) -> bool:
     return not has_violation
 
 
+def generate_offline_lottery_bundles(directory: Path = PUBLIC_DIR) -> bool:
+    """產製尾牙抽獎離線內嵌音效與單檔攜帶打包套件（純 JS 資料檔，嚴格維持 HTML 無 Inline CSS）。"""
+    audio_mp3_path = directory / "audio" / "grand_win_cheer.mp3"
+    css_path = directory / "css" / "style.css"
+    app_js_path = directory / "js" / "app.js"
+    audio_js_out = directory / "js" / "lottery_audio_data.js"
+    export_pack_out = directory / "js" / "lottery_export_pack.js"
+
+    audio_data_uri = ""
+    if audio_mp3_path.exists():
+        b64_str = base64.b64encode(audio_mp3_path.read_bytes()).decode("ascii")
+        audio_data_uri = f"data:audio/mpeg;base64,{b64_str}"
+        audio_js_content = (
+            "// 自動產製之尾牙大獎掌聲與歡呼離線音訊資料 (Data URI)\n"
+            f"window.LOTTERY_CHEER_AUDIO_DATA_URI = {json.dumps(audio_data_uri, ensure_ascii=False)};\n"
+        )
+        audio_js_out.write_text(audio_js_content, encoding="utf-8")
+        print(f"[完成] 已產製離線音訊資料檔：{audio_js_out.name} ({len(b64_str) // 1024} KB)")
+    else:
+        print(f"[警告] 找不到音訊檔：{audio_mp3_path}", file=sys.stderr)
+
+    if css_path.exists() and app_js_path.exists():
+        css_text = css_path.read_text(encoding="utf-8")
+        app_js_text = app_js_path.read_text(encoding="utf-8")
+        pack_payload = {
+            "css": css_text,
+            "appJs": app_js_text,
+            "audioDataUri": audio_data_uri,
+        }
+        pack_js_content = (
+            "// 自動產製之尾牙單檔離線攜帶版打包資源套件\n"
+            f"window.__LOTTERY_EXPORT_PACK__ = {json.dumps(pack_payload, ensure_ascii=False)};\n"
+        )
+        export_pack_out.write_text(pack_js_content, encoding="utf-8")
+        print(f"[完成] 已產製單檔離線打包套件：{export_pack_out.name} ({export_pack_out.stat().st_size // 1024} KB)")
+
+    return True
+
+
 def serve_local(port: int = 8000, directory: Path = PUBLIC_DIR) -> None:
     """啟動本地端靜態網頁預覽伺服器，並提供網頁端直接合成語音與輔助端點。"""
     class CustomHandler(http.server.SimpleHTTPRequestHandler):
@@ -257,6 +296,8 @@ def main() -> int:
 
     if not sync_404_page():
         return 1
+
+    generate_offline_lottery_bundles()
 
     if not validate_no_inline_css():
         return 1

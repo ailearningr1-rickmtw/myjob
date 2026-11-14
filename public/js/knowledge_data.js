@@ -1,14 +1,14 @@
-// 資安核心知識庫靜態快取 (最後同步：2026-11-06 20:46:34)
+// 資安核心知識庫靜態快取 (最後同步：2026-11-14 10:48:01)
 window.WORKSPACE_KNOWLEDGE_DATA = {
   "metadata": {
     "version": "5.0.0",
-    "lastSyncedAt": "2026-11-06 20:46:34",
-    "totalCount": 330,
+    "lastSyncedAt": "2026-11-14 10:48:01",
+    "totalCount": 340,
     "curriculumWeeksCount": 8,
     "curriculumDaysCount": 40,
     "curriculumDiagramsCount": 82,
     "statutoryProjectsCount": 5,
-    "regulationsCount": 241,
+    "regulationsCount": 251,
     "primaryDomain": "security",
     "rootPath": "G:\\我的雲端硬碟\\資安"
   },
@@ -35,8 +35,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
         "code": "REGULATIONS",
         "title": "ISMS 四階規章清冊",
         "subtitle": "一階政策・二階程序書17部・三階說明書・四階表單清冊",
-        "badge": "241 件實體規章",
-        "count": 241
+        "badge": "251 件實體規章",
+        "count": 251
       }
     ]
   },
@@ -3137,17 +3137,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
   ],
   "regulations": [
     {
-      "id": "sec-c5d43551",
-      "fileName": "MS-1-01資訊安全與個資保護政策_V18_111.0530.pdf",
-      "title": "MS-1-01資訊安全與個資保護政策_V18_111.0530",
+      "id": "sec-8471cdf7",
+      "fileName": "MS-1-01資訊安全與個資保護政策_v19.pdf",
+      "title": "MS-1-01資訊安全與個資保護政策_v19",
       "docLevel": "一階政策 (Level 1)",
       "docLevelCode": "MS-1",
       "subCategory": "資訊安全政策與目標",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "305.7 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-1-01資訊安全與個資保護政策_V18_111.0530.pdf",
+      "sizeText": "311.0 KB",
+      "modifiedAt": "2026-11-11 15:32",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-1-01資訊安全與個資保護政策_v19.pdf",
       "summary": "機關資通安全與個資保護最高指導方針，明定管理階層承諾、資安組織架構、法規遵循要求與年度目標檢討機制。",
       "legalBasis": "ISO/IEC 27001:2022 條款 5.2、資通安全法第 9 條",
       "keyPoints": [
@@ -3176,17 +3176,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-b98cc399",
-      "fileName": "MS-2-01文件控管程序書_V16_1150813.pdf",
-      "title": "MS-2-01文件控管程序書_V16_1150813",
+      "id": "sec-768c0c59",
+      "fileName": "MS-2-01文件控管程序書_V16.pdf",
+      "title": "MS-2-01文件控管程序書_V16",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "307.6 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-01文件控管程序書_V16_1150813.pdf",
+      "modifiedAt": "2026-11-11 15:02",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-01文件控管程序書_V16.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3215,17 +3215,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-b92f8b36",
-      "fileName": "MS-2-02資訊安全與個資保護組織程序書.pdf",
-      "title": "MS-2-02資訊安全與個資保護組織程序書",
+      "id": "sec-e60e3337",
+      "fileName": "MS-2-02資訊安全與個資保護組織程序書_V20.pdf",
+      "title": "MS-2-02資訊安全與個資保護組織程序書_V20",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "424.4 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-02資訊安全與個資保護組織程序書.pdf",
+      "sizeText": "424.6 KB",
+      "modifiedAt": "2026-11-11 15:32",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-02資訊安全與個資保護組織程序書_V20.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3293,17 +3293,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-838c0560",
-      "fileName": "MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205.pdf",
-      "title": "MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205",
+      "id": "sec-eb97fc99",
+      "fileName": "MS-2-04資訊安全與個資保護稽核作業程序書_V13.pdf",
+      "title": "MS-2-04資訊安全與個資保護稽核作業程序書_V13",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "254.9 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205.pdf",
+      "sizeText": "260.6 KB",
+      "modifiedAt": "2026-11-11 15:32",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-04資訊安全與個資保護稽核作業程序書_V13.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3332,17 +3332,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-7416483b",
-      "fileName": "MS-2-05網路安全管理程序書_v7_1130814.pdf",
-      "title": "MS-2-05網路安全管理程序書_v7_1130814",
+      "id": "sec-1d32a534",
+      "fileName": "MS-2-05網路安全管理程序書_v7.pdf",
+      "title": "MS-2-05網路安全管理程序書_v7",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "241.3 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-05網路安全管理程序書_v7_1130814.pdf",
+      "modifiedAt": "2026-11-11 15:09",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-05網路安全管理程序書_v7.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3371,17 +3371,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-bd04718b",
-      "fileName": "MS-2-06存取控制程序書_v8_1110919.pdf",
-      "title": "MS-2-06存取控制程序書_v8_1110919",
+      "id": "sec-775eab36",
+      "fileName": "MS-2-06存取控制程序書_v8.pdf",
+      "title": "MS-2-06存取控制程序書_v8",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "296.5 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-06存取控制程序書_v8_1110919.pdf",
+      "modifiedAt": "2026-11-11 15:09",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-06存取控制程序書_v8.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3410,17 +3410,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-44501ff5",
-      "fileName": "MS-2-07系統開發與維護程序書_v11_1130913.pdf",
-      "title": "MS-2-07系統開發與維護程序書_v11_1130913",
+      "id": "sec-a2771913",
+      "fileName": "MS-2-07系統開發與維護程序書_v11.pdf",
+      "title": "MS-2-07系統開發與維護程序書_v11",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "374.0 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-07系統開發與維護程序書_v11_1130913.pdf",
+      "modifiedAt": "2026-11-11 15:09",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-07系統開發與維護程序書_v11.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3449,17 +3449,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-165963f3",
-      "fileName": "MS-2-08安全事件緊急應變程序書_V22_1150722.pdf",
-      "title": "MS-2-08安全事件緊急應變程序書_V22_1150722",
+      "id": "sec-9013d34a",
+      "fileName": "MS-2-08安全事件緊急應變程序書_V22.pdf",
+      "title": "MS-2-08安全事件緊急應變程序書_V22",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "688.0 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-08安全事件緊急應變程序書_V22_1150722.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-08安全事件緊急應變程序書_V22.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3488,17 +3488,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-7d41c343",
-      "fileName": "MS-2-09矯正措施管理程序書_V12_1130319.pdf",
-      "title": "MS-2-09矯正措施管理程序書_V12_1130319",
+      "id": "sec-4b53954c",
+      "fileName": "MS-2-09矯正措施管理程序書_V12.pdf",
+      "title": "MS-2-09矯正措施管理程序書_V12",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "228.1 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-09矯正措施管理程序書_V12_1130319.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-09矯正措施管理程序書_V12.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3566,17 +3566,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-a3879407",
-      "fileName": "MS-2-11風險評鑑暨管理程序書_V13.pdf",
-      "title": "MS-2-11風險評鑑暨管理程序書_V13",
+      "id": "sec-1a19e449",
+      "fileName": "MS-2-11風險評鑑暨管理程序書_V14.pdf",
+      "title": "MS-2-11風險評鑑暨管理程序書_V14",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "321.8 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-11風險評鑑暨管理程序書_V13.pdf",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-11風險評鑑暨管理程序書_V14.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3605,17 +3605,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-06e96f64",
-      "fileName": "MS-2-12業務永續經營程序書_V11_1110627.pdf",
-      "title": "MS-2-12業務永續經營程序書_V11_1110627",
+      "id": "sec-ddb00e92",
+      "fileName": "MS-2-12業務永續經營程序書_V11.pdf",
+      "title": "MS-2-12業務永續經營程序書_V11",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "221.4 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-12業務永續經營程序書_V11_1110627.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-12業務永續經營程序書_V11.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3644,17 +3644,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-16e1a5a4",
-      "fileName": "MS-2-13人員安全管理與教育訓練程序書_V17.pdf",
-      "title": "MS-2-13人員安全管理與教育訓練程序書_V17",
+      "id": "sec-991d217c",
+      "fileName": "MS-2-13人員安全管理與教育訓練程序書_V18.pdf",
+      "title": "MS-2-13人員安全管理與教育訓練程序書_V18",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "281.6 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-13人員安全管理與教育訓練程序書_V17.pdf",
+      "sizeText": "276.5 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-13人員安全管理與教育訓練程序書_V18.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3722,17 +3722,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-e062c5c6",
-      "fileName": "MS-2-15個資流程鑑別程序書_v5_1110912.pdf",
-      "title": "MS-2-15個資流程鑑別程序書_v5_1110912",
+      "id": "sec-58d7c449",
+      "fileName": "MS-2-15個資流程鑑別程序書_v5.pdf",
+      "title": "MS-2-15個資流程鑑別程序書_v5",
       "docLevel": "二階程序書 (Level 2)",
       "docLevelCode": "MS-2",
       "subCategory": "制度化管制作業程序",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "303.6 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-15個資流程鑑別程序書_v5_1110912.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-15個資流程鑑別程序書_v5.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -3811,6 +3811,45 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "sizeText": "662.7 KB",
       "modifiedAt": "2026-09-08 14:30",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-17全景評鑑程序書_v9_115902.pdf",
+      "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
+      "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
+      "keyPoints": [
+        "跨科室權責切分：明確定義業務主辦單位、系統管理員、資安專責人員之作業分工。",
+        "控制節點制度化：將防護基準與 ISO 規範轉化為可留痕之標準申請、審核與簽核流程。",
+        "文件版本嚴格控管：設有版次紀錄表，任何修改均須註明修訂原因、日期及核准主管。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "作業發起與申請",
+          "detail": "作業人員依程序書規定填寫標準申請表單，備齊佐證資料呈報權責長官。"
+        },
+        {
+          "step": 2,
+          "title": "權責主管複核簽章",
+          "detail": "主管確認作業必要性、合規性與潛在安全衝擊，簽核同意執行。"
+        },
+        {
+          "step": 3,
+          "title": "標準程序執行與留痕",
+          "detail": "依規範步驟執行技術設定或業務操作，並產製完整日誌紀錄妥善歸檔備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：程序書規範流程是否與實際現場操作完全一致、是否有跳過主管審核直接執行之現象。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-47474aa4",
+      "fileName": "MS-2-18雲端服務管理程序書_v1.pdf",
+      "title": "MS-2-18雲端服務管理程序書_v1",
+      "docLevel": "二階程序書 (Level 2)",
+      "docLevelCode": "MS-2",
+      "subCategory": "制度化管制作業程序",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "236.5 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-18雲端服務管理程序書_v1.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -4121,7 +4160,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "371.1 KB",
-      "modifiedAt": "2026-09-08 14:27",
+      "modifiedAt": "2026-11-11 13:09",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-08委外安全管理作業說明書_V14.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
@@ -4151,17 +4190,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-239e3d66",
-      "fileName": "MS-3-09資料庫管理作業說明書_V15_1140901.pdf",
-      "title": "MS-3-09資料庫管理作業說明書_V15_1140901",
+      "id": "sec-fb148463",
+      "fileName": "MS-3-09資料庫管理作業說明書_V16.pdf",
+      "title": "MS-3-09資料庫管理作業說明書_V16",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "380.3 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-09資料庫管理作業說明書_V15_1140901.pdf",
+      "sizeText": "379.9 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-09資料庫管理作業說明書_V16.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -4190,17 +4229,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-22944655",
-      "fileName": "MS-3-10設備安全維護作業說明書_V11_1120725.pdf",
-      "title": "MS-3-10設備安全維護作業說明書_V11_1120725",
+      "id": "sec-977d9a3a",
+      "fileName": "MS-3-10設備安全維護作業說明書_V12.pdf",
+      "title": "MS-3-10設備安全維護作業說明書_V12",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "358.2 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-10設備安全維護作業說明書_V11_1120725.pdf",
+      "sizeText": "353.3 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-10設備安全維護作業說明書_V12.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -4307,17 +4346,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-271d85e3",
-      "fileName": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725.pdf",
-      "title": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725",
+      "id": "sec-4107248b",
+      "fileName": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v24.pdf",
+      "title": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v24",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "409.8 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725.pdf",
+      "sizeText": "484.4 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v24.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -4346,17 +4385,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-48f2e617",
-      "fileName": "MS-3-15主機緊急應變計畫作業說明書_V5.pdf",
-      "title": "MS-3-15主機緊急應變計畫作業說明書_V5",
+      "id": "sec-225baac4",
+      "fileName": "MS-3-15主機緊急應變計畫作業說明書_V6.pdf",
+      "title": "MS-3-15主機緊急應變計畫作業說明書_V6",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "400.6 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-15主機緊急應變計畫作業說明書_V5.pdf",
+      "sizeText": "488.6 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-15主機緊急應變計畫作業說明書_V6.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -4502,17 +4541,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-c6bc5331",
-      "fileName": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106.pdf",
-      "title": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106",
+      "id": "sec-d444cc24",
+      "fileName": "MS-3-19網路設備緊急應變計畫作業說明書_V6.pdf",
+      "title": "MS-3-19網路設備緊急應變計畫作業說明書_V6",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "388.2 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106.pdf",
+      "sizeText": "2.3 MB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-19網路設備緊急應變計畫作業說明書_V6.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -4892,17 +4931,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-e612f430",
-      "fileName": "MS-3-30稅務管理流程作業說明書_V14.pdf",
-      "title": "MS-3-30稅務管理流程作業說明書_V14",
+      "id": "sec-1e16188e",
+      "fileName": "MS-3-30稅務管理流程作業說明書_V15.pdf",
+      "title": "MS-3-30稅務管理流程作業說明書_V15",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "1.9 MB",
-      "modifiedAt": "2026-09-08 14:28",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-30稅務管理流程作業說明書_V14.pdf",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-30稅務管理流程作業說明書_V15.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -5332,6 +5371,45 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "sizeText": "357.9 KB",
       "modifiedAt": "2026-09-08 14:28",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-41國家賠償流程管理作業說明書_V3.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-dea65a59",
+      "fileName": "MS-3-42_個資事件緊急應變計畫作業說明書_V4.pdf",
+      "title": "MS-3-42_個資事件緊急應變計畫作業說明書_V4",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "subCategory": "技術實務與操作指引",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "275.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-42_個資事件緊急應變計畫作業說明書_V4.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -6101,17 +6179,17 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-9f59063d",
-      "fileName": "MS-3-61網路安全管理作業說明書_V3.pdf",
-      "title": "MS-3-61網路安全管理作業說明書_V3",
+      "id": "sec-ac58d0b3",
+      "fileName": "MS-3-61網路安全管理作業說明書_v4.pdf",
+      "title": "MS-3-61網路安全管理作業說明書_v4",
       "docLevel": "三階作業說明書 (Level 3)",
       "docLevelCode": "MS-3",
       "subCategory": "技術實務與操作指引",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "371.6 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-61網路安全管理作業說明書_V3.pdf",
+      "sizeText": "383.6 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-61網路安全管理作業說明書_v4.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -6374,6 +6452,45 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
+      "id": "sec-2fe256de",
+      "fileName": "MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業說明書_V2.pdf",
+      "title": "MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業說明書_V2",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "subCategory": "技術實務與操作指引",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "266.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業說明書_V2.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": ""
+    },
+    {
       "id": "sec-913714ac",
       "fileName": "MS-3-68_使用T-Road地政資料管理作業說明書_V1.pdf",
       "title": "MS-3-68_使用T-Road地政資料管理作業說明書_V1",
@@ -6424,6 +6541,123 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "sizeText": "188.6 KB",
       "modifiedAt": "2026-09-08 14:29",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-69%20臺中市政府地方稅務局各稅賦更案件內部審核作業說明書_V1.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-b967d2ac",
+      "fileName": "MS-3-70雲端服務管理作業說明書_v1.pdf",
+      "title": "MS-3-70雲端服務管理作業說明書_v1",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "subCategory": "技術實務與操作指引",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "296.2 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-70雲端服務管理作業說明書_v1.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-e2431734",
+      "fileName": "MS-3-71資通系統緊急應變計畫作業說明書_v1.pdf",
+      "title": "MS-3-71資通系統緊急應變計畫作業說明書_v1",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "subCategory": "技術實務與操作指引",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "276.1 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-71資通系統緊急應變計畫作業說明書_v1.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-aeee7a96",
+      "fileName": "MS-3-72_地政資訊網際網路作業說明書_V1.pdf",
+      "title": "MS-3-72_地政資訊網際網路作業說明書_V1",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "subCategory": "技術實務與操作指引",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "247.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-72_地政資訊網際網路作業說明書_V1.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -6608,18 +6842,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-3a302e5b",
-      "fileName": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3).pdf",
-      "title": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3)",
+      "id": "sec-828d7398",
+      "fileName": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7.pdf",
+      "title": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "169.1 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3).pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3)），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "167.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -6881,18 +7115,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-46a45c63",
-      "fileName": "MS-4-103全球資訊網隱私權保護宣告_V3.pdf",
-      "title": "MS-4-103全球資訊網隱私權保護宣告_V3",
+      "id": "sec-0a4ce8a8",
+      "fileName": "MS-4-103全球資訊網隱私權保護宣告_v4.pdf",
+      "title": "MS-4-103全球資訊網隱私權保護宣告_v4",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "235.9 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-103全球資訊網隱私權保護宣告_V3.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-103全球資訊網隱私權保護宣告_V3），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "260.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-103全球資訊網隱私權保護宣告_v4.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-103全球資訊網隱私權保護宣告_v4），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -7037,18 +7271,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-909361ef",
-      "fileName": "MS-4-107(線上表單)個資事件通報單_V4.pdf",
-      "title": "MS-4-107(線上表單)個資事件通報單_V4",
+      "id": "sec-79a0ba0f",
+      "fileName": "MS-4-107(線上表單)個資事件通報單_V5.pdf",
+      "title": "MS-4-107(線上表單)個資事件通報單_V5",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "124.2 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-107(線上表單)個資事件通報單_V4.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-107(線上表單)個資事件通報單_V4），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "118.7 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-107(線上表單)個資事件通報單_V5.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-107(線上表單)個資事件通報單_V5），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -7115,18 +7349,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-e18dd878",
-      "fileName": "MS-4-109資安與個資議題之關注方意見反映單_V7_1150731.pdf",
-      "title": "MS-4-109資安與個資議題之關注方意見反映單_V7_1150731",
+      "id": "sec-93e993ad",
+      "fileName": "MS-4-109資安與個資議題之關注方意見反映單_V8.pdf",
+      "title": "MS-4-109資安與個資議題之關注方意見反映單_V8",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "143.3 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-109資安與個資議題之關注方意見反映單_V7_1150731.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-109資安與個資議題之關注方意見反映單_V7_1150731），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "145.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-109資安與個資議題之關注方意見反映單_V8.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-109資安與個資議題之關注方意見反映單_V8），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -7193,18 +7427,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-eb4c1e52",
-      "fileName": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905.pdf",
-      "title": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905",
+      "id": "sec-8cf3a379",
+      "fileName": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V8.pdf",
+      "title": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V8",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "264.7 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "266.4 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-111委外服務之資訊安全與個資保護需求評估表_V8.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-111委外服務之資訊安全與個資保護需求評估表_V8），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -8870,6 +9104,45 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
+      "id": "sec-a6c1bf20",
+      "fileName": "ms-4-150資通系統安全防護基準應辦事項檢核表_v3.pdf",
+      "title": "ms-4-150資通系統安全防護基準應辦事項檢核表_v3",
+      "docLevel": "四階核心紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "subCategory": "資通系統防護基準檢核專題",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "340.7 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\ms-4-150資通系統安全防護基準應辦事項檢核表_v3.pdf",
+      "summary": "資通安全責任等級分級辦法附表十『資通系統防護基準』核心檢核表，涵蓋存取控制、審計日誌、傳輸安全等法定控制項目。",
+      "legalBasis": "資通安全責任等級分級辦法附表十（資通系統防護基準）",
+      "keyPoints": [
+        "身分鑑別與存取：密碼長度 >= 12 碼，連續失敗 5 次鎖定帳號，閒置 15 分鐘強制登出。",
+        "日誌保存規範：核心系統與資料庫稽核日誌至少留存 6 個月，且定期實施離線備份防篡改。",
+        "傳輸加密要求：所有外部連線強制採用 TLS 1.2 以上加密協議，嚴禁使用 HTTP、SSLv3 或弱密碼套件。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "系統等級鑑別",
+          "detail": "填報 MS-4-124 評定為普級、中級或高級，決定對應之防護控制措施基準。"
+        },
+        {
+          "step": 2,
+          "title": "逐項組態檢核",
+          "detail": "依 MS-4-150 檢核表逐條查核系統組態，並取得管理介面截圖作為佐證。"
+        },
+        {
+          "step": 3,
+          "title": "弱點改善與追蹤",
+          "detail": "針對未符合項目開立改善計畫，於指定期限內修正並由資安專責人員複測。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：密碼規則設定截圖、連續登入失敗 5 次鎖定實測紀錄、日誌留存是否滿 180 天。",
+      "matchedDiagram": ""
+    },
+    {
       "id": "sec-b33e77d7",
       "fileName": "MS-4-151稅務管理系統新增修撰需求及問題反應提案表_V1.pdf",
       "title": "MS-4-151稅務管理系統新增修撰需求及問題反應提案表_V1",
@@ -9260,18 +9533,96 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-18349b57",
-      "fileName": "MS-4-16適用性聲明書_v9_1150904.pdf",
-      "title": "MS-4-16適用性聲明書_v9_1150904",
+      "id": "sec-a46def3e",
+      "fileName": "MS-4-160雲端服務需求提報表_v1.pdf",
+      "title": "MS-4-160雲端服務需求提報表_v1",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "732.1 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-16適用性聲明書_v9_1150904.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-16適用性聲明書_v9_1150904），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "220.0 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-160雲端服務需求提報表_v1.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-160雲端服務需求提報表_v1），提供資安稽核佐證與可追溯性紀錄。",
+      "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
+      "keyPoints": [
+        "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
+        "稽核佐證憑據：作為內外部資安稽核時抽驗實體作業之法定佐證。",
+        "防呆與定期檢視：定期檢討表單欄位適切性，確保符合最新法規要求。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "業務事項申請填報",
+          "detail": "業務同仁依規範步驟填報表單各欄位，檢附必要之技術佐證。"
+        },
+        {
+          "step": 2,
+          "title": "單位長官複核審查",
+          "detail": "單位主管確認申請正當性與合規性，簽章核准。"
+        },
+        {
+          "step": 3,
+          "title": "專卷歸檔定期盤點",
+          "detail": "由資安推行小組或檔案室集中保管，依保存年限妥善留存。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：表單填寫完整度、主管核准程序合規性、抽驗佐證是否真實無缺漏。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-b5302336",
+      "fileName": "MS-4-161操管自動化管理系統週檢核表_V1.pdf",
+      "title": "MS-4-161操管自動化管理系統週檢核表_V1",
+      "docLevel": "四階表單紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "subCategory": "執行佐證與表單清冊",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "115.0 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-161操管自動化管理系統週檢核表_V1.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-161操管自動化管理系統週檢核表_V1），提供資安稽核佐證與可追溯性紀錄。",
+      "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
+      "keyPoints": [
+        "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
+        "稽核佐證憑據：作為內外部資安稽核時抽驗實體作業之法定佐證。",
+        "防呆與定期檢視：定期檢討表單欄位適切性，確保符合最新法規要求。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "業務事項申請填報",
+          "detail": "業務同仁依規範步驟填報表單各欄位，檢附必要之技術佐證。"
+        },
+        {
+          "step": 2,
+          "title": "單位長官複核審查",
+          "detail": "單位主管確認申請正當性與合規性，簽章核准。"
+        },
+        {
+          "step": 3,
+          "title": "專卷歸檔定期盤點",
+          "detail": "由資安推行小組或檔案室集中保管，依保存年限妥善留存。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：表單填寫完整度、主管核准程序合規性、抽驗佐證是否真實無缺漏。",
+      "matchedDiagram": ""
+    },
+    {
+      "id": "sec-2d053e46",
+      "fileName": "MS-4-16適用性聲明書_V10.pdf",
+      "title": "MS-4-16適用性聲明書_V10",
+      "docLevel": "四階表單紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "subCategory": "執行佐證與表單清冊",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "725.8 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-16適用性聲明書_V10.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-16適用性聲明書_V10），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -9806,6 +10157,45 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
+      "id": "sec-2dd035a5",
+      "fileName": "MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16.pdf",
+      "title": "MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16",
+      "docLevel": "四階表單紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "subCategory": "執行佐證與表單清冊",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "180.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16），提供資安稽核佐證與可追溯性紀錄。",
+      "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
+      "keyPoints": [
+        "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
+        "稽核佐證憑據：作為內外部資安稽核時抽驗實體作業之法定佐證。",
+        "防呆與定期檢視：定期檢討表單欄位適切性，確保符合最新法規要求。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "業務事項申請填報",
+          "detail": "業務同仁依規範步驟填報表單各欄位，檢附必要之技術佐證。"
+        },
+        {
+          "step": 2,
+          "title": "單位長官複核審查",
+          "detail": "單位主管確認申請正當性與合規性，簽章核准。"
+        },
+        {
+          "step": 3,
+          "title": "專卷歸檔定期盤點",
+          "detail": "由資安推行小組或檔案室集中保管，依保存年限妥善留存。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：表單填寫完整度、主管核准程序合規性、抽驗佐證是否真實無缺漏。",
+      "matchedDiagram": ""
+    },
+    {
       "id": "sec-655909b3",
       "fileName": "MS-4-33(線上表單)可攜式設備權限使用 停用申請單_V10.pdf",
       "title": "MS-4-33(線上表單)可攜式設備權限使用 停用申請單_V10",
@@ -9845,18 +10235,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-19c01d75",
-      "fileName": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19.pdf",
-      "title": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19",
+      "id": "sec-d67a9859",
+      "fileName": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V21.pdf",
+      "title": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V21",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "261.0 KB",
-      "modifiedAt": "2026-09-08 14:32",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-35委外契約資訊安全與個資保護條款參考規範_V19.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-35委外契約資訊安全與個資保護條款參考規範_V19），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "243.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-35委外契約資訊安全與個資保護條款參考規範_V21.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-35委外契約資訊安全與個資保護條款參考規範_V21），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -10274,18 +10664,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-72944938",
-      "fileName": "MS-4-47資訊設備設定變更申請表_V6_1120725.pdf",
-      "title": "MS-4-47資訊設備設定變更申請表_V6_1120725",
+      "id": "sec-317f5af6",
+      "fileName": "MS-4-47資訊設備設定變更申請表_V7.pdf",
+      "title": "MS-4-47資訊設備設定變更申請表_V7",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "135.8 KB",
-      "modifiedAt": "2026-09-08 14:32",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-47資訊設備設定變更申請表_V6_1120725.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-47資訊設備設定變更申請表_V6_1120725），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "132.5 KB",
+      "modifiedAt": "2026-11-11 15:35",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-47資訊設備設定變更申請表_V7.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-47資訊設備設定變更申請表_V7），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -11210,18 +11600,18 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "matchedDiagram": ""
     },
     {
-      "id": "sec-b527e407",
-      "fileName": "MS-4-76分局機房管理檢查表_V4.pdf",
-      "title": "MS-4-76分局機房管理檢查表_V4",
+      "id": "sec-5a2a31eb",
+      "fileName": "MS-4-76分局機房管理檢查表_V5.pdf",
+      "title": "MS-4-76分局機房管理檢查表_V5",
       "docLevel": "四階表單紀錄 (Level 4)",
       "docLevelCode": "MS-4",
       "subCategory": "執行佐證與表單清冊",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "105.6 KB",
-      "modifiedAt": "2026-09-08 14:32",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-76分局機房管理檢查表_V4.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-76分局機房管理檢查表_V4），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "108.6 KB",
+      "modifiedAt": "2026-11-11 15:35",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-76分局機房管理檢查表_V5.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-76分局機房管理檢查表_V5），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -12760,9 +13150,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
   ],
   "items": [
     {
-      "id": "sec-c5d43551",
-      "title": "MS-1-01資訊安全與個資保護政策_V18_111.0530",
-      "fileName": "MS-1-01資訊安全與個資保護政策_V18_111.0530.pdf",
+      "id": "sec-8471cdf7",
+      "title": "MS-1-01資訊安全與個資保護政策_v19",
+      "fileName": "MS-1-01資訊安全與個資保護政策_v19.pdf",
       "domain": "security",
       "category": "一階政策 (Level 1)",
       "subCategory": "資訊安全政策與目標",
@@ -12770,9 +13160,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-1",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "305.7 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-1-01資訊安全與個資保護政策_V18_111.0530.pdf",
+      "sizeText": "311.0 KB",
+      "modifiedAt": "2026-11-11 15:32",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-1-01資訊安全與個資保護政策_v19.pdf",
       "summary": "機關資通安全與個資保護最高指導方針，明定管理階層承諾、資安組織架構、法規遵循要求與年度目標檢討機制。",
       "legalBasis": "ISO/IEC 27001:2022 條款 5.2、資通安全法第 9 條",
       "keyPoints": [
@@ -12806,9 +13196,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-b98cc399",
-      "title": "MS-2-01文件控管程序書_V16_1150813",
-      "fileName": "MS-2-01文件控管程序書_V16_1150813.pdf",
+      "id": "sec-768c0c59",
+      "title": "MS-2-01文件控管程序書_V16",
+      "fileName": "MS-2-01文件控管程序書_V16.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -12817,8 +13207,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "307.6 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-01文件控管程序書_V16_1150813.pdf",
+      "modifiedAt": "2026-11-11 15:02",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-01文件控管程序書_V16.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -12852,9 +13242,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-b92f8b36",
-      "title": "MS-2-02資訊安全與個資保護組織程序書",
-      "fileName": "MS-2-02資訊安全與個資保護組織程序書.pdf",
+      "id": "sec-e60e3337",
+      "title": "MS-2-02資訊安全與個資保護組織程序書_V20",
+      "fileName": "MS-2-02資訊安全與個資保護組織程序書_V20.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -12862,9 +13252,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-2",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "424.4 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-02資訊安全與個資保護組織程序書.pdf",
+      "sizeText": "424.6 KB",
+      "modifiedAt": "2026-11-11 15:32",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-02資訊安全與個資保護組織程序書_V20.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -12944,9 +13334,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-838c0560",
-      "title": "MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205",
-      "fileName": "MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205.pdf",
+      "id": "sec-eb97fc99",
+      "title": "MS-2-04資訊安全與個資保護稽核作業程序書_V13",
+      "fileName": "MS-2-04資訊安全與個資保護稽核作業程序書_V13.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -12954,9 +13344,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-2",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "254.9 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-04資訊安全與個資保護稽核作業程序書_V12_1130205.pdf",
+      "sizeText": "260.6 KB",
+      "modifiedAt": "2026-11-11 15:32",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-04資訊安全與個資保護稽核作業程序書_V13.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -12990,9 +13380,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-7416483b",
-      "title": "MS-2-05網路安全管理程序書_v7_1130814",
-      "fileName": "MS-2-05網路安全管理程序書_v7_1130814.pdf",
+      "id": "sec-1d32a534",
+      "title": "MS-2-05網路安全管理程序書_v7",
+      "fileName": "MS-2-05網路安全管理程序書_v7.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13001,8 +13391,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "241.3 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-05網路安全管理程序書_v7_1130814.pdf",
+      "modifiedAt": "2026-11-11 15:09",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-05網路安全管理程序書_v7.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13036,9 +13426,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-bd04718b",
-      "title": "MS-2-06存取控制程序書_v8_1110919",
-      "fileName": "MS-2-06存取控制程序書_v8_1110919.pdf",
+      "id": "sec-775eab36",
+      "title": "MS-2-06存取控制程序書_v8",
+      "fileName": "MS-2-06存取控制程序書_v8.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13047,8 +13437,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "296.5 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-06存取控制程序書_v8_1110919.pdf",
+      "modifiedAt": "2026-11-11 15:09",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-06存取控制程序書_v8.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13082,9 +13472,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-44501ff5",
-      "title": "MS-2-07系統開發與維護程序書_v11_1130913",
-      "fileName": "MS-2-07系統開發與維護程序書_v11_1130913.pdf",
+      "id": "sec-a2771913",
+      "title": "MS-2-07系統開發與維護程序書_v11",
+      "fileName": "MS-2-07系統開發與維護程序書_v11.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13093,8 +13483,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "374.0 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-07系統開發與維護程序書_v11_1130913.pdf",
+      "modifiedAt": "2026-11-11 15:09",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-07系統開發與維護程序書_v11.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13128,9 +13518,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-165963f3",
-      "title": "MS-2-08安全事件緊急應變程序書_V22_1150722",
-      "fileName": "MS-2-08安全事件緊急應變程序書_V22_1150722.pdf",
+      "id": "sec-9013d34a",
+      "title": "MS-2-08安全事件緊急應變程序書_V22",
+      "fileName": "MS-2-08安全事件緊急應變程序書_V22.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13139,8 +13529,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "688.0 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-08安全事件緊急應變程序書_V22_1150722.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-08安全事件緊急應變程序書_V22.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13174,9 +13564,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-7d41c343",
-      "title": "MS-2-09矯正措施管理程序書_V12_1130319",
-      "fileName": "MS-2-09矯正措施管理程序書_V12_1130319.pdf",
+      "id": "sec-4b53954c",
+      "title": "MS-2-09矯正措施管理程序書_V12",
+      "fileName": "MS-2-09矯正措施管理程序書_V12.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13185,8 +13575,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "228.1 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-09矯正措施管理程序書_V12_1130319.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-09矯正措施管理程序書_V12.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13266,9 +13656,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-a3879407",
-      "title": "MS-2-11風險評鑑暨管理程序書_V13",
-      "fileName": "MS-2-11風險評鑑暨管理程序書_V13.pdf",
+      "id": "sec-1a19e449",
+      "title": "MS-2-11風險評鑑暨管理程序書_V14",
+      "fileName": "MS-2-11風險評鑑暨管理程序書_V14.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13277,8 +13667,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "321.8 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-11風險評鑑暨管理程序書_V13.pdf",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-11風險評鑑暨管理程序書_V14.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13312,9 +13702,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-06e96f64",
-      "title": "MS-2-12業務永續經營程序書_V11_1110627",
-      "fileName": "MS-2-12業務永續經營程序書_V11_1110627.pdf",
+      "id": "sec-ddb00e92",
+      "title": "MS-2-12業務永續經營程序書_V11",
+      "fileName": "MS-2-12業務永續經營程序書_V11.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13323,8 +13713,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "221.4 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-12業務永續經營程序書_V11_1110627.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-12業務永續經營程序書_V11.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13358,9 +13748,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-16e1a5a4",
-      "title": "MS-2-13人員安全管理與教育訓練程序書_V17",
-      "fileName": "MS-2-13人員安全管理與教育訓練程序書_V17.pdf",
+      "id": "sec-991d217c",
+      "title": "MS-2-13人員安全管理與教育訓練程序書_V18",
+      "fileName": "MS-2-13人員安全管理與教育訓練程序書_V18.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13368,9 +13758,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-2",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "281.6 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-13人員安全管理與教育訓練程序書_V17.pdf",
+      "sizeText": "276.5 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-13人員安全管理與教育訓練程序書_V18.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13450,9 +13840,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-e062c5c6",
-      "title": "MS-2-15個資流程鑑別程序書_v5_1110912",
-      "fileName": "MS-2-15個資流程鑑別程序書_v5_1110912.pdf",
+      "id": "sec-58d7c449",
+      "title": "MS-2-15個資流程鑑別程序書_v5",
+      "fileName": "MS-2-15個資流程鑑別程序書_v5.pdf",
       "domain": "security",
       "category": "二階程序書 (Level 2)",
       "subCategory": "制度化管制作業程序",
@@ -13461,8 +13851,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "303.6 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-15個資流程鑑別程序書_v5_1110912.pdf",
+      "modifiedAt": "2026-11-11 15:10",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-15個資流程鑑別程序書_v5.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13555,6 +13945,52 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "sizeText": "662.7 KB",
       "modifiedAt": "2026-09-08 14:30",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-17全景評鑑程序書_v9_115902.pdf",
+      "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
+      "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
+      "keyPoints": [
+        "跨科室權責切分：明確定義業務主辦單位、系統管理員、資安專責人員之作業分工。",
+        "控制節點制度化：將防護基準與 ISO 規範轉化為可留痕之標準申請、審核與簽核流程。",
+        "文件版本嚴格控管：設有版次紀錄表，任何修改均須註明修訂原因、日期及核准主管。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "作業發起與申請",
+          "detail": "作業人員依程序書規定填寫標準申請表單，備齊佐證資料呈報權責長官。"
+        },
+        {
+          "step": 2,
+          "title": "權責主管複核簽章",
+          "detail": "主管確認作業必要性、合規性與潛在安全衝擊，簽核同意執行。"
+        },
+        {
+          "step": 3,
+          "title": "標準程序執行與留痕",
+          "detail": "依規範步驟執行技術設定或業務操作，並產製完整日誌紀錄妥善歸檔備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：程序書規範流程是否與實際現場操作完全一致、是否有跳過主管審核直接執行之現象。",
+      "matchedDiagram": "",
+      "tags": [
+        "二階程序書 (Level 2)",
+        "制度化管制作業程序",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-47474aa4",
+      "title": "MS-2-18雲端服務管理程序書_v1",
+      "fileName": "MS-2-18雲端服務管理程序書_v1.pdf",
+      "domain": "security",
+      "category": "二階程序書 (Level 2)",
+      "subCategory": "制度化管制作業程序",
+      "docLevel": "二階程序書 (Level 2)",
+      "docLevelCode": "MS-2",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "236.5 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-2-18雲端服務管理程序書_v1.pdf",
       "summary": "規範跨單位權責分工、標準作業流程、審核查驗點與管理紀錄，確保各項資安控制措施落實執行。",
       "legalBasis": "ISO/IEC 27001:2022 / CNS 27701 規範體系",
       "keyPoints": [
@@ -13921,7 +14357,7 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "371.1 KB",
-      "modifiedAt": "2026-09-08 14:27",
+      "modifiedAt": "2026-11-11 13:09",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-08委外安全管理作業說明書_V14.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
@@ -13956,9 +14392,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-239e3d66",
-      "title": "MS-3-09資料庫管理作業說明書_V15_1140901",
-      "fileName": "MS-3-09資料庫管理作業說明書_V15_1140901.pdf",
+      "id": "sec-fb148463",
+      "title": "MS-3-09資料庫管理作業說明書_V16",
+      "fileName": "MS-3-09資料庫管理作業說明書_V16.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -13966,9 +14402,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-3",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "380.3 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-09資料庫管理作業說明書_V15_1140901.pdf",
+      "sizeText": "379.9 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-09資料庫管理作業說明書_V16.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -14002,9 +14438,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-22944655",
-      "title": "MS-3-10設備安全維護作業說明書_V11_1120725",
-      "fileName": "MS-3-10設備安全維護作業說明書_V11_1120725.pdf",
+      "id": "sec-977d9a3a",
+      "title": "MS-3-10設備安全維護作業說明書_V12",
+      "fileName": "MS-3-10設備安全維護作業說明書_V12.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -14012,9 +14448,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-3",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "358.2 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-10設備安全維護作業說明書_V11_1120725.pdf",
+      "sizeText": "353.3 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-10設備安全維護作業說明書_V12.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -14140,9 +14576,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-271d85e3",
-      "title": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725",
-      "fileName": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725.pdf",
+      "id": "sec-4107248b",
+      "title": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v24",
+      "fileName": "MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v24.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -14150,9 +14586,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-3",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "409.8 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v22_1150725.pdf",
+      "sizeText": "484.4 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-14資訊安全與個資保護管理系統量測指標作業說明書_v24.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -14186,9 +14622,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-48f2e617",
-      "title": "MS-3-15主機緊急應變計畫作業說明書_V5",
-      "fileName": "MS-3-15主機緊急應變計畫作業說明書_V5.pdf",
+      "id": "sec-225baac4",
+      "title": "MS-3-15主機緊急應變計畫作業說明書_V6",
+      "fileName": "MS-3-15主機緊急應變計畫作業說明書_V6.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -14196,9 +14632,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-3",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "400.6 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-15主機緊急應變計畫作業說明書_V5.pdf",
+      "sizeText": "488.6 KB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-15主機緊急應變計畫作業說明書_V6.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -14370,9 +14806,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-c6bc5331",
-      "title": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106",
-      "fileName": "MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106.pdf",
+      "id": "sec-d444cc24",
+      "title": "MS-3-19網路設備緊急應變計畫作業說明書_V6",
+      "fileName": "MS-3-19網路設備緊急應變計畫作業說明書_V6.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -14380,9 +14816,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-3",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "388.2 KB",
-      "modifiedAt": "2026-09-08 14:27",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-19網路設備緊急應變計畫作業說明書_V5_1090106.pdf",
+      "sizeText": "2.3 MB",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-19網路設備緊急應變計畫作業說明書_V6.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -14830,9 +15266,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-e612f430",
-      "title": "MS-3-30稅務管理流程作業說明書_V14",
-      "fileName": "MS-3-30稅務管理流程作業說明書_V14.pdf",
+      "id": "sec-1e16188e",
+      "title": "MS-3-30稅務管理流程作業說明書_V15",
+      "fileName": "MS-3-30稅務管理流程作業說明書_V15.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -14841,8 +15277,8 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
       "sizeText": "1.9 MB",
-      "modifiedAt": "2026-09-08 14:28",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-30稅務管理流程作業說明書_V14.pdf",
+      "modifiedAt": "2026-11-11 15:33",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-30稅務管理流程作業說明書_V15.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -15349,6 +15785,52 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "sizeText": "357.9 KB",
       "modifiedAt": "2026-09-08 14:28",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-41國家賠償流程管理作業說明書_V3.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": "",
+      "tags": [
+        "三階作業說明書 (Level 3)",
+        "技術實務與操作指引",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-dea65a59",
+      "title": "MS-3-42_個資事件緊急應變計畫作業說明書_V4",
+      "fileName": "MS-3-42_個資事件緊急應變計畫作業說明書_V4.pdf",
+      "domain": "security",
+      "category": "三階作業說明書 (Level 3)",
+      "subCategory": "技術實務與操作指引",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "275.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-42_個資事件緊急應變計畫作業說明書_V4.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -16256,9 +16738,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-9f59063d",
-      "title": "MS-3-61網路安全管理作業說明書_V3",
-      "fileName": "MS-3-61網路安全管理作業說明書_V3.pdf",
+      "id": "sec-ac58d0b3",
+      "title": "MS-3-61網路安全管理作業說明書_v4",
+      "fileName": "MS-3-61網路安全管理作業說明書_v4.pdf",
       "domain": "security",
       "category": "三階作業說明書 (Level 3)",
       "subCategory": "技術實務與操作指引",
@@ -16266,9 +16748,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-3",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "371.6 KB",
-      "modifiedAt": "2026-09-08 14:29",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-61網路安全管理作業說明書_V3.pdf",
+      "sizeText": "383.6 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-61網路安全管理作業說明書_v4.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -16578,6 +17060,52 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
+      "id": "sec-2fe256de",
+      "title": "MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業說明書_V2",
+      "fileName": "MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業說明書_V2.pdf",
+      "domain": "security",
+      "category": "三階作業說明書 (Level 3)",
+      "subCategory": "技術實務與操作指引",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "266.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-67臺中市政府地方稅務局應用公路監理資訊管理作業說明書_V2.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": "",
+      "tags": [
+        "三階作業說明書 (Level 3)",
+        "技術實務與操作指引",
+        "PDF"
+      ]
+    },
+    {
       "id": "sec-913714ac",
       "title": "MS-3-68_使用T-Road地政資料管理作業說明書_V1",
       "fileName": "MS-3-68_使用T-Road地政資料管理作業說明書_V1.pdf",
@@ -16637,6 +17165,144 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "sizeText": "188.6 KB",
       "modifiedAt": "2026-09-08 14:29",
       "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-69%20臺中市政府地方稅務局各稅賦更案件內部審核作業說明書_V1.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": "",
+      "tags": [
+        "三階作業說明書 (Level 3)",
+        "技術實務與操作指引",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-b967d2ac",
+      "title": "MS-3-70雲端服務管理作業說明書_v1",
+      "fileName": "MS-3-70雲端服務管理作業說明書_v1.pdf",
+      "domain": "security",
+      "category": "三階作業說明書 (Level 3)",
+      "subCategory": "技術實務與操作指引",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "296.2 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-70雲端服務管理作業說明書_v1.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": "",
+      "tags": [
+        "三階作業說明書 (Level 3)",
+        "技術實務與操作指引",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-e2431734",
+      "title": "MS-3-71資通系統緊急應變計畫作業說明書_v1",
+      "fileName": "MS-3-71資通系統緊急應變計畫作業說明書_v1.pdf",
+      "domain": "security",
+      "category": "三階作業說明書 (Level 3)",
+      "subCategory": "技術實務與操作指引",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "276.1 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-71資通系統緊急應變計畫作業說明書_v1.pdf",
+      "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
+      "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
+      "keyPoints": [
+        "手把手操作指引：包含指令、參數、組態畫面範例，確保輪調同仁能即刻上手。",
+        "資安基準剛性嵌入：將密碼長度、帳號鎖定、通訊加密 (TLS 1.2+) 具體化為設定值。",
+        "異常狀況應急指引：明定各項系統警訊、備份失敗或網路中斷之第一時間處置動作。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "環境檢查與工具準備",
+          "detail": "確認操作所需之特權帳號權限已獲核准，檢查工作站環境符合安全規範。"
+        },
+        {
+          "step": 2,
+          "title": "逐步執行技術指令",
+          "detail": "依照作業說明書之步驟依序執行設定，嚴禁自行略過安全檢查項目。"
+        },
+        {
+          "step": 3,
+          "title": "組態驗證與畫面截圖",
+          "detail": "執行驗證指令確認設定生效，截圖保存組態基準留存專案檔案夾備查。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：伺服器真實組態是否與作業說明書記載數值完全一致、操作人員是否能現場演示操作流程。",
+      "matchedDiagram": "",
+      "tags": [
+        "三階作業說明書 (Level 3)",
+        "技術實務與操作指引",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-aeee7a96",
+      "title": "MS-3-72_地政資訊網際網路作業說明書_V1",
+      "fileName": "MS-3-72_地政資訊網際網路作業說明書_V1.pdf",
+      "domain": "security",
+      "category": "三階作業說明書 (Level 3)",
+      "subCategory": "技術實務與操作指引",
+      "docLevel": "三階作業說明書 (Level 3)",
+      "docLevelCode": "MS-3",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "247.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-3-72_地政資訊網際網路作業說明書_V1.pdf",
       "summary": "提供單一工作崗位之具體技術操作指引、伺服器安全組態步驟 (GCB)、網路設備檢核指令與日常維運準則。",
       "legalBasis": "行政院政府組態基準 (GCB)、資通系統防護基準",
       "keyPoints": [
@@ -16854,9 +17520,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-3a302e5b",
-      "title": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3)",
-      "fileName": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3).pdf",
+      "id": "sec-828d7398",
+      "title": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7",
+      "fileName": "MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -16864,10 +17530,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "169.1 KB",
-      "modifiedAt": "2026-09-08 14:30",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3).pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V6%20(3)），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "167.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-07(線上表單)資訊安全推動小組資通安全事件通報單_V7），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -17176,9 +17842,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-46a45c63",
-      "title": "MS-4-103全球資訊網隱私權保護宣告_V3",
-      "fileName": "MS-4-103全球資訊網隱私權保護宣告_V3.pdf",
+      "id": "sec-0a4ce8a8",
+      "title": "MS-4-103全球資訊網隱私權保護宣告_v4",
+      "fileName": "MS-4-103全球資訊網隱私權保護宣告_v4.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -17186,10 +17852,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "235.9 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-103全球資訊網隱私權保護宣告_V3.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-103全球資訊網隱私權保護宣告_V3），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "260.3 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-103全球資訊網隱私權保護宣告_v4.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-103全球資訊網隱私權保護宣告_v4），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -17360,9 +18026,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-909361ef",
-      "title": "MS-4-107(線上表單)個資事件通報單_V4",
-      "fileName": "MS-4-107(線上表單)個資事件通報單_V4.pdf",
+      "id": "sec-79a0ba0f",
+      "title": "MS-4-107(線上表單)個資事件通報單_V5",
+      "fileName": "MS-4-107(線上表單)個資事件通報單_V5.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -17370,10 +18036,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "124.2 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-107(線上表單)個資事件通報單_V4.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-107(線上表單)個資事件通報單_V4），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "118.7 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-107(線上表單)個資事件通報單_V5.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-107(線上表單)個資事件通報單_V5），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -17452,9 +18118,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-e18dd878",
-      "title": "MS-4-109資安與個資議題之關注方意見反映單_V7_1150731",
-      "fileName": "MS-4-109資安與個資議題之關注方意見反映單_V7_1150731.pdf",
+      "id": "sec-93e993ad",
+      "title": "MS-4-109資安與個資議題之關注方意見反映單_V8",
+      "fileName": "MS-4-109資安與個資議題之關注方意見反映單_V8.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -17462,10 +18128,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "143.3 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-109資安與個資議題之關注方意見反映單_V7_1150731.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-109資安與個資議題之關注方意見反映單_V7_1150731），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "145.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-109資安與個資議題之關注方意見反映單_V8.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-109資安與個資議題之關注方意見反映單_V8），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -17544,9 +18210,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-eb4c1e52",
-      "title": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905",
-      "fileName": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905.pdf",
+      "id": "sec-8cf3a379",
+      "title": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V8",
+      "fileName": "MS-4-111委外服務之資訊安全與個資保護需求評估表_V8.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -17554,10 +18220,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "264.7 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-111委外服務之資訊安全與個資保護需求評估表_V7_1120905），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "266.4 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-111委外服務之資訊安全與個資保護需求評估表_V8.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-111委外服務之資訊安全與個資保護需求評估表_V8），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -19522,6 +20188,52 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
+      "id": "sec-a6c1bf20",
+      "title": "ms-4-150資通系統安全防護基準應辦事項檢核表_v3",
+      "fileName": "ms-4-150資通系統安全防護基準應辦事項檢核表_v3.pdf",
+      "domain": "security",
+      "category": "四階核心紀錄 (Level 4)",
+      "subCategory": "資通系統防護基準檢核專題",
+      "docLevel": "四階核心紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "340.7 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\ms-4-150資通系統安全防護基準應辦事項檢核表_v3.pdf",
+      "summary": "資通安全責任等級分級辦法附表十『資通系統防護基準』核心檢核表，涵蓋存取控制、審計日誌、傳輸安全等法定控制項目。",
+      "legalBasis": "資通安全責任等級分級辦法附表十（資通系統防護基準）",
+      "keyPoints": [
+        "身分鑑別與存取：密碼長度 >= 12 碼，連續失敗 5 次鎖定帳號，閒置 15 分鐘強制登出。",
+        "日誌保存規範：核心系統與資料庫稽核日誌至少留存 6 個月，且定期實施離線備份防篡改。",
+        "傳輸加密要求：所有外部連線強制採用 TLS 1.2 以上加密協議，嚴禁使用 HTTP、SSLv3 或弱密碼套件。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "系統等級鑑別",
+          "detail": "填報 MS-4-124 評定為普級、中級或高級，決定對應之防護控制措施基準。"
+        },
+        {
+          "step": 2,
+          "title": "逐項組態檢核",
+          "detail": "依 MS-4-150 檢核表逐條查核系統組態，並取得管理介面截圖作為佐證。"
+        },
+        {
+          "step": 3,
+          "title": "弱點改善與追蹤",
+          "detail": "針對未符合項目開立改善計畫，於指定期限內修正並由資安專責人員複測。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：密碼規則設定截圖、連續登入失敗 5 次鎖定實測紀錄、日誌留存是否滿 180 天。",
+      "matchedDiagram": "",
+      "tags": [
+        "四階核心紀錄 (Level 4)",
+        "資通系統防護基準檢核專題",
+        "PDF"
+      ]
+    },
+    {
       "id": "sec-b33e77d7",
       "title": "MS-4-151稅務管理系統新增修撰需求及問題反應提案表_V1",
       "fileName": "MS-4-151稅務管理系統新增修撰需求及問題反應提案表_V1.pdf",
@@ -19982,9 +20694,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-18349b57",
-      "title": "MS-4-16適用性聲明書_v9_1150904",
-      "fileName": "MS-4-16適用性聲明書_v9_1150904.pdf",
+      "id": "sec-a46def3e",
+      "title": "MS-4-160雲端服務需求提報表_v1",
+      "fileName": "MS-4-160雲端服務需求提報表_v1.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -19992,10 +20704,102 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "732.1 KB",
-      "modifiedAt": "2026-09-08 14:31",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-16適用性聲明書_v9_1150904.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-16適用性聲明書_v9_1150904），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "220.0 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-160雲端服務需求提報表_v1.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-160雲端服務需求提報表_v1），提供資安稽核佐證與可追溯性紀錄。",
+      "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
+      "keyPoints": [
+        "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
+        "稽核佐證憑據：作為內外部資安稽核時抽驗實體作業之法定佐證。",
+        "防呆與定期檢視：定期檢討表單欄位適切性，確保符合最新法規要求。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "業務事項申請填報",
+          "detail": "業務同仁依規範步驟填報表單各欄位，檢附必要之技術佐證。"
+        },
+        {
+          "step": 2,
+          "title": "單位長官複核審查",
+          "detail": "單位主管確認申請正當性與合規性，簽章核准。"
+        },
+        {
+          "step": 3,
+          "title": "專卷歸檔定期盤點",
+          "detail": "由資安推行小組或檔案室集中保管，依保存年限妥善留存。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：表單填寫完整度、主管核准程序合規性、抽驗佐證是否真實無缺漏。",
+      "matchedDiagram": "",
+      "tags": [
+        "四階表單紀錄 (Level 4)",
+        "執行佐證與表單清冊",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-b5302336",
+      "title": "MS-4-161操管自動化管理系統週檢核表_V1",
+      "fileName": "MS-4-161操管自動化管理系統週檢核表_V1.pdf",
+      "domain": "security",
+      "category": "四階表單紀錄 (Level 4)",
+      "subCategory": "執行佐證與表單清冊",
+      "docLevel": "四階表單紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "115.0 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-161操管自動化管理系統週檢核表_V1.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-161操管自動化管理系統週檢核表_V1），提供資安稽核佐證與可追溯性紀錄。",
+      "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
+      "keyPoints": [
+        "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
+        "稽核佐證憑據：作為內外部資安稽核時抽驗實體作業之法定佐證。",
+        "防呆與定期檢視：定期檢討表單欄位適切性，確保符合最新法規要求。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "業務事項申請填報",
+          "detail": "業務同仁依規範步驟填報表單各欄位，檢附必要之技術佐證。"
+        },
+        {
+          "step": 2,
+          "title": "單位長官複核審查",
+          "detail": "單位主管確認申請正當性與合規性，簽章核准。"
+        },
+        {
+          "step": 3,
+          "title": "專卷歸檔定期盤點",
+          "detail": "由資安推行小組或檔案室集中保管，依保存年限妥善留存。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：表單填寫完整度、主管核准程序合規性、抽驗佐證是否真實無缺漏。",
+      "matchedDiagram": "",
+      "tags": [
+        "四階表單紀錄 (Level 4)",
+        "執行佐證與表單清冊",
+        "PDF"
+      ]
+    },
+    {
+      "id": "sec-2d053e46",
+      "title": "MS-4-16適用性聲明書_V10",
+      "fileName": "MS-4-16適用性聲明書_V10.pdf",
+      "domain": "security",
+      "category": "四階表單紀錄 (Level 4)",
+      "subCategory": "執行佐證與表單清冊",
+      "docLevel": "四階表單紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "725.8 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-16適用性聲明書_V10.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-16適用性聲明書_V10），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -20626,6 +21430,52 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
+      "id": "sec-2dd035a5",
+      "title": "MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16",
+      "fileName": "MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16.pdf",
+      "domain": "security",
+      "category": "四階表單紀錄 (Level 4)",
+      "subCategory": "執行佐證與表單清冊",
+      "docLevel": "四階表單紀錄 (Level 4)",
+      "docLevelCode": "MS-4",
+      "fileType": "PDF 法規公文/表單",
+      "extension": "PDF",
+      "sizeText": "180.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-31應用系統程式需求暨賦稅資料庫資料複製管理申請表_V16），提供資安稽核佐證與可追溯性紀錄。",
+      "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
+      "keyPoints": [
+        "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
+        "稽核佐證憑據：作為內外部資安稽核時抽驗實體作業之法定佐證。",
+        "防呆與定期檢視：定期檢討表單欄位適切性，確保符合最新法規要求。"
+      ],
+      "sopSteps": [
+        {
+          "step": 1,
+          "title": "業務事項申請填報",
+          "detail": "業務同仁依規範步驟填報表單各欄位，檢附必要之技術佐證。"
+        },
+        {
+          "step": 2,
+          "title": "單位長官複核審查",
+          "detail": "單位主管確認申請正當性與合規性，簽章核准。"
+        },
+        {
+          "step": 3,
+          "title": "專卷歸檔定期盤點",
+          "detail": "由資安推行小組或檔案室集中保管，依保存年限妥善留存。"
+        }
+      ],
+      "auditFocus": "稽核員必抽查：表單填寫完整度、主管核准程序合規性、抽驗佐證是否真實無缺漏。",
+      "matchedDiagram": "",
+      "tags": [
+        "四階表單紀錄 (Level 4)",
+        "執行佐證與表單清冊",
+        "PDF"
+      ]
+    },
+    {
       "id": "sec-655909b3",
       "title": "MS-4-33(線上表單)可攜式設備權限使用 停用申請單_V10",
       "fileName": "MS-4-33(線上表單)可攜式設備權限使用 停用申請單_V10.pdf",
@@ -20672,9 +21522,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-19c01d75",
-      "title": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19",
-      "fileName": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V19.pdf",
+      "id": "sec-d67a9859",
+      "title": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V21",
+      "fileName": "MS-4-35委外契約資訊安全與個資保護條款參考規範_V21.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -20682,10 +21532,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "261.0 KB",
-      "modifiedAt": "2026-09-08 14:32",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-35委外契約資訊安全與個資保護條款參考規範_V19.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-35委外契約資訊安全與個資保護條款參考規範_V19），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "243.5 KB",
+      "modifiedAt": "2026-11-11 15:34",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-35委外契約資訊安全與個資保護條款參考規範_V21.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-35委外契約資訊安全與個資保護條款參考規範_V21），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -21178,9 +22028,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-72944938",
-      "title": "MS-4-47資訊設備設定變更申請表_V6_1120725",
-      "fileName": "MS-4-47資訊設備設定變更申請表_V6_1120725.pdf",
+      "id": "sec-317f5af6",
+      "title": "MS-4-47資訊設備設定變更申請表_V7",
+      "fileName": "MS-4-47資訊設備設定變更申請表_V7.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -21188,10 +22038,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "135.8 KB",
-      "modifiedAt": "2026-09-08 14:32",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-47資訊設備設定變更申請表_V6_1120725.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-47資訊設備設定變更申請表_V6_1120725），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "132.5 KB",
+      "modifiedAt": "2026-11-11 15:35",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-47資訊設備設定變更申請表_V7.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-47資訊設備設定變更申請表_V7），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",
@@ -22282,9 +23132,9 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       ]
     },
     {
-      "id": "sec-b527e407",
-      "title": "MS-4-76分局機房管理檢查表_V4",
-      "fileName": "MS-4-76分局機房管理檢查表_V4.pdf",
+      "id": "sec-5a2a31eb",
+      "title": "MS-4-76分局機房管理檢查表_V5",
+      "fileName": "MS-4-76分局機房管理檢查表_V5.pdf",
       "domain": "security",
       "category": "四階表單紀錄 (Level 4)",
       "subCategory": "執行佐證與表單清冊",
@@ -22292,10 +23142,10 @@ window.WORKSPACE_KNOWLEDGE_DATA = {
       "docLevelCode": "MS-4",
       "fileType": "PDF 法規公文/表單",
       "extension": "PDF",
-      "sizeText": "105.6 KB",
-      "modifiedAt": "2026-09-08 14:32",
-      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-76分局機房管理檢查表_V4.pdf",
-      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-76分局機房管理檢查表_V4），提供資安稽核佐證與可追溯性紀錄。",
+      "sizeText": "108.6 KB",
+      "modifiedAt": "2026-11-11 15:35",
+      "windowsPath": "G:\\我的雲端硬碟\\資安\\完成\\MS-4-76分局機房管理檢查表_V5.pdf",
+      "summary": "公務機關資訊安全與個人資料保護之實務表單與執行憑證（MS-4-76分局機房管理檢查表_V5），提供資安稽核佐證與可追溯性紀錄。",
       "legalBasis": "資通安全法第 10 條、個人資料保護法第 27 條",
       "keyPoints": [
         "表單留痕要求：落實標準化填報、主管簽章與歸檔保存年限要求。",

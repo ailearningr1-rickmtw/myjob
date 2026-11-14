@@ -1,0 +1,10 @@
+{
+  "name": "歲末年終尾牙自動化抽獎系統 (離線可用版)",
+  "short_name": "尾牙抽獎輪盤",
+  "description": "支援離線與雙模式（獎項抽人名／轉盤預設獎項同仁自抽）的歲末年終尾牙幸運輪盤抽獎系統。",
+  "start_url": "./lottery.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1a050b",
+  "theme_color": "#b91c1c"
+}

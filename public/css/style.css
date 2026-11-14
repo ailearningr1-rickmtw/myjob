@@ -11677,3 +11677,300 @@ body.is-festive-gala-mode #focus-section {
     background: rgba(220, 38, 38, 0.5);
     color: #ffffff;
 }
+
+
+/* ==========================================================================
+   尾牙雙模式切換（獎項抽人名 vs 轉盤抽獎項）與離線功能區樣式
+   ========================================================================== */
+
+.hud-mode-switch-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 2px;
+}
+
+.hud-mode-switch-btn {
+    border: 1px solid transparent;
+    background: transparent;
+    color: rgba(254, 243, 199, 0.78);
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 5px 8px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.hud-mode-switch-btn:hover:not(:disabled) {
+    color: #ffffff;
+    background: rgba(245, 158, 11, 0.16);
+}
+
+.hud-mode-switch-btn.active {
+    background: linear-gradient(135deg, #b91c1c 0%, #d97706 100%);
+    border-color: #fde047;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+}
+
+.hud-mode-switch-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* 模式二：左上角獎項剩餘配額膠囊列 */
+.hud-prize-quota-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 2px;
+}
+
+.hud-quota-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: #fef3c7;
+}
+
+.hud-quota-chip.is-empty {
+    opacity: 0.42;
+    text-decoration: line-through;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.hud-quota-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.hud-quota-dot.tier-gold { background: #f59e0b; }
+.hud-quota-dot.tier-red { background: #dc2626; }
+.hud-quota-dot.tier-blue { background: #2563eb; }
+.hud-quota-dot.tier-green { background: #059669; }
+.hud-quota-dot.tier-purple { background: #7c3aed; }
+.hud-quota-dot.tier-orange { background: #ea580c; }
+.hud-quota-dot.tier-cyan { background: #0891b2; }
+
+/* 模式二：目前上台抽獎同仁選擇列 */
+.hud-stage-player-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    border-radius: 10px;
+    padding: 7px 10px;
+    margin-top: 2px;
+}
+
+.hud-stage-player-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fbbf24;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hud-stage-player-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.hud-player-select {
+    flex: 1;
+    min-width: 0;
+    background: rgba(15, 15, 24, 0.92);
+    color: #fef08a;
+    border: 1px solid rgba(245, 158, 11, 0.55);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    outline: none;
+}
+
+.hud-player-select:focus {
+    border-color: #fde047;
+}
+
+.hud-offline-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    background: rgba(16, 185, 129, 0.18);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #a7f3d0;
+}
+
+/* 後台：雙模式選擇與離線攜帶工具列 */
+.admin-mode-offline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.admin-mode-selector-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.65rem;
+}
+
+.admin-mode-choice-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.admin-mode-choice-btn:hover {
+    border-color: var(--festive-gold, #f59e0b);
+}
+
+.admin-mode-choice-btn.active {
+    border-color: #dc2626;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.12) 0%, rgba(245, 158, 11, 0.12) 100%);
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.18);
+}
+
+.admin-mode-choice-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.admin-mode-choice-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+
+.admin-offline-actions-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+}
+
+/* 後台：模式二獎項配額設定表單與列表 */
+.prize-wheel-config-form {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 0.75fr 0.8fr auto;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.prize-wheel-config-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 280px;
+    overflow-y: auto;
+    margin-bottom: 0.85rem;
+    padding: 0;
+}
+
+.prize-wheel-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.qty-step-btn {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border-light);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-step-btn:hover {
+    background: var(--accent-soft-bg);
+}
+
+.prize-qty-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.18rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background: rgba(245, 158, 11, 0.15);
+    color: #b45309;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+html[data-theme="dark"] .prize-qty-badge {
+    color: #fbbf24;
+}
+
+.lottery-mode-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: rgba(37, 99, 235, 0.15);
+    color: #1d4ed8;
+    border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+.lottery-mode-tag.is-prize-mode {
+    background: rgba(217, 119, 6, 0.15);
+    color: #b45309;
+    border-color: rgba(217, 119, 6, 0.35);
+}
+
+html[data-theme="dark"] .lottery-mode-tag {
+    color: #93c5fd;
+}
+
+html[data-theme="dark"] .lottery-mode-tag.is-prize-mode {
+    color: #fcd34d;
+}
+
+@media (max-width: 960px) {
+    .prize-wheel-config-form {
+        grid-template-columns: 1fr 1fr;
+    }
+    .admin-mode-selector-cards {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="歲末年終尾牙自動化抽獎系統（離線雙模式版）：支援獎項抽人名與轉盤預設獎項同仁自抽。" />
+    <title>歲末年終尾牙幸運輪盤抽獎系統 | 離線完整版</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./css/style.css?v=20261114v1" />
+</head>
+<body data-lottery-entry="true">
+    <!-- 科技網格與清新流體光暈背景 -->
+    <div class="ambient-background" aria-hidden="true"></div>
+    <div class="ambient-orb orb-primary" aria-hidden="true"></div>
+    <div class="ambient-orb orb-secondary" aria-hidden="true"></div>
+    <!-- 得獎慶祝煙花特效全螢幕畫布 -->
+    <canvas id="fireworks-canvas" class="fireworks-canvas is-hidden" aria-hidden="true"></canvas>
+
+    <!-- 隱藏主頁佔位結構以完整相容主控制器 -->
+    <header class="top-navbar is-hidden" aria-hidden="true">
+        <nav class="nav-tabs" id="nav-tabs"></nav>
+        <span id="clock-text"></span>
+        <button type="button" id="theme-toggle-btn" aria-label="切換亮暗主題"></button>
+    </header>
+
+    <main class="main-container">
+        <div id="overview-section" class="is-hidden" aria-hidden="true">
+            <div id="themes-grid"></div>
+        </div>
+        <section id="focus-section" aria-live="polite"></section>
+    </main>
+
+    <script src="./js/lottery_audio_data.js?v=20261114v1"></script>
+    <script src="./js/app.js?v=20261114v1"></script>
+</body>
+</html>
